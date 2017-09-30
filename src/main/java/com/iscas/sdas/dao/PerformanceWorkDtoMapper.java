@@ -1,6 +1,6 @@
-package geneator;
+package com.iscas.sdas.dao;
 
-import geneator.PerformanceWorkDto;
+import com.iscas.sdas.dto.PerformanceWorkDto;
 
 public interface PerformanceWorkDtoMapper {
     int deleteByPrimaryKey(Integer alarmId);

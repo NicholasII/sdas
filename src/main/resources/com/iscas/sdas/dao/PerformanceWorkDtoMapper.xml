@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="geneator.PerformanceWorkDtoMapper">
-  <resultMap id="BaseResultMap" type="geneator.PerformanceWorkDto">
+<mapper namespace="com.iscas.sdas.dao.PerformanceWorkDtoMapper">
+  <resultMap id="BaseResultMap" type="com.iscas.sdas.dto.PerformanceWorkDto">
     <id column="alarm_id" jdbcType="INTEGER" property="alarmId" />
     <result column="occurrence_time" jdbcType="TIMESTAMP" property="occurrenceTime" />
     <result column="monitor_item_name" jdbcType="VARCHAR" property="monitorItemName" />
@@ -25,7 +25,6 @@
     <result column="reasons" jdbcType="VARCHAR" property="reasons" />
     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
     <result column="handle_info" jdbcType="VARCHAR" property="handleInfo" />
-    <result column="monitor_type" jdbcType="INTEGER" property="monitorType" />
     <result column="monitor_content" jdbcType="VARCHAR" property="monitorContent" />
     <result column="monitor_value" jdbcType="VARCHAR" property="monitorValue" />
     <result column="if_send_order_timeout" jdbcType="VARCHAR" property="ifSendOrderTimeout" />
@@ -52,11 +51,11 @@
     alarm_id, occurrence_time, monitor_item_name, current_value, bscid, cellid, station_name, 
     boutique_level, limit_times, maintain_company, security_tasks, data_modification, 
     belong_area, timeout_monitor, area_received_time, emos_order_number, overtime_time, 
-    equipment_type, maintain_or_no, track_area_code, reasons, remarks, handle_info, monitor_type, 
-    monitor_content, monitor_value, if_send_order_timeout, if_handle_timeout, alerm_level, 
-    handle_group, handle_group_area_order, handle_person, handle_time, complete_person, 
-    complete_time, apply_person, apply_time, apply_time_now, state, final_reply, receive_person, 
-    receive_time, make_up, tablenum, questionflag
+    equipment_type, maintain_or_no, track_area_code, reasons, remarks, handle_info, monitor_content, 
+    monitor_value, if_send_order_timeout, if_handle_timeout, alerm_level, handle_group, 
+    handle_group_area_order, handle_person, handle_time, complete_person, complete_time, 
+    apply_person, apply_time, apply_time_now, state, final_reply, receive_person, receive_time, 
+    make_up, tablenum, questionflag
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -68,7 +67,7 @@
     delete from t_performance_work
     where alarm_id = #{alarmId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="geneator.PerformanceWorkDto">
+  <insert id="insert" parameterType="com.iscas.sdas.dto.PerformanceWorkDto">
     insert into t_performance_work (alarm_id, occurrence_time, monitor_item_name, 
       current_value, bscid, cellid, 
       station_name, boutique_level, limit_times, 
@@ -76,15 +75,14 @@
       belong_area, timeout_monitor, area_received_time, 
       emos_order_number, overtime_time, equipment_type, 
       maintain_or_no, track_area_code, reasons, 
-      remarks, handle_info, monitor_type, 
-      monitor_content, monitor_value, if_send_order_timeout, 
-      if_handle_timeout, alerm_level, handle_group, 
-      handle_group_area_order, handle_person, handle_time, 
-      complete_person, complete_time, apply_person, 
-      apply_time, apply_time_now, state, 
-      final_reply, receive_person, receive_time, 
-      make_up, tablenum, questionflag
-      )
+      remarks, handle_info, monitor_content, 
+      monitor_value, if_send_order_timeout, if_handle_timeout, 
+      alerm_level, handle_group, handle_group_area_order, 
+      handle_person, handle_time, complete_person, 
+      complete_time, apply_person, apply_time, 
+      apply_time_now, state, final_reply, 
+      receive_person, receive_time, make_up, 
+      tablenum, questionflag)
     values (#{alarmId,jdbcType=INTEGER}, #{occurrenceTime,jdbcType=TIMESTAMP}, #{monitorItemName,jdbcType=VARCHAR}, 
       #{currentValue,jdbcType=VARCHAR}, #{bscid,jdbcType=VARCHAR}, #{cellid,jdbcType=VARCHAR}, 
       #{stationName,jdbcType=VARCHAR}, #{boutiqueLevel,jdbcType=VARCHAR}, #{limitTimes,jdbcType=VARCHAR}, 
@@ -92,17 +90,16 @@
       #{belongArea,jdbcType=VARCHAR}, #{timeoutMonitor,jdbcType=VARCHAR}, #{areaReceivedTime,jdbcType=TIMESTAMP}, 
       #{emosOrderNumber,jdbcType=VARCHAR}, #{overtimeTime,jdbcType=TIMESTAMP}, #{equipmentType,jdbcType=VARCHAR}, 
       #{maintainOrNo,jdbcType=VARCHAR}, #{trackAreaCode,jdbcType=INTEGER}, #{reasons,jdbcType=VARCHAR}, 
-      #{remarks,jdbcType=VARCHAR}, #{handleInfo,jdbcType=VARCHAR}, #{monitorType,jdbcType=INTEGER}, 
-      #{monitorContent,jdbcType=VARCHAR}, #{monitorValue,jdbcType=VARCHAR}, #{ifSendOrderTimeout,jdbcType=VARCHAR}, 
-      #{ifHandleTimeout,jdbcType=VARCHAR}, #{alermLevel,jdbcType=VARCHAR}, #{handleGroup,jdbcType=VARCHAR}, 
-      #{handleGroupAreaOrder,jdbcType=VARCHAR}, #{handlePerson,jdbcType=VARCHAR}, #{handleTime,jdbcType=TIMESTAMP}, 
-      #{completePerson,jdbcType=VARCHAR}, #{completeTime,jdbcType=TIMESTAMP}, #{applyPerson,jdbcType=VARCHAR}, 
-      #{applyTime,jdbcType=TIMESTAMP}, #{applyTimeNow,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, 
-      #{finalReply,jdbcType=VARCHAR}, #{receivePerson,jdbcType=VARCHAR}, #{receiveTime,jdbcType=VARCHAR}, 
-      #{makeUp,jdbcType=VARCHAR}, #{tablenum,jdbcType=VARCHAR}, #{questionflag,jdbcType=INTEGER}
-      )
+      #{remarks,jdbcType=VARCHAR}, #{handleInfo,jdbcType=VARCHAR}, #{monitorContent,jdbcType=VARCHAR}, 
+      #{monitorValue,jdbcType=VARCHAR}, #{ifSendOrderTimeout,jdbcType=VARCHAR}, #{ifHandleTimeout,jdbcType=VARCHAR}, 
+      #{alermLevel,jdbcType=VARCHAR}, #{handleGroup,jdbcType=VARCHAR}, #{handleGroupAreaOrder,jdbcType=VARCHAR}, 
+      #{handlePerson,jdbcType=VARCHAR}, #{handleTime,jdbcType=TIMESTAMP}, #{completePerson,jdbcType=VARCHAR}, 
+      #{completeTime,jdbcType=TIMESTAMP}, #{applyPerson,jdbcType=VARCHAR}, #{applyTime,jdbcType=TIMESTAMP}, 
+      #{applyTimeNow,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, #{finalReply,jdbcType=VARCHAR}, 
+      #{receivePerson,jdbcType=VARCHAR}, #{receiveTime,jdbcType=VARCHAR}, #{makeUp,jdbcType=VARCHAR}, 
+      #{tablenum,jdbcType=VARCHAR}, #{questionflag,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="geneator.PerformanceWorkDto">
+  <insert id="insertSelective" parameterType="com.iscas.sdas.dto.PerformanceWorkDto">
     insert into t_performance_work
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="alarmId != null">
@@ -173,9 +170,6 @@
       </if>
       <if test="handleInfo != null">
         handle_info,
-      </if>
-      <if test="monitorType != null">
-        monitor_type,
       </if>
       <if test="monitorContent != null">
         monitor_content,
@@ -311,9 +305,6 @@
       <if test="handleInfo != null">
         #{handleInfo,jdbcType=VARCHAR},
       </if>
-      <if test="monitorType != null">
-        #{monitorType,jdbcType=INTEGER},
-      </if>
       <if test="monitorContent != null">
         #{monitorContent,jdbcType=VARCHAR},
       </if>
@@ -379,7 +370,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="geneator.PerformanceWorkDto">
+  <update id="updateByPrimaryKeySelective" parameterType="com.iscas.sdas.dto.PerformanceWorkDto">
     update t_performance_work
     <set>
       <if test="occurrenceTime != null">
@@ -448,9 +439,6 @@
       <if test="handleInfo != null">
         handle_info = #{handleInfo,jdbcType=VARCHAR},
       </if>
-      <if test="monitorType != null">
-        monitor_type = #{monitorType,jdbcType=INTEGER},
-      </if>
       <if test="monitorContent != null">
         monitor_content = #{monitorContent,jdbcType=VARCHAR},
       </if>
@@ -517,7 +505,7 @@
     </set>
     where alarm_id = #{alarmId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="geneator.PerformanceWorkDto">
+  <update id="updateByPrimaryKey" parameterType="com.iscas.sdas.dto.PerformanceWorkDto">
     update t_performance_work
     set occurrence_time = #{occurrenceTime,jdbcType=TIMESTAMP},
       monitor_item_name = #{monitorItemName,jdbcType=VARCHAR},
@@ -541,7 +529,6 @@
       reasons = #{reasons,jdbcType=VARCHAR},
       remarks = #{remarks,jdbcType=VARCHAR},
       handle_info = #{handleInfo,jdbcType=VARCHAR},
-      monitor_type = #{monitorType,jdbcType=INTEGER},
       monitor_content = #{monitorContent,jdbcType=VARCHAR},
       monitor_value = #{monitorValue,jdbcType=VARCHAR},
       if_send_order_timeout = #{ifSendOrderTimeout,jdbcType=VARCHAR},

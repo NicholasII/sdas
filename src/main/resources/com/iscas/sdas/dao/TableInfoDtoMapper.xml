@@ -9,7 +9,7 @@
     <result column="column_comment" jdbcType="VARCHAR" property="columnComment" />
     <result column="ui_usedflag" jdbcType="INTEGER" property="uiUsedflag" />
   </resultMap>
-  <insert id="insert" parameterType="geneator.TableInfoDto">
+  <insert id="insert" parameterType="com.iscas.sdas.dto.TableInfoDto">
     insert into t_table_info (table_name, column_name, ordinal_position, 
       column_type, column_comment, ui_usedflag
       )
@@ -17,7 +17,7 @@
       #{columnType,jdbcType=VARCHAR}, #{columnComment,jdbcType=VARCHAR}, #{uiUsedflag,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="geneator.TableInfoDto">
+  <insert id="insertSelective" parameterType="com.iscas.sdas.dto.TableInfoDto">
     insert into t_table_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="tableName != null">
@@ -61,6 +61,6 @@
     </trim>
   </insert>
   <select id="select" resultMap="BaseResultMap">
-  	select * from t_table_info where table_name = #{0} and column_name = #{1}
+  	select * from t_table_info where table_name = #{tablename}
   </select>
 </mapper>

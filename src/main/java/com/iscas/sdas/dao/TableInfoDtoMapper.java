@@ -11,5 +11,5 @@ public interface TableInfoDtoMapper {
 
     int insertSelective(TableInfoDto record);
     
-    List<TableInfoDto> select(String tablename,String column);
+    List<TableInfoDto> select(String tablename);
 }
