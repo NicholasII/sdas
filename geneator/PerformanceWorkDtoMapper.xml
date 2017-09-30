@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="geneator.PerformanceWorkDtoMapper">
+  <resultMap id="BaseResultMap" type="geneator.PerformanceWorkDto">
+    <id column="alarm_id" jdbcType="INTEGER" property="alarmId" />
+    <result column="occurrence_time" jdbcType="TIMESTAMP" property="occurrenceTime" />
+    <result column="monitor_item_name" jdbcType="VARCHAR" property="monitorItemName" />
+    <result column="current_value" jdbcType="VARCHAR" property="currentValue" />
+    <result column="bscid" jdbcType="VARCHAR" property="bscid" />
+    <result column="cellid" jdbcType="VARCHAR" property="cellid" />
+    <result column="station_name" jdbcType="VARCHAR" property="stationName" />
+    <result column="boutique_level" jdbcType="VARCHAR" property="boutiqueLevel" />
+    <result column="limit_times" jdbcType="VARCHAR" property="limitTimes" />
+    <result column="maintain_company" jdbcType="VARCHAR" property="maintainCompany" />
+    <result column="security_tasks" jdbcType="VARCHAR" property="securityTasks" />
+    <result column="data_modification" jdbcType="VARCHAR" property="dataModification" />
+    <result column="belong_area" jdbcType="VARCHAR" property="belongArea" />
+    <result column="timeout_monitor" jdbcType="VARCHAR" property="timeoutMonitor" />
+    <result column="area_received_time" jdbcType="TIMESTAMP" property="areaReceivedTime" />
+    <result column="emos_order_number" jdbcType="VARCHAR" property="emosOrderNumber" />
+    <result column="overtime_time" jdbcType="TIMESTAMP" property="overtimeTime" />
+    <result column="equipment_type" jdbcType="VARCHAR" property="equipmentType" />
+    <result column="maintain_or_no" jdbcType="VARCHAR" property="maintainOrNo" />
+    <result column="track_area_code" jdbcType="INTEGER" property="trackAreaCode" />
+    <result column="reasons" jdbcType="VARCHAR" property="reasons" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="handle_info" jdbcType="VARCHAR" property="handleInfo" />
+    <result column="monitor_type" jdbcType="INTEGER" property="monitorType" />
+    <result column="monitor_content" jdbcType="VARCHAR" property="monitorContent" />
+    <result column="monitor_value" jdbcType="VARCHAR" property="monitorValue" />
+    <result column="if_send_order_timeout" jdbcType="VARCHAR" property="ifSendOrderTimeout" />
+    <result column="if_handle_timeout" jdbcType="VARCHAR" property="ifHandleTimeout" />
+    <result column="alerm_level" jdbcType="VARCHAR" property="alermLevel" />
+    <result column="handle_group" jdbcType="VARCHAR" property="handleGroup" />
+    <result column="handle_group_area_order" jdbcType="VARCHAR" property="handleGroupAreaOrder" />
+    <result column="handle_person" jdbcType="VARCHAR" property="handlePerson" />
+    <result column="handle_time" jdbcType="TIMESTAMP" property="handleTime" />
+    <result column="complete_person" jdbcType="VARCHAR" property="completePerson" />
+    <result column="complete_time" jdbcType="TIMESTAMP" property="completeTime" />
+    <result column="apply_person" jdbcType="VARCHAR" property="applyPerson" />
+    <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime" />
+    <result column="apply_time_now" jdbcType="TIMESTAMP" property="applyTimeNow" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="final_reply" jdbcType="VARCHAR" property="finalReply" />
+    <result column="receive_person" jdbcType="VARCHAR" property="receivePerson" />
+    <result column="receive_time" jdbcType="VARCHAR" property="receiveTime" />
+    <result column="make_up" jdbcType="VARCHAR" property="makeUp" />
+    <result column="tablenum" jdbcType="VARCHAR" property="tablenum" />
+    <result column="questionflag" jdbcType="INTEGER" property="questionflag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    alarm_id, occurrence_time, monitor_item_name, current_value, bscid, cellid, station_name, 
+    boutique_level, limit_times, maintain_company, security_tasks, data_modification, 
+    belong_area, timeout_monitor, area_received_time, emos_order_number, overtime_time, 
+    equipment_type, maintain_or_no, track_area_code, reasons, remarks, handle_info, monitor_type, 
+    monitor_content, monitor_value, if_send_order_timeout, if_handle_timeout, alerm_level, 
+    handle_group, handle_group_area_order, handle_person, handle_time, complete_person, 
+    complete_time, apply_person, apply_time, apply_time_now, state, final_reply, receive_person, 
+    receive_time, make_up, tablenum, questionflag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_performance_work
+    where alarm_id = #{alarmId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_performance_work
+    where alarm_id = #{alarmId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="geneator.PerformanceWorkDto">
+    insert into t_performance_work (alarm_id, occurrence_time, monitor_item_name, 
+      current_value, bscid, cellid, 
+      station_name, boutique_level, limit_times, 
+      maintain_company, security_tasks, data_modification, 
+      belong_area, timeout_monitor, area_received_time, 
+      emos_order_number, overtime_time, equipment_type, 
+      maintain_or_no, track_area_code, reasons, 
+      remarks, handle_info, monitor_type, 
+      monitor_content, monitor_value, if_send_order_timeout, 
+      if_handle_timeout, alerm_level, handle_group, 
+      handle_group_area_order, handle_person, handle_time, 
+      complete_person, complete_time, apply_person, 
+      apply_time, apply_time_now, state, 
+      final_reply, receive_person, receive_time, 
+      make_up, tablenum, questionflag
+      )
+    values (#{alarmId,jdbcType=INTEGER}, #{occurrenceTime,jdbcType=TIMESTAMP}, #{monitorItemName,jdbcType=VARCHAR}, 
+      #{currentValue,jdbcType=VARCHAR}, #{bscid,jdbcType=VARCHAR}, #{cellid,jdbcType=VARCHAR}, 
+      #{stationName,jdbcType=VARCHAR}, #{boutiqueLevel,jdbcType=VARCHAR}, #{limitTimes,jdbcType=VARCHAR}, 
+      #{maintainCompany,jdbcType=VARCHAR}, #{securityTasks,jdbcType=VARCHAR}, #{dataModification,jdbcType=VARCHAR}, 
+      #{belongArea,jdbcType=VARCHAR}, #{timeoutMonitor,jdbcType=VARCHAR}, #{areaReceivedTime,jdbcType=TIMESTAMP}, 
+      #{emosOrderNumber,jdbcType=VARCHAR}, #{overtimeTime,jdbcType=TIMESTAMP}, #{equipmentType,jdbcType=VARCHAR}, 
+      #{maintainOrNo,jdbcType=VARCHAR}, #{trackAreaCode,jdbcType=INTEGER}, #{reasons,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{handleInfo,jdbcType=VARCHAR}, #{monitorType,jdbcType=INTEGER}, 
+      #{monitorContent,jdbcType=VARCHAR}, #{monitorValue,jdbcType=VARCHAR}, #{ifSendOrderTimeout,jdbcType=VARCHAR}, 
+      #{ifHandleTimeout,jdbcType=VARCHAR}, #{alermLevel,jdbcType=VARCHAR}, #{handleGroup,jdbcType=VARCHAR}, 
+      #{handleGroupAreaOrder,jdbcType=VARCHAR}, #{handlePerson,jdbcType=VARCHAR}, #{handleTime,jdbcType=TIMESTAMP}, 
+      #{completePerson,jdbcType=VARCHAR}, #{completeTime,jdbcType=TIMESTAMP}, #{applyPerson,jdbcType=VARCHAR}, 
+      #{applyTime,jdbcType=TIMESTAMP}, #{applyTimeNow,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, 
+      #{finalReply,jdbcType=VARCHAR}, #{receivePerson,jdbcType=VARCHAR}, #{receiveTime,jdbcType=VARCHAR}, 
+      #{makeUp,jdbcType=VARCHAR}, #{tablenum,jdbcType=VARCHAR}, #{questionflag,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="geneator.PerformanceWorkDto">
+    insert into t_performance_work
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="alarmId != null">
+        alarm_id,
+      </if>
+      <if test="occurrenceTime != null">
+        occurrence_time,
+      </if>
+      <if test="monitorItemName != null">
+        monitor_item_name,
+      </if>
+      <if test="currentValue != null">
+        current_value,
+      </if>
+      <if test="bscid != null">
+        bscid,
+      </if>
+      <if test="cellid != null">
+        cellid,
+      </if>
+      <if test="stationName != null">
+        station_name,
+      </if>
+      <if test="boutiqueLevel != null">
+        boutique_level,
+      </if>
+      <if test="limitTimes != null">
+        limit_times,
+      </if>
+      <if test="maintainCompany != null">
+        maintain_company,
+      </if>
+      <if test="securityTasks != null">
+        security_tasks,
+      </if>
+      <if test="dataModification != null">
+        data_modification,
+      </if>
+      <if test="belongArea != null">
+        belong_area,
+      </if>
+      <if test="timeoutMonitor != null">
+        timeout_monitor,
+      </if>
+      <if test="areaReceivedTime != null">
+        area_received_time,
+      </if>
+      <if test="emosOrderNumber != null">
+        emos_order_number,
+      </if>
+      <if test="overtimeTime != null">
+        overtime_time,
+      </if>
+      <if test="equipmentType != null">
+        equipment_type,
+      </if>
+      <if test="maintainOrNo != null">
+        maintain_or_no,
+      </if>
+      <if test="trackAreaCode != null">
+        track_area_code,
+      </if>
+      <if test="reasons != null">
+        reasons,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="handleInfo != null">
+        handle_info,
+      </if>
+      <if test="monitorType != null">
+        monitor_type,
+      </if>
+      <if test="monitorContent != null">
+        monitor_content,
+      </if>
+      <if test="monitorValue != null">
+        monitor_value,
+      </if>
+      <if test="ifSendOrderTimeout != null">
+        if_send_order_timeout,
+      </if>
+      <if test="ifHandleTimeout != null">
+        if_handle_timeout,
+      </if>
+      <if test="alermLevel != null">
+        alerm_level,
+      </if>
+      <if test="handleGroup != null">
+        handle_group,
+      </if>
+      <if test="handleGroupAreaOrder != null">
+        handle_group_area_order,
+      </if>
+      <if test="handlePerson != null">
+        handle_person,
+      </if>
+      <if test="handleTime != null">
+        handle_time,
+      </if>
+      <if test="completePerson != null">
+        complete_person,
+      </if>
+      <if test="completeTime != null">
+        complete_time,
+      </if>
+      <if test="applyPerson != null">
+        apply_person,
+      </if>
+      <if test="applyTime != null">
+        apply_time,
+      </if>
+      <if test="applyTimeNow != null">
+        apply_time_now,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="finalReply != null">
+        final_reply,
+      </if>
+      <if test="receivePerson != null">
+        receive_person,
+      </if>
+      <if test="receiveTime != null">
+        receive_time,
+      </if>
+      <if test="makeUp != null">
+        make_up,
+      </if>
+      <if test="tablenum != null">
+        tablenum,
+      </if>
+      <if test="questionflag != null">
+        questionflag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="alarmId != null">
+        #{alarmId,jdbcType=INTEGER},
+      </if>
+      <if test="occurrenceTime != null">
+        #{occurrenceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="monitorItemName != null">
+        #{monitorItemName,jdbcType=VARCHAR},
+      </if>
+      <if test="currentValue != null">
+        #{currentValue,jdbcType=VARCHAR},
+      </if>
+      <if test="bscid != null">
+        #{bscid,jdbcType=VARCHAR},
+      </if>
+      <if test="cellid != null">
+        #{cellid,jdbcType=VARCHAR},
+      </if>
+      <if test="stationName != null">
+        #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="boutiqueLevel != null">
+        #{boutiqueLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="limitTimes != null">
+        #{limitTimes,jdbcType=VARCHAR},
+      </if>
+      <if test="maintainCompany != null">
+        #{maintainCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="securityTasks != null">
+        #{securityTasks,jdbcType=VARCHAR},
+      </if>
+      <if test="dataModification != null">
+        #{dataModification,jdbcType=VARCHAR},
+      </if>
+      <if test="belongArea != null">
+        #{belongArea,jdbcType=VARCHAR},
+      </if>
+      <if test="timeoutMonitor != null">
+        #{timeoutMonitor,jdbcType=VARCHAR},
+      </if>
+      <if test="areaReceivedTime != null">
+        #{areaReceivedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="emosOrderNumber != null">
+        #{emosOrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="overtimeTime != null">
+        #{overtimeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="equipmentType != null">
+        #{equipmentType,jdbcType=VARCHAR},
+      </if>
+      <if test="maintainOrNo != null">
+        #{maintainOrNo,jdbcType=VARCHAR},
+      </if>
+      <if test="trackAreaCode != null">
+        #{trackAreaCode,jdbcType=INTEGER},
+      </if>
+      <if test="reasons != null">
+        #{reasons,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="handleInfo != null">
+        #{handleInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="monitorType != null">
+        #{monitorType,jdbcType=INTEGER},
+      </if>
+      <if test="monitorContent != null">
+        #{monitorContent,jdbcType=VARCHAR},
+      </if>
+      <if test="monitorValue != null">
+        #{monitorValue,jdbcType=VARCHAR},
+      </if>
+      <if test="ifSendOrderTimeout != null">
+        #{ifSendOrderTimeout,jdbcType=VARCHAR},
+      </if>
+      <if test="ifHandleTimeout != null">
+        #{ifHandleTimeout,jdbcType=VARCHAR},
+      </if>
+      <if test="alermLevel != null">
+        #{alermLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="handleGroup != null">
+        #{handleGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="handleGroupAreaOrder != null">
+        #{handleGroupAreaOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="handlePerson != null">
+        #{handlePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="handleTime != null">
+        #{handleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completePerson != null">
+        #{completePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="completeTime != null">
+        #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyPerson != null">
+        #{applyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null">
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyTimeNow != null">
+        #{applyTimeNow,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="finalReply != null">
+        #{finalReply,jdbcType=VARCHAR},
+      </if>
+      <if test="receivePerson != null">
+        #{receivePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveTime != null">
+        #{receiveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="makeUp != null">
+        #{makeUp,jdbcType=VARCHAR},
+      </if>
+      <if test="tablenum != null">
+        #{tablenum,jdbcType=VARCHAR},
+      </if>
+      <if test="questionflag != null">
+        #{questionflag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="geneator.PerformanceWorkDto">
+    update t_performance_work
+    <set>
+      <if test="occurrenceTime != null">
+        occurrence_time = #{occurrenceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="monitorItemName != null">
+        monitor_item_name = #{monitorItemName,jdbcType=VARCHAR},
+      </if>
+      <if test="currentValue != null">
+        current_value = #{currentValue,jdbcType=VARCHAR},
+      </if>
+      <if test="bscid != null">
+        bscid = #{bscid,jdbcType=VARCHAR},
+      </if>
+      <if test="cellid != null">
+        cellid = #{cellid,jdbcType=VARCHAR},
+      </if>
+      <if test="stationName != null">
+        station_name = #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="boutiqueLevel != null">
+        boutique_level = #{boutiqueLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="limitTimes != null">
+        limit_times = #{limitTimes,jdbcType=VARCHAR},
+      </if>
+      <if test="maintainCompany != null">
+        maintain_company = #{maintainCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="securityTasks != null">
+        security_tasks = #{securityTasks,jdbcType=VARCHAR},
+      </if>
+      <if test="dataModification != null">
+        data_modification = #{dataModification,jdbcType=VARCHAR},
+      </if>
+      <if test="belongArea != null">
+        belong_area = #{belongArea,jdbcType=VARCHAR},
+      </if>
+      <if test="timeoutMonitor != null">
+        timeout_monitor = #{timeoutMonitor,jdbcType=VARCHAR},
+      </if>
+      <if test="areaReceivedTime != null">
+        area_received_time = #{areaReceivedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="emosOrderNumber != null">
+        emos_order_number = #{emosOrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="overtimeTime != null">
+        overtime_time = #{overtimeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="equipmentType != null">
+        equipment_type = #{equipmentType,jdbcType=VARCHAR},
+      </if>
+      <if test="maintainOrNo != null">
+        maintain_or_no = #{maintainOrNo,jdbcType=VARCHAR},
+      </if>
+      <if test="trackAreaCode != null">
+        track_area_code = #{trackAreaCode,jdbcType=INTEGER},
+      </if>
+      <if test="reasons != null">
+        reasons = #{reasons,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="handleInfo != null">
+        handle_info = #{handleInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="monitorType != null">
+        monitor_type = #{monitorType,jdbcType=INTEGER},
+      </if>
+      <if test="monitorContent != null">
+        monitor_content = #{monitorContent,jdbcType=VARCHAR},
+      </if>
+      <if test="monitorValue != null">
+        monitor_value = #{monitorValue,jdbcType=VARCHAR},
+      </if>
+      <if test="ifSendOrderTimeout != null">
+        if_send_order_timeout = #{ifSendOrderTimeout,jdbcType=VARCHAR},
+      </if>
+      <if test="ifHandleTimeout != null">
+        if_handle_timeout = #{ifHandleTimeout,jdbcType=VARCHAR},
+      </if>
+      <if test="alermLevel != null">
+        alerm_level = #{alermLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="handleGroup != null">
+        handle_group = #{handleGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="handleGroupAreaOrder != null">
+        handle_group_area_order = #{handleGroupAreaOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="handlePerson != null">
+        handle_person = #{handlePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="handleTime != null">
+        handle_time = #{handleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completePerson != null">
+        complete_person = #{completePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="completeTime != null">
+        complete_time = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyPerson != null">
+        apply_person = #{applyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null">
+        apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyTimeNow != null">
+        apply_time_now = #{applyTimeNow,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="finalReply != null">
+        final_reply = #{finalReply,jdbcType=VARCHAR},
+      </if>
+      <if test="receivePerson != null">
+        receive_person = #{receivePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveTime != null">
+        receive_time = #{receiveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="makeUp != null">
+        make_up = #{makeUp,jdbcType=VARCHAR},
+      </if>
+      <if test="tablenum != null">
+        tablenum = #{tablenum,jdbcType=VARCHAR},
+      </if>
+      <if test="questionflag != null">
+        questionflag = #{questionflag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where alarm_id = #{alarmId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="geneator.PerformanceWorkDto">
+    update t_performance_work
+    set occurrence_time = #{occurrenceTime,jdbcType=TIMESTAMP},
+      monitor_item_name = #{monitorItemName,jdbcType=VARCHAR},
+      current_value = #{currentValue,jdbcType=VARCHAR},
+      bscid = #{bscid,jdbcType=VARCHAR},
+      cellid = #{cellid,jdbcType=VARCHAR},
+      station_name = #{stationName,jdbcType=VARCHAR},
+      boutique_level = #{boutiqueLevel,jdbcType=VARCHAR},
+      limit_times = #{limitTimes,jdbcType=VARCHAR},
+      maintain_company = #{maintainCompany,jdbcType=VARCHAR},
+      security_tasks = #{securityTasks,jdbcType=VARCHAR},
+      data_modification = #{dataModification,jdbcType=VARCHAR},
+      belong_area = #{belongArea,jdbcType=VARCHAR},
+      timeout_monitor = #{timeoutMonitor,jdbcType=VARCHAR},
+      area_received_time = #{areaReceivedTime,jdbcType=TIMESTAMP},
+      emos_order_number = #{emosOrderNumber,jdbcType=VARCHAR},
+      overtime_time = #{overtimeTime,jdbcType=TIMESTAMP},
+      equipment_type = #{equipmentType,jdbcType=VARCHAR},
+      maintain_or_no = #{maintainOrNo,jdbcType=VARCHAR},
+      track_area_code = #{trackAreaCode,jdbcType=INTEGER},
+      reasons = #{reasons,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      handle_info = #{handleInfo,jdbcType=VARCHAR},
+      monitor_type = #{monitorType,jdbcType=INTEGER},
+      monitor_content = #{monitorContent,jdbcType=VARCHAR},
+      monitor_value = #{monitorValue,jdbcType=VARCHAR},
+      if_send_order_timeout = #{ifSendOrderTimeout,jdbcType=VARCHAR},
+      if_handle_timeout = #{ifHandleTimeout,jdbcType=VARCHAR},
+      alerm_level = #{alermLevel,jdbcType=VARCHAR},
+      handle_group = #{handleGroup,jdbcType=VARCHAR},
+      handle_group_area_order = #{handleGroupAreaOrder,jdbcType=VARCHAR},
+      handle_person = #{handlePerson,jdbcType=VARCHAR},
+      handle_time = #{handleTime,jdbcType=TIMESTAMP},
+      complete_person = #{completePerson,jdbcType=VARCHAR},
+      complete_time = #{completeTime,jdbcType=TIMESTAMP},
+      apply_person = #{applyPerson,jdbcType=VARCHAR},
+      apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      apply_time_now = #{applyTimeNow,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=VARCHAR},
+      final_reply = #{finalReply,jdbcType=VARCHAR},
+      receive_person = #{receivePerson,jdbcType=VARCHAR},
+      receive_time = #{receiveTime,jdbcType=VARCHAR},
+      make_up = #{makeUp,jdbcType=VARCHAR},
+      tablenum = #{tablenum,jdbcType=VARCHAR},
+      questionflag = #{questionflag,jdbcType=INTEGER}
+    where alarm_id = #{alarmId,jdbcType=INTEGER}
+  </update>
+</mapper>

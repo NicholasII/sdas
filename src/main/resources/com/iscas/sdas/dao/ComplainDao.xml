@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iscas.sdas.dao.ComplainDao">
+	<select id="getlist" resultType="com.iscas.sdas.dto.ComplainDto">
+		SELECT time,phone_number
+		,cellname ,COUNT(*) as countnum FROM(
+		SELECT a.phone_number,a.record_time as time,a.live_cellname1 as cellname
+		FROM
+		t_complaint_residentarea a
+		WHERE a.record_time LIKE
+		&apos;%2017-08-01%&apos;
+		union
+		SELECT b.phone_number,b.record_time as time ,b.live_cellname2 as cellname
+		FROM t_complaint_residentarea b
+		WHERE b.record_time LIKE &apos;%2017-08-01%&apos;
+		union
+		SELECT c.phone_number,c.record_time as time ,c.live_cellname3 as cellname
+		FROM t_complaint_residentarea c
+		WHERE c.record_time LIKE
+		&apos;%2017-08-01%&apos;
+		)t WHERE cellname !='' GROUP BY cellname ORDER
+		BY countnum DESC;
+	</select>
+	<select id="getcelllist" resultType="com.iscas.sdas.dto.CellComplainDto">
+	    <bind name="cellname" value="'%'+ _parameter +'%'"/>
+		SELECT record_time,phone_number,live_cellname1,live_cellname2,live_cellname3
+		FROM t_complaint_residentarea WHERE
+		live_cellname1 LIKE #{cellname} OR
+		live_cellname2 LIKE #{cellname} OR
+		live_cellname3 LIKE #{cellname}
+		GROUP BY phone_number;
+	</select>
+	<select id="getalllist" resultType="com.iscas.sdas.dto.CellComplainDto">
+		SELECT record_time,phone_number,live_cellname1,live_cellname2,live_cellname3
+		FROM t_complaint_residentarea GROUP BY phone_number LIMIT 1000;
+	</select>
+	
+	
+	<select id="getfocuslist" resultType="com.iscas.sdas.dto.CellComplainDto">
+	    <bind name="cellname" value="'%'+ _parameter +'%'"/>
+		SELECT record_time,phone_number,live_cellname1,live_cellname2,live_cellname3 FROM(
+		SELECT phone_number,record_time,live_cellname1,live_cellname2,live_cellname3
+		FROM
+		t_complaint_residentarea 
+		WHERE live_cellname1 LIKE #{cellname} OR live_cellname2 LIKE #{cellname} OR live_cellname3 LIKE #{cellname})t  
+		WHERE record_time LIKE &apos;%2017-08-01%&apos;
+	</select>
+	
+</mapper>

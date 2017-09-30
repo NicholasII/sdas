@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iscas.sdas.dao.work.CapacityWorkDao">
+	<select id="getlist" parameterType="com.iscas.sdas.dto.work.CapacityWorkDto" resultType="com.iscas.sdas.dto.work.CapacityWorkDto">
+		select
+		occurrence_time,cellid,boutique_level,limit_times,belong_area,reasons,
+		monitor_content,monitor_value,alerm_level,complete_time
+		from
+		t_performance_work
+		<where>
+			<if test="occurrence_time != null">
+				occurrence_time like #{occurrence_time}
+			</if>
+			<if test="cellid != null">
+				and cellid like #{cellid}
+			</if>
+			<if test="belong_area != null">
+				and belong_area like #{belong_area}
+			</if>
+			<if test="monitor_content != null">
+				and monitor_content like #{monitor_content}
+			</if>
+		</where>
+		limit 1000
+	</select>
+</mapper>

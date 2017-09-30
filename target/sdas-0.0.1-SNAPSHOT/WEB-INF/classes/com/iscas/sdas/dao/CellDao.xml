@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iscas.sdas.dao.cell.CellDao">
+	<select id="getcells" resultType="com.iscas.sdas.dto.cell.CellDto">
+	    
+		select
+		e_utrancell,network_name,used_band,cover_scene,station_name,group_type
+		from
+		table_cell_base_station, t_groupBaseInfo where
+		table_cell_base_station.network_name= t_groupBaseInfo.cell_code 
+		<if test="e_utrancell != null">
+		    and table_cell_base_station.e_utrancell like #{e_utrancell}
+		</if>
+		<if test="cover_scene != null">
+		    and table_cell_base_station.cover_scene like #{cover_scene}
+		</if>
+		<if test="group_type != null">
+		    and t_groupBaseInfo.group_type like #{group_type}
+		</if>
+		limit 100
+	</select>
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iscas.sdas.dao.TableInfoDtoMapper">
+  <resultMap id="BaseResultMap" type="com.iscas.sdas.dto.TableInfoDto">
+    <result column="table_name" jdbcType="VARCHAR" property="tableName" />
+    <result column="column_name" jdbcType="VARCHAR" property="columnName" />
+    <result column="ordinal_position" jdbcType="VARCHAR" property="ordinalPosition" />
+    <result column="column_type" jdbcType="VARCHAR" property="columnType" />
+    <result column="column_comment" jdbcType="VARCHAR" property="columnComment" />
+    <result column="ui_usedflag" jdbcType="INTEGER" property="uiUsedflag" />
+  </resultMap>
+  <insert id="insert" parameterType="geneator.TableInfoDto">
+    insert into t_table_info (table_name, column_name, ordinal_position, 
+      column_type, column_comment, ui_usedflag
+      )
+    values (#{tableName,jdbcType=VARCHAR}, #{columnName,jdbcType=VARCHAR}, #{ordinalPosition,jdbcType=VARCHAR}, 
+      #{columnType,jdbcType=VARCHAR}, #{columnComment,jdbcType=VARCHAR}, #{uiUsedflag,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="geneator.TableInfoDto">
+    insert into t_table_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tableName != null">
+        table_name,
+      </if>
+      <if test="columnName != null">
+        column_name,
+      </if>
+      <if test="ordinalPosition != null">
+        ordinal_position,
+      </if>
+      <if test="columnType != null">
+        column_type,
+      </if>
+      <if test="columnComment != null">
+        column_comment,
+      </if>
+      <if test="uiUsedflag != null">
+        ui_usedflag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tableName != null">
+        #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="columnName != null">
+        #{columnName,jdbcType=VARCHAR},
+      </if>
+      <if test="ordinalPosition != null">
+        #{ordinalPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="columnType != null">
+        #{columnType,jdbcType=VARCHAR},
+      </if>
+      <if test="columnComment != null">
+        #{columnComment,jdbcType=VARCHAR},
+      </if>
+      <if test="uiUsedflag != null">
+        #{uiUsedflag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="select" resultMap="BaseResultMap">
+  	select * from t_table_info where table_name = #{0} and column_name = #{1}
+  </select>
+</mapper>

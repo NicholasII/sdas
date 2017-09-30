@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iscas.sdas.dao.MRdataMapper">
+  <resultMap id="BaseResultMap" type="com.iscas.sdas.dto.MRdata">
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="time" jdbcType="DATE" property="time" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="a_net_city" jdbcType="VARCHAR" property="aNetCity" />
+    <result column="a_net_id" jdbcType="VARCHAR" property="aNetId" />
+    <result column="b_net_city" jdbcType="VARCHAR" property="bNetCity" />
+    <result column="b_net_id" jdbcType="VARCHAR" property="bNetId" />
+    <result column="c_net_city" jdbcType="VARCHAR" property="cNetCity" />
+    <result column="c_net_id" jdbcType="VARCHAR" property="cNetId" />
+    <result column="cgi" jdbcType="VARCHAR" property="cgi" />
+    <result column="cell_name" jdbcType="VARCHAR" property="cellName" />
+    <result column="cover_scene" jdbcType="VARCHAR" property="coverScene" />
+    <result column="used_band" jdbcType="VARCHAR" property="usedBand" />
+    <result column="center_band" jdbcType="INTEGER" property="centerBand" />
+    <result column="mrs_num" jdbcType="INTEGER" property="mrsNum" />
+    <result column="mrs_greater_105DBM_num" jdbcType="INTEGER" property="mrsGreater105dbmNum" />
+    <result column="mrs_greater_110DBM_num" jdbcType="INTEGER" property="mrsGreater110dbmNum" />
+    <result column="mrs_greater_105DBM_cover" jdbcType="INTEGER" property="mrsGreater105dbmCover" />
+    <result column="mrs_greater_110DBM_cover" jdbcType="INTEGER" property="mrsGreater110dbmCover" />
+    <result column="mro_num" jdbcType="INTEGER" property="mroNum" />
+    <result column="mro_greater_105DBM_num" jdbcType="INTEGER" property="mroGreater105dbmNum" />
+    <result column="mro_greater_110DBM_num" jdbcType="INTEGER" property="mroGreater110dbmNum" />
+    <result column="mro_greater_105DBM_cover" jdbcType="DOUBLE" property="mroGreater105dbmCover" />
+    <result column="mro_greater_110DBM_cover" jdbcType="DOUBLE" property="mroGreater110dbmCover" />
+    <result column="DB6_inter_3_num" jdbcType="INTEGER" property="db6Inter3Num" />
+    <result column="DB6_inter_3_ratio" jdbcType="VARCHAR" property="db6Inter3Ratio" />
+    <result column="DB6_inter_3_num_same" jdbcType="INTEGER" property="db6Inter3NumSame" />
+    <result column="DB6_inter_3_ratio_same" jdbcType="VARCHAR" property="db6Inter3RatioSame" />
+    <result column="DB6_inter_1_num_same" jdbcType="INTEGER" property="db6Inter1NumSame" />
+    <result column="DB6_inter_1_ratio_same" jdbcType="VARCHAR" property="db6Inter1RatioSame" />
+    <result column="mro" jdbcType="VARCHAR" property="mro" />
+    <result column="mrs" jdbcType="VARCHAR" property="mrs" />
+    <result column="hight_cover_cell_num" jdbcType="VARCHAR" property="hightCoverCellNum" />
+    <result column="cellhight_cover_cell_num" jdbcType="VARCHAR" property="cellhightCoverCellNum" />
+    <result column="same_hight_cover_cell_num" jdbcType="VARCHAR" property="sameHightCoverCellNum" />
+    <result column="uplink_percentage" jdbcType="VARCHAR" property="uplinkPercentage" />
+    <result column="sinr_aver" jdbcType="VARCHAR" property="sinrAver" />
+    <result column="ue_aver" jdbcType="VARCHAR" property="ueAver" />
+    <result column="mix_live_coverage" jdbcType="VARCHAR" property="mixLiveCoverage" />
+    <result column="Live_coverage_same" jdbcType="VARCHAR" property="liveCoverageSame" />
+    <result column="overlapping_coverage_15" jdbcType="VARCHAR" property="overlappingCoverage15" />
+    <result column="overlapping_coverage_10" jdbcType="VARCHAR" property="overlappingCoverage10" />
+    <result column="overlapping_coverage_5" jdbcType="VARCHAR" property="overlappingCoverage5" />
+    <result column="mrs_20" jdbcType="VARCHAR" property="mrs20" />
+    <result column="mrs_10" jdbcType="VARCHAR" property="mrs10" />
+    <result column="mro_20" jdbcType="VARCHAR" property="mro20" />
+    <result column="mro_10" jdbcType="VARCHAR" property="mro10" />
+    <result column="Live_coverage" jdbcType="VARCHAR" property="liveCoverage" />
+    <result column="Live_coverage_16" jdbcType="VARCHAR" property="liveCoverage16" />
+    <result column="Live_coverage_hight" jdbcType="VARCHAR" property="liveCoverageHight" />
+    <result column="High_cell_CI1_count" jdbcType="VARCHAR" property="highCellCi1Count" />
+    <result column="Uplink_QCI1_num" jdbcType="VARCHAR" property="uplinkQci1Num" />
+    <result column="Uplink_QCI1_packet" jdbcType="VARCHAR" property="uplinkQci1Packet" />
+    <result column="Uplink_cell_name" jdbcType="VARCHAR" property="uplinkCellName" />
+    <result column="downlink_QCI1_count" jdbcType="VARCHAR" property="downlinkQci1Count" />
+    <result column="downlink_QCI1_num" jdbcType="VARCHAR" property="downlinkQci1Num" />
+    <result column="downlink_QCI1" jdbcType="VARCHAR" property="downlinkQci1" />
+    <result column="downlink_QCI1_cellname" jdbcType="VARCHAR" property="downlinkQci1Cellname" />
+  </resultMap>
+  <insert id="insert" parameterType="com.iscas.sdas.dto.MRdata">
+    insert into t_lte_mr_detail (city, time, company, 
+      a_net_city, a_net_id, b_net_city, 
+      b_net_id, c_net_city, c_net_id, 
+      cgi, cell_name, cover_scene, 
+      used_band, center_band, mrs_num, 
+      mrs_greater_105DBM_num, mrs_greater_110DBM_num, 
+      mrs_greater_105DBM_cover, mrs_greater_110DBM_cover, 
+      mro_num, mro_greater_105DBM_num, mro_greater_110DBM_num, 
+      mro_greater_105DBM_cover, mro_greater_110DBM_cover, 
+      DB6_inter_3_num, DB6_inter_3_ratio, DB6_inter_3_num_same, 
+      DB6_inter_3_ratio_same, DB6_inter_1_num_same, DB6_inter_1_ratio_same, 
+      mro, mrs, hight_cover_cell_num, 
+      cellhight_cover_cell_num, same_hight_cover_cell_num, 
+      uplink_percentage, sinr_aver, ue_aver, 
+      mix_live_coverage, Live_coverage_same, overlapping_coverage_15, 
+      overlapping_coverage_10, overlapping_coverage_5, 
+      mrs_20, mrs_10, mro_20, 
+      mro_10, Live_coverage, Live_coverage_16, 
+      Live_coverage_hight, High_cell_CI1_count, Uplink_QCI1_num, 
+      Uplink_QCI1_packet, Uplink_cell_name, downlink_QCI1_count, 
+      downlink_QCI1_num, downlink_QCI1, downlink_QCI1_cellname
+      )
+    values (#{city,jdbcType=VARCHAR}, #{time,jdbcType=DATE}, #{company,jdbcType=VARCHAR}, 
+      #{aNetCity,jdbcType=VARCHAR}, #{aNetId,jdbcType=VARCHAR}, #{bNetCity,jdbcType=VARCHAR}, 
+      #{bNetId,jdbcType=VARCHAR}, #{cNetCity,jdbcType=VARCHAR}, #{cNetId,jdbcType=VARCHAR}, 
+      #{cgi,jdbcType=VARCHAR}, #{cellName,jdbcType=VARCHAR}, #{coverScene,jdbcType=VARCHAR}, 
+      #{usedBand,jdbcType=VARCHAR}, #{centerBand,jdbcType=INTEGER}, #{mrsNum,jdbcType=INTEGER}, 
+      #{mrsGreater105dbmNum,jdbcType=INTEGER}, #{mrsGreater110dbmNum,jdbcType=INTEGER}, 
+      #{mrsGreater105dbmCover,jdbcType=INTEGER}, #{mrsGreater110dbmCover,jdbcType=INTEGER}, 
+      #{mroNum,jdbcType=INTEGER}, #{mroGreater105dbmNum,jdbcType=INTEGER}, #{mroGreater110dbmNum,jdbcType=INTEGER}, 
+      #{mroGreater105dbmCover,jdbcType=DOUBLE}, #{mroGreater110dbmCover,jdbcType=DOUBLE}, 
+      #{db6Inter3Num,jdbcType=INTEGER}, #{db6Inter3Ratio,jdbcType=VARCHAR}, #{db6Inter3NumSame,jdbcType=INTEGER}, 
+      #{db6Inter3RatioSame,jdbcType=VARCHAR}, #{db6Inter1NumSame,jdbcType=INTEGER}, #{db6Inter1RatioSame,jdbcType=VARCHAR}, 
+      #{mro,jdbcType=VARCHAR}, #{mrs,jdbcType=VARCHAR}, #{hightCoverCellNum,jdbcType=VARCHAR}, 
+      #{cellhightCoverCellNum,jdbcType=VARCHAR}, #{sameHightCoverCellNum,jdbcType=VARCHAR}, 
+      #{uplinkPercentage,jdbcType=VARCHAR}, #{sinrAver,jdbcType=VARCHAR}, #{ueAver,jdbcType=VARCHAR}, 
+      #{mixLiveCoverage,jdbcType=VARCHAR}, #{liveCoverageSame,jdbcType=VARCHAR}, #{overlappingCoverage15,jdbcType=VARCHAR}, 
+      #{overlappingCoverage10,jdbcType=VARCHAR}, #{overlappingCoverage5,jdbcType=VARCHAR}, 
+      #{mrs20,jdbcType=VARCHAR}, #{mrs10,jdbcType=VARCHAR}, #{mro20,jdbcType=VARCHAR}, 
+      #{mro10,jdbcType=VARCHAR}, #{liveCoverage,jdbcType=VARCHAR}, #{liveCoverage16,jdbcType=VARCHAR}, 
+      #{liveCoverageHight,jdbcType=VARCHAR}, #{highCellCi1Count,jdbcType=VARCHAR}, #{uplinkQci1Num,jdbcType=VARCHAR}, 
+      #{uplinkQci1Packet,jdbcType=VARCHAR}, #{uplinkCellName,jdbcType=VARCHAR}, #{downlinkQci1Count,jdbcType=VARCHAR}, 
+      #{downlinkQci1Num,jdbcType=VARCHAR}, #{downlinkQci1,jdbcType=VARCHAR}, #{downlinkQci1Cellname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.iscas.sdas.dto.MRdata">
+    insert into t_lte_mr_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="city != null">
+        city,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="aNetCity != null">
+        a_net_city,
+      </if>
+      <if test="aNetId != null">
+        a_net_id,
+      </if>
+      <if test="bNetCity != null">
+        b_net_city,
+      </if>
+      <if test="bNetId != null">
+        b_net_id,
+      </if>
+      <if test="cNetCity != null">
+        c_net_city,
+      </if>
+      <if test="cNetId != null">
+        c_net_id,
+      </if>
+      <if test="cgi != null">
+        cgi,
+      </if>
+      <if test="cellName != null">
+        cell_name,
+      </if>
+      <if test="coverScene != null">
+        cover_scene,
+      </if>
+      <if test="usedBand != null">
+        used_band,
+      </if>
+      <if test="centerBand != null">
+        center_band,
+      </if>
+      <if test="mrsNum != null">
+        mrs_num,
+      </if>
+      <if test="mrsGreater105dbmNum != null">
+        mrs_greater_105DBM_num,
+      </if>
+      <if test="mrsGreater110dbmNum != null">
+        mrs_greater_110DBM_num,
+      </if>
+      <if test="mrsGreater105dbmCover != null">
+        mrs_greater_105DBM_cover,
+      </if>
+      <if test="mrsGreater110dbmCover != null">
+        mrs_greater_110DBM_cover,
+      </if>
+      <if test="mroNum != null">
+        mro_num,
+      </if>
+      <if test="mroGreater105dbmNum != null">
+        mro_greater_105DBM_num,
+      </if>
+      <if test="mroGreater110dbmNum != null">
+        mro_greater_110DBM_num,
+      </if>
+      <if test="mroGreater105dbmCover != null">
+        mro_greater_105DBM_cover,
+      </if>
+      <if test="mroGreater110dbmCover != null">
+        mro_greater_110DBM_cover,
+      </if>
+      <if test="db6Inter3Num != null">
+        DB6_inter_3_num,
+      </if>
+      <if test="db6Inter3Ratio != null">
+        DB6_inter_3_ratio,
+      </if>
+      <if test="db6Inter3NumSame != null">
+        DB6_inter_3_num_same,
+      </if>
+      <if test="db6Inter3RatioSame != null">
+        DB6_inter_3_ratio_same,
+      </if>
+      <if test="db6Inter1NumSame != null">
+        DB6_inter_1_num_same,
+      </if>
+      <if test="db6Inter1RatioSame != null">
+        DB6_inter_1_ratio_same,
+      </if>
+      <if test="mro != null">
+        mro,
+      </if>
+      <if test="mrs != null">
+        mrs,
+      </if>
+      <if test="hightCoverCellNum != null">
+        hight_cover_cell_num,
+      </if>
+      <if test="cellhightCoverCellNum != null">
+        cellhight_cover_cell_num,
+      </if>
+      <if test="sameHightCoverCellNum != null">
+        same_hight_cover_cell_num,
+      </if>
+      <if test="uplinkPercentage != null">
+        uplink_percentage,
+      </if>
+      <if test="sinrAver != null">
+        sinr_aver,
+      </if>
+      <if test="ueAver != null">
+        ue_aver,
+      </if>
+      <if test="mixLiveCoverage != null">
+        mix_live_coverage,
+      </if>
+      <if test="liveCoverageSame != null">
+        Live_coverage_same,
+      </if>
+      <if test="overlappingCoverage15 != null">
+        overlapping_coverage_15,
+      </if>
+      <if test="overlappingCoverage10 != null">
+        overlapping_coverage_10,
+      </if>
+      <if test="overlappingCoverage5 != null">
+        overlapping_coverage_5,
+      </if>
+      <if test="mrs20 != null">
+        mrs_20,
+      </if>
+      <if test="mrs10 != null">
+        mrs_10,
+      </if>
+      <if test="mro20 != null">
+        mro_20,
+      </if>
+      <if test="mro10 != null">
+        mro_10,
+      </if>
+      <if test="liveCoverage != null">
+        Live_coverage,
+      </if>
+      <if test="liveCoverage16 != null">
+        Live_coverage_16,
+      </if>
+      <if test="liveCoverageHight != null">
+        Live_coverage_hight,
+      </if>
+      <if test="highCellCi1Count != null">
+        High_cell_CI1_count,
+      </if>
+      <if test="uplinkQci1Num != null">
+        Uplink_QCI1_num,
+      </if>
+      <if test="uplinkQci1Packet != null">
+        Uplink_QCI1_packet,
+      </if>
+      <if test="uplinkCellName != null">
+        Uplink_cell_name,
+      </if>
+      <if test="downlinkQci1Count != null">
+        downlink_QCI1_count,
+      </if>
+      <if test="downlinkQci1Num != null">
+        downlink_QCI1_num,
+      </if>
+      <if test="downlinkQci1 != null">
+        downlink_QCI1,
+      </if>
+      <if test="downlinkQci1Cellname != null">
+        downlink_QCI1_cellname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=DATE},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="aNetCity != null">
+        #{aNetCity,jdbcType=VARCHAR},
+      </if>
+      <if test="aNetId != null">
+        #{aNetId,jdbcType=VARCHAR},
+      </if>
+      <if test="bNetCity != null">
+        #{bNetCity,jdbcType=VARCHAR},
+      </if>
+      <if test="bNetId != null">
+        #{bNetId,jdbcType=VARCHAR},
+      </if>
+      <if test="cNetCity != null">
+        #{cNetCity,jdbcType=VARCHAR},
+      </if>
+      <if test="cNetId != null">
+        #{cNetId,jdbcType=VARCHAR},
+      </if>
+      <if test="cgi != null">
+        #{cgi,jdbcType=VARCHAR},
+      </if>
+      <if test="cellName != null">
+        #{cellName,jdbcType=VARCHAR},
+      </if>
+      <if test="coverScene != null">
+        #{coverScene,jdbcType=VARCHAR},
+      </if>
+      <if test="usedBand != null">
+        #{usedBand,jdbcType=VARCHAR},
+      </if>
+      <if test="centerBand != null">
+        #{centerBand,jdbcType=INTEGER},
+      </if>
+      <if test="mrsNum != null">
+        #{mrsNum,jdbcType=INTEGER},
+      </if>
+      <if test="mrsGreater105dbmNum != null">
+        #{mrsGreater105dbmNum,jdbcType=INTEGER},
+      </if>
+      <if test="mrsGreater110dbmNum != null">
+        #{mrsGreater110dbmNum,jdbcType=INTEGER},
+      </if>
+      <if test="mrsGreater105dbmCover != null">
+        #{mrsGreater105dbmCover,jdbcType=INTEGER},
+      </if>
+      <if test="mrsGreater110dbmCover != null">
+        #{mrsGreater110dbmCover,jdbcType=INTEGER},
+      </if>
+      <if test="mroNum != null">
+        #{mroNum,jdbcType=INTEGER},
+      </if>
+      <if test="mroGreater105dbmNum != null">
+        #{mroGreater105dbmNum,jdbcType=INTEGER},
+      </if>
+      <if test="mroGreater110dbmNum != null">
+        #{mroGreater110dbmNum,jdbcType=INTEGER},
+      </if>
+      <if test="mroGreater105dbmCover != null">
+        #{mroGreater105dbmCover,jdbcType=DOUBLE},
+      </if>
+      <if test="mroGreater110dbmCover != null">
+        #{mroGreater110dbmCover,jdbcType=DOUBLE},
+      </if>
+      <if test="db6Inter3Num != null">
+        #{db6Inter3Num,jdbcType=INTEGER},
+      </if>
+      <if test="db6Inter3Ratio != null">
+        #{db6Inter3Ratio,jdbcType=VARCHAR},
+      </if>
+      <if test="db6Inter3NumSame != null">
+        #{db6Inter3NumSame,jdbcType=INTEGER},
+      </if>
+      <if test="db6Inter3RatioSame != null">
+        #{db6Inter3RatioSame,jdbcType=VARCHAR},
+      </if>
+      <if test="db6Inter1NumSame != null">
+        #{db6Inter1NumSame,jdbcType=INTEGER},
+      </if>
+      <if test="db6Inter1RatioSame != null">
+        #{db6Inter1RatioSame,jdbcType=VARCHAR},
+      </if>
+      <if test="mro != null">
+        #{mro,jdbcType=VARCHAR},
+      </if>
+      <if test="mrs != null">
+        #{mrs,jdbcType=VARCHAR},
+      </if>
+      <if test="hightCoverCellNum != null">
+        #{hightCoverCellNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cellhightCoverCellNum != null">
+        #{cellhightCoverCellNum,jdbcType=VARCHAR},
+      </if>
+      <if test="sameHightCoverCellNum != null">
+        #{sameHightCoverCellNum,jdbcType=VARCHAR},
+      </if>
+      <if test="uplinkPercentage != null">
+        #{uplinkPercentage,jdbcType=VARCHAR},
+      </if>
+      <if test="sinrAver != null">
+        #{sinrAver,jdbcType=VARCHAR},
+      </if>
+      <if test="ueAver != null">
+        #{ueAver,jdbcType=VARCHAR},
+      </if>
+      <if test="mixLiveCoverage != null">
+        #{mixLiveCoverage,jdbcType=VARCHAR},
+      </if>
+      <if test="liveCoverageSame != null">
+        #{liveCoverageSame,jdbcType=VARCHAR},
+      </if>
+      <if test="overlappingCoverage15 != null">
+        #{overlappingCoverage15,jdbcType=VARCHAR},
+      </if>
+      <if test="overlappingCoverage10 != null">
+        #{overlappingCoverage10,jdbcType=VARCHAR},
+      </if>
+      <if test="overlappingCoverage5 != null">
+        #{overlappingCoverage5,jdbcType=VARCHAR},
+      </if>
+      <if test="mrs20 != null">
+        #{mrs20,jdbcType=VARCHAR},
+      </if>
+      <if test="mrs10 != null">
+        #{mrs10,jdbcType=VARCHAR},
+      </if>
+      <if test="mro20 != null">
+        #{mro20,jdbcType=VARCHAR},
+      </if>
+      <if test="mro10 != null">
+        #{mro10,jdbcType=VARCHAR},
+      </if>
+      <if test="liveCoverage != null">
+        #{liveCoverage,jdbcType=VARCHAR},
+      </if>
+      <if test="liveCoverage16 != null">
+        #{liveCoverage16,jdbcType=VARCHAR},
+      </if>
+      <if test="liveCoverageHight != null">
+        #{liveCoverageHight,jdbcType=VARCHAR},
+      </if>
+      <if test="highCellCi1Count != null">
+        #{highCellCi1Count,jdbcType=VARCHAR},
+      </if>
+      <if test="uplinkQci1Num != null">
+        #{uplinkQci1Num,jdbcType=VARCHAR},
+      </if>
+      <if test="uplinkQci1Packet != null">
+        #{uplinkQci1Packet,jdbcType=VARCHAR},
+      </if>
+      <if test="uplinkCellName != null">
+        #{uplinkCellName,jdbcType=VARCHAR},
+      </if>
+      <if test="downlinkQci1Count != null">
+        #{downlinkQci1Count,jdbcType=VARCHAR},
+      </if>
+      <if test="downlinkQci1Num != null">
+        #{downlinkQci1Num,jdbcType=VARCHAR},
+      </if>
+      <if test="downlinkQci1 != null">
+        #{downlinkQci1,jdbcType=VARCHAR},
+      </if>
+      <if test="downlinkQci1Cellname != null">
+        #{downlinkQci1Cellname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="select" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	SELECT * FROM t_lte_mr_detail WHERE cell_name = #{cellname} ORDER BY time DESC LIMIT 1
+  </select>
+  
+  
+  
+  
+</mapper>

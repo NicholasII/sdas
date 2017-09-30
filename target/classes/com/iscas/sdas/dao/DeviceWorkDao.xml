@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iscas.sdas.dao.work.DeviceWorkDao">
+	<select id="getlist" parameterType="com.iscas.sdas.dto.work.DeviceWorkDto" resultType="com.iscas.sdas.dto.work.DeviceWorkDto">
+		select
+		order_title,build_bill_time,net_alarm_name,net_remove_time,net_alarm_source,cell_name,fault_occus_time,transt_reason
+		from
+		t_equipment_failure_201708
+		<where>
+			<if test="build_bill_time != null">
+				build_bill_time like #{build_bill_time}
+			</if>
+			<if test="fault_occus_time != null">
+				and fault_occus_time like #{fault_occus_time}
+			</if>
+			<if test="order_title != null">
+				and order_title like #{order_title}
+			</if>
+			<if test="cell_name != null">
+				and cell_name like #{cell_name}
+			</if>
+		</where>
+		limit 1000
+	</select>
+</mapper>
