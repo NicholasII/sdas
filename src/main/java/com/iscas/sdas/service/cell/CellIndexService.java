@@ -35,8 +35,8 @@ public class CellIndexService {
 	@Autowired
 	CellDao cellDao;
 	
-	public List<Double[]> generateIndexData(Integer indexid,String cellname){
-		List<Double[]> map = new ArrayList<>();
+	public List<List<Double[]>> generateIndexData(Integer indexid,String cellname){
+		List<List<Double[]>> map = new ArrayList<>();
 		try {
 			BaseIndex cellIndex = cellIndexDao.getOriginIndex(indexid,cellname);
 			if (cellIndex!=null) {
@@ -45,14 +45,43 @@ public class CellIndexService {
 					if (method.getName().contains("getRange")) {	
 						String range = (String)method.invoke(cellIndex, null);						
 						String key = method.getName().substring(method.getName().lastIndexOf("_")+1);
-						Double[] value = getconv(key,range);
+						List<Double[]> value = getconv(key,range);
 						if (value!=null) {
 							map.add(value);
 						}
 					}
 					
 				}
-				return map;
+				int max=0;
+				List<List<Double[]>> result = new ArrayList<>();
+				for (int i = 0; i < map.size(); i++) {
+					List<Double[]> ratios = map.get(i);
+					if (max<ratios.size()) {
+						max=ratios.size();
+					}
+				}
+				for (int i = 0; i < max; i++) {
+					List<Double[]> ratiolist = new ArrayList<>();
+					result.add(ratiolist);
+				}
+				for (int i = 0; i < map.size(); i++) {
+					List<Double[]> ratios = map.get(i);
+					for(int j=0; j<max; j++){
+						if (j<ratios.size()) {
+							result.get(j).add(ratios.get(j));
+						}else {
+							Double[] point = new Double[5];
+							point[0] = ratios.get(0)[0];
+							point[1] = 0.0;
+							point[2] = 0.0;
+							point[3] = 0.0;
+							point[4] = 0.0;
+							result.get(j).add(point);
+						}
+						
+					}
+				}
+				return result;
 			}else {
 				return null;
 			}
@@ -63,8 +92,8 @@ public class CellIndexService {
 	}
 	
 	
-	public List<Double[]> generateGroupIndexData(String grouptype,String indexcode){
-		List<Double[]> map = new ArrayList<>();
+	public List<List<Double[]>> generateGroupIndexData(String grouptype,String indexcode){
+		List<List<Double[]>> map = new ArrayList<>();
 		try {
 			BaseGroupIndex groupIndex = cellDao.getgroupindexcontent(grouptype, indexcode);
 			if (groupIndex!=null) {
@@ -73,14 +102,42 @@ public class CellIndexService {
 					if (method.getName().contains("getRange")) {	
 						String range = (String)method.invoke(groupIndex, null);						
 						String key = method.getName().substring(method.getName().lastIndexOf("_")+1);
-						Double[] value = getconv(key,range);
+						List<Double[]> value = getconv(key,range);
 						if (value!=null) {
-							map.add(value);
+							map.add(value);						
 						}
-					}
-					
+					}				
 				}
-				return map;
+				int max=0;
+				List<List<Double[]>> result = new ArrayList<>();
+				for (int i = 0; i < map.size(); i++) {
+					List<Double[]> ratios = map.get(i);
+					if (max<ratios.size()) {
+						max=ratios.size();
+					}
+				}
+				for (int i = 0; i < max; i++) {
+					List<Double[]> ratiolist = new ArrayList<>();
+					result.add(ratiolist);
+				}
+				for (int i = 0; i < map.size(); i++) {
+					List<Double[]> ratios = map.get(i);
+					for(int j=0; j<max; j++){
+						if (j<ratios.size()) {
+							result.get(j).add(ratios.get(j));
+						}else {
+							Double[] point = new Double[5];
+							point[0] = ratios.get(0)[0];
+							point[1] = 0.0;
+							point[2] = 0.0;
+							point[3] = 0.0;
+							point[4] = 0.0;
+							result.get(j).add(point);
+						}
+						
+					}
+				}
+				return result;
 			}else {
 				return null;
 			}
@@ -89,14 +146,20 @@ public class CellIndexService {
 		}
 		return null;
 	}
-	
-	private Double[] getconv(String key,String content) {
-		Double[] point = new Double[5];
+	/**
+	 * 生成多个簇心
+	 * @param key
+	 * @param content
+	 * @return
+	 */
+	private List<Double[]> getconv(String key,String content) {
+		List<Double[]> result = new ArrayList<>();
+		
 		double temp = Double.valueOf(key);
 		double max,min,pre,last;
 		try {
 			JSONArray array = JSON.parseArray(content);
-			int vaildcount=0,currcount=0;
+			/*int vaildcount=0,currcount=0;
 			for (int i = 0; i < array.size(); i++) {
 				JSONObject obj = array.getJSONObject(i);
 				if (obj.containsKey("is_valid")) {
@@ -105,16 +168,17 @@ public class CellIndexService {
 						vaildcount++;
 					}
 				}
-			}
-			if (vaildcount > 0) {
+			}*/
+			//if (vaildcount > 0) {
 				for (int i = 0; i < array.size(); i++) {
-					JSONObject obj = array.getJSONObject(i);
+					JSONObject obj = array.getJSONObject(i);					
 					if (obj.containsKey("is_valid")) {
 						boolean is_valid = obj.getBoolean("is_valid");
 						if (is_valid) {
-							currcount++;
-							double temp1 = (double)currcount/(vaildcount+1);
-							point[0] =  temp + temp1;
+							//currcount++;
+							//double temp1 = (double)currcount/(vaildcount+1);
+							Double[] point = new Double[5];
+							point[0] =  temp;
 							if (obj.containsKey("max")) {
 								max = obj.getDouble("max");
 								point[4] = max;
@@ -139,26 +203,24 @@ public class CellIndexService {
 							}else {
 								point[2] = 0.0;
 							}
+							result.add(point);
 						}
 					}				
 				}
-			}else {
-				point[0] = temp;
-				point[1] = 0.0;
-				point[2] = 0.0;
-				point[3] = 0.0;
-				point[4] = 0.0;
-			}
-			
-			
-			
-			
+				if (result.size()==0) {
+					Double[] point = new Double[5];
+					point[0] = temp;
+					point[1] = 0.0;
+					point[2] = 0.0;
+					point[3] = 0.0;
+					point[4] = 0.0;
+					result.add(point);
+				}		
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
-		return point;
+		return result;
 	}
 	
 	public List<Double[]> generateRealTimeData(Integer index){

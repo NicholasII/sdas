@@ -11,6 +11,12 @@ var upColor ='#68C5CC';
 var upBorderColor = '#19B7CF';
 var downColor = '#68C5CC';
 var downBorderColor = '#19B7CF';
+var color = ['rgba(104, 197, 204, 0.73)',
+    'rgba(51,51,204, 0.53)', 'rgba(171, 226, 98, 0.62)'
+];
+var borderColor = ['rgb(25, 183, 207)', 'rgb(51,51,204,)',
+    'rgb(163, 222, 84)'
+];
 var echart_option = {
 	    tooltip: {
 	        trigger: 'axis',
@@ -66,58 +72,50 @@ var echart_option = {
 	        }
 	    ],
 	    series: [
-	        {
-	            name: name1,
-	            type: 'candlestick',
-	            data: {},
-	            itemStyle: {
-	                normal: {
-	                    color: upColor,
-	                    color0: downColor,
-	                    borderColor: upBorderColor,
-	                    borderColor0: downBorderColor
-	                }
-	            },	            
-	            markLine: {
-	                symbol: ['none', 'none'],
-	                data: [
-	                    [
-	                        {
-	                            name: 'from lowest to highest',
-	                            type: 'min',
-	                            valueDim: 'lowest',
-	                            symbol: 'circle',
-	                            symbolSize: 10,
-	                            label: {
-	                                normal: {show: false},
-	                                emphasis: {show: false}
-	                            }
-	                        },
-	                        {
-	                            type: 'max',
-	                            valueDim: 'highest',
-	                            symbol: 'circle',
-	                            symbolSize: 10,
-	                            label: {
-	                                normal: {show: false},
-	                                emphasis: {show: false}
-	                            }
-	                        }
-	                    ]
-	                ]
-	            }
-	        }/*,
-	        {
-	            name: name2,
-	            type: 'line',
-	            data: {},
-	            smooth: true,
-	            lineStyle: {
-	                normal: {opacity: 0.5}
-	            }
-	        }*/
+	        
 	    ]
 };
+var serie = {
+                name: name1,
+                type: 'candlestick',
+                data: {},
+                itemStyle: {
+                    normal: {
+                        color: upColor,
+                        color0: downColor,
+                        borderColor: upBorderColor,
+                        borderColor0: downBorderColor
+                    }
+                },              
+                markLine: {
+                    symbol: ['none', 'none'],
+                    data: [
+                        [
+                            {
+                                name: 'from lowest to highest',
+                                type: 'min',
+                                valueDim: 'lowest',
+                                symbol: 'circle',
+                                symbolSize: 10,
+                                label: {
+                                    normal: {show: false},
+                                    emphasis: {show: false}
+                                }
+                            },
+                            {
+                                type: 'max',
+                                valueDim: 'highest',
+                                symbol: 'circle',
+                                symbolSize: 10,
+                                label: {
+                                    normal: {show: false},
+                                    emphasis: {show: false}
+                                }
+                            }
+                        ]
+                    ]
+                }
+            }
 $(function(){
 	$.jgrid.defaults.styleUI = 'Bootstrap';
 	$.ajax({
@@ -539,17 +537,24 @@ function groupindex(cellcode,indexcode) {
 		success:function(data,status){
 			if (data.success) {
 				var scatter = data.rows;
-				var data0 = splitData(scatter);			
-				//var rtdata = calculateMA(data0.values);				
-				echart_option.series[0].data = data0.values; 
-				//echart_option.series[1].data = rtdata;					
+                var series = [];
+                for(var i=0;i<scatter.length;i++){
+                    var temp = splitData(scatter[i]); 
+                    var name = "簇心" +i;
+                    serie.name = name;
+                    serie.data = temp.values;
+                    if(i<3){
+                        serie.itemStyle.normal.color = color[i];
+                        serie.itemStyle.normal.color0 = color[i];
+                        serie.itemStyle.normal.borderColor = borderColor[i];
+                        serie.itemStyle.normal.borderColor0 = borderColor[i];
+                    }                    
+                    series.push(serie);
+                }
+                echart_option.series = series;
 				chart_mb.setOption(echart_option);
-			}else {
-				var data0 = [];			
-				//var rtdata = [];
-				
-				echart_option.series[0].data = data0; 
-				//echart_option.series[1].data = rtdata;	
+			}else {					
+				echart_option.series = series; 
 				chart_mb.setOption(echart_option);
 			}
 		}

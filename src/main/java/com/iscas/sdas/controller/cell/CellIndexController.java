@@ -30,7 +30,11 @@ import com.iscas.sdas.util.Constraints;
 public class CellIndexController {
 	@Autowired
 	CellIndexService cellIndexService;
-	
+	/**
+	 * 小区模型
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/index")
 	@ResponseBody
 	public ModelMap cellindex(HttpServletRequest request){
@@ -40,7 +44,7 @@ public class CellIndexController {
 		if (!CommonUntils.isempty(str_index)&&!CommonUntils.isempty(cellname)) {
 			Integer indexid = Integer.parseInt(str_index);
 			try {
-				List<Double[]> hosdata = cellIndexService.generateIndexData(indexid,cellname);
+				List<List<Double[]>> hosdata = cellIndexService.generateIndexData(indexid,cellname);
 				List<Double[]> realdata = cellIndexService.generateRealTimeData(indexid);
 				if (hosdata!=null) {
 					map.addAttribute(Constraints.RESULT_ROW,hosdata);	
@@ -81,7 +85,11 @@ public class CellIndexController {
 		
 		return map;
 	}
-	
+	/**
+	 * 小组模型
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/groupindexcontent")
 	@ResponseBody
 	public ModelMap groupindex(HttpServletRequest request){
@@ -90,7 +98,7 @@ public class CellIndexController {
 		String indexid = request.getParameter("indexid");
 		if (!CommonUntils.isempty(grouptype)&&!CommonUntils.isempty(indexid)) {
 			try {
-				List<Double[]> result = cellIndexService.generateGroupIndexData(grouptype, indexid);
+				List<List<Double[]>> result = cellIndexService.generateGroupIndexData(grouptype, indexid);
 				if (result!=null) {
 					map.addAttribute(Constraints.RESULT_ROW,result);	
 					map.addAttribute(Constraints.RESULT_SUCCESS, true);	
