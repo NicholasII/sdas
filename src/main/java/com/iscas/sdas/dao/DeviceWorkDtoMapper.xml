@@ -1,0 +1,1060 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iscas.sdas.dao.DeviceWorkDtoMapper">
+  <resultMap id="BaseResultMap" type="com.iscas.sdas.dto.DeviceWorkDto">
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="order_state" jdbcType="VARCHAR" property="orderState" />
+    <result column="order_title" jdbcType="VARCHAR" property="orderTitle" />
+    <result column="order_creat_person" jdbcType="VARCHAR" property="orderCreatPerson" />
+    <result column="order_creat_person_part" jdbcType="VARCHAR" property="orderCreatPersonPart" />
+    <result column="build_bill_time" jdbcType="TIMESTAMP" property="buildBillTime" />
+    <result column="net_alarm_id" jdbcType="VARCHAR" property="netAlarmId" />
+    <result column="net_alarm_name" jdbcType="VARCHAR" property="netAlarmName" />
+    <result column="net_remove_time" jdbcType="TIMESTAMP" property="netRemoveTime" />
+    <result column="net_alarm_source" jdbcType="VARCHAR" property="netAlarmSource" />
+    <result column="net_alarm_serialnum" jdbcType="VARCHAR" property="netAlarmSerialnum" />
+    <result column="pre_treated_Identification" jdbcType="VARCHAR" property="preTreatedIdentification" />
+    <result column="automatic_dispatch_ident" jdbcType="VARCHAR" property="automaticDispatchIdent" />
+    <result column="part_accept_ident" jdbcType="VARCHAR" property="partAcceptIdent" />
+    <result column="submit_maintenance_flag" jdbcType="VARCHAR" property="submitMaintenanceFlag" />
+    <result column="device_maintenance_company" jdbcType="VARCHAR" property="deviceMaintenanceCompany" />
+    <result column="line_maintenance_company" jdbcType="VARCHAR" property="lineMaintenanceCompany" />
+    <result column="alarm_logic_type" jdbcType="VARCHAR" property="alarmLogicType" />
+    <result column="alarm_logic_child_type" jdbcType="VARCHAR" property="alarmLogicChildType" />
+    <result column="alarm_type" jdbcType="VARCHAR" property="alarmType" />
+    <result column="cell_name" jdbcType="VARCHAR" property="cellName" />
+    <result column="alarm_object" jdbcType="VARCHAR" property="alarmObject" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="alarm_relation_ident" jdbcType="VARCHAR" property="alarmRelationIdent" />
+    <result column="child_alarm_count" jdbcType="INTEGER" property="childAlarmCount" />
+    <result column="net_alarm_level" jdbcType="VARCHAR" property="netAlarmLevel" />
+    <result column="distribute_leaflets_mode" jdbcType="VARCHAR" property="distributeLeafletsMode" />
+    <result column="fault_device_company" jdbcType="VARCHAR" property="faultDeviceCompany" />
+    <result column="order_accept_time" jdbcType="VARCHAR" property="orderAcceptTime" />
+    <result column="order_accept_long" jdbcType="VARCHAR" property="orderAcceptLong" />
+    <result column="t1_process_long" jdbcType="VARCHAR" property="t1ProcessLong" />
+    <result column="t2_process_long" jdbcType="VARCHAR" property="t2ProcessLong" />
+    <result column="net_type_class_one" jdbcType="VARCHAR" property="netTypeClassOne" />
+    <result column="net_type_class_two" jdbcType="VARCHAR" property="netTypeClassTwo" />
+    <result column="net_type_class_three" jdbcType="VARCHAR" property="netTypeClassThree" />
+    <result column="fault_occus_time" jdbcType="TIMESTAMP" property="faultOccusTime" />
+    <result column="fault_find_mode" jdbcType="VARCHAR" property="faultFindMode" />
+    <result column="fault_find_time" jdbcType="VARCHAR" property="faultFindTime" />
+    <result column="fault_occus_city" jdbcType="VARCHAR" property="faultOccusCity" />
+    <result column="fault_handle_city" jdbcType="VARCHAR" property="faultHandleCity" />
+    <result column="fault_critical_flag" jdbcType="VARCHAR" property="faultCriticalFlag" />
+    <result column="t1_accept_time" jdbcType="VARCHAR" property="t1AcceptTime" />
+    <result column="t1_transt_object" jdbcType="VARCHAR" property="t1TranstObject" />
+    <result column="t1_transt_suggestion" jdbcType="VARCHAR" property="t1TranstSuggestion" />
+    <result column="t1_transt_persion" jdbcType="VARCHAR" property="t1TranstPersion" />
+    <result column="t1_transt_person_part" jdbcType="VARCHAR" property="t1TranstPersonPart" />
+    <result column="t1_transt_oper_time" jdbcType="VARCHAR" property="t1TranstOperTime" />
+    <result column="t2_accept_person" jdbcType="VARCHAR" property="t2AcceptPerson" />
+    <result column="t2_accept_time" jdbcType="VARCHAR" property="t2AcceptTime" />
+    <result column="transt_reason" jdbcType="VARCHAR" property="transtReason" />
+    <result column="requirement_complete_time" jdbcType="VARCHAR" property="requirementCompleteTime" />
+    <result column="task_accept_time" jdbcType="VARCHAR" property="taskAcceptTime" />
+    <result column="task_assign_person" jdbcType="VARCHAR" property="taskAssignPerson" />
+    <result column="task_assign_person_part" jdbcType="VARCHAR" property="taskAssignPersonPart" />
+    <result column="task_assign_opterat_time" jdbcType="VARCHAR" property="taskAssignOpteratTime" />
+    <result column="work_recover_time" jdbcType="VARCHAR" property="workRecoverTime" />
+    <result column="Influence_long" jdbcType="VARCHAR" property="influenceLong" />
+    <result column="return_reason" jdbcType="VARCHAR" property="returnReason" />
+    <result column="task_reback_person" jdbcType="VARCHAR" property="taskRebackPerson" />
+    <result column="task_reback_person_part" jdbcType="VARCHAR" property="taskRebackPersonPart" />
+    <result column="task_reback_time" jdbcType="VARCHAR" property="taskRebackTime" />
+    <result column="
+confirmation_option" jdbcType="VARCHAR" property="
+confirmationOption" />
+    <result column="confirmation_person" jdbcType="VARCHAR" property="confirmationPerson" />
+    <result column="confirmation_person_part" jdbcType="VARCHAR" property="confirmationPersonPart" />
+    <result column="task_confirm_time" jdbcType="VARCHAR" property="taskConfirmTime" />
+    <result column="assign_reply_fault_name" jdbcType="VARCHAR" property="assignReplyFaultName" />
+    <result column="assign_reply_handle_time" jdbcType="VARCHAR" property="assignReplyHandleTime" />
+    <result column="assign_reply_handle_method" jdbcType="VARCHAR" property="assignReplyHandleMethod" />
+    <result column="assign_reply_solve_time" jdbcType="VARCHAR" property="assignReplySolveTime" />
+    <result column="apply_report_fault_result" jdbcType="VARCHAR" property="applyReportFaultResult" />
+    <result column="apply_report_fault_type" jdbcType="VARCHAR" property="applyReportFaultType" />
+    <result column="apply_settlement_measure" jdbcType="VARCHAR" property="applySettlementMeasure" />
+    <result column="apply_business_flag" jdbcType="VARCHAR" property="applyBusinessFlag" />
+    <result column="apply_person" jdbcType="VARCHAR" property="applyPerson" />
+    <result column="apply_person_part" jdbcType="VARCHAR" property="applyPersonPart" />
+    <result column="apply_time" jdbcType="VARCHAR" property="applyTime" />
+    <result column="apply_fault_eliminate_time" jdbcType="VARCHAR" property="applyFaultEliminateTime" />
+    <result column="warm_time" jdbcType="VARCHAR" property="warmTime" />
+    <result column="process_time" jdbcType="VARCHAR" property="processTime" />
+    <result column="power_start_time" jdbcType="VARCHAR" property="powerStartTime" />
+    <result column="power_end_time" jdbcType="VARCHAR" property="powerEndTime" />
+    <result column="oil_engine_num" jdbcType="VARCHAR" property="oilEngineNum" />
+    <result column="deny_flag" jdbcType="VARCHAR" property="denyFlag" />
+    <result column="confirm_person" jdbcType="VARCHAR" property="confirmPerson" />
+    <result column="confirm_person_part" jdbcType="VARCHAR" property="confirmPersonPart" />
+    <result column="confirm_time" jdbcType="VARCHAR" property="confirmTime" />
+    <result column="deny_valid_flag" jdbcType="VARCHAR" property="denyValidFlag" />
+    <result column="apply_extension_flag" jdbcType="VARCHAR" property="applyExtensionFlag" />
+    <result column="apply_extension_resion" jdbcType="VARCHAR" property="applyExtensionResion" />
+    <result column="expected_resolve_time" jdbcType="VARCHAR" property="expectedResolveTime" />
+    <result column="apply_extension_person" jdbcType="VARCHAR" property="applyExtensionPerson" />
+    <result column="apply_extension_persion_part" jdbcType="VARCHAR" property="applyExtensionPersionPart" />
+    <result column="approval_opinions" jdbcType="VARCHAR" property="approvalOpinions" />
+    <result column="extension_person" jdbcType="VARCHAR" property="extensionPerson" />
+    <result column="stage_reply_response" jdbcType="VARCHAR" property="stageReplyResponse" />
+    <result column="stage_reply_time" jdbcType="VARCHAR" property="stageReplyTime" />
+    <result column="stage_reply_person" jdbcType="VARCHAR" property="stageReplyPerson" />
+    <result column="stage_reply_person_part" jdbcType="VARCHAR" property="stageReplyPersonPart" />
+    <result column="customer_flag" jdbcType="VARCHAR" property="customerFlag" />
+    <result column="customer_type" jdbcType="VARCHAR" property="customerType" />
+    <result column="business_scope" jdbcType="VARCHAR" property="businessScope" />
+    <result column="custome_groupname" jdbcType="VARCHAR" property="customeGroupname" />
+    <result column="custome_groupnum" jdbcType="VARCHAR" property="customeGroupnum" />
+    <result column="business_support_level" jdbcType="VARCHAR" property="businessSupportLevel" />
+    <result column="business_event_impact" jdbcType="VARCHAR" property="businessEventImpact" />
+    <result column="client_device_type" jdbcType="VARCHAR" property="clientDeviceType" />
+    <result column="client_device_company" jdbcType="VARCHAR" property="clientDeviceCompany" />
+    <result column="client_device_model" jdbcType="VARCHAR" property="clientDeviceModel" />
+    <result column="work_order_timeout" jdbcType="VARCHAR" property="workOrderTimeout" />
+    <result column="assign_flag" jdbcType="VARCHAR" property="assignFlag" />
+    <result column="main_order_flag" jdbcType="VARCHAR" property="mainOrderFlag" />
+    <result column="announce_flag" jdbcType="VARCHAR" property="announceFlag" />
+    <result column="announcement_num" jdbcType="VARCHAR" property="announcementNum" />
+    <result column="order_filing_time" jdbcType="VARCHAR" property="orderFilingTime" />
+    <result column="assign_reply_person" jdbcType="VARCHAR" property="assignReplyPerson" />
+    <result column="assign_reply_person_part" jdbcType="VARCHAR" property="assignReplyPersonPart" />
+    <result column="assign_reply_oper_time" jdbcType="VARCHAR" property="assignReplyOperTime" />
+    <result column="pretreatment_advice" jdbcType="VARCHAR" property="pretreatmentAdvice" />
+    <result column="intelligent_flag" jdbcType="VARCHAR" property="intelligentFlag" />
+    <result column="assign_order_mode" jdbcType="VARCHAR" property="assignOrderMode" />
+    <result column="net_level" jdbcType="VARCHAR" property="netLevel" />
+    <result column="dispatching_rule" jdbcType="VARCHAR" property="dispatchingRule" />
+    <result column="proble_rule_order" jdbcType="VARCHAR" property="probleRuleOrder" />
+    <result column="assign_resource_order" jdbcType="VARCHAR" property="assignResourceOrder" />
+    <result column="performance_alarm_child_num" jdbcType="INTEGER" property="performanceAlarmChildNum" />
+    <result column="station_company" jdbcType="VARCHAR" property="stationCompany" />
+    <result column="affiliated_computer_room" jdbcType="VARCHAR" property="affiliatedComputerRoom" />
+    <result column="physical_device_type" jdbcType="VARCHAR" property="physicalDeviceType" />
+    <result column="order_automatic_responsibility" jdbcType="VARCHAR" property="orderAutomaticResponsibility" />
+    <result column="auto_strant_result" jdbcType="VARCHAR" property="autoStrantResult" />
+    <result column="net_class_1" jdbcType="VARCHAR" property="netClass1" />
+    <result column="net_class_2" jdbcType="VARCHAR" property="netClass2" />
+    <result column="month" jdbcType="VARCHAR" property="month" />
+  </resultMap>
+  <insert id="insert" parameterType="com.iscas.sdas.dto.DeviceWorkDto">
+    insert into t_equipment_failure_201708 (order_id, order_state, order_title, 
+      order_creat_person, order_creat_person_part, 
+      build_bill_time, net_alarm_id, net_alarm_name, 
+      net_remove_time, net_alarm_source, net_alarm_serialnum, 
+      pre_treated_Identification, automatic_dispatch_ident, 
+      part_accept_ident, submit_maintenance_flag, 
+      device_maintenance_company, line_maintenance_company, 
+      alarm_logic_type, alarm_logic_child_type, alarm_type, 
+      cell_name, alarm_object, area, 
+      alarm_relation_ident, child_alarm_count, net_alarm_level, 
+      distribute_leaflets_mode, fault_device_company, 
+      order_accept_time, order_accept_long, t1_process_long, 
+      t2_process_long, net_type_class_one, net_type_class_two, 
+      net_type_class_three, fault_occus_time, fault_find_mode, 
+      fault_find_time, fault_occus_city, fault_handle_city, 
+      fault_critical_flag, t1_accept_time, t1_transt_object, 
+      t1_transt_suggestion, t1_transt_persion, t1_transt_person_part, 
+      t1_transt_oper_time, t2_accept_person, t2_accept_time, 
+      transt_reason, requirement_complete_time, 
+      task_accept_time, task_assign_person, task_assign_person_part, 
+      task_assign_opterat_time, work_recover_time, 
+      Influence_long, return_reason, task_reback_person, 
+      task_reback_person_part, task_reback_time, 
+confirmation_option, 
+      confirmation_person, confirmation_person_part, 
+      task_confirm_time, assign_reply_fault_name, 
+      assign_reply_handle_time, assign_reply_handle_method, 
+      assign_reply_solve_time, apply_report_fault_result, 
+      apply_report_fault_type, apply_settlement_measure, 
+      apply_business_flag, apply_person, apply_person_part, 
+      apply_time, apply_fault_eliminate_time, warm_time, 
+      process_time, power_start_time, power_end_time, 
+      oil_engine_num, deny_flag, confirm_person, 
+      confirm_person_part, confirm_time, deny_valid_flag, 
+      apply_extension_flag, apply_extension_resion, 
+      expected_resolve_time, apply_extension_person, 
+      apply_extension_persion_part, approval_opinions, 
+      extension_person, stage_reply_response, stage_reply_time, 
+      stage_reply_person, stage_reply_person_part, 
+      customer_flag, customer_type, business_scope, 
+      custome_groupname, custome_groupnum, business_support_level, 
+      business_event_impact, client_device_type, 
+      client_device_company, client_device_model, 
+      work_order_timeout, assign_flag, main_order_flag, 
+      announce_flag, announcement_num, order_filing_time, 
+      assign_reply_person, assign_reply_person_part, 
+      assign_reply_oper_time, pretreatment_advice, 
+      intelligent_flag, assign_order_mode, net_level, 
+      dispatching_rule, proble_rule_order, assign_resource_order, 
+      performance_alarm_child_num, station_company, 
+      affiliated_computer_room, physical_device_type, 
+      order_automatic_responsibility, auto_strant_result, 
+      net_class_1, net_class_2, month
+      )
+    values (#{orderId,jdbcType=VARCHAR}, #{orderState,jdbcType=VARCHAR}, #{orderTitle,jdbcType=VARCHAR}, 
+      #{orderCreatPerson,jdbcType=VARCHAR}, #{orderCreatPersonPart,jdbcType=VARCHAR}, 
+      #{buildBillTime,jdbcType=TIMESTAMP}, #{netAlarmId,jdbcType=VARCHAR}, #{netAlarmName,jdbcType=VARCHAR}, 
+      #{netRemoveTime,jdbcType=TIMESTAMP}, #{netAlarmSource,jdbcType=VARCHAR}, #{netAlarmSerialnum,jdbcType=VARCHAR}, 
+      #{preTreatedIdentification,jdbcType=VARCHAR}, #{automaticDispatchIdent,jdbcType=VARCHAR}, 
+      #{partAcceptIdent,jdbcType=VARCHAR}, #{submitMaintenanceFlag,jdbcType=VARCHAR}, 
+      #{deviceMaintenanceCompany,jdbcType=VARCHAR}, #{lineMaintenanceCompany,jdbcType=VARCHAR}, 
+      #{alarmLogicType,jdbcType=VARCHAR}, #{alarmLogicChildType,jdbcType=VARCHAR}, #{alarmType,jdbcType=VARCHAR}, 
+      #{cellName,jdbcType=VARCHAR}, #{alarmObject,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
+      #{alarmRelationIdent,jdbcType=VARCHAR}, #{childAlarmCount,jdbcType=INTEGER}, #{netAlarmLevel,jdbcType=VARCHAR}, 
+      #{distributeLeafletsMode,jdbcType=VARCHAR}, #{faultDeviceCompany,jdbcType=VARCHAR}, 
+      #{orderAcceptTime,jdbcType=VARCHAR}, #{orderAcceptLong,jdbcType=VARCHAR}, #{t1ProcessLong,jdbcType=VARCHAR}, 
+      #{t2ProcessLong,jdbcType=VARCHAR}, #{netTypeClassOne,jdbcType=VARCHAR}, #{netTypeClassTwo,jdbcType=VARCHAR}, 
+      #{netTypeClassThree,jdbcType=VARCHAR}, #{faultOccusTime,jdbcType=TIMESTAMP}, #{faultFindMode,jdbcType=VARCHAR}, 
+      #{faultFindTime,jdbcType=VARCHAR}, #{faultOccusCity,jdbcType=VARCHAR}, #{faultHandleCity,jdbcType=VARCHAR}, 
+      #{faultCriticalFlag,jdbcType=VARCHAR}, #{t1AcceptTime,jdbcType=VARCHAR}, #{t1TranstObject,jdbcType=VARCHAR}, 
+      #{t1TranstSuggestion,jdbcType=VARCHAR}, #{t1TranstPersion,jdbcType=VARCHAR}, #{t1TranstPersonPart,jdbcType=VARCHAR}, 
+      #{t1TranstOperTime,jdbcType=VARCHAR}, #{t2AcceptPerson,jdbcType=VARCHAR}, #{t2AcceptTime,jdbcType=VARCHAR}, 
+      #{transtReason,jdbcType=VARCHAR}, #{requirementCompleteTime,jdbcType=VARCHAR}, 
+      #{taskAcceptTime,jdbcType=VARCHAR}, #{taskAssignPerson,jdbcType=VARCHAR}, #{taskAssignPersonPart,jdbcType=VARCHAR}, 
+      #{taskAssignOpteratTime,jdbcType=VARCHAR}, #{workRecoverTime,jdbcType=VARCHAR}, 
+      #{influenceLong,jdbcType=VARCHAR}, #{returnReason,jdbcType=VARCHAR}, #{taskRebackPerson,jdbcType=VARCHAR}, 
+      #{taskRebackPersonPart,jdbcType=VARCHAR}, #{taskRebackTime,jdbcType=VARCHAR}, #{
+confirmationOption,jdbcType=VARCHAR}, 
+      #{confirmationPerson,jdbcType=VARCHAR}, #{confirmationPersonPart,jdbcType=VARCHAR}, 
+      #{taskConfirmTime,jdbcType=VARCHAR}, #{assignReplyFaultName,jdbcType=VARCHAR}, 
+      #{assignReplyHandleTime,jdbcType=VARCHAR}, #{assignReplyHandleMethod,jdbcType=VARCHAR}, 
+      #{assignReplySolveTime,jdbcType=VARCHAR}, #{applyReportFaultResult,jdbcType=VARCHAR}, 
+      #{applyReportFaultType,jdbcType=VARCHAR}, #{applySettlementMeasure,jdbcType=VARCHAR}, 
+      #{applyBusinessFlag,jdbcType=VARCHAR}, #{applyPerson,jdbcType=VARCHAR}, #{applyPersonPart,jdbcType=VARCHAR}, 
+      #{applyTime,jdbcType=VARCHAR}, #{applyFaultEliminateTime,jdbcType=VARCHAR}, #{warmTime,jdbcType=VARCHAR}, 
+      #{processTime,jdbcType=VARCHAR}, #{powerStartTime,jdbcType=VARCHAR}, #{powerEndTime,jdbcType=VARCHAR}, 
+      #{oilEngineNum,jdbcType=VARCHAR}, #{denyFlag,jdbcType=VARCHAR}, #{confirmPerson,jdbcType=VARCHAR}, 
+      #{confirmPersonPart,jdbcType=VARCHAR}, #{confirmTime,jdbcType=VARCHAR}, #{denyValidFlag,jdbcType=VARCHAR}, 
+      #{applyExtensionFlag,jdbcType=VARCHAR}, #{applyExtensionResion,jdbcType=VARCHAR}, 
+      #{expectedResolveTime,jdbcType=VARCHAR}, #{applyExtensionPerson,jdbcType=VARCHAR}, 
+      #{applyExtensionPersionPart,jdbcType=VARCHAR}, #{approvalOpinions,jdbcType=VARCHAR}, 
+      #{extensionPerson,jdbcType=VARCHAR}, #{stageReplyResponse,jdbcType=VARCHAR}, #{stageReplyTime,jdbcType=VARCHAR}, 
+      #{stageReplyPerson,jdbcType=VARCHAR}, #{stageReplyPersonPart,jdbcType=VARCHAR}, 
+      #{customerFlag,jdbcType=VARCHAR}, #{customerType,jdbcType=VARCHAR}, #{businessScope,jdbcType=VARCHAR}, 
+      #{customeGroupname,jdbcType=VARCHAR}, #{customeGroupnum,jdbcType=VARCHAR}, #{businessSupportLevel,jdbcType=VARCHAR}, 
+      #{businessEventImpact,jdbcType=VARCHAR}, #{clientDeviceType,jdbcType=VARCHAR}, 
+      #{clientDeviceCompany,jdbcType=VARCHAR}, #{clientDeviceModel,jdbcType=VARCHAR}, 
+      #{workOrderTimeout,jdbcType=VARCHAR}, #{assignFlag,jdbcType=VARCHAR}, #{mainOrderFlag,jdbcType=VARCHAR}, 
+      #{announceFlag,jdbcType=VARCHAR}, #{announcementNum,jdbcType=VARCHAR}, #{orderFilingTime,jdbcType=VARCHAR}, 
+      #{assignReplyPerson,jdbcType=VARCHAR}, #{assignReplyPersonPart,jdbcType=VARCHAR}, 
+      #{assignReplyOperTime,jdbcType=VARCHAR}, #{pretreatmentAdvice,jdbcType=VARCHAR}, 
+      #{intelligentFlag,jdbcType=VARCHAR}, #{assignOrderMode,jdbcType=VARCHAR}, #{netLevel,jdbcType=VARCHAR}, 
+      #{dispatchingRule,jdbcType=VARCHAR}, #{probleRuleOrder,jdbcType=VARCHAR}, #{assignResourceOrder,jdbcType=VARCHAR}, 
+      #{performanceAlarmChildNum,jdbcType=INTEGER}, #{stationCompany,jdbcType=VARCHAR}, 
+      #{affiliatedComputerRoom,jdbcType=VARCHAR}, #{physicalDeviceType,jdbcType=VARCHAR}, 
+      #{orderAutomaticResponsibility,jdbcType=VARCHAR}, #{autoStrantResult,jdbcType=VARCHAR}, 
+      #{netClass1,jdbcType=VARCHAR}, #{netClass2,jdbcType=VARCHAR}, #{month,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.iscas.sdas.dto.DeviceWorkDto">
+    insert into t_equipment_failure_201708
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="orderState != null">
+        order_state,
+      </if>
+      <if test="orderTitle != null">
+        order_title,
+      </if>
+      <if test="orderCreatPerson != null">
+        order_creat_person,
+      </if>
+      <if test="orderCreatPersonPart != null">
+        order_creat_person_part,
+      </if>
+      <if test="buildBillTime != null">
+        build_bill_time,
+      </if>
+      <if test="netAlarmId != null">
+        net_alarm_id,
+      </if>
+      <if test="netAlarmName != null">
+        net_alarm_name,
+      </if>
+      <if test="netRemoveTime != null">
+        net_remove_time,
+      </if>
+      <if test="netAlarmSource != null">
+        net_alarm_source,
+      </if>
+      <if test="netAlarmSerialnum != null">
+        net_alarm_serialnum,
+      </if>
+      <if test="preTreatedIdentification != null">
+        pre_treated_Identification,
+      </if>
+      <if test="automaticDispatchIdent != null">
+        automatic_dispatch_ident,
+      </if>
+      <if test="partAcceptIdent != null">
+        part_accept_ident,
+      </if>
+      <if test="submitMaintenanceFlag != null">
+        submit_maintenance_flag,
+      </if>
+      <if test="deviceMaintenanceCompany != null">
+        device_maintenance_company,
+      </if>
+      <if test="lineMaintenanceCompany != null">
+        line_maintenance_company,
+      </if>
+      <if test="alarmLogicType != null">
+        alarm_logic_type,
+      </if>
+      <if test="alarmLogicChildType != null">
+        alarm_logic_child_type,
+      </if>
+      <if test="alarmType != null">
+        alarm_type,
+      </if>
+      <if test="cellName != null">
+        cell_name,
+      </if>
+      <if test="alarmObject != null">
+        alarm_object,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="alarmRelationIdent != null">
+        alarm_relation_ident,
+      </if>
+      <if test="childAlarmCount != null">
+        child_alarm_count,
+      </if>
+      <if test="netAlarmLevel != null">
+        net_alarm_level,
+      </if>
+      <if test="distributeLeafletsMode != null">
+        distribute_leaflets_mode,
+      </if>
+      <if test="faultDeviceCompany != null">
+        fault_device_company,
+      </if>
+      <if test="orderAcceptTime != null">
+        order_accept_time,
+      </if>
+      <if test="orderAcceptLong != null">
+        order_accept_long,
+      </if>
+      <if test="t1ProcessLong != null">
+        t1_process_long,
+      </if>
+      <if test="t2ProcessLong != null">
+        t2_process_long,
+      </if>
+      <if test="netTypeClassOne != null">
+        net_type_class_one,
+      </if>
+      <if test="netTypeClassTwo != null">
+        net_type_class_two,
+      </if>
+      <if test="netTypeClassThree != null">
+        net_type_class_three,
+      </if>
+      <if test="faultOccusTime != null">
+        fault_occus_time,
+      </if>
+      <if test="faultFindMode != null">
+        fault_find_mode,
+      </if>
+      <if test="faultFindTime != null">
+        fault_find_time,
+      </if>
+      <if test="faultOccusCity != null">
+        fault_occus_city,
+      </if>
+      <if test="faultHandleCity != null">
+        fault_handle_city,
+      </if>
+      <if test="faultCriticalFlag != null">
+        fault_critical_flag,
+      </if>
+      <if test="t1AcceptTime != null">
+        t1_accept_time,
+      </if>
+      <if test="t1TranstObject != null">
+        t1_transt_object,
+      </if>
+      <if test="t1TranstSuggestion != null">
+        t1_transt_suggestion,
+      </if>
+      <if test="t1TranstPersion != null">
+        t1_transt_persion,
+      </if>
+      <if test="t1TranstPersonPart != null">
+        t1_transt_person_part,
+      </if>
+      <if test="t1TranstOperTime != null">
+        t1_transt_oper_time,
+      </if>
+      <if test="t2AcceptPerson != null">
+        t2_accept_person,
+      </if>
+      <if test="t2AcceptTime != null">
+        t2_accept_time,
+      </if>
+      <if test="transtReason != null">
+        transt_reason,
+      </if>
+      <if test="requirementCompleteTime != null">
+        requirement_complete_time,
+      </if>
+      <if test="taskAcceptTime != null">
+        task_accept_time,
+      </if>
+      <if test="taskAssignPerson != null">
+        task_assign_person,
+      </if>
+      <if test="taskAssignPersonPart != null">
+        task_assign_person_part,
+      </if>
+      <if test="taskAssignOpteratTime != null">
+        task_assign_opterat_time,
+      </if>
+      <if test="workRecoverTime != null">
+        work_recover_time,
+      </if>
+      <if test="influenceLong != null">
+        Influence_long,
+      </if>
+      <if test="returnReason != null">
+        return_reason,
+      </if>
+      <if test="taskRebackPerson != null">
+        task_reback_person,
+      </if>
+      <if test="taskRebackPersonPart != null">
+        task_reback_person_part,
+      </if>
+      <if test="taskRebackTime != null">
+        task_reback_time,
+      </if>
+      <if test="
+confirmationOption != null">
+        
+confirmation_option,
+      </if>
+      <if test="confirmationPerson != null">
+        confirmation_person,
+      </if>
+      <if test="confirmationPersonPart != null">
+        confirmation_person_part,
+      </if>
+      <if test="taskConfirmTime != null">
+        task_confirm_time,
+      </if>
+      <if test="assignReplyFaultName != null">
+        assign_reply_fault_name,
+      </if>
+      <if test="assignReplyHandleTime != null">
+        assign_reply_handle_time,
+      </if>
+      <if test="assignReplyHandleMethod != null">
+        assign_reply_handle_method,
+      </if>
+      <if test="assignReplySolveTime != null">
+        assign_reply_solve_time,
+      </if>
+      <if test="applyReportFaultResult != null">
+        apply_report_fault_result,
+      </if>
+      <if test="applyReportFaultType != null">
+        apply_report_fault_type,
+      </if>
+      <if test="applySettlementMeasure != null">
+        apply_settlement_measure,
+      </if>
+      <if test="applyBusinessFlag != null">
+        apply_business_flag,
+      </if>
+      <if test="applyPerson != null">
+        apply_person,
+      </if>
+      <if test="applyPersonPart != null">
+        apply_person_part,
+      </if>
+      <if test="applyTime != null">
+        apply_time,
+      </if>
+      <if test="applyFaultEliminateTime != null">
+        apply_fault_eliminate_time,
+      </if>
+      <if test="warmTime != null">
+        warm_time,
+      </if>
+      <if test="processTime != null">
+        process_time,
+      </if>
+      <if test="powerStartTime != null">
+        power_start_time,
+      </if>
+      <if test="powerEndTime != null">
+        power_end_time,
+      </if>
+      <if test="oilEngineNum != null">
+        oil_engine_num,
+      </if>
+      <if test="denyFlag != null">
+        deny_flag,
+      </if>
+      <if test="confirmPerson != null">
+        confirm_person,
+      </if>
+      <if test="confirmPersonPart != null">
+        confirm_person_part,
+      </if>
+      <if test="confirmTime != null">
+        confirm_time,
+      </if>
+      <if test="denyValidFlag != null">
+        deny_valid_flag,
+      </if>
+      <if test="applyExtensionFlag != null">
+        apply_extension_flag,
+      </if>
+      <if test="applyExtensionResion != null">
+        apply_extension_resion,
+      </if>
+      <if test="expectedResolveTime != null">
+        expected_resolve_time,
+      </if>
+      <if test="applyExtensionPerson != null">
+        apply_extension_person,
+      </if>
+      <if test="applyExtensionPersionPart != null">
+        apply_extension_persion_part,
+      </if>
+      <if test="approvalOpinions != null">
+        approval_opinions,
+      </if>
+      <if test="extensionPerson != null">
+        extension_person,
+      </if>
+      <if test="stageReplyResponse != null">
+        stage_reply_response,
+      </if>
+      <if test="stageReplyTime != null">
+        stage_reply_time,
+      </if>
+      <if test="stageReplyPerson != null">
+        stage_reply_person,
+      </if>
+      <if test="stageReplyPersonPart != null">
+        stage_reply_person_part,
+      </if>
+      <if test="customerFlag != null">
+        customer_flag,
+      </if>
+      <if test="customerType != null">
+        customer_type,
+      </if>
+      <if test="businessScope != null">
+        business_scope,
+      </if>
+      <if test="customeGroupname != null">
+        custome_groupname,
+      </if>
+      <if test="customeGroupnum != null">
+        custome_groupnum,
+      </if>
+      <if test="businessSupportLevel != null">
+        business_support_level,
+      </if>
+      <if test="businessEventImpact != null">
+        business_event_impact,
+      </if>
+      <if test="clientDeviceType != null">
+        client_device_type,
+      </if>
+      <if test="clientDeviceCompany != null">
+        client_device_company,
+      </if>
+      <if test="clientDeviceModel != null">
+        client_device_model,
+      </if>
+      <if test="workOrderTimeout != null">
+        work_order_timeout,
+      </if>
+      <if test="assignFlag != null">
+        assign_flag,
+      </if>
+      <if test="mainOrderFlag != null">
+        main_order_flag,
+      </if>
+      <if test="announceFlag != null">
+        announce_flag,
+      </if>
+      <if test="announcementNum != null">
+        announcement_num,
+      </if>
+      <if test="orderFilingTime != null">
+        order_filing_time,
+      </if>
+      <if test="assignReplyPerson != null">
+        assign_reply_person,
+      </if>
+      <if test="assignReplyPersonPart != null">
+        assign_reply_person_part,
+      </if>
+      <if test="assignReplyOperTime != null">
+        assign_reply_oper_time,
+      </if>
+      <if test="pretreatmentAdvice != null">
+        pretreatment_advice,
+      </if>
+      <if test="intelligentFlag != null">
+        intelligent_flag,
+      </if>
+      <if test="assignOrderMode != null">
+        assign_order_mode,
+      </if>
+      <if test="netLevel != null">
+        net_level,
+      </if>
+      <if test="dispatchingRule != null">
+        dispatching_rule,
+      </if>
+      <if test="probleRuleOrder != null">
+        proble_rule_order,
+      </if>
+      <if test="assignResourceOrder != null">
+        assign_resource_order,
+      </if>
+      <if test="performanceAlarmChildNum != null">
+        performance_alarm_child_num,
+      </if>
+      <if test="stationCompany != null">
+        station_company,
+      </if>
+      <if test="affiliatedComputerRoom != null">
+        affiliated_computer_room,
+      </if>
+      <if test="physicalDeviceType != null">
+        physical_device_type,
+      </if>
+      <if test="orderAutomaticResponsibility != null">
+        order_automatic_responsibility,
+      </if>
+      <if test="autoStrantResult != null">
+        auto_strant_result,
+      </if>
+      <if test="netClass1 != null">
+        net_class_1,
+      </if>
+      <if test="netClass2 != null">
+        net_class_2,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderState != null">
+        #{orderState,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTitle != null">
+        #{orderTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreatPerson != null">
+        #{orderCreatPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreatPersonPart != null">
+        #{orderCreatPersonPart,jdbcType=VARCHAR},
+      </if>
+      <if test="buildBillTime != null">
+        #{buildBillTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="netAlarmId != null">
+        #{netAlarmId,jdbcType=VARCHAR},
+      </if>
+      <if test="netAlarmName != null">
+        #{netAlarmName,jdbcType=VARCHAR},
+      </if>
+      <if test="netRemoveTime != null">
+        #{netRemoveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="netAlarmSource != null">
+        #{netAlarmSource,jdbcType=VARCHAR},
+      </if>
+      <if test="netAlarmSerialnum != null">
+        #{netAlarmSerialnum,jdbcType=VARCHAR},
+      </if>
+      <if test="preTreatedIdentification != null">
+        #{preTreatedIdentification,jdbcType=VARCHAR},
+      </if>
+      <if test="automaticDispatchIdent != null">
+        #{automaticDispatchIdent,jdbcType=VARCHAR},
+      </if>
+      <if test="partAcceptIdent != null">
+        #{partAcceptIdent,jdbcType=VARCHAR},
+      </if>
+      <if test="submitMaintenanceFlag != null">
+        #{submitMaintenanceFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceMaintenanceCompany != null">
+        #{deviceMaintenanceCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="lineMaintenanceCompany != null">
+        #{lineMaintenanceCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmLogicType != null">
+        #{alarmLogicType,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmLogicChildType != null">
+        #{alarmLogicChildType,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmType != null">
+        #{alarmType,jdbcType=VARCHAR},
+      </if>
+      <if test="cellName != null">
+        #{cellName,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmObject != null">
+        #{alarmObject,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmRelationIdent != null">
+        #{alarmRelationIdent,jdbcType=VARCHAR},
+      </if>
+      <if test="childAlarmCount != null">
+        #{childAlarmCount,jdbcType=INTEGER},
+      </if>
+      <if test="netAlarmLevel != null">
+        #{netAlarmLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="distributeLeafletsMode != null">
+        #{distributeLeafletsMode,jdbcType=VARCHAR},
+      </if>
+      <if test="faultDeviceCompany != null">
+        #{faultDeviceCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAcceptTime != null">
+        #{orderAcceptTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAcceptLong != null">
+        #{orderAcceptLong,jdbcType=VARCHAR},
+      </if>
+      <if test="t1ProcessLong != null">
+        #{t1ProcessLong,jdbcType=VARCHAR},
+      </if>
+      <if test="t2ProcessLong != null">
+        #{t2ProcessLong,jdbcType=VARCHAR},
+      </if>
+      <if test="netTypeClassOne != null">
+        #{netTypeClassOne,jdbcType=VARCHAR},
+      </if>
+      <if test="netTypeClassTwo != null">
+        #{netTypeClassTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="netTypeClassThree != null">
+        #{netTypeClassThree,jdbcType=VARCHAR},
+      </if>
+      <if test="faultOccusTime != null">
+        #{faultOccusTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="faultFindMode != null">
+        #{faultFindMode,jdbcType=VARCHAR},
+      </if>
+      <if test="faultFindTime != null">
+        #{faultFindTime,jdbcType=VARCHAR},
+      </if>
+      <if test="faultOccusCity != null">
+        #{faultOccusCity,jdbcType=VARCHAR},
+      </if>
+      <if test="faultHandleCity != null">
+        #{faultHandleCity,jdbcType=VARCHAR},
+      </if>
+      <if test="faultCriticalFlag != null">
+        #{faultCriticalFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="t1AcceptTime != null">
+        #{t1AcceptTime,jdbcType=VARCHAR},
+      </if>
+      <if test="t1TranstObject != null">
+        #{t1TranstObject,jdbcType=VARCHAR},
+      </if>
+      <if test="t1TranstSuggestion != null">
+        #{t1TranstSuggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="t1TranstPersion != null">
+        #{t1TranstPersion,jdbcType=VARCHAR},
+      </if>
+      <if test="t1TranstPersonPart != null">
+        #{t1TranstPersonPart,jdbcType=VARCHAR},
+      </if>
+      <if test="t1TranstOperTime != null">
+        #{t1TranstOperTime,jdbcType=VARCHAR},
+      </if>
+      <if test="t2AcceptPerson != null">
+        #{t2AcceptPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="t2AcceptTime != null">
+        #{t2AcceptTime,jdbcType=VARCHAR},
+      </if>
+      <if test="transtReason != null">
+        #{transtReason,jdbcType=VARCHAR},
+      </if>
+      <if test="requirementCompleteTime != null">
+        #{requirementCompleteTime,jdbcType=VARCHAR},
+      </if>
+      <if test="taskAcceptTime != null">
+        #{taskAcceptTime,jdbcType=VARCHAR},
+      </if>
+      <if test="taskAssignPerson != null">
+        #{taskAssignPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="taskAssignPersonPart != null">
+        #{taskAssignPersonPart,jdbcType=VARCHAR},
+      </if>
+      <if test="taskAssignOpteratTime != null">
+        #{taskAssignOpteratTime,jdbcType=VARCHAR},
+      </if>
+      <if test="workRecoverTime != null">
+        #{workRecoverTime,jdbcType=VARCHAR},
+      </if>
+      <if test="influenceLong != null">
+        #{influenceLong,jdbcType=VARCHAR},
+      </if>
+      <if test="returnReason != null">
+        #{returnReason,jdbcType=VARCHAR},
+      </if>
+      <if test="taskRebackPerson != null">
+        #{taskRebackPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="taskRebackPersonPart != null">
+        #{taskRebackPersonPart,jdbcType=VARCHAR},
+      </if>
+      <if test="taskRebackTime != null">
+        #{taskRebackTime,jdbcType=VARCHAR},
+      </if>
+      <if test="
+confirmationOption != null">
+        #{
+confirmationOption,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmationPerson != null">
+        #{confirmationPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmationPersonPart != null">
+        #{confirmationPersonPart,jdbcType=VARCHAR},
+      </if>
+      <if test="taskConfirmTime != null">
+        #{taskConfirmTime,jdbcType=VARCHAR},
+      </if>
+      <if test="assignReplyFaultName != null">
+        #{assignReplyFaultName,jdbcType=VARCHAR},
+      </if>
+      <if test="assignReplyHandleTime != null">
+        #{assignReplyHandleTime,jdbcType=VARCHAR},
+      </if>
+      <if test="assignReplyHandleMethod != null">
+        #{assignReplyHandleMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="assignReplySolveTime != null">
+        #{assignReplySolveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="applyReportFaultResult != null">
+        #{applyReportFaultResult,jdbcType=VARCHAR},
+      </if>
+      <if test="applyReportFaultType != null">
+        #{applyReportFaultType,jdbcType=VARCHAR},
+      </if>
+      <if test="applySettlementMeasure != null">
+        #{applySettlementMeasure,jdbcType=VARCHAR},
+      </if>
+      <if test="applyBusinessFlag != null">
+        #{applyBusinessFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPerson != null">
+        #{applyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPersonPart != null">
+        #{applyPersonPart,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null">
+        #{applyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="applyFaultEliminateTime != null">
+        #{applyFaultEliminateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="warmTime != null">
+        #{warmTime,jdbcType=VARCHAR},
+      </if>
+      <if test="processTime != null">
+        #{processTime,jdbcType=VARCHAR},
+      </if>
+      <if test="powerStartTime != null">
+        #{powerStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="powerEndTime != null">
+        #{powerEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="oilEngineNum != null">
+        #{oilEngineNum,jdbcType=VARCHAR},
+      </if>
+      <if test="denyFlag != null">
+        #{denyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmPerson != null">
+        #{confirmPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmPersonPart != null">
+        #{confirmPersonPart,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmTime != null">
+        #{confirmTime,jdbcType=VARCHAR},
+      </if>
+      <if test="denyValidFlag != null">
+        #{denyValidFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="applyExtensionFlag != null">
+        #{applyExtensionFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="applyExtensionResion != null">
+        #{applyExtensionResion,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedResolveTime != null">
+        #{expectedResolveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="applyExtensionPerson != null">
+        #{applyExtensionPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="applyExtensionPersionPart != null">
+        #{applyExtensionPersionPart,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalOpinions != null">
+        #{approvalOpinions,jdbcType=VARCHAR},
+      </if>
+      <if test="extensionPerson != null">
+        #{extensionPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="stageReplyResponse != null">
+        #{stageReplyResponse,jdbcType=VARCHAR},
+      </if>
+      <if test="stageReplyTime != null">
+        #{stageReplyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="stageReplyPerson != null">
+        #{stageReplyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="stageReplyPersonPart != null">
+        #{stageReplyPersonPart,jdbcType=VARCHAR},
+      </if>
+      <if test="customerFlag != null">
+        #{customerFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="customerType != null">
+        #{customerType,jdbcType=VARCHAR},
+      </if>
+      <if test="businessScope != null">
+        #{businessScope,jdbcType=VARCHAR},
+      </if>
+      <if test="customeGroupname != null">
+        #{customeGroupname,jdbcType=VARCHAR},
+      </if>
+      <if test="customeGroupnum != null">
+        #{customeGroupnum,jdbcType=VARCHAR},
+      </if>
+      <if test="businessSupportLevel != null">
+        #{businessSupportLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="businessEventImpact != null">
+        #{businessEventImpact,jdbcType=VARCHAR},
+      </if>
+      <if test="clientDeviceType != null">
+        #{clientDeviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="clientDeviceCompany != null">
+        #{clientDeviceCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="clientDeviceModel != null">
+        #{clientDeviceModel,jdbcType=VARCHAR},
+      </if>
+      <if test="workOrderTimeout != null">
+        #{workOrderTimeout,jdbcType=VARCHAR},
+      </if>
+      <if test="assignFlag != null">
+        #{assignFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="mainOrderFlag != null">
+        #{mainOrderFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="announceFlag != null">
+        #{announceFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="announcementNum != null">
+        #{announcementNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orderFilingTime != null">
+        #{orderFilingTime,jdbcType=VARCHAR},
+      </if>
+      <if test="assignReplyPerson != null">
+        #{assignReplyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="assignReplyPersonPart != null">
+        #{assignReplyPersonPart,jdbcType=VARCHAR},
+      </if>
+      <if test="assignReplyOperTime != null">
+        #{assignReplyOperTime,jdbcType=VARCHAR},
+      </if>
+      <if test="pretreatmentAdvice != null">
+        #{pretreatmentAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="intelligentFlag != null">
+        #{intelligentFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="assignOrderMode != null">
+        #{assignOrderMode,jdbcType=VARCHAR},
+      </if>
+      <if test="netLevel != null">
+        #{netLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="dispatchingRule != null">
+        #{dispatchingRule,jdbcType=VARCHAR},
+      </if>
+      <if test="probleRuleOrder != null">
+        #{probleRuleOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="assignResourceOrder != null">
+        #{assignResourceOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="performanceAlarmChildNum != null">
+        #{performanceAlarmChildNum,jdbcType=INTEGER},
+      </if>
+      <if test="stationCompany != null">
+        #{stationCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="affiliatedComputerRoom != null">
+        #{affiliatedComputerRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="physicalDeviceType != null">
+        #{physicalDeviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAutomaticResponsibility != null">
+        #{orderAutomaticResponsibility,jdbcType=VARCHAR},
+      </if>
+      <if test="autoStrantResult != null">
+        #{autoStrantResult,jdbcType=VARCHAR},
+      </if>
+      <if test="netClass1 != null">
+        #{netClass1,jdbcType=VARCHAR},
+      </if>
+      <if test="netClass2 != null">
+        #{netClass2,jdbcType=VARCHAR},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

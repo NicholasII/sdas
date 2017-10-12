@@ -7,14 +7,17 @@
 <title>小区综合页面</title>
 <%@ include file="/include/common.jsp"%>
 <script type="text/javascript" src="${context }/include/time.js"></script>
-
+<script src="${context}/lib/hplus/js/plugins/layer/laydate/laydate.js"></script>
 <script type="text/javascript"
 	src="http://api.map.baidu.com/api?v=2.0&ak=EmXf0NLcNCvBO5hdDliGtvC9D5v6GA5K"></script>
 <style type="text/css">
-td {
-	margin-left: 10px;
-	margin-right: 10px
-}
+	td {
+		margin-left: 10px;
+		margin-right: 10px
+	}
+	input{
+	    padding-top: 5px;padding-bottom: 5px;margin-top: 0px;margin-bottom: 0px
+	}
 </style>
 </head>
 <body>
@@ -123,11 +126,29 @@ td {
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="ibox-title">
-						<h5>小区健康度历史趋势</h5>
+					<h5>小区健康度历史趋势</h5>
+					<div class="ibox-tools">
+						<div class="btn-group">
+							<button class="btn btn-info" id="trendinweek" type="button">一周</button>
+							<button class="btn btn-white" id="trendinmonth" type="button">一月</button>
+							<button class="btn btn-white" id="trendinselect" type="button">按时间选择</button>
+							<div id="timeselect" style="display: none;">
+								<input id="starttime" style="margin-top: -3px !important;"
+									class="layer-date" placeholder="请输入开始时间"
+									onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+								<span id="span" style="margin-top: -10px ;display: inline !important;"
+									class="input-group-addon">到</span> 
+								<input id="endtime"
+									style="margin-top: -3px !important;" class="layer-date"
+									placeholder="请输入结束时间"
+									onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+							</div>
+						</div>
 					</div>
-					<div class="ibox-content">
-						<div id="ratiotrend" style="height: 300px;"></div>
-					</div>
+				</div>
+				<div class="ibox-content">
+					<div id="ratiotrend" style="height: 300px;"></div>
+				</div>
 			</div>
 		</div>
 		<div class="row">
@@ -161,7 +182,7 @@ td {
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" style="display: none;">
 			<div class="col-sm-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-title">
@@ -169,7 +190,8 @@ td {
 						<div class="ibox-tools"></div>
 					</div>
 					<div class="ibox-content">
-						<div class="jqGrid_wrapper" style="margin:0;padding:0; width: 100%;overflow: auto;">
+						<div class="jqGrid_wrapper"
+							style="margin: 0; padding: 0; width: 100%; overflow: auto;">
 							<table class="table" id="table_list_weight"></table>
 							<div id="pager_list_weight"></div>
 						</div>
@@ -259,7 +281,7 @@ td {
 							class=""><a data-toggle="tab" href="#tab-3"
 							aria-expanded="false">退服工单</a></li>
 						<li onclick="switchwork('/sdas/cellindex/mrinfo','${cellname}')"
-						    class=""><a data-toggle="tab" href="#tab-4"
+							class=""><a data-toggle="tab" href="#tab-4"
 							aria-expanded="false">指标信息</a></li>
 					</ul>
 					<div class="tab-content">
@@ -318,9 +340,8 @@ td {
 		map.addControl(new BMap.MapTypeControl()); //添加地图类型控件
 		map.setCurrentCity("广州"); // 设置地图显示的城市 此项是必须设置的
 		map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
-		var marker = new BMap.Marker(new BMap.Point(113.270856, 23.137463)); 
+		var marker = new BMap.Marker(new BMap.Point(113.270856, 23.137463));
 		map.addOverlay(marker);
-
 	</script>
 
 

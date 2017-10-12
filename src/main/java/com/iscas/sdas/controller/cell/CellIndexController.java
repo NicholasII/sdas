@@ -19,7 +19,11 @@ import com.iscas.sdas.dto.cell.WeightSequence;
 import com.iscas.sdas.service.cell.CellIndexService;
 import com.iscas.sdas.util.CommonUntils;
 import com.iscas.sdas.util.Constraints;
-
+/**
+ * 小区健康模型相关
+ * @author dongqun
+ * 2017年10月12日上午9:43:23
+ */
 
 @Controller
 @RequestMapping("/cell")

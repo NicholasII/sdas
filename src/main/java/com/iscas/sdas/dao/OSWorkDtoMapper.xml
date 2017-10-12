@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iscas.sdas.dao.OSWorkDtoMapper">
+  <resultMap id="BaseResultMap" type="com.iscas.sdas.dto.OSWorkDto">
+    <result column="net_type" jdbcType="VARCHAR" property="netType" />
+    <result column="alarm_id" jdbcType="VARCHAR" property="alarmId" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="recovery_time" jdbcType="TIMESTAMP" property="recoveryTime" />
+    <result column="fault_type" jdbcType="VARCHAR" property="faultType" />
+    <result column="order_state" jdbcType="VARCHAR" property="orderState" />
+    <result column="vip_type" jdbcType="VARCHAR" property="vipType" />
+    <result column="net_name" jdbcType="VARCHAR" property="netName" />
+    <result column="cell_name" jdbcType="VARCHAR" property="cellName" />
+    <result column="station_name" jdbcType="VARCHAR" property="stationName" />
+    <result column="retire_order" jdbcType="VARCHAR" property="retireOrder" />
+    <result column="manumant_group" jdbcType="VARCHAR" property="manumantGroup" />
+    <result column="event_log" jdbcType="VARCHAR" property="eventLog" />
+    <result column="physical_site_id" jdbcType="VARCHAR" property="physicalSiteId" />
+    <result column="physical_site_name" jdbcType="VARCHAR" property="physicalSiteName" />
+    <result column="device_maintain_company" jdbcType="VARCHAR" property="deviceMaintainCompany" />
+  </resultMap>
+  <insert id="insert" parameterType="com.iscas.sdas.dto.OSWorkDto">
+    insert into t_wireless_retirement (net_type, alarm_id, start_time, 
+      recovery_time, fault_type, order_state, 
+      vip_type, net_name, cell_name, 
+      station_name, retire_order, manumant_group, 
+      event_log, physical_site_id, physical_site_name, 
+      device_maintain_company)
+    values (#{netType,jdbcType=VARCHAR}, #{alarmId,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{recoveryTime,jdbcType=TIMESTAMP}, #{faultType,jdbcType=VARCHAR}, #{orderState,jdbcType=VARCHAR}, 
+      #{vipType,jdbcType=VARCHAR}, #{netName,jdbcType=VARCHAR}, #{cellName,jdbcType=VARCHAR}, 
+      #{stationName,jdbcType=VARCHAR}, #{retireOrder,jdbcType=VARCHAR}, #{manumantGroup,jdbcType=VARCHAR}, 
+      #{eventLog,jdbcType=VARCHAR}, #{physicalSiteId,jdbcType=VARCHAR}, #{physicalSiteName,jdbcType=VARCHAR}, 
+      #{deviceMaintainCompany,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.iscas.sdas.dto.OSWorkDto">
+    insert into t_wireless_retirement
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="netType != null">
+        net_type,
+      </if>
+      <if test="alarmId != null">
+        alarm_id,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="recoveryTime != null">
+        recovery_time,
+      </if>
+      <if test="faultType != null">
+        fault_type,
+      </if>
+      <if test="orderState != null">
+        order_state,
+      </if>
+      <if test="vipType != null">
+        vip_type,
+      </if>
+      <if test="netName != null">
+        net_name,
+      </if>
+      <if test="cellName != null">
+        cell_name,
+      </if>
+      <if test="stationName != null">
+        station_name,
+      </if>
+      <if test="retireOrder != null">
+        retire_order,
+      </if>
+      <if test="manumantGroup != null">
+        manumant_group,
+      </if>
+      <if test="eventLog != null">
+        event_log,
+      </if>
+      <if test="physicalSiteId != null">
+        physical_site_id,
+      </if>
+      <if test="physicalSiteName != null">
+        physical_site_name,
+      </if>
+      <if test="deviceMaintainCompany != null">
+        device_maintain_company,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="netType != null">
+        #{netType,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmId != null">
+        #{alarmId,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recoveryTime != null">
+        #{recoveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="faultType != null">
+        #{faultType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderState != null">
+        #{orderState,jdbcType=VARCHAR},
+      </if>
+      <if test="vipType != null">
+        #{vipType,jdbcType=VARCHAR},
+      </if>
+      <if test="netName != null">
+        #{netName,jdbcType=VARCHAR},
+      </if>
+      <if test="cellName != null">
+        #{cellName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationName != null">
+        #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="retireOrder != null">
+        #{retireOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="manumantGroup != null">
+        #{manumantGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="eventLog != null">
+        #{eventLog,jdbcType=VARCHAR},
+      </if>
+      <if test="physicalSiteId != null">
+        #{physicalSiteId,jdbcType=VARCHAR},
+      </if>
+      <if test="physicalSiteName != null">
+        #{physicalSiteName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceMaintainCompany != null">
+        #{deviceMaintainCompany,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -15,9 +15,22 @@ $(function(){
 			refreshJqGrid(list);
 			
 		}
-	});     
+	});
+    
+    $.ajax({
+        url: "/sdas/capacitywork/doubttabletopsix",
+        type:"GET",
+        success:function(data,status){
+            var temp = eval('(' + data + ')'); 
+            var list = temp.rows;
+            refreshJqGrid2(list);
+            
+        },
+        error:function(data){
+            alert("fail");
+        }
+    }); 
 });
-
 function refreshJqGrid(list){
 	$("#table_list_1").jqGrid({
 		data:list,
@@ -84,18 +97,7 @@ function scroll2(){
 setInterval(() => {
 	scroll2()
 }, 10000);
-$(function(){
-	$.ajax({
-		url: "/sdas/capacitywork/doubttabletopsix",
-		type:"GET",
-		dataType:"json",
-		success:function(data,status){
-			var list = data.rows;
-			refreshJqGrid2(list);
-			
-		}
-	});     
-});
+
 function refreshJqGrid2(list){
 	$.jgrid.defaults.styleUI = 'Bootstrap';
 	$("#table_list_2").jqGrid({

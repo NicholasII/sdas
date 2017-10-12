@@ -10,7 +10,7 @@ import java.sql.Date;
 public class BaseCellHealth {
 
 	private String percentage_code;
-	private Date yyyyMMdd;
+	private String yyyyMMdd;
 	private String cell_code;
 	private String yyyyMM;
 	private String snapshot_model;
@@ -28,11 +28,11 @@ public class BaseCellHealth {
 		this.percentage_code = percentage_code;
 	}
 
-	public Date getYyyyMMdd() {
+	public String getYyyyMMdd() {
 		return yyyyMMdd;
 	}
 
-	public void setYyyyMMdd(Date yyyyMMdd) {
+	public void setYyyyMMdd(String yyyyMMdd) {
 		this.yyyyMMdd = yyyyMMdd;
 	}
 

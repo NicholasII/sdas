@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.iscas.sdas.dto.GroupIndexMeatdata;
+import com.iscas.sdas.dto.TotalHealthInfoDto;
 import com.iscas.sdas.dto.cell.CellDto;
 import com.iscas.sdas.service.cell.CellService;
 import com.iscas.sdas.util.Constraints;
@@ -79,12 +80,17 @@ public class CellController {
 		map.addAttribute(Constraints.RESULT_ROW, groups);
 		return map;
 	}
+	/**
+	 * 小区健康度历史
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/healthtrend")
 	@ResponseBody
 	public ModelMap healthtrend(HttpServletRequest request){
 		ModelMap map = new ModelMap();
 		String cellname = request.getParameter("cellname");
-		List<double[]> list = cellService.generateCellHealthTrend(cellname);
+		List<TotalHealthInfoDto> list = cellService.generateCellHealthTrend(cellname);
 		map.addAttribute(Constraints.RESULT_ROW, list);
 		return map;
 	}

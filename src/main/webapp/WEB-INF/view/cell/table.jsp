@@ -95,7 +95,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="ibox float-e-margins">
+						<div class="ibox float-e-margins" style="display: none;">
 							<h5>指标权重</h5>
 							<div class="ibox-content">
 								<div class="jqGrid_wrapper"

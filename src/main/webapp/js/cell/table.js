@@ -1,5 +1,5 @@
 /**
- * 
+ * 小组
  */
 var name1='历史分析';
 var name2='实时数据';
@@ -43,7 +43,7 @@ var echart_option = {
                 formatter : function(value){
                 	return value;
             	}
-            },
+            }
 	    },
 	    yAxis: {
 	        scale: true,
@@ -206,7 +206,7 @@ function refreshJqGrid_weight(list){
             {
                 name: 'indeicator_name',
                 index: '指标名称',
-                width: 180,
+                width: 180
             },
             {
                 name: 'range0',
