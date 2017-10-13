@@ -1,5 +1,7 @@
 package com.iscas.sdas.controller;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -31,12 +33,15 @@ public class GeneralInfoController {
 	 * 小区首页
 	 * @param request
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping("/cellhome")
-	public ModelAndView cellhome(HttpServletRequest request){
+	public ModelAndView cellhome(HttpServletRequest request) throws UnsupportedEncodingException{
 		ModelAndView modelAndView = new ModelAndView("general/cell");
-		String name = request.getParameter("name");
-		String stationname = request.getParameter("stationname");
+		String name =new String(request.getParameter("name").getBytes("iso-8859-1"),"utf-8");
+		String stationname =new String(request.getParameter("stationname").getBytes("iso-8859-1"),"utf-8");
+		//String name = request.getParameter("name");
+		//String stationname = request.getParameter("stationname");
 		if (!CommonUntils.isempty(name)) {
 			modelAndView.addObject("cellname", name);
 		}
