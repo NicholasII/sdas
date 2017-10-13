@@ -1,7 +1,5 @@
 /**
- * by dq 
- * 2017年9月14日下午4:04:56
- * TODO
+ * by dq 2017年9月14日下午4:04:56 TODO
  */
 $.jgrid.defaults.styleUI = 'Bootstrap';
 var index = ctx + "/cell/index";
@@ -27,16 +25,19 @@ var echart_option = {
 			type : 'cross'
 		},
 		formatter : function(params) {
-            var res = params[0].seriesName + ' ' + params[0].name + ': '+ params[0].value;
-            for(var i=1;i<params.length;i++){
-                
-            res += '<br/>'+params[i].seriesName+'  前值 : ' + params[i].value[1] + '<br/>'+params[i].seriesName+'  后值 : '
-                    + params[i].value[2];
-            res += '<br/>'+params[i].seriesName+'  最小 : ' + params[i].value[3] + '<br/>'+params[i].seriesName+'  最大 : '
-                    + params[i].value[4];
-            
-            }	
-            return res;
+			var res = params[0].seriesName + ' ' + params[0].name + ': '
+					+ params[0].value;
+			for (var i = 1; i < params.length; i++) {
+
+				res += '<br/>' + params[i].seriesName + '  前值 : '
+						+ params[i].value[1] + '<br/>' + params[i].seriesName
+						+ '  后值 : ' + params[i].value[2];
+				res += '<br/>' + params[i].seriesName + '  最小 : '
+						+ params[i].value[3] + '<br/>' + params[i].seriesName
+						+ '  最大 : ' + params[i].value[4];
+
+			}
+			return res;
 		}
 	},
 	legend : {
@@ -143,34 +144,245 @@ var isdevicework = false;
 var isoutservework = false;
 var isindexinfo = false;
 var isweek = true
-$("#trendinweek").click(function() {
+var top_split = [];
+var bottom_spli = [];
+var middle_split = [];
+for (var i = 0; i < 240; i++) {
+                var b_arr = [];
+                b_arr.push(i);
+                b_arr.push(25);
+                bottom_spli.push(b_arr);
+                var s_arr = [];
+                s_arr.push(i);
+                s_arr.push(55);
+                middle_split.push(s_arr);
+                var t_arr = [];
+                t_arr.push(i);
+                t_arr.push(20);
+                top_split.push(t_arr);
+}
+var histroy_trend = {
+                tooltip : { // 提示框
+                    trigger : 'axis', // 触发类型：坐标轴触发
+                    axisPointer : { // 坐标轴指示器配置项
+                        type : 'cross' // 指示器类型，十字准星
+                    },
+                    formatter : function(params) {
+                        if (params.length > 3) {
+                            var res = params[0].seriesName + ': '
+                                    + (params[0].value[1]) + '<br/>';
+                            res += params[1].seriesName + '数量 : '
+                                    + (params[1].value[2]) + '<br/>';
+                            return res;
+                        }
 
-			$("#trendinweek").addClass("btn-info");
-			$("#trendinweek").removeClass("btn-white");
-			$("#trendinmonth").addClass("btn-white");
-			$("#trendinmonth").removeClass("btn-info");
-			$("#trendinselect").removeClass("btn-info");
-			$("#trendinselect").addClass("btn-white");
-			$("#timeselect").css("display", "none");
-		});
-$("#trendinmonth").click(function() {
-			$("#trendinmonth").addClass("btn-info");
-			$("#trendinmonth").removeClass("btn-white");
-			$("#trendinweek").removeClass("btn-info");
-			$("#trendinweek").addClass("btn-white");
-			$("#trendinselect").removeClass("btn-info");
-			$("#trendinselect").addClass("btn-white");
-			$("#timeselect").css("display", "none");
-		});
-$("#trendinselect").click(function() {
-			$("#trendinselect").addClass("btn-info");
-			$("#trendinselect").removeClass("btn-white");
-			$("#timeselect").css("display", "inline");
-			$("#trendinmonth").addClass("btn-white");
-			$("#trendinmonth").removeClass("btn-info");
-			$("#trendinweek").removeClass("btn-info");
-			$("#trendinweek").addClass("btn-white");
-		});
+                    }
+                },
+                xAxis : {
+                    type : 'category',
+                    data : []
+                },
+                yAxis : {
+                    splitLine : {
+                        show : false
+                    },
+                    max : 100
+                },
+                legend : {
+                    data : [{
+                                'name' : "历史健康度"
+                            },{
+                                'name' : "投诉"
+                            }]
+                },
+                dataZoom : [{
+                            type : 'slider',
+                            startValue : 0,
+                            endValue : 15
+                        }],
+                series : [{
+                            name : '历史健康度',
+                            type : 'line',
+                            data : [],
+                            markLine : {
+                                silent : true,
+                                data : [{
+                                            yAxis : 60
+                                        }]
+                            },
+                            label : {
+                                emphasis : {
+                                    show : true,
+                                    formatter : function(param) {
+                                        return "健康度";
+                                    },
+                                    position : 'top'
+                                }
+                            }
+                        },{
+                            name : '投诉',
+                            data : [],
+                            type : 'scatter',
+                            symbolOffset : [0, 30],
+                            symbolSize : function(data) {
+                                return data[2] * 10;
+                            },
+                            label : {
+                                emphasis : {
+                                    show : true,
+                                    formatter : function(param) {
+                                        return "投诉";
+                                    },
+                                    position : 'top'
+                                }
+                            },
+                            itemStyle : {
+                                normal : {
+                                    shadowBlur : 10,
+                                    shadowColor : 'rgba(120, 36, 50, 0.5)',
+                                    shadowOffsetY : 5,
+                                    color : new echarts.graphic.RadialGradient(
+                                            0.4, 0.3, 1, [{
+                                                        offset : 0,
+                                                        color : 'rgb(251, 118, 123)'
+                                                    }, {
+                                                        offset : 1,
+                                                        color : 'rgb(204, 46, 72)'
+                                                    }])
+                                }
+                            }
+                        }, {
+                            name : '',
+                            type : 'line',
+                            smooth : true,
+                            symbol : "none",
+                            stack : true,
+                            itemStyle : {
+                                normal : {
+                                    opacity : 0.1,
+                                    color : 'rgb(231,133,131)',
+                                    lineStyle : {
+                                        opacity : 0.1,
+                                        color : 'rgb(231,133,131)'
+                                    },
+                                    areaStyle : {
+                                        type : 'default'
+                                    }
+                                }
+                            },
+                            data : bottom_spli
+                        }, {
+                            name : '',
+                            type : 'line',
+                            smooth : true,
+                            symbol : "none",
+                            stack : true,
+                            itemStyle : {
+                                normal : {
+                                    opacity : 0.1,
+                                    color : 'rgb(231,233,131)',
+                                    lineStyle : {
+                                        opacity : 0.1,
+                                        color : 'rgb(231,233,131)'
+                                    },
+                                    areaStyle : {
+                                        type : 'default'
+                                    }
+                                }
+                            },
+                            data : middle_split
+                        }, {
+                            name : '',
+                            type : 'line',
+                            smooth : true,
+                            symbol : "none",
+                            stack : true,
+                            itemStyle : {
+                                normal : {
+                                    opacity : 0.1,
+                                    color : 'rgb(172,231,131)',
+                                    lineStyle : {
+                                        opacity : 0.1,
+                                        color : 'rgb(172,231,131)'
+                                    },
+                                    areaStyle : {
+                                        type : 'default'
+                                    }
+                                }
+                            },
+                            data : top_split
+                        }]
+            }
+function oneweek() {
+	$("#trendinweek").addClass("btn-info");
+	$("#trendinweek").removeClass("btn-white");
+	$("#trendinmonth").addClass("btn-white");
+	$("#trendinmonth").removeClass("btn-info");
+	$("#trendinselect").removeClass("btn-info");
+	$("#trendinselect").addClass("btn-white");
+	$("#timeselect").css("display", "none");
+    historyTrendQuery();
+}
+function onemonth() {
+	$("#trendinmonth").addClass("btn-info");
+	$("#trendinmonth").removeClass("btn-white");
+	$("#trendinweek").removeClass("btn-info");
+	$("#trendinweek").addClass("btn-white");
+	$("#trendinselect").removeClass("btn-info");
+	$("#trendinselect").addClass("btn-white");
+	$("#timeselect").css("display", "none");
+    historyTrendQuery("month");
+}
+function timeselect() {
+	$("#trendinselect").addClass("btn-info");
+	$("#trendinselect").removeClass("btn-white");
+	$("#timeselect").css("display", "inline");
+	$("#trendinmonth").addClass("btn-white");
+	$("#trendinmonth").removeClass("btn-info");
+	$("#trendinweek").removeClass("btn-info");
+	$("#trendinweek").addClass("btn-white");   
+}
+function historyTrendQuery(type,start,end){
+    $.ajax({
+        url : healthtrendurl,
+        data : {
+            'cellname' : cellname,
+            'start':start,
+            'end':end,
+            'type':type
+        },
+        type : "POST",
+        dataType : "json",
+        success : function(data, status) {
+            var list = data.rows;
+            var axis = [];
+            var data2 = [];
+            for (var z = 0; z < list.length; z++) {
+                var timer = list[z].time;
+                var ratio = list[z].ratio;
+                var perworks = list[z].perworks;
+                var deviceworks = list[z].deviceworks;
+                var osworks = list[z].osworks;
+                var complaints = list[z].complaints;
+                var temp = []
+                axis.push(timer);
+                temp.push(timer);
+                temp.push(ratio);
+                temp.push(complaints);
+                data2.push(temp);
+            }
+            histroy_trend.xAxis.data = axis;
+            histroy_trend.series[0].data = data2;
+            histroy_trend.series[1].data = data2;
+            ratiotrend.setOption(histroy_trend);
+        }
+    });
+}
+function query(){
+    var start = $("#starttime").val();
+    var end = $("#endtime").val();
+    historyTrendQuery("select",start,end);
+}
 $(function() {
 	/*
 	 * 故障工单
@@ -219,7 +431,10 @@ $(function() {
 					refreshJqGrid_weight(list);
 				}
 			});
-	$.ajax({
+	/*
+	 * 模型
+	 */
+    $.ajax({
 		url : "/sdas/cell/belonggroup",
 		data : {
 			'cellname' : cellname
@@ -286,295 +501,18 @@ $(function() {
 				var perworks = list[z].perworks;
 				var deviceworks = list[z].deviceworks;
 				var osworks = list[z].osworks;
-                var complaints = list[z].complaints;
+				var complaints = list[z].complaints;
 				var temp = []
 				axis.push(timer);
 				temp.push(timer);
 				temp.push(ratio);
-				temp.push(perworks);
-				temp.push(deviceworks);
-				temp.push(osworks);
-                temp.push(complaints);
+				temp.push(complaints);
 				data2.push(temp);
 			}
-
-			var top_split = [];
-			var bottom_spli = [];
-			var middle_split = [];
-			for (var i = 0; i < 240; i++) {
-				var b_arr = [];
-				b_arr.push(i);
-				b_arr.push(25);
-				bottom_spli.push(b_arr);
-				var s_arr = [];
-				s_arr.push(i);
-				s_arr.push(55);
-				middle_split.push(s_arr);
-				var t_arr = [];
-				t_arr.push(i);
-				t_arr.push(20);
-				top_split.push(t_arr);
-			}
-			ratiotrend.setOption(option = {
-				tooltip : { //提示框
-					trigger : 'axis', //触发类型：坐标轴触发
-					axisPointer : { //坐标轴指示器配置项
-						type : 'cross' //指示器类型，十字准星
-					},
-					formatter : function(params) {
-						if (params.length > 3) {
-							var res = params[0].seriesName + ': '
-									+ (params[0].value[1]) + '<br/>';
-							res += params[1].seriesName + '数量 : '
-									+ (params[1].value[2]) + '<br/>';
-							res += params[2].seriesName + '数量 : '
-									+ (params[2].value[3]) + '<br/>';
-							res += params[3].seriesName + '数量 : '
-									+ (params[3].value[4]) + '<br/>';
-                            res += params[4].seriesName + '数量 : '
-                                    + (params[4].value[5]) + '<br/>';
-							return res;
-						}
-
-					}
-				},
-				xAxis : {
-					type : 'category',
-					data : axis
-				},
-				yAxis : {
-					splitLine : {
-						show : false
-					},
-					max : 100
-				},
-				legend : {
-					data : [{
-								'name' : "历史健康度"
-							}, /*{
-								'name' : "性能工单"
-							}, {
-								'name' : "设备工单"
-							}, {
-								'name' : "退服工单"
-							},*/{
-                                'name' : "投诉"
-                            }]
-				},
-				dataZoom : [{
-							type : 'slider',
-							startValue : 0,
-							endValue : 15
-						}],
-				series : [{
-							name : '历史健康度',
-							type : 'line',
-							data : data2,
-							markLine : {
-								silent : true,
-								data : [{
-											yAxis : 60
-										}]
-							},
-							label : {
-								emphasis : {
-									show : true,
-									formatter : function(param) {
-										return "健康度";
-									},
-									position : 'top'
-								}
-							}
-						}, /*{
-							name : '性能工单',
-							data : data2,
-							type : 'scatter',
-							symbolOffset : [0, -15],
-							symbolSize : function(data) {
-								return data[2] * 10;
-							},
-							label : {
-								emphasis : {
-									show : true,
-									formatter : function(param) {
-										return "性能工单";
-									},
-									position : 'top'
-								}
-							},
-							itemStyle : {
-								normal : {
-									shadowBlur : 10,
-									shadowColor : 'rgba(25, 100, 150, 0.5)',
-									shadowOffsetY : 5,
-									color : new echarts.graphic.RadialGradient(
-											0.4, 0.3, 1, [{
-														offset : 0,
-														color : 'rgb(129, 227, 238)'
-													}, {
-														offset : 1,
-														color : 'rgb(25, 183, 207)'
-													}])
-								}
-							}
-						}, {
-							name : '设备工单',
-							data : data2,
-							type : 'scatter',
-							symbolOffset : [0, 10],
-							symbolSize : function(data) {
-								return data[3] * 10;
-							},
-							label : {
-								emphasis : {
-									show : true,
-									formatter : function(param) {
-										return "设备工单";
-									},
-									position : 'top'
-								}
-							},
-							itemStyle : {
-								normal : {
-									shadowBlur : 10,
-									shadowColor : 'rgba(25, 100, 150, 0.5)',
-									shadowOffsetY : 5,
-									color : new echarts.graphic.RadialGradient(
-											0.4, 0.3, 1, [{
-														offset : 0,
-														color : 'rgb(169, 127, 138)'
-													}, {
-														offset : 1,
-														color : 'rgb(25, 83, 237)'
-													}])
-								}
-							}
-						}, {
-							name : '退服工单',
-							data : data2,
-							type : 'scatter',
-							symbolOffset : [0, 30],
-							symbolSize : function(data) {
-								return data[4] * 10;
-							},
-							label : {
-								emphasis : {
-									show : true,
-									formatter : function(param) {
-										return "退服工单";
-									},
-									position : 'top'
-								}
-							},
-							itemStyle : {
-								normal : {
-									shadowBlur : 10,
-									shadowColor : 'rgba(120, 36, 50, 0.5)',
-									shadowOffsetY : 5,
-									color : new echarts.graphic.RadialGradient(
-											0.4, 0.3, 1, [{
-														offset : 0,
-														color : 'rgb(251, 118, 123)'
-													}, {
-														offset : 1,
-														color : 'rgb(204, 46, 72)'
-													}])
-								}
-							}
-						},*/{
-                            name : '投诉',
-                            data : data2,
-                            type : 'scatter',
-                            symbolOffset : [0, 30],
-                            symbolSize : function(data) {
-                                return data[5] * 10;
-                            },
-                            label : {
-                                emphasis : {
-                                    show : true,
-                                    formatter : function(param) {
-                                        return "投诉";
-                                    },
-                                    position : 'top'
-                                }
-                            },
-                            itemStyle : {
-                                normal : {
-                                    shadowBlur : 10,
-                                    shadowColor : 'rgba(120, 36, 50, 0.5)',
-                                    shadowOffsetY : 5,
-                                    color : new echarts.graphic.RadialGradient(
-                                            0.4, 0.3, 1, [{
-                                                        offset : 0,
-                                                        color : 'rgb(251, 118, 123)'
-                                                    }, {
-                                                        offset : 1,
-                                                        color : 'rgb(204, 46, 72)'
-                                                    }])
-                                }
-                            }
-                        }, {
-							name : '小区健康分布-预警',
-							type : 'line',
-							smooth : true,
-							symbol : "none",
-							stack : true,
-							itemStyle : {
-								normal : {
-									opacity : 0.1,
-									color : 'rgb(231,133,131)',
-									lineStyle : {
-										opacity : 0.1,
-										color : 'rgb(231,133,131)'
-									},
-									areaStyle : {
-										type : 'default'
-									}
-								}
-							},
-							data : bottom_spli
-						}, {
-							name : '小区健康分布-前兆',
-							type : 'line',
-							smooth : true,
-							symbol : "none",
-							stack : true,
-							itemStyle : {
-								normal : {
-									opacity : 0.1,
-									color : 'rgb(231,233,131)',
-									lineStyle : {
-										opacity : 0.1,
-										color : 'rgb(231,233,131)'
-									},
-									areaStyle : {
-										type : 'default'
-									}
-								}
-							},
-							data : middle_split
-						}, {
-							name : '小区健康分布-健康',
-							type : 'line',
-							smooth : true,
-							symbol : "none",
-							stack : true,
-							itemStyle : {
-								normal : {
-									opacity : 0.1,
-									color : 'rgb(172,231,131)',
-									lineStyle : {
-										opacity : 0.1,
-										color : 'rgb(172,231,131)'
-									},
-									areaStyle : {
-										type : 'default'
-									}
-								}
-							},
-							data : top_split
-						}]
-			});
+            histroy_trend.xAxis.data = axis;
+            histroy_trend.series[0].data = data2;
+            histroy_trend.series[1].data = data2;
+			ratiotrend.setOption(histroy_trend);
 		}
 	});
 });
@@ -594,8 +532,8 @@ function groupindex(cellcode, indexcode) {
 				var temp0 = splitData(scatter[0]);
 				var rtdata = calculateRT(temp0.values);
 				line.data = rtdata;
-				echart_option.series[0]=line;
-                var k = scatter.length;
+				echart_option.series[0] = line;
+				var k = scatter.length;
 				for (var i = 0; i < k; i++) {
 					var serie1 = {
 						name : name1,
@@ -662,7 +600,7 @@ function groupindex(cellcode, indexcode) {
 						}
 					}
 
-					echart_option.series[i+1]=serie1;
+					echart_option.series[i + 1] = serie1;
 				}
 				chart_mb.setOption(echart_option);
 			} else {
@@ -712,7 +650,7 @@ function refreshJqGrid(list) {
 		viewrecords : true,
 		hidegrid : false,
 		gridComplete : function() {
-			//获取某列的每一行id
+			// 获取某列的每一行id
 			var ids = jQuery("#table_list_complain").jqGrid("getDataIDs");
 			for (var i = 0; i < ids.length; i++) {
 				var id = ids[i];
@@ -732,6 +670,7 @@ function refreshJqGrid(list) {
 				$('#table_list_complain').setGridWidth(width);
 			});
 }
+
 function refreshJqGrid_capacity(list) {
 	$("#table_list_work").jqGrid({
 				data : list,
@@ -767,6 +706,7 @@ function refreshJqGrid_capacity(list) {
 				$('#table_list_work').setGridWidth(width);
 			});
 }
+
 function refreshJqGrid_device(list) {
 	$("#table_list_work2").jqGrid({
 				data : list,
@@ -804,6 +744,7 @@ function refreshJqGrid_device(list) {
 				$('#table_list_work2').setGridWidth(width);
 			});
 }
+
 function refreshJqGrid_outserver(list) {
 	$("#table_list_work3").jqGrid({
 				data : list,
@@ -841,6 +782,7 @@ function refreshJqGrid_outserver(list) {
 				$('#table_list_work3').setGridWidth(width);
 			});
 }
+
 function refreshJqGrid_indexifo(list) {
 	$("#table_list_index").jqGrid({
 				data : list,
@@ -879,6 +821,7 @@ function refreshJqGrid_indexifo(list) {
 				$('#table_list_index').setGridWidth(width);
 			});
 }
+
 function switchwork(url, params) {
 
 	$.ajax({
@@ -915,6 +858,7 @@ function switchwork(url, params) {
 				}
 			});
 }
+
 function refreshJqGrid_weight(list) {
 	$("#table_list_weight").jqGrid({
 		data : list,
@@ -1032,10 +976,6 @@ function refreshJqGrid_weight(list) {
 		viewrecords : true,
 		hidegrid : false
 	});
-	/* $(window).bind('resize', function () {
-	     var width = $('.jqGrid_wrapper').width();
-	     $('#table_list_weight').setGridWidth(width);
-	 });*/
 }
 
 function scroll() {
@@ -1068,58 +1008,7 @@ function calculateRT(data) {
 	}
 	return result;
 }
-/*$.ajax({
-			url : index,
-			type : "post",
-			data : {
-				'index' : '14',
-				'cellname' : cellname
-			},
-			dataType : "json",
-			success : function(data, status) {
-				if (data.success) {
-					var scatter = data.rows;
-					var temp0 = splitData(scatter[0]);
-					var rtdata = calculateRT(temp0.values);
-					line.data = rtdata;
-					echart_option.series.push(line);
 
-					for (var i = 0; i < scatter.length; i++) {
-						if (i == 0) {
-							var name = "簇心" + i;
-							serie.name = name;
-							serie.data = temp0.values;
-							serie.itemStyle.normal.color = color[i];
-							serie.itemStyle.normal.color0 = color[i];
-							serie.itemStyle.normal.borderColor = borderColor[i];
-							serie.itemStyle.normal.borderColor0 = borderColor[i];
-						} else {
-							var temp = splitData(scatter[i]);
-							var name = "簇心" + i;
-							serie.name = name;
-							serie.data = temp.values;
-							if (i < 3) {
-								serie.itemStyle.normal.color = color[i];
-								serie.itemStyle.normal.color0 = color[i];
-								serie.itemStyle.normal.borderColor = borderColor[i];
-								serie.itemStyle.normal.borderColor0 = borderColor[i];
-							}
-						}
-
-						echart_option.series.push(serie);
-					}
-					chart_mb.setOption(echart_option);
-				} else {
-					echart_option.series.push(line);
-					echart_option.series.push(serie);
-					chart_mb.setOption(echart_option);
-				}
-
-			},
-			error : function(data, status) {
-				alert(status);
-			}
-		});*/
 function switchindex(indeicator_id) {
 	$.ajax({
 				url : index,
@@ -1132,23 +1021,17 @@ function switchindex(indeicator_id) {
 				success : function(data, status) {
 					var data0 = [];
 					var rtdata = [];
-
 					echart_option.series[0].data = data0;
-					//echart_option.series[1].data = rtdata;	
 					chart_mb.setOption(echart_option);
 					if (data.success) {
 						var scatter = data.rows;
 						var data0 = splitData(scatter);
 						var rtdata = calculateRT(data0.values);
 						echart_option.series[0].data = data0.values;
-						//echart_option.series[1].data = rtdata;					
 						chart_mb.setOption(echart_option);
 					} else {
 						var data0 = [];
-						//var rtdata = [];
-
 						echart_option.series[0].data = data0;
-						//echart_option.series[1].data = rtdata;	
 						chart_mb.setOption(echart_option);
 					}
 
@@ -1159,21 +1042,5 @@ function switchindex(indeicator_id) {
 			});
 
 }
-/*$(function(){
- $("#trendinweek").toggle(function(){
- $("#trendinweek").addClass("btn-white");
- $("#trendinweek").removeClass("btn-info");
- },function(){
- $("#trendinweek").removeClass("btn-white");
- $("#trendinweek").addClass("btn-info");
- })
 
- $("#trendinmonth").toggle(function(){
- $("#trendinmonth").addClass("btn-white");
- $("#trendinmonth").removeClass("btn-info");
- },function(){
- $("#trendinmonth").removeClass("btn-white");
- $("#trendinmonth").addClass("btn-info");
- })
- });*/
 

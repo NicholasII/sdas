@@ -32,4 +32,12 @@ public interface CellDao {
 	List<OSWorkDto> osWorkWithinCurrTime(String cellname);
 	
 	List<CellComplainDto> complaintWithinCurrTime(String cellname);
+	
+	List<BaseCellHealth> cellhealthtrendWithinOneMonth(String cellname);
+	
+	List<CellComplainDto> complaintWithinOneMonth(String cellname);
+	
+	List<BaseCellHealth> cellhealthtrendWithinSelect(String cellname,String starttime,String endtime);
+	
+	List<CellComplainDto> complaintWithinSelect(String cellname,String starttime,String endtime);
 }
