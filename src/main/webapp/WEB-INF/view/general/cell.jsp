@@ -3,13 +3,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <title>小区综合页面</title>
 <%@ include file="/include/common.jsp"%>
 <script type="text/javascript" src="${context }/include/time.js"></script>
 <script src="${context}/lib/hplus/js/plugins/layer/laydate/laydate.js"></script>
 <script type="text/javascript"
 	src="http://api.map.baidu.com/api?v=2.0&ak=EmXf0NLcNCvBO5hdDliGtvC9D5v6GA5K"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+<script type="text/javascript" src="${context}/js/general/cell.js"></script>
+	
 <style type="text/css">
 	td {
 		margin-left: 10px;
@@ -18,6 +22,7 @@
 	input{
 	    padding-top: 5px;padding-bottom: 5px;margin-top: 0px;margin-bottom: 0px
 	}
+	#container{height:500px;width:100%;}
 </style>
 </head>
 <body>
@@ -182,6 +187,19 @@
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>健康度热力图</h5>
+						<div class="ibox-tools"></div>
+					</div>
+					<div class="ibox-content">
+						<div id="container"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="row" style="display: none;">
 			<div class="col-sm-12">
 				<div class="ibox float-e-margins">
@@ -333,6 +351,7 @@
 		</div>
 
 	</div>
+	<script type="text/javascript" src="${context}/js/general/heatMap.js"></script>	
 	<script type="text/javascript">
 		// 百度地图API功能
 		var map = new BMap.Map("allmap"); // 创建Map实例
@@ -342,6 +361,8 @@
 		map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
 		var marker = new BMap.Marker(new BMap.Point(113.270856, 23.137463));
 		map.addOverlay(marker);
+		//////
+		
 	</script>
 
 
@@ -357,6 +378,6 @@
 		var ratiotrend = echarts.init($("#ratiotrend").get(0));
 	</script>
 
-	<script type="text/javascript" src="${context}/js/general/cell.js"></script>
+
 </body>
 </html>
