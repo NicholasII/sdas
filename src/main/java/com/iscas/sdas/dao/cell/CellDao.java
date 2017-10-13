@@ -2,6 +2,7 @@ package com.iscas.sdas.dao.cell;
 
 import java.util.List;
 
+import com.iscas.sdas.dto.CellComplainDto;
 import com.iscas.sdas.dto.DeviceWorkDto;
 import com.iscas.sdas.dto.GroupIndexMeatdata;
 import com.iscas.sdas.dto.OSWorkDto;
@@ -29,4 +30,6 @@ public interface CellDao {
 	List<DeviceWorkDto> deviceWorkWithinCurrTime(String cellname);
 	
 	List<OSWorkDto> osWorkWithinCurrTime(String cellname);
+	
+	List<CellComplainDto> complaintWithinCurrTime(String cellname);
 }

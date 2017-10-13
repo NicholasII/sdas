@@ -1,16 +1,21 @@
 package com.iscas.sdas.dto;
 
 import java.sql.Timestamp;
-
+import java.util.Date;
+/**
+ * 投诉信息dto
+ * @author dongqun
+ * 2017年10月13日上午11:14:30
+ */
 public class CellComplainDto {
 
-	private Timestamp record_time;
+	private Date record_time;
 	private String phone_number;
 	private String live_cellname1,live_cellname2,live_cellname3;
-	public Timestamp getRecord_time() {
+	public Date getRecord_time() {
 		return record_time;
 	}
-	public void setRecord_time(Timestamp record_time) {
+	public void setRecord_time(Date record_time) {
 		this.record_time = record_time;
 	}
 	public String getPhone_number() {

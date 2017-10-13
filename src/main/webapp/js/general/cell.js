@@ -286,6 +286,7 @@ $(function() {
 				var perworks = list[z].perworks;
 				var deviceworks = list[z].deviceworks;
 				var osworks = list[z].osworks;
+                var complaints = list[z].complaints;
 				var temp = []
 				axis.push(timer);
 				temp.push(timer);
@@ -293,6 +294,7 @@ $(function() {
 				temp.push(perworks);
 				temp.push(deviceworks);
 				temp.push(osworks);
+                temp.push(complaints);
 				data2.push(temp);
 			}
 
@@ -329,6 +331,8 @@ $(function() {
 									+ (params[2].value[3]) + '<br/>';
 							res += params[3].seriesName + '数量 : '
 									+ (params[3].value[4]) + '<br/>';
+                            res += params[4].seriesName + '数量 : '
+                                    + (params[4].value[5]) + '<br/>';
 							return res;
 						}
 
@@ -347,13 +351,15 @@ $(function() {
 				legend : {
 					data : [{
 								'name' : "历史健康度"
-							}, {
+							}, /*{
 								'name' : "性能工单"
 							}, {
 								'name' : "设备工单"
 							}, {
 								'name' : "退服工单"
-							}]
+							},*/{
+                                'name' : "投诉"
+                            }]
 				},
 				dataZoom : [{
 							type : 'slider',
@@ -379,7 +385,7 @@ $(function() {
 									position : 'top'
 								}
 							}
-						}, {
+						}, /*{
 							name : '性能工单',
 							data : data2,
 							type : 'scatter',
@@ -475,7 +481,39 @@ $(function() {
 													}])
 								}
 							}
-						}, {
+						},*/{
+                            name : '投诉',
+                            data : data2,
+                            type : 'scatter',
+                            symbolOffset : [0, 30],
+                            symbolSize : function(data) {
+                                return data[5] * 10;
+                            },
+                            label : {
+                                emphasis : {
+                                    show : true,
+                                    formatter : function(param) {
+                                        return "投诉";
+                                    },
+                                    position : 'top'
+                                }
+                            },
+                            itemStyle : {
+                                normal : {
+                                    shadowBlur : 10,
+                                    shadowColor : 'rgba(120, 36, 50, 0.5)',
+                                    shadowOffsetY : 5,
+                                    color : new echarts.graphic.RadialGradient(
+                                            0.4, 0.3, 1, [{
+                                                        offset : 0,
+                                                        color : 'rgb(251, 118, 123)'
+                                                    }, {
+                                                        offset : 1,
+                                                        color : 'rgb(204, 46, 72)'
+                                                    }])
+                                }
+                            }
+                        }, {
 							name : '小区健康分布-预警',
 							type : 'line',
 							smooth : true,
@@ -560,7 +598,7 @@ function groupindex(cellcode, indexcode) {
                 var k = scatter.length;
 				for (var i = 0; i < k; i++) {
 					var serie1 = {
-						name : "你是傻逼吗",
+						name : name1,
 						type : 'candlestick',
 						data : [],
 						itemStyle : {

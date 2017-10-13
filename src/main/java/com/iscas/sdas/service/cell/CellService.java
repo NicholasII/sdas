@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.iscas.sdas.dao.cell.CellDao;
+import com.iscas.sdas.dto.CellComplainDto;
 import com.iscas.sdas.dto.DeviceWorkDto;
 import com.iscas.sdas.dto.GroupIndexMeatdata;
 import com.iscas.sdas.dto.OSWorkDto;
@@ -51,10 +52,11 @@ public class CellService {
 		List<TotalHealthInfoDto> list = new ArrayList<>();
 		try {
 			List<BaseCellHealth> cellHealths = cellDao.cellhealthtrend(cellname);		
-			if (cellHealths!=null) {
+			if (cellHealths!=null && cellHealths.size()>0) {
 				List<String> perWorkCount = permanceWorkWithinCurrenttime(cellname); 
 				List<String> deviceWorkCount = deviceWorkWithinCurrenttime(cellname);
 				List<String> osWorkCount = osWorkWithinCurrenttime(cellname);
+				List<String> complaints = complaintsWithinCurrenttime(cellname);
 				for (int i=0;i<cellHealths.size(); i++) {
 					BaseCellHealth cellHealth = cellHealths.get(i);
 					Method[] methods = cellHealth.getClass().getMethods();
@@ -70,6 +72,7 @@ public class CellService {
 							infoDto.setDeviceworks(0);
 							infoDto.setOsworks(0);
 							infoDto.setPerworks(0);
+							infoDto.setComplaints(0);
 							/*map[0] = moment;
 							map[1] = ratio;
 							map[2] = 0;//性能单数量
@@ -102,6 +105,16 @@ public class CellService {
 										System.out.println("--退服务---"+osWorkCount.get(j)+"--------"+infoDto.getTime());
 										int osworks = infoDto.getPerworks()+1;
 										infoDto.setPerworks(osworks);
+									}
+								}
+							}
+							if (complaints!=null) {
+								for (int j = 0; j < complaints.size(); j++) {
+									
+									if (complaints.get(j).equals(infoDto.getTime())) {
+										System.out.println("--投诉---"+complaints.get(j)+"--------"+infoDto.getTime());
+										int complaint = infoDto.getComplaints()+1;
+										infoDto.setPerworks(complaint);
 									}
 								}
 							}
@@ -178,7 +191,26 @@ public class CellService {
 		return list;
 	}
 	
-	
+	/**
+	 * 投诉工单数量
+	 * @param cellname
+	 * @return
+	 */
+	private List<String> complaintsWithinCurrenttime(String cellname){
+		List<String> list = new ArrayList<>();
+		List<CellComplainDto> works =  cellDao.complaintWithinCurrTime(cellname);
+		for (CellComplainDto work : works) {
+			int year = work.getRecord_time().getYear()+1900;
+			int month = work.getRecord_time().getMonth()+1;
+			String monthstr = month>=10?""+month:"0"+month;
+			int day = work.getRecord_time().getDate();
+			String daystr = day>=10?""+day:"0"+day;
+			int hour = work.getRecord_time().getHours();
+			String occurtime = year +"-"+ monthstr+"-"+daystr+" "+hour+"时";
+			list.add(occurtime);
+		}
+		return list;
+	}
 	
 	private double parseRatio(String range){
 		double ratio = 0;
