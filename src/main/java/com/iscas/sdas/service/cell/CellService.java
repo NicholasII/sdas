@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.iscas.sdas.dao.cell.CellDao;
+import com.iscas.sdas.dto.CellComplainDto;
 import com.iscas.sdas.dto.DeviceWorkDto;
 import com.iscas.sdas.dto.GroupIndexMeatdata;
 import com.iscas.sdas.dto.OSWorkDto;
@@ -46,15 +47,21 @@ public class CellService {
 	public String getgroup(String cellname){
 		return cellDao.getgroup(cellname);
 	}
-	
-	public List<TotalHealthInfoDto> generateCellHealthTrend(String cellname){
+	/**
+	 * 一周历史曲线
+	 * @param cellname
+	 * @return
+	 */
+	public List<TotalHealthInfoDto> generateCellHealthTrend(String cellname,String type,String start,String end){
 		List<TotalHealthInfoDto> list = new ArrayList<>();
 		try {
 			List<BaseCellHealth> cellHealths = cellDao.cellhealthtrend(cellname);		
-			if (cellHealths!=null) {
-				List<String> perWorkCount = permanceWorkWithinCurrenttime(cellname); 
-				List<String> deviceWorkCount = deviceWorkWithinCurrenttime(cellname);
-				List<String> osWorkCount = osWorkWithinCurrenttime(cellname);
+			if (cellHealths!=null && cellHealths.size()>0) {
+				//List<String> perWorkCount = permanceWorkWithinCurrenttime(cellname); 
+				//List<String> deviceWorkCount = deviceWorkWithinCurrenttime(cellname);
+				//List<String> osWorkCount = osWorkWithinCurrenttime(cellname);
+				List<String> complaints = complaintsWithinCurrenttime(cellname,type,start,end);
+			
 				for (int i=0;i<cellHealths.size(); i++) {
 					BaseCellHealth cellHealth = cellHealths.get(i);
 					Method[] methods = cellHealth.getClass().getMethods();
@@ -70,12 +77,8 @@ public class CellService {
 							infoDto.setDeviceworks(0);
 							infoDto.setOsworks(0);
 							infoDto.setPerworks(0);
-							/*map[0] = moment;
-							map[1] = ratio;
-							map[2] = 0;//性能单数量
-							map[3] = 0;//设备
-							map[4] = 0;//退服*/	
-							if (perWorkCount!=null) {
+							infoDto.setComplaints(0);
+							/*if (perWorkCount!=null) {
 								for (int j = 0; j < perWorkCount.size(); j++) {
 									
 									if (perWorkCount.get(j).equals(infoDto.getTime())) {
@@ -104,6 +107,16 @@ public class CellService {
 										infoDto.setPerworks(osworks);
 									}
 								}
+							}*/
+							if (complaints!=null) {
+								for (int j = 0; j < complaints.size(); j++) {
+									
+									if (complaints.get(j).equals(infoDto.getTime())) {
+										System.out.println("--投诉---"+complaints.get(j)+"--------"+infoDto.getTime());
+										int complaint = infoDto.getComplaints()+1;
+										infoDto.setPerworks(complaint);
+									}
+								}
 							}
 							list.add(infoDto);
 						}		
@@ -115,6 +128,8 @@ public class CellService {
 		}
 		return list;
 	}
+	
+	
 	
 	/**
 	 * 当前时间性能单数量
@@ -178,6 +193,35 @@ public class CellService {
 		return list;
 	}
 	
+	/**
+	 * 投诉工单数量
+	 * @param cellname
+	 * @return
+	 */
+	private List<String> complaintsWithinCurrenttime(String cellname,String type,String starttime,String endtime){
+		List<String> list = new ArrayList<>();
+		List<CellComplainDto> works;
+		if ("week".equals(type)) {
+			works =  cellDao.complaintWithinCurrTime(cellname);
+		}else if ("month".equals(type)) {
+			works =  cellDao.complaintWithinOneMonth(cellname);
+		}else {
+			works =  cellDao.complaintWithinSelect(cellname, starttime, endtime);
+		}
+		if (works!=null) {
+			for (CellComplainDto work : works) {
+				int year = work.getRecord_time().getYear()+1900;
+				int month = work.getRecord_time().getMonth()+1;
+				String monthstr = month>=10?""+month:"0"+month;
+				int day = work.getRecord_time().getDate();
+				String daystr = day>=10?""+day:"0"+day;
+				int hour = work.getRecord_time().getHours();
+				String occurtime = year +"-"+ monthstr+"-"+daystr+" "+hour+"时";
+				list.add(occurtime);
+			}
+		}
+		return list;
+	}	
 	
 	
 	private double parseRatio(String range){

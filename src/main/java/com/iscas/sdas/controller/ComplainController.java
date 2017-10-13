@@ -60,7 +60,11 @@ public class ComplainController {
 		return map;
 	}
 	
-	
+	/**
+	 * 小区投诉工单
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/getcelllist")
 	@ResponseBody
 	public ModelMap getcelllist(HttpServletRequest request){

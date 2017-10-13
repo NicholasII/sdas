@@ -5,14 +5,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
 <title>小区综合页面</title>
 <%@ include file="/include/common.jsp"%>
 <script type="text/javascript" src="${context }/include/time.js"></script>
 <script src="${context}/lib/hplus/js/plugins/layer/laydate/laydate.js"></script>
 <script type="text/javascript"
 	src="http://api.map.baidu.com/api?v=2.0&ak=EmXf0NLcNCvBO5hdDliGtvC9D5v6GA5K"></script>
-	<script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
-<script type="text/javascript" src="${context}/js/general/cell.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+
 	
 <style type="text/css">
 	td {
@@ -133,19 +136,20 @@
 					<h5>小区健康度历史趋势</h5>
 					<div class="ibox-tools">
 						<div class="btn-group">
-							<button class="btn btn-info" id="trendinweek" type="button">一周</button>
-							<button class="btn btn-white" id="trendinmonth" type="button">一月</button>
-							<button class="btn btn-white" id="trendinselect" type="button">按时间选择</button>
+							<button class="btn btn-info" id="trendinweek" type="button" onclick="javascript:oneweek()">一周</button>
+							<button class="btn btn-white" id="trendinmonth" type="button" onclick="javascript:onemonth()">一月</button>
+							<button class="btn btn-white" id="trendinselect" type="button" onclick="javascript:timeselect()">按时间选择</button>
 							<div id="timeselect" style="display: none;">
-								<input id="starttime" style="margin-top: -3px !important;"
+								<input id="starttime" style="margin-left:5px;margin-top: -7px !important;"
 									class="layer-date" placeholder="请输入开始时间"
 									onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
 								<span id="span" style="margin-top: -10px ;display: inline !important;"
 									class="input-group-addon">到</span> 
 								<input id="endtime"
-									style="margin-top: -3px !important;" class="layer-date"
+									style="margin-top: -7px !important;" class="layer-date"
 									placeholder="请输入结束时间"
 									onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+								<button class="btn btn-info" type="button" onclick="javascript:query()">确定</button>
 							</div>
 						</div>
 					</div>
@@ -365,6 +369,6 @@
 		var ratiotrend = echarts.init($("#ratiotrend").get(0));
 	</script>
 
-
+    <script type="text/javascript" src="${context}/js/general/cell.js"></script>
 </body>
 </html>

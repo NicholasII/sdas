@@ -87,10 +87,16 @@ public class CellController {
 	 */
 	@RequestMapping("/healthtrend")
 	@ResponseBody
-	public ModelMap healthtrend(HttpServletRequest request){
+	public ModelMap healthtrend(HttpServletRequest request,
+			@RequestParam(required=true,defaultValue="week",value="type")String type){
 		ModelMap map = new ModelMap();
 		String cellname = request.getParameter("cellname");
-		List<TotalHealthInfoDto> list = cellService.generateCellHealthTrend(cellname);
+		String starttime = null,endtime = null;
+		if ("select".equals(type)) {
+			starttime = request.getParameter("start");
+			endtime = request.getParameter("end");
+		}
+		List<TotalHealthInfoDto> list = cellService.generateCellHealthTrend(cellname,type,starttime,endtime);
 		map.addAttribute(Constraints.RESULT_ROW, list);
 		return map;
 	}
