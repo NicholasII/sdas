@@ -21,39 +21,18 @@
 					<div class="col-sm-5">
 						<h5>小区健康异常预警</h5>
 						<div class="ibox-content">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>时间</th>
-										<th>小区名称</th>
-										<th>次数</th>
-									</tr>
-								</thead>
-								<tbody id="table">
-									<tr>
-										<td>2017-08-26 20:00</td>
-										<td>广州白云区朝阳工业区F-ZLH-1</td>
-										<td>10</td>
-									</tr>
-									<tr>
-										<td>2017-08-26 20:00</td>
-										<td>广州西区和辉花园D-ZLH-3</td>
-										<td>9</td>
-									</tr>
-									<tr>
-										<td>2017-08-26 20:00</td>
-										<td>广州白云区朝阳工业区F-ZLH-1</td>
-										<td>8</td>
-									</tr>
-								</tbody>
-							</table>
+							<div class="jqGrid_wrapper">
+								<table class="table" id="table_list_alarm"></table>
+								<div id="pager_list_alarm"></div>
+							</div>
 						</div>
 					</div>
 					<div class="col-sm-7">
 						<div>
 							<h5 style="float: left;">小区指标异常预警</h5>
 							<div style="float: right;" class="ibox-tools">
-								<select><option>全部</option><option>PRB利用率</option>
+								<select><option>全部</option>
+									<option>PRB利用率</option>
 									<option>切换出成功率</option>
 								</select>
 							</div>
@@ -101,11 +80,12 @@
 				</div>
 				<div class="ibox-content">
 					<div class="col-sm-12">
-						<a href="javascript:iframeconvert('/sdas/work/capacity','性能工单')" <h5>最近一天可疑工单</h5></a>
+						<a href="javascript:iframeconvert('/sdas/work/capacity','性能工单')"
+							<h5>最近一天可疑工单</h5></a>
 						<div class="ibox-content">
 							<div class="jqGrid_wrapper">
 								<table class="table" id="table_list_2"></table>
-								<!-- <div id="pager_list_2"></div> -->
+								<div id="pager_list_2"></div>
 							</div>
 						</div>
 					</div>
@@ -123,7 +103,7 @@
 				<div class="ibox float-e-margins">
 					<div class="ibox-title">
 						<a href="${context}/work/complaint"><h5>集中投诉</h5></a>
-						
+
 					</div>
 					<div class="ibox-content">
 						<div class="jqGrid_wrapper">

@@ -1,11 +1,9 @@
 /**
- * by dq 
- * 2017年9月14日下午8:00:31
- * TODO
+ * by dq 2017年9月14日下午8:00:31 TODO
  */
+ $.jgrid.defaults.styleUI = 'Bootstrap';
 $(function(){
-	$.jgrid.defaults.styleUI = 'Bootstrap';
-	// Examle data for jqGrid
+
 	$.ajax({
 		url: "/sdas/complain/getlist",
 		type:"GET",
@@ -25,6 +23,21 @@ $(function(){
             var list = temp.rows;
             refreshJqGrid2(list);
             
+        },
+        error:function(data){
+            alert("fail");
+        }
+    }); 
+    /*
+	 * 预警
+	 */
+    $.ajax({
+        url: "/sdas/alarm/currentday",
+        type:"GET",
+        success:function(data,status){
+            var temp = eval('(' + data + ')'); 
+            var list = temp.rows;
+            refreshJqGrid_alarm(list);
         },
         error:function(data){
             alert("fail");
@@ -65,7 +78,7 @@ function refreshJqGrid(list){
         viewrecords: true,
         hidegrid: false,
         gridComplete:function(){
-        	//获取某列的每一行id
+        	// 获取某列的每一行id
         	var ids = jQuery("#table_list_1").jqGrid("getDataIDs");
         	for(var i=0;i<ids.length;i++){
         	    var id = ids[i];
@@ -85,19 +98,70 @@ function refreshJqGrid(list){
 }
 
 function scroll2(){
-    /*var table = document.getElementById("table").getElementsByTagName("tbody");*/
-    /*var row = table.firstChild;
-    table.remove(row);    
-    table.append(row);*/
-    
+ 
     $("#table tr:first").appendTo($("#table"));
     $("#table1 tr:first").appendTo($("#table1"));
 }
-
 setInterval(() => {
 	scroll2()
 }, 10000);
+function alarmrefresh(){
+    $.ajax({
+        url: "/sdas/alarm/currentday",
+        type:"GET",
+        success:function(data,status){
+            $("#table_list_alarm").jqGrid("clearGridData")
+            var temp = eval('(' + data + ')'); 
+            var list = temp.rows;
+            $("#table_list_alarm").jqGrid('setGridParam',{
+                 datatype:'local',
+                 data:list,// newData是符合格式要求的重新加载的数据
+                page:1// 哪一页的值       
+            }).trigger("reloadGrid");
+        }
+    }); 
+}
+setInterval(function(){
+    alarmrefresh()
+},15*60*1000);
+function refreshJqGrid_alarm(list){
+    
+    $("#table_list_alarm").jqGrid({
+        data:list,
+        datatype: "local",
+        height: "auto",
+        autowidth: true,
+        shrinkToFit: true,
+        rowNum: 5,
+        rowList: [10, 20, 30],
+        colNames: ['发生时间', '小区名称', '次数'],
+        colModel: [
+            {
+                name: 'yyyyMMdd',
+                index: 'yyyyMMdd',
+                width: 40
+            },
+            {
+                name: 'cell_code',
+                index: 'cell_code',
+                width: 50
+            },
+            {
+                name: 'count',
+                index: 'count',
+                width: 30
+            }
+        ],
+        pager: "#pager_list_alarm",
+        viewrecords: true,
+        hidegrid: false
+    });
+    $(window).bind('resize', function () {
+        var width = $('.jqGrid_wrapper').width();
+        $('#table_list_alarm').setGridWidth(width);
 
+    });
+}
 function refreshJqGrid2(list){
 	$.jgrid.defaults.styleUI = 'Bootstrap';
 	$("#table_list_2").jqGrid({
@@ -129,11 +193,11 @@ function refreshJqGrid2(list){
                 width: 50
             }
         ],
-        //pager: "#pager_list_2",
+        pager: "#pager_list_2",
         viewrecords: true,
         hidegrid: false,
         gridComplete:function(){
-        	//获取某列的每一行id
+        	// 获取某列的每一行id
         	var ids = jQuery("#table_list_2").jqGrid("getDataIDs");
         	for(var i=0;i<ids.length;i++){
         	    var id = ids[i];
