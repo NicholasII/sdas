@@ -22,7 +22,6 @@
 	input{
 	    padding-top: 5px;padding-bottom: 5px;margin-top: 0px;margin-bottom: 0px
 	}
-	#container{height:500px;width:100%;}
 </style>
 </head>
 <body>
@@ -187,19 +186,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="ibox float-e-margins">
-					<div class="ibox-title">
-						<h5>健康度热力图</h5>
-						<div class="ibox-tools"></div>
-					</div>
-					<div class="ibox-content">
-						<div id="container"></div>
-					</div>
-				</div>
-			</div>
-		</div>
 		<div class="row" style="display: none;">
 			<div class="col-sm-12">
 				<div class="ibox float-e-margins">
@@ -351,11 +337,11 @@
 		</div>
 
 	</div>
-	<script type="text/javascript" src="${context}/js/general/heatMap.js"></script>	
+	
 	<script type="text/javascript">
 		// 百度地图API功能
 		var map = new BMap.Map("allmap"); // 创建Map实例
-		map.centerAndZoom(new BMap.Point(113.270856, 23.137463), 13); // 初始化地图,设置中心点坐标和地图级别
+		map.centerAndZoom(new BMap.Point(113.270856, 23.137463), 14); // 初始化地图,设置中心点坐标和地图级别
 		map.addControl(new BMap.MapTypeControl()); //添加地图类型控件
 		map.setCurrentCity("广州"); // 设置地图显示的城市 此项是必须设置的
 		map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
@@ -364,6 +350,7 @@
 		//////
 		
 	</script>
+	<script type="text/javascript" src="${context}/js/general/heatMap.js"></script>	
 
 
 	<script type="text/javascript">

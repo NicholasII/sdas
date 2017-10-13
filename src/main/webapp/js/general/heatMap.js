@@ -1,8 +1,4 @@
-var heatMap = new BMap.Map("container");          // 创建地图实例
-    var point = new BMap.Point(113.274449,23.142448);
-    heatMap.centerAndZoom(point, 13);             // 初始化地图，设置中心点坐标和地图级别
-    heatMap.enableScrollWheelZoom(); // 允许滚轮缩放
-  
+
     var points =[
     {"lng":113.278261,"lat":23.141984,"count":50},
     {"lng":113.273332,"lat":23.146532,"count":51},
@@ -114,7 +110,7 @@ var heatMap = new BMap.Map("container");          // 创建地图实例
 		    value 为颜色值. 
      */
 	heatmapOverlay = new BMapLib.HeatmapOverlay({"radius":20});
-	heatMap.addOverlay(heatmapOverlay);
+	map.addOverlay(heatmapOverlay);
 	heatmapOverlay.setDataSet({data:points,max:100});
 	
     function setGradient(){
