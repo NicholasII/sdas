@@ -7,4 +7,6 @@ import com.iscas.sdas.dto.AlarmDto;
 public interface AlarmDao {
 
 	List<AlarmDto> currentDayAlarm();
+	
+	List<AlarmDto> allAlarm(AlarmDto alarmDto);
 }

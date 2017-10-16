@@ -19,7 +19,7 @@
 				</div>
 				<div class="ibox-content">
 					<div class="col-sm-5">
-						<h5>小区健康异常预警</h5>
+						<a href="javascript:iframeconvert('/sdas/alarm/','小区健康异常预警')"><h5>小区健康异常预警</h5></a>
 						<div class="ibox-content">
 							<div class="jqGrid_wrapper">
 								<table class="table" id="table_list_alarm"></table>

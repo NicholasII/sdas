@@ -198,7 +198,7 @@ var histroy_trend = {
                 dataZoom : [{
                             type : 'slider',
                             startValue : 0,
-                            endValue : 15
+                            endValue : 60
                         }],
                 series : [{
                             name : '历史健康度',

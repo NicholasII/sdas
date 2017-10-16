@@ -17,4 +17,8 @@ public class AlarmService {
 	public List<AlarmDto> currentDayAlarm(){
 		return alarmDao.currentDayAlarm();
 	}
+	
+	public List<AlarmDto> allAlarm(AlarmDto alarmDto){
+		return alarmDao.allAlarm(alarmDto);
+	}
 }

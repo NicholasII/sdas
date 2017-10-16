@@ -55,7 +55,14 @@ public class CellService {
 	public List<TotalHealthInfoDto> generateCellHealthTrend(String cellname,String type,String start,String end){
 		List<TotalHealthInfoDto> list = new ArrayList<>();
 		try {
-			List<BaseCellHealth> cellHealths = cellDao.cellhealthtrend(cellname);		
+			List<BaseCellHealth> cellHealths;		
+			if ("week".equals(type)) {
+				cellHealths = cellDao.cellhealthtrend(cellname);
+			}else if ("month".equals(type)) {
+				cellHealths = cellDao.cellhealthtrendWithinOneMonth(cellname);
+			}else {
+				cellHealths = cellDao.cellhealthtrendWithinSelect(cellname, start, end);
+			}
 			if (cellHealths!=null && cellHealths.size()>0) {
 				//List<String> perWorkCount = permanceWorkWithinCurrenttime(cellname); 
 				//List<String> deviceWorkCount = deviceWorkWithinCurrenttime(cellname);
@@ -71,7 +78,10 @@ public class CellService {
 							String range = (String)method.invoke(cellHealth, null);						
 							int  moment = Integer.parseInt(method.getName().substring(method.getName().lastIndexOf("_")+1));
 							Double ratio = parseRatio(range);
-							String time = cellHealth.getYyyyMMdd()+" "+moment+"时";
+							String year  = cellHealth.getYyyyMMdd().substring(0, 4);
+							String month  = cellHealth.getYyyyMMdd().substring(4, 6);
+							String day  = cellHealth.getYyyyMMdd().substring(6);
+							String time = year+"-"+month+"-"+day+" "+moment+"时";
 							infoDto.setTime(time);
 							infoDto.setRatio(ratio);
 							infoDto.setDeviceworks(0);
@@ -112,9 +122,10 @@ public class CellService {
 								for (int j = 0; j < complaints.size(); j++) {
 									
 									if (complaints.get(j).equals(infoDto.getTime())) {
-										System.out.println("--投诉---"+complaints.get(j)+"--------"+infoDto.getTime());
+										
 										int complaint = infoDto.getComplaints()+1;
-										infoDto.setPerworks(complaint);
+										infoDto.setComplaints(complaint);
+										System.out.println("--投诉---"+complaints.get(j)+"--------"+infoDto.getTime()+"总共"+complaint+"个");
 									}
 								}
 							}

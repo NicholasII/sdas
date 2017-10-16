@@ -6,4 +6,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="currentDayAlarm" resultType="com.iscas.sdas.dto.AlarmDto">
 		SELECT cell_code,COUNT(cell_code) AS count,yyyyMMdd FROM t_cell_result_info WHERE yyyyMMdd = (SELECT yyyyMMdd FROM t_cell_result_info ORDER BY yyyyMMdd DESC LIMIT 1) GROUP BY cell_code
 	</select>
+    <select id="allAlarm" resultType="com.iscas.sdas.dto.AlarmDto" parameterType="com.iscas.sdas.dto.AlarmDto">
+        SELECT cell_code,COUNT(cell_code) AS count,yyyyMMdd FROM t_cell_result_info GROUP BY cell_code
+        <where>
+        	<if test="cell_code !=null">
+        		<bind name="cellcode" value="'%'+ _parameter.getCell_code() +'%'"/>
+        	    cell_code like #{cellcode}
+        	</if>
+        	<if test="yyyyMMdd != null">
+        		and yyyyMMdd = #{yyyyMMdd}
+        	</if>
+        </where>
+    </select>
 </mapper>
