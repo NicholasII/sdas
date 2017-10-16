@@ -22,7 +22,11 @@ public interface CellDao {
 	BaseGroupIndex getgroupindexcontent(String grouptype,String indexcode);
 	
 	String getgroup(String cellname);
-	
+	/**
+	 * 一个周的健康度
+	 * @param cellname
+	 * @return
+	 */
 	List<BaseCellHealth> cellhealthtrend(String cellname);
 	
 	List<PerformanceWorkDto> performWorkWithinCurrTime(String cellname);
@@ -32,11 +36,21 @@ public interface CellDao {
 	List<OSWorkDto> osWorkWithinCurrTime(String cellname);
 	
 	List<CellComplainDto> complaintWithinCurrTime(String cellname);
-	
+	/**
+	 * 一个月的健康度
+	 * @param cellname
+	 * @return
+	 */
 	List<BaseCellHealth> cellhealthtrendWithinOneMonth(String cellname);
 	
 	List<CellComplainDto> complaintWithinOneMonth(String cellname);
-	
+	/**
+	 * 一定时间段的健康度
+	 * @param cellname
+	 * @param starttime
+	 * @param endtime
+	 * @return
+	 */
 	List<BaseCellHealth> cellhealthtrendWithinSelect(String cellname,String starttime,String endtime);
 	
 	List<CellComplainDto> complaintWithinSelect(String cellname,String starttime,String endtime);

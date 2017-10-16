@@ -125,7 +125,7 @@ public class CellService {
 										
 										int complaint = infoDto.getComplaints()+1;
 										infoDto.setComplaints(complaint);
-										System.out.println("--投诉---"+complaints.get(j)+"--------"+infoDto.getTime()+"总共"+complaint+"个");
+										//System.out.println("--投诉---"+complaints.get(j)+"--------"+infoDto.getTime()+"总共"+complaint+"个");
 									}
 								}
 							}

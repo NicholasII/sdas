@@ -163,22 +163,7 @@
 			<div class="col-sm-12">
 				<div class="tabs-container">
 					<ul id="group_index" class="nav nav-tabs">
-						<!-- <li onclick="switchindex('14')" class="active"><a
-							data-toggle="tab" href="#tab-1" aria-expanded="true">MR-总流量（KB）</a></li>
-						<li onclick="switchindex('17')" class=""><a data-toggle="tab"
-							href="#tab-2" aria-expanded="false">YY-RRC连接建立成功率</a></li>
-						<li onclick="switchindex('20')" class=""><a data-toggle="tab"
-							href="#tab-3" aria-expanded="false">YY-ERAB建立成功率</a></li>
-						<li onclick="switchindex('21')" class=""><a data-toggle="tab"
-							href="#tab-4" aria-expanded="false">YY-无线掉线率</a></li>
-						<li onclick="switchindex('24')" class=""><a data-toggle="tab"
-							href="#tab-5" aria-expanded="false">YY-切换成功率</a></li>
-						<li onclick="switchindex('27')" class=""><a data-toggle="tab"
-							href="#tab-6" aria-expanded="false">YY-无线接通率</a></li>
-						<li onclick="switchindex('32')" class=""><a data-toggle="tab"
-							href="#tab-7" aria-expanded="false">用户面最大激活UE数</a></li>
-						<li onclick="switchindex('48')" class=""><a data-toggle="tab"
-							href="#tab-8" aria-expanded="false">小区载频PUSCH实际使用PRB个数</a></li> -->
+					
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active">
@@ -267,25 +252,52 @@
 		</div>
 
 		<script type="text/javascript">
-			var capacityurl = ctx + "/capacitywork/gettable";
+			var capacityweekurl = ctx + "/capacitywork/oneweek";
+			var capacitymonthurl = ctx + "/capacitywork/onemonth";
 			var deviceurl = ctx + "/devicework/getlist";
+			var deviceweekurl = ctx + "/devicework/oneweek";
+			var devicemonthurl = ctx + "/devicework/onemonth";
 			var complainturl = ctx + "/complain/getcelllist";
 			var outservice = ctx + "/outserverwork/getlist";
+			var outserviceweek = ctx + "/outserverwork/oneweek";
+			var outservicemonth = ctx + "/outserverwork/onemonth";
 			var indexurl = ctx;
 		</script>
 		<div class="row">
+			<div class="ibox-title">
+					<h5>工单信息</h5>
+					<div class="ibox-tools">
+						<div class="btn-group">
+							<button class="btn btn-info" id="workinweek" type="button" onclick="javascript:workoneweek()">一周</button>
+							<button class="btn btn-white" id="workinmonth" type="button" onclick="javascript:workonemonth()">一月</button>
+							<button class="btn btn-white" id="workinselect" type="button" onclick="javascript:worktimeselect()">按时间选择</button>
+							<div id="worktimeselect" style="display: none;">
+								<input id="start" style="margin-left:5px;margin-top: -7px !important;"
+									class="layer-date" placeholder="请输入开始时间"
+									onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+								<span id="span" style="margin-top: -10px ;display: inline !important;"
+									class="input-group-addon">到</span> 
+								<input id="end"
+									style="margin-top: -7px !important;" class="layer-date"
+									placeholder="请输入结束时间"
+									onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+								<button class="btn btn-info" type="button" onclick="javascript:query2()">确定</button>
+							</div>
+						</div>
+					</div>
+			</div>
 			<div class="col-sm-12">
 				<div class="tabs-container">
 					<ul class="nav nav-tabs">
 						<li
-							onclick="switchwork('/sdas/capacitywork/gettable','${cellname}')"
+							onclick="switchwork('/sdas/capacitywork/oneweek','${cellname}')"
 							class="active"><a data-toggle="tab" href="#tab-1"
 							aria-expanded="true">性能工单</a></li>
-						<li onclick="switchwork('/sdas/devicework/getlist','${cellname}')"
+						<li onclick="switchwork('/sdas/devicework/oneweek','${cellname}')"
 							class=""><a data-toggle="tab" href="#tab-2"
 							aria-expanded="false">设备工单</a></li>
 						<li
-							onclick="switchwork('/sdas/outserverwork/getlist','${cellname}')"
+							onclick="switchwork('/sdas/outserverwork/oneweek','${cellname}')"
 							class=""><a data-toggle="tab" href="#tab-3"
 							aria-expanded="false">退服工单</a></li>
 						<li onclick="switchwork('/sdas/cellindex/mrinfo','${cellname}')"
@@ -351,7 +363,6 @@
 		map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
 		var marker = new BMap.Marker(new BMap.Point(113.270856, 23.137463));
 		map.addOverlay(marker);
-		//////
 		
 	</script>
 	<script type="text/javascript" src="${context}/js/general/heatMap.js"></script>	
@@ -359,13 +370,6 @@
 
 	<script type="text/javascript">
 		var chart_mb = echarts.init($("#mb").get(0));
-		/* var chart_yyttc = echarts.init($("#yyttc").get(0));
-		var chart_yyerab = echarts.init($("#yyerab").get(0));
-		var chart_yylostconn = echarts.init($("#yylostconn").get(0));
-		var chart_yyswitch = echarts.init($("#yyswitch").get(0));
-		var chart_yyconn = echarts.init($("#yyconn").get(0));
-		var chart_mastue = echarts.init($("#mastue").get(0));
-		var chart_prb = echarts.init($("#prb").get(0)); */
 		var ratiotrend = echarts.init($("#ratiotrend").get(0));
 	</script>
 

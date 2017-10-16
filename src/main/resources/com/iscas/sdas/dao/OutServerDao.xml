@@ -3,9 +3,10 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iscas.sdas.dao.work.OutServerDao">
-	<select id="getlist" parameterType="com.iscas.sdas.dto.work.OutServerDto" resultType="com.iscas.sdas.dto.work.OutServerDto">
-		select 
-		start_time,recovery_time,fault_type,vip_type,cell_name,station_name 
+	<select id="getlist" parameterType="com.iscas.sdas.dto.work.OutServerDto"
+		resultType="com.iscas.sdas.dto.work.OutServerDto">
+		select
+		start_time,recovery_time,fault_type,vip_type,cell_name,station_name
 		from
 		t_wireless_retirement
 		<where>
@@ -23,5 +24,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 		</where>
 		limit 1000
+	</select>
+	<select id="getlist2" resultType="com.iscas.sdas.dto.work.OutServerDto">
+		select
+		start_time,recovery_time,fault_type,vip_type,cell_name,station_name
+		from
+		t_wireless_retirement where start_time between #{start} and
+		#{end}
+		<if test="work.recovery_time != null">
+			and recovery_time like #{work.recovery_time}
+		</if>
+		<if test="work.station_name != null">
+			and station_name like #{work.station_name}
+		</if>
+		<if test="work.cell_name != null">
+			and cell_name like #{work.cell_name}
+		</if>
+		limit 1000
+	</select>
+	<select id="getlistWhithinOneWeek" parameterType="java.lang.String"
+		resultType="com.iscas.sdas.dto.work.OutServerDto">
+		select
+		start_time,recovery_time,fault_type,vip_type,cell_name,station_name
+		from
+		t_wireless_retirement
+		where start_time >
+		DATE_SUB((SELECT start_time FROM t_wireless_retirement WHERE cell_name= #{cellname}
+		ORDER BY start_time DESC LIMIT 1),INTERVAL 7 DAY)
+		AND cell_name = #{cellname}
+	</select>
+	<select id="getlistWhithinOneMonth" parameterType="java.lang.String"
+		resultType="com.iscas.sdas.dto.work.OutServerDto">
+		select
+		start_time,recovery_time,fault_type,vip_type,cell_name,station_name
+		from
+		t_wireless_retirement
+		where start_time > DATE_SUB((SELECT
+		start_time FROM t_wireless_retirement WHERE cell_name = #{cellname}
+		ORDER BY start_time DESC LIMIT 1),INTERVAL 30 DAY)
+		AND cell_name = #{cellname}
 	</select>
 </mapper>

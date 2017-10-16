@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		t_performance_work
 		<where>
 			<if test="cellid != null">
-				<bind name="cellid" value="'%' + _parameter.getCellid() + '%'"/>
+				<bind name="cellid" value="'%' + _parameter.getCellid() + '%'" />
 				cellid like #{cellid}
 			</if>
 			<if test="occurrence_time != null">
@@ -27,18 +27,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 		limit 1000
 	</select>
-	<select id="getlist2"
-		resultType="com.iscas.sdas.dto.work.CapacityWorkDto">
+	<select id="getlist2" resultType="com.iscas.sdas.dto.work.CapacityWorkDto">
 		select
 		occurrence_time,cellid,boutique_level,limit_times,belong_area,reasons,
 		monitor_content,monitor_value,alerm_level,complete_time
 		from
-		t_performance_work where occurrence_time between #{starttime} and #{endtime}
+		t_performance_work where occurrence_time between #{starttime} and
+		#{endtime}
 		<if test="work.cellid != null">
-			<bind name="cellid" value="'%' + work.getCellid() + '%'"/>
+			<bind name="cellid" value="'%' + work.getCellid() + '%'" />
 			and cellid like #{cellid}
 		</if>
-		<if test="work.belong_area != null">			
+		<if test="work.belong_area != null">
 			and belong_area like #{work.belong_area}
 		</if>
 		<if test="work.monitor_content != null">
@@ -63,6 +63,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY occurrence_time DESC LIMIT 6
 	</select>
 	<select id="getbelongaera" resultType="java.lang.String">
-		SELECT belong_area FROM t_performance_work GROUP BY belong_area
+		SELECT belong_area FROM
+		t_performance_work GROUP BY belong_area
+	</select>
+	<select id="getlistWhithinOneWeek" resultType="com.iscas.sdas.dto.work.CapacityWorkDto"
+		parameterType="java.lang.String">
+		SELECT
+		occurrence_time,cellid,boutique_level,limit_times,belong_area,reasons,
+		monitor_content,monitor_value,alerm_level,complete_time FROM
+		t_performance_work WHERE occurrence_time > DATE_SUB((SELECT
+		occurrence_time FROM t_performance_work WHERE cellid = #{cellname}
+		ORDER BY occurrence_time DESC LIMIT 1),INTERVAL 7 DAY) AND cellid =
+		#{cellname}
+	</select>
+	<select id="getlistWhithinOneMonth" resultType="com.iscas.sdas.dto.work.CapacityWorkDto"
+		parameterType="java.lang.String">
+		SELECT
+		occurrence_time,cellid,boutique_level,limit_times,belong_area,reasons,
+		monitor_content,monitor_value,alerm_level,complete_time FROM
+		t_performance_work WHERE occurrence_time >
+		DATE_SUB((SELECT
+		occurrence_time FROM t_performance_work WHERE cellid
+		= #{cellname}
+		ORDER BY occurrence_time DESC LIMIT 1),INTERVAL 30 DAY)
+		AND cellid =
+		#{cellname}
 	</select>
 </mapper>

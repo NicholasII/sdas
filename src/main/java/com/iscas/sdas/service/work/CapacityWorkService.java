@@ -35,4 +35,11 @@ public class CapacityWorkService {
 	public List<String> getbelongaera(){
 		return capacityWorkDao.getbelongaera();
 	}
+	
+	public List<CapacityWorkDto> getlistWhithinOneWeek(String cellname){
+		return capacityWorkDao.getlistWhithinOneWeek(cellname);
+	}
+	public List<CapacityWorkDto> getlistWhithinOneMonth(String cellname){
+		return capacityWorkDao.getlistWhithinOneMonth(cellname);
+	}
 }
