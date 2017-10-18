@@ -17,4 +17,13 @@ public class FaultService {
 	public List<PRBBean> getprbs(){
 		return faultDao.getprb();
 	}
+	public List<PRBBean> getprbothers(){
+		return faultDao.getprbothers();
+	}
+	public List<PRBBean> getswitch(){
+		return faultDao.getswitch();
+	}
+	public List<PRBBean> getswitchothers(){
+		return faultDao.getswitchothers();
+	}
 }

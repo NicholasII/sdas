@@ -3,220 +3,151 @@
  * 2017年9月13日上午10:46:07
  * TODO
  */	
-var option3 = {
-	legend : {
-		left : 'left',
-		data : [ 'MR-RRC连接建立最大用户数', '集团-502上行PRB平均利用率', '集团-502下行PRB平均利用率' ]
-	},
-	xAxis : {
-		type : 'value'
+var Interval;
+$(function(){
+	PRBCharts(); 
+});
 
-	},
-	yAxis : {
-		type : 'value',
-	},
-	series : [ {
-		name : "MR-RRC连接建立最大用户数",
-		type : 'line',
-		lineStyle : {
-			normal : {
-				color : '#CE0000',
-			}
-		},
-		data : []
-
-	}, {
-		name : '集团-502上行PRB平均利用率',
-		type : 'line',
-		lineStyle : {
-			normal : {
-				color : '#8600FF'
-			}
-		},
-		data : []
-	}, {
-		name : '集团-502下行PRB平均利用率',
-		type : 'line',
-		lineStyle : {
-			normal : {
-				color : '#9AFF02'
-			}
-		},
-		data : []
-	} ]
-
-};
-
-var rrcoption = {
-		legend : {
-			left : 'left',
-			data : [ 'MR-RRC连接建立最大用户数' ]
-		},
-		xAxis : {
-			type : 'value'
-		},
-		yAxis : {
-			type : 'value',
-		},
-		series : [{
-			name:'MR-RRC连接建立最大用户数',
-			type : 'line',
-			lineStyle : {
-				normal : {
-					color : '#CE0000'
-				}
-			},
-			data : []
-		}]
-};
-var upprboption = {
-		legend : {
-			left : 'left',
-			data : [ '集团-502上行PRB平均利用率' ]
-		},
-		xAxis : {
-			type : 'value'
-		},
-		yAxis : {
-			type : 'value',
-		},
-		series : [{
-			name:'集团-502上行PRB平均利用率',
-			type : 'line',
-			lineStyle : {
-				normal : {
-					color : '#8600FF'
-				}
-			},
-			data : []
-		}]
-};
-var downprboption = {
-		legend : {
-			left : 'left',
-			data : [ '集团-502下行PRB平均利用率' ]
-		},
-		xAxis : {
-			type : 'value'
-		},
-		yAxis : {
-			type : 'value',
-		},
-		series : [{
-			name:'集团-502下行PRB平均利用率',
-			type : 'line',
-			lineStyle : {
-				normal : {
-					color : '#9AFF02'
-				}
-			},
-			data : []
-		}]
-};
-
-var switch_countoption = {
-		legend : {
-			left : 'left',
-			data : [ '小区间切换出准备请求次数' ]
-		},
-		xAxis : {
-			type : 'value'
-		},
-		yAxis : {
-			type : 'value',
-		},
-		series : [{
-			name:'小区间切换出准备请求次数',
-			type : 'line',
-			lineStyle : {
-				normal : {
-					color : '#CE0000'
-				}
-			},
-			data : []
-		}]
-};
-var switch_successoption = {
-		legend : {
-			left : 'left',
-			data : [ '切换出成功率' ]
-		},
-		xAxis : {
-			type : 'value'
-		},
-		yAxis : {
-			type : 'value',
-		},
-		series : [{
-			name:'切换出成功率',
-			type : 'line',
-			lineStyle : {
-				normal : {
-					color : '#CE0000'
-				}
-			},
-			data : []
-		}]
-};
-
-$.ajax({
-	url: "/sdas/fault/prb",
-	type:"get",
-	dataType:"json",
-	success:function(data,status){
-		if (data.success) {
-			var list = data.rows;
-			var rrcdata = [];
-			var upprbdata = [];
-			var downprbdata = [];
-			for(var i = 0;i<list.length;i++){
-				var rrc1 = [];
-				var upprb1 = [];
-				var downprb1 = [];
-				var item = list[i];
-				rrc1[0] = i*0.25;
-				rrc1[1] = parseInt(item.rrc);
-				upprb1[0] = i*0.25;
-				upprb1[1] = parseInt(item.upprb);
-				downprb1[0] = i*0.25;
-				downprb1[1] = parseInt(item.downprb);
-				rrcdata.push(rrc1);
-				upprbdata.push(upprb1);
-				downprbdata.push(downprb1);
-			}
-			rrcoption.series[0].data = rrcdata;
-			rrc.setOption(rrcoption);
-			upprboption.series[0].data = upprbdata;
-			up_prb.setOption(upprboption);
-			downprboption.series[0].data = downprbdata;
-			down_prb.setOption(downprboption);
-			option3.series[0].data = rrcdata;
-			option3.series[1].data = upprbdata;
-			option3.series[2].data = downprbdata;
-			relate_index.setOption(option3);
-		}
-		
-	}
-}); 
-function switchs(){
+function PRBCharts(){
 	$.ajax({
 		url: "/sdas/fault/prb",
+		type:"get",
+		dataType:"json",
+		async:false,
+		success:function(data,status){
+			if (data.success) {
+				var list = data.rows;
+				var rrcdata = [];
+				var upprbdata = [];
+				var downprbdata = [];
+				var times=[];
+				for(var i = 0;i<list.length;i++){
+					var item = list[i];
+					//时间格式化
+					var timestamp = new Date(item.timestamp);
+					var date=timestamp.toLocaleDateString().replace(/\//g, "-") + " " + timestamp.toTimeString().substr(0, 8);
+					times.push(date);
+					rrcdata.push(parseInt(item.rrc));
+					upprbdata.push(parseInt(item.upprb));
+					downprbdata.push(parseInt(item.downprb));
+				}
+				drawEcharts("#rrc",'MR-RRC连接建立最大用户数',times,rrcdata,'#CE0000');
+				drawEcharts("#up_prb_rate",'集团-502上行PRB平均利用率',times,upprbdata,'#8600FF');
+				drawEcharts("#down_prb_rate",'集团-502下行PRB平均利用率',times,downprbdata,'#9AFF02');
+			}
+			
+		}
+	});
+	if(Interval!=undefined){
+		clearInterval(Interval);
+	}
+	Interval=setInterval(function(){PRBCharts()},5*60*1000);
+}
+function switchCharts(){
+	$.ajax({
+		url: "/sdas/fault/switch",
+		type:"get",
+		dataType:"json",
+		async:false,
+		success:function(data,status){
+			if (data.success) {
+				var list = data.rows;
+				var yymon = [];
+				var yysucces = [];
+				var times=[];
+				for(var i = 0;i<list.length;i++){
+					var item = list[i];
+					//时间格式化
+					var timestamp = new Date(item.timestamp);
+					var date=timestamp.toLocaleDateString().replace(/\//g, "-") + " " + timestamp.toTimeString().substr(0, 8);
+					times.push(date);
+					yymon.push(parseInt(item.yymon));
+					yysucces.push(item.yysucces.replace(/%/, ""));
+				}
+				drawEcharts("#switch_mon",'YY-切换成功率分母',times,yymon,'#CE0000');
+				drawEcharts("#switch_success_rate",'YY-切换成功率',times,yysucces,'#8600FF');
+			}
+			
+		}
+	});
+	if(Interval!=undefined){
+		clearInterval(Interval);
+	}
+	Interval=setInterval(function(){switchCharts()},5*60*1000);
+}
+function simpleCharts(url,attr,id,title,color){
+	$.ajax({
+		url: url,
 		type:"get",
 		dataType:"json",
 		success:function(data,status){
 			if (data.success) {
 				var list = data.rows;
-				var succdata = [];
+				var data = [];
+				var times=[];
 				for(var i = 0;i<list.length;i++){
-					var temp = [];	
-					var item = list[i];
-					temp[0] = i*0.25;
-					temp[1] = parseInt(item.switchs);				
-					succdata.push(temp);
+					var item=list[i];
+					//时间格式化
+					var timestamp = new Date(item.timestamp);
+					var date=timestamp.toLocaleDateString().replace(/\//g, "-") + " " + timestamp.toTimeString().substr(0, 8);
+					times.push(date);
+					if(url.indexOf("switch")>-1){
+						data.push(item[attr].replace(/%/, ""));
+					}else{
+						data.push(item[attr]);
+					}
+					
 				}
-				switch_successoption.series[0].data = succdata;
-				switchsucc.setOption(switch_successoption);
-			}			
+				drawEcharts(id,title,times,data,color);
+			}
+			
 		}
-	}); 
+	});
+	if(Interval!=undefined){
+		clearInterval(Interval);
+	}
+	Interval=setInterval(function(){simpleCharts("'"+url+'","'+attr+'","'+id+'","'+title+'","'+color+"'")},5*60*1000);
+}
+function drawEcharts(id,title,times,data,color){
+	var mycharts= echarts.init($(id).get(0));
+	var option= {
+			legend : {
+				left : 'left',
+				data : [ title ]
+			},
+			tooltip : {
+		        trigger: 'axis',
+		        formatter: function (params) {
+		        	var str=params[0].name+"</br>"+params[0].seriesName+" : ";
+		        	if(id.indexOf("rate")>-1){
+		        		return str+params[0].value+"%";
+		        	}else{
+		        		return str+params[0].value;
+		        	}
+               }
+		    },
+			xAxis : {
+				type : 'category',
+				data:times
+			},
+			yAxis : {
+				type : 'value',
+			},
+			series : [{
+				name:title,
+				type : 'line',
+				itemStyle : {
+					normal : {
+						color : color
+					}
+				},
+				data : data
+			}]
+	};
+	mycharts.setOption(option);
+	mycharts.resize();
+	/*window.onresize = function(){
+	    myChart.resize(); 
+	});*/
+	//mycharts.resize();
 }

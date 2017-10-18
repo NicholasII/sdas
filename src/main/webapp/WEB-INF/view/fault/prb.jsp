@@ -6,6 +6,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+.tab-content > .tab-pane,
+.pill-content > .pill-pane {
+display: block; /* undo display:none */
+height: 0; /* height:0 is also invisible */
+overflow-y: hidden; /* no-overflow */
+}
+.tab-content > .active,
+.pill-content > .active {
+height: auto; /* let the content decide it */
+} /* bootstrap hack end */
+</style>
 </head>
 <body>
 	<div class="wrapper wrapper-content animated fadeInRight">
@@ -13,11 +25,10 @@
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="#tab-11" data-toggle="tab"
 					aria-expanded="true">新PRB利用率(4次连续)</a></li>
-				<li onclick="switchs()" class=""><a href="#tab-12"
+				<li class="" onclick="switchCharts()"><a href="#tab-12"
 					data-toggle="tab" aria-expanded="false">新切换出成功率(4次连续)</a></li>
 			</ul>
-		</div>
-		<div class="tab-content">
+			<div class="tab-content">
 			<div id="tab-11" class="tab-pane active">
 				<div class="panel-body">
 					<div class="row">
@@ -87,35 +98,58 @@
 									<div class="tabs-container">
 										<ul class="nav nav-tabs">
 
-											<li class="active"><a href="#tab-1" data-toggle="tab"
-												aria-expanded="true">关联指标对比</a></li>
-											<li class=""><a href="#tab-2" data-toggle="tab"
-												aria-expanded="false">上行PRB利用率</a></li>
-											<li class=""><a href="#tab-3" data-toggle="tab"
-												aria-expanded="false">下行PRB利用率</a></li>
-											<li class=""><a href="#tab-4" data-toggle="tab"
-												aria-expanded="true">MR-RRC连接建立最大用户数</a></li>
+											<li class="active" onclick="PRBCharts()"><a
+												href="#tab-1" data-toggle="tab" aria-expanded="true">关联指标对比</a></li>
+											<li class=""
+												onclick='simpleCharts("/sdas/fault/getprbothers","uecounts","#UE","用户面最大激活UE数","#2EC7C9")'>
+												<a href="#tab-2" data-toggle="tab" aria-expanded="false">用户面最大激活UE数</a>
+											</li>
+											<li class=""
+												onclick="simpleCharts('/sdas/fault/getprbothers','pucch','#PUCCH','PUCCH SR 资源使用量','#385Ad3')"><a
+												href="#tab-3" data-toggle="tab" aria-expanded="false">PUCCH
+													SR 资源使用量</a></li>
+											<li class=""
+												onclick="simpleCharts('/sdas/fault/getprbothers','cce','#CCE','CCE聚合度为2的次数','#823B93')"><a
+												href="#tab-4" data-toggle="tab" aria-expanded="true">CCE聚合度为2的次数</a></li>
+											<li class=""
+												onclick="simpleCharts('/sdas/fault/getprbothers','puschprb','#PUSCH_PRB','小区载频PUSCH实际使用PRB个数','#27727B')"><a
+												href="#tab-5" data-toggle="tab" aria-expanded="true">小区载频PUSCH实际使用PRB个数</a></li>
+											<li class=""
+												onclick="simpleCharts('/sdas/fault/getprbothers','uprealprb','#PRB_count','小区上行信道实际使用PRB个数','#9BCA63')"><a
+												href="#tab-6" data-toggle="tab" aria-expanded="true">小区上行信道实际使用PRB个数</a></li>
 
 										</ul>
 										<div class="tab-content">
 											<div id="tab-1" class="tab-pane active">
 												<div class="panel-body">
-													<div id="relate_index" style="height: 400px"></div>
+													<div id="rrc" style="height: 400px"></div>
+													<div id="up_prb_rate" style="height: 400px"></div>
+													<div id="down_prb_rate" style="height: 400px"></div>
 												</div>
 											</div>
-											<div id="tab-2" class="tab-pane active">
+											<div id="tab-2" class="tab-pane">
 												<div class="panel-body">
-													<div id="up_prb" style="height: 300px"></div>
+													<div id="UE" style="height: 300px"></div>
 												</div>
 											</div>
-											<div id="tab-3" class="tab-pane active">
+											<div id="tab-3" class="tab-pane">
 												<div class="panel-body">
-													<div id="down_prb" style="height: 300px"></div>
+													<div id="PUCCH" style="height: 300px"></div>
 												</div>
 											</div>
-											<div id="tab-4" class="tab-pane active">
+											<div id="tab-4" class="tab-pane">
 												<div class="panel-body">
-													<div id="rrc" style="height: 300px"></div>
+													<div id="CCE" style="height: 300px"></div>
+												</div>
+											</div>
+											<div id="tab-5" class="tab-pane">
+												<div class="panel-body">
+													<div id="PUSCH_PRB" style="height: 300px"></div>
+												</div>
+											</div>
+											<div id="tab-6" class="tab-pane">
+												<div class="panel-body">
+													<div id="PRB_count" style="height: 300px"></div>
 												</div>
 											</div>
 										</div>
@@ -236,28 +270,30 @@
 								<div class="ibox-content">
 									<div class="tabs-container">
 										<ul class="nav nav-tabs">
-											<li class="active"><a href="#tab-1" data-toggle="tab"
-												aria-expanded="true">关联指标对比</a></li>
-											<li class=""><a href="#tab-2" data-toggle="tab"
-												aria-expanded="false">小区间切换出准备请求次数</a></li>
-											<li class=""><a href="#tab-3" data-toggle="tab"
-												aria-expanded="false">切换出成功率</a></li>
+											<li class="active" onclick="switchCharts()"><a
+												href="#tab-2-1" data-toggle="tab" aria-expanded="true">关联指标对比</a></li>
+											<li class=""
+												onclick="simpleCharts('/sdas/fault/getswitchothers','yyrrc','#YY-RRC_rate','YY-RRC连接建立成功率','#9BCA63')"><a
+												href="#tab-2-2" data-toggle="tab" aria-expanded="false">YY-RRC连接建立成功率</a></li>
+											<li class=""
+												onclick="simpleCharts('/sdas/fault/getswitchothers','yywire','#yywire_rate','YY-无线接通率','#385Ad3')"><a
+												href="#tab-2-3" data-toggle="tab" aria-expanded="false">YY-无线接通率</a></li>
 										</ul>
 										<div class="tab-content">
-											<div id="tab-1" class="tab-pane active">
-												<div class="panel-body">
-													<div id="switch_relate" style="height: 300px"></div>
-
+											<div id="tab-2-1" class="tab-pane active">
+													<div class="panel-body">
+													<div id="switch_mon" style="width:750px;height: 400px"></div>
+													<div id="switch_success_rate" style="width:750px;height: 400px"></div>
 												</div>
 											</div>
-											<div id="tab-2" class="tab-pane active">
+											<div id="tab-2-2" class="tab-pane">
 												<div class="panel-body">
-													<div id="switch_count" style="height: 300px"></div>
+													<div id="YY-RRC_rate" style="height: 300px"></div>
 												</div>
 											</div>
-											<div id="tab-3" class="tab-pane active">
+											<div id="tab-2-3" class="tab-pane">
 												<div class="panel-body">
-													<div id="switch_success" style="height: 300px"></div>
+													<div id="yywire_rate" style="height: 300px"></div>
 												</div>
 											</div>
 										</div>
@@ -310,16 +346,9 @@
 				</div>
 			</div>
 		</div>
+		</div>
+		
 	</div>
-	<script type="text/javascript">
-			var up_prb = echarts.init($("#up_prb").get(0));
-			var down_prb = echarts.init($("#down_prb").get(0));
-			var relate_index = echarts.init($("#relate_index").get(0));
-			var rrc = echarts.init($("#rrc").get(0));
-			var switchsucc = echarts.init($("#switch_success").get(0));
-			var switchcount = echarts.init($("#switch_count").get(0));
-			var switchrelate = echarts.init($("#switch_relate").get(0));
-		</script>
 	<script type="text/javascript" src="${context}/js/fault/prb.js"></script>
 </body>
 </html>
