@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,36 +39,16 @@ public class DataController {
 	@ResponseBody
 	public ModelMap upload(HttpServletRequest request){
 		ModelMap map = new ModelMap();
-		 long  startTime=System.currentTimeMillis();
-		//将当前上下文初始化给  CommonsMutipartResolver （多部分解析器）
-		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
-		if (multipartResolver.isMultipart(request)) {
-			MultipartHttpServletRequest mutiRequest = (MultipartHttpServletRequest) request;
-			Iterator it = mutiRequest.getFileNames();
-			while (it.hasNext()) {
-				String filename = (String) it.next();
-				System.out.println(filename);
-				MultipartFile file = mutiRequest.getFile(filename);
-				if (file!=null) {
-					String file1 = CommonUntils.generatePath() + file.getOriginalFilename();
-					try {
-						file.transferTo(new File(file1));
-						map.addAttribute(Constraints.RESULT_SUCCESS, true);
-					} catch (IllegalStateException | IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						map.addAttribute(Constraints.RESULT_SUCCESS, false);
-					}
-					
-				}
-			}
+		List<String> files = CommonUntils.MultipleFilesUpload(request);
+		if (files!=null && files.size()>0) {
+			map.addAttribute(Constraints.RESULT_ROW, files);
+			map.addAttribute(Constraints.RESULT_SUCCESS, true);
+		}else {
+			map.addAttribute(Constraints.RESULT_SUCCESS, false);
 		}
-		long  endTime=System.currentTimeMillis();
-        System.out.println("方法三的运行时间："+String.valueOf(endTime-startTime)+"ms");
         try {
-			executeShell();
-		} catch (IOException | InterruptedException e) {
-			// TODO Auto-generated catch block
+			//executeShell();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return map;

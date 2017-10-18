@@ -1,6 +1,5 @@
 package com.iscas.sdas.dto;
 
-import java.sql.Timestamp;
 import java.util.Date;
 /**
  * 投诉信息dto

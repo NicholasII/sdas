@@ -31,8 +31,7 @@ public class AlarmController {
 	public ModelMap currentDayAlarm(){
 		ModelMap map = new ModelMap();
 		List<AlarmDto> alarmDtos =  alarmService.currentDayAlarm();
-		map.addAttribute(Constraints.RESULT_ROW
-					, alarmDtos);
+		map.addAttribute(Constraints.RESULT_ROW, alarmDtos);
 		return map;
 	}
 	/**

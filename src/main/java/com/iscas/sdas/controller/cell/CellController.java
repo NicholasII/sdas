@@ -100,7 +100,11 @@ public class CellController {
 		map.addAttribute(Constraints.RESULT_ROW, list);
 		return map;
 	}
-	
+	/**
+	 * 小区属于组别
+	 * @param cellname
+	 * @return
+	 */
 	@RequestMapping("/belonggroup")
 	@ResponseBody
 	public ModelMap getbelonggroup(@RequestParam(value="cellname",defaultValue="I",required = true)String cellname){
@@ -109,6 +113,19 @@ public class CellController {
 		map.addAttribute("group", group);
 		return map;
 	}
-	
+	/**
+	 * 实时简况度
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/rthealth")
+	@ResponseBody
+	public ModelMap rthealth(HttpServletRequest request){
+		ModelMap map = new ModelMap();
+		String cellname = request.getParameter("cellname");
+		List<TotalHealthInfoDto> list = cellService.generateCellRTHealth(cellname);
+		map.addAttribute(Constraints.RESULT_ROW, list);
+		return map;
+	}
 	
 }

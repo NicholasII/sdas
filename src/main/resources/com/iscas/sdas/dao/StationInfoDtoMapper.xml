@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iscas.sdas.dao.StationInfoDtoMapper">
+  <resultMap id="BaseResultMap" type="com.iscas.sdas.dto.StationInfoDto">
+    <id column="station_code" jdbcType="VARCHAR" property="stationCode" />
+    <result column="station_name" jdbcType="VARCHAR" property="stationName" />
+    <result column="station_nodeid" jdbcType="VARCHAR" property="stationNodeid" />
+    <result column="station_latitude" jdbcType="VARCHAR" property="stationLatitude" />
+    <result column="station_longitude" jdbcType="VARCHAR" property="stationLongitude" />
+    <result column="station_info" jdbcType="VARCHAR" property="stationInfo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    station_code, station_name, station_nodeid, station_latitude, station_longitude, 
+    station_info
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_station_info
+    where station_code = #{stationCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByStationName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_station_info
+    where station_name = #{stationName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_station_info
+    where station_code = #{stationCode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.iscas.sdas.dto.StationInfoDto">
+    insert into t_station_info (station_code, station_name, station_nodeid, 
+      station_latitude, station_longitude, station_info
+      )
+    values (#{stationCode,jdbcType=VARCHAR}, #{stationName,jdbcType=VARCHAR}, #{stationNodeid,jdbcType=VARCHAR}, 
+      #{stationLatitude,jdbcType=VARCHAR}, #{stationLongitude,jdbcType=VARCHAR}, #{stationInfo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.iscas.sdas.dto.StationInfoDto">
+    insert into t_station_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stationCode != null">
+        station_code,
+      </if>
+      <if test="stationName != null">
+        station_name,
+      </if>
+      <if test="stationNodeid != null">
+        station_nodeid,
+      </if>
+      <if test="stationLatitude != null">
+        station_latitude,
+      </if>
+      <if test="stationLongitude != null">
+        station_longitude,
+      </if>
+      <if test="stationInfo != null">
+        station_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stationCode != null">
+        #{stationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stationName != null">
+        #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationNodeid != null">
+        #{stationNodeid,jdbcType=VARCHAR},
+      </if>
+      <if test="stationLatitude != null">
+        #{stationLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="stationLongitude != null">
+        #{stationLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="stationInfo != null">
+        #{stationInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iscas.sdas.dto.StationInfoDto">
+    update t_station_info
+    <set>
+      <if test="stationName != null">
+        station_name = #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationNodeid != null">
+        station_nodeid = #{stationNodeid,jdbcType=VARCHAR},
+      </if>
+      <if test="stationLatitude != null">
+        station_latitude = #{stationLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="stationLongitude != null">
+        station_longitude = #{stationLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="stationInfo != null">
+        station_info = #{stationInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where station_code = #{stationCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iscas.sdas.dto.StationInfoDto">
+    update t_station_info
+    set station_name = #{stationName,jdbcType=VARCHAR},
+      station_nodeid = #{stationNodeid,jdbcType=VARCHAR},
+      station_latitude = #{stationLatitude,jdbcType=VARCHAR},
+      station_longitude = #{stationLongitude,jdbcType=VARCHAR},
+      station_info = #{stationInfo,jdbcType=VARCHAR}
+    where station_code = #{stationCode,jdbcType=VARCHAR}
+  </update>
+</mapper>

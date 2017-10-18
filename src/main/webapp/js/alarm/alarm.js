@@ -45,13 +45,13 @@ function refreshJqGrid(list){
         colNames: ['发生时间', '小区名称', '次数'],
         colModel: [
             {
-                name: 'cell_code',
-                index: 'cell_code',
+                name: 'yyyyMMdd',
+                index: 'yyyyMMdd',
                 width: 150
             },
             {
-                name: 'yyyyMMdd',
-                index: 'yyyyMMdd',
+                name: 'cell_code',
+                index: 'cell_code',
                 width: 250
             },
             {

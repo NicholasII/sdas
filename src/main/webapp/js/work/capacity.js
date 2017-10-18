@@ -6,6 +6,7 @@
 var capacityworkurl = ctx + "/capacitywork/gettable";
 var doubutworkurl = ctx +"/capacitywork/getdoubttable";
 var aeraurl = ctx + "/capacitywork/belongare";
+var validateurl = ctx +"/work/validate";
 $(function(){
 	$.jgrid.defaults.styleUI = 'Bootstrap';
 	$.ajax({
@@ -197,3 +198,22 @@ $(function(){
 	});
 	
 });
+function validate(){
+    $.ajax({
+                url: validateurl,
+                type:"GET",
+                dataType:"json",
+                success:function(data,status){  
+                    var success = data.success;
+                    jQuery("#table_list_1").jqGrid("clearGridData");
+                    if(success){
+                        var list = data.rows;
+                        $("#table_list_1").jqGrid('setGridParam',{
+                            datatype:'local',
+                            data : list,   
+                            page:1
+                        }).trigger("reloadGrid");
+                    }                                
+                }
+            });
+}

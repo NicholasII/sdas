@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class CapacityWorkDto {
 	
 	private Timestamp occurrence_time;
-	
+	private Integer alarm_id;
 	private String cellid;
 	private String boutique_level;
 	private String limit_times;
@@ -74,6 +74,12 @@ public class CapacityWorkDto {
 	}
 	public void setComplete_time(Timestamp complete_time) {
 		this.complete_time = complete_time;
+	}
+	public Integer getAlarm_id() {
+		return alarm_id;
+	}
+	public void setAlarm_id(Integer alarm_id) {
+		this.alarm_id = alarm_id;
 	}
 	
 	

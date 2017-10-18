@@ -54,4 +54,25 @@ public interface CellDao {
 	List<BaseCellHealth> cellhealthtrendWithinSelect(String cellname,String starttime,String endtime);
 	
 	List<CellComplainDto> complaintWithinSelect(String cellname,String starttime,String endtime);
+	/**
+	 * 该小区最近健康度
+	 * @param cellname
+	 * @return
+	 */
+	BaseCellHealth currenthealthratio(String cellname);
+	/**
+	 * 健康度表中所有的小区
+	 * @return
+	 */
+	List<String> allcells();
+	
+	List<String> allstations();
+	
+	List<String> allcellsinstation(String stationname);
+	/**
+	 * 当前健康度
+	 * @param cellname
+	 * @return
+	 */
+	BaseCellHealth cellcurrenthealth(String cellname);
 }

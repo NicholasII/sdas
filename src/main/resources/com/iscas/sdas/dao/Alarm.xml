@@ -4,18 +4,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iscas.sdas.dao.AlarmDao">
 	<select id="currentDayAlarm" resultType="com.iscas.sdas.dto.AlarmDto">
-		SELECT cell_code,COUNT(cell_code) AS count,yyyyMMdd FROM t_cell_result_info WHERE yyyyMMdd = (SELECT yyyyMMdd FROM t_cell_result_info ORDER BY yyyyMMdd DESC LIMIT 1) GROUP BY cell_code
+		SELECT
+		a.cell_code,a.yyyyMMdd,COUNT(*) AS count,a.app_hour,a.app_result FROM (SELECT * FROM
+		t_cell_result_info WHERE yyyyMMdd = (SELECT yyyyMMdd FROM
+		t_cell_result_info ORDER BY yyyyMMdd DESC LIMIT 1)) AS a WHERE
+		a.app_result=0 GROUP BY a.cell_code
 	</select>
-    <select id="allAlarm" resultType="com.iscas.sdas.dto.AlarmDto" parameterType="com.iscas.sdas.dto.AlarmDto">
-        SELECT cell_code,COUNT(cell_code) AS count,yyyyMMdd FROM t_cell_result_info GROUP BY cell_code
-        <where>
-        	<if test="cell_code !=null">
-        		<bind name="cellcode" value="'%'+ _parameter.getCell_code() +'%'"/>
-        	    cell_code like #{cellcode}
-        	</if>
-        	<if test="yyyyMMdd != null">
-        		and yyyyMMdd = #{yyyyMMdd}
-        	</if>
-        </where>
-    </select>
+	<select id="allAlarm" resultType="com.iscas.sdas.dto.AlarmDto"
+		parameterType="com.iscas.sdas.dto.AlarmDto">
+		SELECT cell_code,COUNT(cell_code) AS count,yyyyMMdd FROM
+		t_cell_result_info WHERE app_result=0
+		<if test="cell_code !=null">
+			<bind name="cellcode" value="'%'+ _parameter.getCell_code() +'%'" />
+			and cell_code like #{cellcode}
+		</if>
+		<if test="yyyyMMdd != null">
+			and yyyyMMdd = #{yyyyMMdd}
+		</if>
+		GROUP BY cell_code
+	</select>
 </mapper>

@@ -147,7 +147,7 @@ var isweek = true
 var top_split = [];
 var bottom_spli = [];
 var middle_split = [];
-for (var i = 0; i < 240; i++) {
+for (var i = 0; i < 1000; i++) {
 	var b_arr = [];
 	b_arr.push(i);
 	b_arr.push(25);
@@ -244,7 +244,7 @@ var histroy_trend = {
 						color : new echarts.graphic.RadialGradient(0.4, 0.3, 1,
 								[{
 											offset : 0,
-											color : 'rgb(251, 118, 123)'
+											color : 'rgb(51, 118, 123)'
 										}, {
 											offset : 1,
 											color : 'rgb(204, 46, 72)'
@@ -332,6 +332,139 @@ function onemonth() {
 	$("#trendinselect").addClass("btn-white");
 	$("#timeselect").css("display", "none");
 	historyTrendQuery("month");
+}
+var top_split2 = [];
+var bottom_spli2 = [];
+var middle_split2 = [];
+for (var i = 0; i < 24; i++) {
+    var b_arr = [];
+    b_arr.push(i);
+    b_arr.push(25);
+    bottom_spli2.push(b_arr);
+    var s_arr = [];
+    s_arr.push(i);
+    s_arr.push(55);
+    middle_split2.push(s_arr);
+    var t_arr = [];
+    t_arr.push(i);
+    t_arr.push(20);
+    top_split2.push(t_arr);
+}
+var rt_health = {
+    tooltip : { // 提示框
+        trigger : 'axis', // 触发类型：坐标轴触发
+        axisPointer : { // 坐标轴指示器配置项
+            type : 'cross' // 指示器类型，十字准星
+        },
+        formatter : function(params) {
+            if (params.length > 3) {
+                var res = params[0].seriesName + ': ' + (params[0].value[1])
+                        + '<br/>';
+                return res;
+            }
+
+        }
+    },
+    xAxis : {
+        type : 'category',
+        data : []
+    },
+    yAxis : {
+        splitLine : {
+            show : false
+        },
+        max : 100
+    },
+    legend : {
+        data : [{
+                    'name' : "实时健康度"
+                }]
+    },
+    dataZoom : [{
+                type : 'slider',
+                startValue : 0,
+                endValue : 23
+            }],
+    series : [{
+                name : '实时健康度',
+                type : 'line',
+                data : [],
+                markLine : {
+                    silent : true,
+                    data : [{
+                                yAxis : 60
+                            }]
+                },
+                label : {
+                    emphasis : {
+                        show : true,
+                        formatter : function(param) {
+                            return "健康度";
+                        },
+                        position : 'top'
+                    }
+                }
+            },  {
+                name : '',
+                type : 'line',
+                smooth : true,
+                symbol : "none",
+                stack : true,
+                itemStyle : {
+                    normal : {
+                        opacity : 0.1,
+                        color : 'rgb(231,133,131)',
+                        lineStyle : {
+                            opacity : 0.1,
+                            color : 'rgb(231,133,131)'
+                        },
+                        areaStyle : {
+                            type : 'default'
+                        }
+                    }
+                },
+                data : bottom_spli2
+            }, {
+                name : '',
+                type : 'line',
+                smooth : true,
+                symbol : "none",
+                stack : true,
+                itemStyle : {
+                    normal : {
+                        opacity : 0.1,
+                        color : 'rgb(231,233,131)',
+                        lineStyle : {
+                            opacity : 0.1,
+                            color : 'rgb(231,233,131)'
+                        },
+                        areaStyle : {
+                            type : 'default'
+                        }
+                    }
+                },
+                data : middle_split2
+            }, {
+                name : '',
+                type : 'line',
+                smooth : true,
+                symbol : "none",
+                stack : true,
+                itemStyle : {
+                    normal : {
+                        opacity : 0.1,
+                        color : 'rgb(172,231,131)',
+                        lineStyle : {
+                            opacity : 0.1,
+                            color : 'rgb(172,231,131)'
+                        },
+                        areaStyle : {
+                            type : 'default'
+                        }
+                    }
+                },
+                data : top_split2
+            }]
 }
 function timeselect() {
 	$("#trendinselect").addClass("btn-info");
@@ -726,6 +859,34 @@ $(function() {
 					ratiotrend.setOption(histroy_trend);
 				}
 			});
+     /**
+      * 实时健康度
+      */
+     $.ajax({
+                url : "/sdas/cell/rthealth",
+                data : {
+                    'cellname' : cellname
+                },
+                type : "POST",
+                dataType : "json",
+                success : function(data, status) {
+                    var list = data.rows;
+                    var axis = [];
+                    var data2 = [];
+                    for (var z = 0; z < list.length; z++) {
+                        var timer = list[z].time;
+                        var ratio = list[z].ratio;
+                        var temp = []
+                        axis.push(timer);
+                        temp.push(timer);
+                        temp.push(ratio);
+                        data2.push(temp);
+                    }
+                    rt_health.xAxis.data = axis;
+                    rt_health.series[0].data = data2;
+                    rtratio.setOption(rt_health);
+                }
+            });
 });
 
 function groupindex(cellcode, indexcode) {

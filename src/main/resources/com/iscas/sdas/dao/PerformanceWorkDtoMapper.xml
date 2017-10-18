@@ -67,8 +67,11 @@
     delete from t_performance_work
     where alarm_id = #{alarmId,jdbcType=INTEGER}
   </delete>
+  <delete id="delete">
+    delete from t_performance_work_rt
+  </delete>
   <insert id="insert" parameterType="com.iscas.sdas.dto.PerformanceWorkDto">
-    insert into t_performance_work (alarm_id, occurrence_time, monitor_item_name, 
+    insert into t_performance_work_rt (alarm_id, occurrence_time, monitor_item_name, 
       current_value, bscid, cellid, 
       station_name, boutique_level, limit_times, 
       maintain_company, security_tasks, data_modification, 
@@ -83,20 +86,20 @@
       apply_time_now, state, final_reply, 
       receive_person, receive_time, make_up, 
       tablenum, questionflag)
-    values (#{alarmId,jdbcType=INTEGER}, #{occurrenceTime,jdbcType=TIMESTAMP}, #{monitorItemName,jdbcType=VARCHAR}, 
-      #{currentValue,jdbcType=VARCHAR}, #{bscid,jdbcType=VARCHAR}, #{cellid,jdbcType=VARCHAR}, 
-      #{stationName,jdbcType=VARCHAR}, #{boutiqueLevel,jdbcType=VARCHAR}, #{limitTimes,jdbcType=VARCHAR}, 
-      #{maintainCompany,jdbcType=VARCHAR}, #{securityTasks,jdbcType=VARCHAR}, #{dataModification,jdbcType=VARCHAR}, 
-      #{belongArea,jdbcType=VARCHAR}, #{timeoutMonitor,jdbcType=VARCHAR}, #{areaReceivedTime,jdbcType=TIMESTAMP}, 
-      #{emosOrderNumber,jdbcType=VARCHAR}, #{overtimeTime,jdbcType=TIMESTAMP}, #{equipmentType,jdbcType=VARCHAR}, 
-      #{maintainOrNo,jdbcType=VARCHAR}, #{trackAreaCode,jdbcType=INTEGER}, #{reasons,jdbcType=VARCHAR}, 
-      #{remarks,jdbcType=VARCHAR}, #{handleInfo,jdbcType=VARCHAR}, #{monitorContent,jdbcType=VARCHAR}, 
-      #{monitorValue,jdbcType=VARCHAR}, #{ifSendOrderTimeout,jdbcType=VARCHAR}, #{ifHandleTimeout,jdbcType=VARCHAR}, 
-      #{alermLevel,jdbcType=VARCHAR}, #{handleGroup,jdbcType=VARCHAR}, #{handleGroupAreaOrder,jdbcType=VARCHAR}, 
-      #{handlePerson,jdbcType=VARCHAR}, #{handleTime,jdbcType=TIMESTAMP}, #{completePerson,jdbcType=VARCHAR}, 
-      #{completeTime,jdbcType=TIMESTAMP}, #{applyPerson,jdbcType=VARCHAR}, #{applyTime,jdbcType=TIMESTAMP}, 
-      #{applyTimeNow,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, #{finalReply,jdbcType=VARCHAR}, 
-      #{receivePerson,jdbcType=VARCHAR}, #{receiveTime,jdbcType=VARCHAR}, #{makeUp,jdbcType=VARCHAR}, 
+    values (#{alarm_id,jdbcType=INTEGER}, #{occurrence_time,jdbcType=TIMESTAMP}, #{monitor_item_name,jdbcType=VARCHAR}, 
+      #{current_value,jdbcType=VARCHAR}, #{bscid,jdbcType=VARCHAR}, #{cellid,jdbcType=VARCHAR}, 
+      #{station_name,jdbcType=VARCHAR}, #{boutique_level,jdbcType=VARCHAR}, #{limit_times,jdbcType=VARCHAR}, 
+      #{maintain_company,jdbcType=VARCHAR}, #{security_tasks,jdbcType=VARCHAR}, #{data_modification,jdbcType=VARCHAR}, 
+      #{belong_area,jdbcType=VARCHAR}, #{timeout_monitor,jdbcType=VARCHAR}, #{area_received_time,jdbcType=TIMESTAMP}, 
+      #{emos_order_number,jdbcType=VARCHAR}, #{overtime_time,jdbcType=TIMESTAMP}, #{equipment_type,jdbcType=VARCHAR}, 
+      #{maintain_or_no,jdbcType=VARCHAR}, #{track_area_code,jdbcType=INTEGER}, #{reasons,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{handle_info,jdbcType=VARCHAR}, #{monitor_content,jdbcType=VARCHAR}, 
+      #{monitor_value,jdbcType=VARCHAR}, #{if_send_order_timeout,jdbcType=VARCHAR}, #{if_handle_timeout,jdbcType=VARCHAR}, 
+      #{alerm_level,jdbcType=VARCHAR}, #{handle_group,jdbcType=VARCHAR}, #{handle_group_area_order,jdbcType=VARCHAR}, 
+      #{handle_person,jdbcType=VARCHAR}, #{handle_time,jdbcType=TIMESTAMP}, #{complete_person,jdbcType=VARCHAR}, 
+      #{complete_time,jdbcType=TIMESTAMP}, #{apply_person,jdbcType=VARCHAR}, #{apply_time,jdbcType=TIMESTAMP}, 
+      #{apply_time_now,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, #{final_reply,jdbcType=VARCHAR}, 
+      #{receive_person,jdbcType=VARCHAR}, #{receive_time,jdbcType=VARCHAR}, #{make_up,jdbcType=VARCHAR}, 
       #{tablenum,jdbcType=VARCHAR}, #{questionflag,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.iscas.sdas.dto.PerformanceWorkDto">

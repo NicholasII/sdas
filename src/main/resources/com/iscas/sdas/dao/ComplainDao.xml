@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		live_cellname1 LIKE #{cellname} OR
 		live_cellname2 LIKE #{cellname} OR
 		live_cellname3 LIKE #{cellname}
-		GROUP BY phone_number;
+		GROUP BY phone_number ORDER BY record_time;
 	</select>
 	<select id="getalllist" resultType="com.iscas.sdas.dto.CellComplainDto">
 		SELECT record_time,phone_number,live_cellname1,live_cellname2,live_cellname3

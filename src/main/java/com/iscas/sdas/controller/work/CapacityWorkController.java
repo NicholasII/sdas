@@ -55,7 +55,12 @@ public class CapacityWorkController {
 		map.addAttribute(Constraints.RESULT_ROW, works);
 		return map;
 	}
-	
+	/**
+	 * 可以工单
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping("/getdoubttable")
 	@ResponseBody
 	public ModelMap getdoubttable(HttpServletRequest request,HttpServletResponse response){

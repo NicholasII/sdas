@@ -22,4 +22,7 @@ public interface CapacityWorkDao {
 
 	List<CapacityWorkDto> getlistWhithinOneMonth(String cellname);
 	
+	List<CapacityWorkDto> getvalidatelist();
+	
+	int update(CapacityWorkDto work);
 }

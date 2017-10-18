@@ -342,7 +342,7 @@ function refreshJqGrid(list){
         shrinkToFit: true,
         rowNum: 10,
         rowList: [10, 20, 30],
-        colNames: ['小区名称','基站','分组' ,'覆盖场景','健康监控','指标监控'],
+        colNames: ['小区名称','基站','分组','频段' ,'覆盖场景','健康监控','指标监控'],
         colModel: [
             {
                 name: 'network_name',
@@ -358,6 +358,11 @@ function refreshJqGrid(list){
             {
                 name: 'group_type',
                 index: 'group_type',
+                width: 30,
+                hidden:true
+            },{
+                name: 'used_band',
+                index: 'used_band',
                 width: 30,
                 hidden:true
             },
@@ -388,8 +393,10 @@ function refreshJqGrid(list){
         	    var id = ids[i];
         	    var names = $("#table_list_1").getCell(id,'network_name');
         	    var station_name = $("#table_list_1").getCell(id,'station_name');
+                var cover_scene = $("#table_list_1").getCell(id,'cover_scene');
+                var used_band = $("#table_list_1").getCell(id,'used_band');
         	    var link2 = "/sdas/general/cellhome/";
-        	    var url2='<a href=javascript:gotocellhome("'+link2+'","'+names+'","'+station_name+'")>健康监控</a>';
+        	    var url2='<a href=javascript:gotocellhome("'+link2+'","'+names+'","'+station_name+'","'+cover_scene+'","'+used_band+'")>健康监控</a>';
         	    var link3 = "/sdas/fault/page";      	    
         	    var url3='<a href=javascript:gotoprb("'+link3+'","'+names+'")>指标监控</a>';
         	    $("#table_list_1").jqGrid('setRowData',id,{index:url2});
@@ -591,13 +598,13 @@ $("#clear").click(function() {
 	clear();
 });
 
-function gotocellhome(url,params,station){
+function gotocellhome(url,cellname,station,scene,band){
 	
 	var a_parent = $(".page-tabs-content",window.parent.document);
 	var iframe_parent = $("#content-main",window.parent.document);
 	
 	var item = $('<a href="javascript:;" class="active J_menuTab" data-id="'+url+'">日常监控 <i class="fa fa-times-circle"></i></a>');
-	var content = $('<iframe class="J_iframe" name="iframe10" width="100%" height="100%" src="'+url+'?name='+params+'&stationname='+station+'" frameborder="0" data-id="'+url+'" seamless></iframe>');
+	var content = $('<iframe class="J_iframe" name="iframe10" width="100%" height="100%" src="'+url+'?name='+cellname+'&stationname='+station+'&cover_scene='+scene+'&used_band='+band+'" frameborder="0" data-id="'+url+'" seamless></iframe>');
 	
 	a_parent.children("a").removeClass("active");
 

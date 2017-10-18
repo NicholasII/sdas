@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getlist" parameterType="com.iscas.sdas.dto.work.CapacityWorkDto"
 		resultType="com.iscas.sdas.dto.work.CapacityWorkDto">
 		select
-		occurrence_time,cellid,boutique_level,limit_times,belong_area,reasons,
+		occurrence_time,alarm_id,cellid,boutique_level,limit_times,belong_area,reasons,
 		monitor_content,monitor_value,alerm_level,complete_time
 		from
 		t_performance_work
@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="getlist2" resultType="com.iscas.sdas.dto.work.CapacityWorkDto">
 		select
-		occurrence_time,cellid,boutique_level,limit_times,belong_area,reasons,
+		occurrence_time,alarm_id,cellid,boutique_level,limit_times,belong_area,reasons,
 		monitor_content,monitor_value,alerm_level,complete_time
 		from
 		t_performance_work where occurrence_time between #{starttime} and
@@ -48,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="getDoubtlist" resultType="com.iscas.sdas.dto.work.CapacityWorkDto">
 		select
-		occurrence_time,cellid,boutique_level,limit_times,belong_area,reasons,
+		occurrence_time,alarm_id,cellid,boutique_level,limit_times,belong_area,reasons,
 		monitor_content,monitor_value,alerm_level,complete_time
 		from
 		t_performance_work where questionflag = 1
@@ -56,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="getdoubtlisttopsix" resultType="com.iscas.sdas.dto.work.CapacityWorkDto">
 		select
-		occurrence_time,cellid,boutique_level,limit_times,belong_area,reasons,
+		occurrence_time,alarm_id,cellid,boutique_level,limit_times,belong_area,reasons,
 		monitor_content,monitor_value,alerm_level,complete_time
 		from
 		t_performance_work where questionflag = 1 GROUP BY occurrence_time
@@ -69,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getlistWhithinOneWeek" resultType="com.iscas.sdas.dto.work.CapacityWorkDto"
 		parameterType="java.lang.String">
 		SELECT
-		occurrence_time,cellid,boutique_level,limit_times,belong_area,reasons,
+		occurrence_time,alarm_id,cellid,boutique_level,limit_times,belong_area,reasons,
 		monitor_content,monitor_value,alerm_level,complete_time FROM
 		t_performance_work WHERE occurrence_time > DATE_SUB((SELECT
 		occurrence_time FROM t_performance_work WHERE cellid = #{cellname}
@@ -79,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getlistWhithinOneMonth" resultType="com.iscas.sdas.dto.work.CapacityWorkDto"
 		parameterType="java.lang.String">
 		SELECT
-		occurrence_time,cellid,boutique_level,limit_times,belong_area,reasons,
+		occurrence_time,alarm_id,cellid,boutique_level,limit_times,belong_area,reasons,
 		monitor_content,monitor_value,alerm_level,complete_time FROM
 		t_performance_work WHERE occurrence_time >
 		DATE_SUB((SELECT
@@ -89,4 +89,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND cellid =
 		#{cellname}
 	</select>
+	<select id="getvalidatelist"
+		resultType="com.iscas.sdas.dto.work.CapacityWorkDto">
+		select
+		occurrence_time,alarm_id,cellid,boutique_level,limit_times,belong_area,reasons,
+		monitor_content,monitor_value,alerm_level,complete_time
+		from
+		t_performance_work_rt
+	</select>
+	<update id="update" parameterType="com.iscas.sdas.dto.work.CapacityWorkDto">
+		update t_performance_work_rt set questionflag = 1 where alarm_id = #{alarm_id}
+	</update>
 </mapper>
