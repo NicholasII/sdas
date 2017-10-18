@@ -11,7 +11,7 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--数据库链接地址账号密码-->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://117.78.43.214:3306/gd_cmcc_base_station" userId="root" password="root">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://117.78.43.214:3306/gd_cmcc_base_station" userId="root" password="nfs_sdas_Sql_123">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
@@ -30,6 +30,6 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!--生成对应表及类名-->
-		<table tableName="t_complaint_residentarea" domainObjectName="ComplaintsDto" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="t_performance_work" domainObjectName="PerformanceWorkDto" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
     </context>
 </generatorConfiguration>

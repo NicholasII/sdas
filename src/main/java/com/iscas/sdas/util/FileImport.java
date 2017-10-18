@@ -52,12 +52,14 @@ public class FileImport {
 			}else {
 				throw new Exception("上传文件不是EXCEL文件");
 			}
-			for (int page = 0; page < workbook.getNumberOfSheets(); page++) {
+			//workbook.getNumberOfSheets()
+			for (int page = 0; page < 1 ; page++) {//去第一页的数据
 				Sheet sheet = workbook.getSheetAt(page);
 				if (sheet == null) {
 					continue;
 				}
-				for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+				int rowNum = sheet.getLastRowNum();
+				for (int i = 1; i <= 10; i++) {
 					T t = result.get(i-1);
 					Row titlerow = sheet.getRow(0);
 					Row row = sheet.getRow(i);

@@ -3,7 +3,8 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iscas.sdas.dao.work.DeviceWorkDao">
-	<select id="getlist" parameterType="com.iscas.sdas.dto.work.DeviceWorkDto" resultType="com.iscas.sdas.dto.work.DeviceWorkDto">
+	<select id="getlist" parameterType="com.iscas.sdas.dto.work.DeviceWorkDto"
+		resultType="com.iscas.sdas.dto.work.DeviceWorkDto">
 		select
 		order_title,build_bill_time,net_alarm_name,net_remove_time,net_alarm_source,cell_name,fault_occus_time,transt_reason
 		from
@@ -23,5 +24,58 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 		</where>
 		limit 1000
+	</select>
+	<select id="getlist2" resultType="com.iscas.sdas.dto.work.DeviceWorkDto">
+		select
+		order_title,build_bill_time,net_alarm_name,net_remove_time,net_alarm_source,cell_name,fault_occus_time,transt_reason
+		from
+		t_equipment_failure_201708 where build_bill_time between #{start}
+		and
+		#{end}
+		<if test="work.build_bill_time != null">
+			and build_bill_time like #{work.build_bill_time}
+		</if>
+		<if test="work.fault_occus_time != null">
+			and fault_occus_time like #{work.fault_occus_time}
+		</if>
+		<if test="work.order_title != null">
+			and order_title like #{work.order_title}
+		</if>
+		<if test="work.cell_name != null">
+			and cell_name like #{work.cell_name}
+		</if>
+		limit 1000
+	</select>
+	<select id="getlistWhithinOneWeek" parameterType="java.lang.String"
+		resultType="com.iscas.sdas.dto.work.DeviceWorkDto">
+		select
+		order_title,build_bill_time,net_alarm_name,net_remove_time,net_alarm_source,cell_name,fault_occus_time,transt_reason
+		from
+		t_equipment_failure_201708
+		where build_bill_time >
+		DATE_SUB((SELECT
+		build_bill_time FROM t_equipment_failure_201708 WHERE cell_name
+		=
+		#{cellname}
+		ORDER BY build_bill_time DESC LIMIT 1),INTERVAL 7 DAY)
+		AND
+		cell_name =
+		#{cellname}
+	</select>
+	<select id="getlistWhithinOneMonth" parameterType="java.lang.String"
+		resultType="com.iscas.sdas.dto.work.DeviceWorkDto">
+		select
+		order_title,build_bill_time,net_alarm_name,net_remove_time,net_alarm_source,cell_name,fault_occus_time,transt_reason
+		from
+		t_equipment_failure_201708
+		where build_bill_time >
+		DATE_SUB((SELECT
+		build_bill_time FROM t_equipment_failure_201708 WHERE cell_name
+		=
+		#{cellname}
+		ORDER BY build_bill_time DESC LIMIT 1),INTERVAL 30 DAY)
+		AND
+		cell_name =
+		#{cellname}
 	</select>
 </mapper>

@@ -55,7 +55,12 @@ public class CapacityWorkController {
 		map.addAttribute(Constraints.RESULT_ROW, works);
 		return map;
 	}
-	
+	/**
+	 * 可以工单
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping("/getdoubttable")
 	@ResponseBody
 	public ModelMap getdoubttable(HttpServletRequest request,HttpServletResponse response){
@@ -80,6 +85,30 @@ public class CapacityWorkController {
 		ModelMap map = new ModelMap();
 		List<String> areas = capacityWorkService.getbelongaera();
 		map.addAttribute(Constraints.RESULT_ROW, areas);
+		return map;
+	}
+	
+	@RequestMapping("/oneweek")
+	@ResponseBody
+	public ModelMap getlistWhithinOneWeek(HttpServletRequest request,HttpServletResponse response){
+		ModelMap map = new ModelMap();
+		String cellname = request.getParameter("cellname");
+		if (cellname!=null) {
+			List<CapacityWorkDto> works = capacityWorkService.getlistWhithinOneWeek(cellname);
+			map.addAttribute(Constraints.RESULT_ROW, works);
+		}
+		return map;
+	}
+	
+	@RequestMapping("/onemonth")
+	@ResponseBody
+	public ModelMap getlistWhithinOneMonth(HttpServletRequest request,HttpServletResponse response){
+		ModelMap map = new ModelMap();
+		String cellname = request.getParameter("cellname");
+		if (cellname!=null) {
+			List<CapacityWorkDto> works = capacityWorkService.getlistWhithinOneMonth(cellname);
+			map.addAttribute(Constraints.RESULT_ROW, works);
+		}			
 		return map;
 	}
 	

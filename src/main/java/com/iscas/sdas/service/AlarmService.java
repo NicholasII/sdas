@@ -15,6 +15,19 @@ public class AlarmService {
 	AlarmDao alarmDao;
 	
 	public List<AlarmDto> currentDayAlarm(){
-		return alarmDao.currentDayAlarm();
+		List<AlarmDto> alarmDtos = alarmDao.currentDayAlarm();
+		for (int i=0;i<alarmDtos.size();i++) {
+			AlarmDto dto = alarmDtos.get(i);
+			String time = dto.getYyyyMMdd() +" " + dto.getApp_hour()+"时";
+			dto.setYyyyMMdd(time);
+			if (alarmDtos.get(i).getCount() ==0) {
+				alarmDtos.remove(i);
+			}
+		}
+		return alarmDtos;
+	}
+	
+	public List<AlarmDto> allAlarm(AlarmDto alarmDto){
+		return alarmDao.allAlarm(alarmDto);
 	}
 }
