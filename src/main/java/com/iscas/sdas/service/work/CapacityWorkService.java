@@ -28,9 +28,6 @@ public class CapacityWorkService {
 	public List<CapacityWorkDto> getdoubtlist(){
 		return capacityWorkDao.getDoubtlist();
 	}
-	public List<CapacityWorkDto> getdoubttopsix(){
-		return capacityWorkDao.getdoubtlisttopsix();
-	}
 	
 	public List<String> getbelongaera(){
 		return capacityWorkDao.getbelongaera();

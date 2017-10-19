@@ -4,7 +4,7 @@
  * TODO
  */
 var capacityworkurl = ctx + "/capacitywork/gettable";
-var doubutworkurl = ctx +"/capacitywork/getdoubttable";
+var doubutworkurl = ctx +"/work/validatedoubt";
 var aeraurl = ctx + "/capacitywork/belongare";
 var validateurl = ctx +"/work/validate";
 $(function(){
@@ -58,7 +58,7 @@ function refreshJqGrid(list){
         shrinkToFit: true,
         rowNum: 10,
         rowList: [10, 20, 30],
-        colNames: ['发生时间', '小区名称', '所属区域','监控内容' ,'监控时值','告警级别','原因','精品级别','越限次数','完成时间'],
+        colNames: ['发生时间', '小区名称', '所属区域','监控内容' ,'监控时值','告警级别','原因','精品级别','越限次数','完成时间','状态'],
         colModel: [
             {
                 name: 'occurrence_time',
@@ -115,11 +115,30 @@ function refreshJqGrid(list){
                 formatter:function(cellvalue, options, rowObject) {  
                     return $.hd_jqGrid.dateTimeFormatter(cellvalue);  
                 }
+            },{
+                name: 'questionflag',
+                index: 'questionflag',
+                width: 100,
+                hidden:true
             }
         ],
         pager: "#pager_list_1",
         viewrecords: true,
-        hidegrid: false
+        hidegrid: false,
+        gridComplete:function(){
+            //获取某列的每一行id
+            var ids = jQuery("#table_list_1").jqGrid("getDataIDs");
+            for(var i=0;i<ids.length;i++){
+                var id = ids[i];
+                var questionflag = $("#table_list_1").getCell(id,'questionflag');
+                var rowData = $("#table_list_1").getRowData(id);
+                 if(questionflag=="1"){
+                     $('#'+ids[i]).find("td").addClass("SelectRed");
+                 }else if(questionflag=="0" || questionflag=="2"){
+                    $('#'+ids[i]).find("td").addClass("SelectGre");
+                 }
+            }
+        }
 	});
     $(window).bind('resize', function () {
         var width = $('.jqGrid_wrapper').width();

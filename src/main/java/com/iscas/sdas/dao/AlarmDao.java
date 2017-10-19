@@ -8,5 +8,5 @@ public interface AlarmDao {
 
 	List<AlarmDto> currentDayAlarm();
 	
-	List<AlarmDto> allAlarm(AlarmDto alarmDto);
+	List<AlarmDto> allDayAlarm(AlarmDto alarmDto);
 }

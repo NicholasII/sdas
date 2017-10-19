@@ -15,6 +15,7 @@ public class CapacityWorkDto {
 	private String monitor_value;
 	private String alerm_level;
 	private Timestamp complete_time;
+	private int questionflag;
 	public Timestamp getOccurrence_time() {
 		return occurrence_time;
 	}
@@ -80,6 +81,12 @@ public class CapacityWorkDto {
 	}
 	public void setAlarm_id(Integer alarm_id) {
 		this.alarm_id = alarm_id;
+	}
+	public int getQuestionflag() {
+		return questionflag;
+	}
+	public void setQuestionflag(int questionflag) {
+		this.questionflag = questionflag;
 	}
 	
 	

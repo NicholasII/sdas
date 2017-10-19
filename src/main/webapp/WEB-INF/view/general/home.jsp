@@ -95,7 +95,7 @@
 				</div>
 				<div class="ibox-content">
 					<div class="col-sm-12">
-						<a href="javascript:iframeconvert('/sdas/work/capacity','性能工单')"><h5>最近一天可疑工单</h5></a>
+						<a href="javascript:iframeconvert('/sdas/work/capacity','性能工单')"><h5>可疑工单</h5></a>
 						<div class="ibox-content">
 							<div class="jqGrid_wrapper">
 								<table class="table" id="table_list_2"></table>

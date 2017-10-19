@@ -85,7 +85,37 @@ public class WorkController {
 	@ResponseBody
 	public ModelMap workvalidate(){
 		ModelMap map = new ModelMap();
-		List<CapacityWorkDto> capacityWorks = workService.workValidate();
+		
+		List<CapacityWorkDto> capacityWorks = workService.workValidate(workService.allvalidatelist(),0);
+		if (capacityWorks.size()>0) {
+			map.addAttribute(Constraints.RESULT_ROW, capacityWorks);
+			map.addAttribute(Constraints.RESULT_SUCCESS, true);
+		}else {
+			map.addAttribute(Constraints.RESULT_SUCCESS, false);
+		}
+		return map;
+	}
+	
+	@RequestMapping("/validatetheday")
+	@ResponseBody
+	public ModelMap workvalidatetheday(){
+		ModelMap map = new ModelMap();
+		
+		List<CapacityWorkDto> capacityWorks = workService.workValidate(workService.validatelisttheday(),1);
+		if (capacityWorks.size()>0) {
+			map.addAttribute(Constraints.RESULT_ROW, capacityWorks);
+			map.addAttribute(Constraints.RESULT_SUCCESS, true);
+		}else {
+			map.addAttribute(Constraints.RESULT_SUCCESS, false);
+		}
+		return map;
+	}
+	@RequestMapping("/validatedoubt")
+	@ResponseBody
+	public ModelMap doubtworkvalidate(){
+		ModelMap map = new ModelMap();
+		
+		List<CapacityWorkDto> capacityWorks = workService.workValidate(workService.allvalidatelist(),2);
 		if (capacityWorks.size()>0) {
 			map.addAttribute(Constraints.RESULT_ROW, capacityWorks);
 			map.addAttribute(Constraints.RESULT_SUCCESS, true);

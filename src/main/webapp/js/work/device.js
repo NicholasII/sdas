@@ -81,25 +81,7 @@ function refreshJqGrid(list){
         ],
         pager: "#pager_list_1",
         viewrecords: true,
-        hidegrid: false,
-        gridComplete:function(){
-        	//获取某列的每一行id
-        	var ids = jQuery("#table_list_1").jqGrid("getDataIDs");
-        	for(var i=0;i<ids.length;i++){
-        	    /*var id = ids[i];
-        	    var names = $("#table_list_1").getCell(id,'network_name');
-        	    var url='<a href="#">'+names+'</a>';
-        	    var link = "/sdas/general/cellhome/";
-        	    var url2='<a href=javascript:gotocellhome("'+link+'","'+names+'")>日常监控</a>';
-        	    var link2 = "/sdas/fault/page";      	    
-        	    var url3='<a href=javascript:gotoprb("'+link2+'","'+names+'")>PRB利用率</a>';
-        	    var url4='<a href="#">切换出成功</a>';
-        	    $("#table_list_1").jqGrid('setRowData',id,{network_name:url});
-        	    $("#table_list_1").jqGrid('setRowData',id,{日常监控:url2});
-        	    $("#table_list_1").jqGrid('setRowData',id,{PRB利用率:url3});
-        	    $("#table_list_1").jqGrid('setRowData',id,{切换出成功:url4});*/
-        	}
-        }
+        hidegrid: false
 	});
 }
 function select(){

@@ -13,8 +13,11 @@ public interface CapacityWorkDao {
 	List<CapacityWorkDto> getlist2(@Param("work")CapacityWorkDto work,@Param("starttime")String starttime,@Param("endtime")String endtime);
 	
 	List<CapacityWorkDto> getDoubtlist();
-	
-	List<CapacityWorkDto> getdoubtlisttopsix();
+	/**
+	 * 从可疑工单表中获取最近一天的数据
+	 * @return
+	 */
+	List<CapacityWorkDto> getListTheDay();
 	
 	List<String> getbelongaera();
 	

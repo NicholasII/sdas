@@ -16,6 +16,12 @@ input {
 	margin-top: 10px;
 	margin-bottom: 10px
 }
+.SelectRed{
+	color:red;
+}
+.SelectGre{
+	color:green;
+}
 </style>
 </head>
 <body style="margin-left: 5px;margin-right: 5px;">

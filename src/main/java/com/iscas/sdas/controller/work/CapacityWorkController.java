@@ -70,15 +70,6 @@ public class CapacityWorkController {
 		return map;
 	}
 	
-	@RequestMapping("/doubttabletopsix")
-	@ResponseBody
-	public ModelMap getdoubttopsix(HttpServletRequest request,HttpServletResponse response){
-		ModelMap map = new ModelMap();
-		List<CapacityWorkDto> works = capacityWorkService.getdoubttopsix();
-		map.addAttribute(Constraints.RESULT_ROW, works);
-		return map;
-	}
-	
 	@RequestMapping("/belongare")
 	@ResponseBody
 	public ModelMap getbelongare(HttpServletRequest request,HttpServletResponse response){

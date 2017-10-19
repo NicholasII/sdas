@@ -20,6 +20,8 @@ import com.iscas.sdas.dao.WorkDao;
 import com.iscas.sdas.dao.work.CapacityWorkDao;
 import com.iscas.sdas.dto.PerformanceWorkDto;
 import com.iscas.sdas.dto.work.CapacityWorkDto;
+import com.mysql.fabric.xmlrpc.base.Fault;
+import com.sun.java.swing.plaf.motif.resources.motif;
 
 @Service
 public class WorkService {
@@ -48,9 +50,32 @@ public class WorkService {
 		performanceWorkMapper.delete();
 	}
 	
-	public List<CapacityWorkDto> workValidate(){
-		List<CapacityWorkDto> capacityWorkDtos = capacityWorkDao.getvalidatelist();
+	/**
+	 * 所有可疑工单
+	 * @return
+	 */
+	public List<CapacityWorkDto> allvalidatelist(){
+		return capacityWorkDao.getvalidatelist();
+	}
+	/**
+	 * 最近一天的可疑工单
+	 * @return
+	 */
+	public List<CapacityWorkDto> validatelisttheday(){
+		return capacityWorkDao.getListTheDay();
+	}
+	/**
+	 * 
+	 * @param capacityWorkDtos
+	 * @param flag 0为全部；1为最近一天的可疑工单；2为全部的可疑工单
+	 * @return
+	 */
+	public List<CapacityWorkDto> workValidate(List<CapacityWorkDto> capacityWorkDtos,int flag){ 
 		List<CapacityWorkDto> result = new ArrayList<>();
+		List<CapacityWorkDto> faultlist = new ArrayList<>();//
+		List<CapacityWorkDto> normallist = new ArrayList<>();//可疑工单
+		List<CapacityWorkDto> others = new ArrayList<>();
+		long start = System.currentTimeMillis();
 		try {
 			for (int i = 0; i < capacityWorkDtos.size(); i++) {
 				CapacityWorkDto capacityWorkDto = capacityWorkDtos.get(i);
@@ -70,25 +95,44 @@ public class WorkService {
 					if (map!=null) {
 						Set<String> set =  map.keySet();
 				    	Iterator<String> iterator =  set.iterator();
-				    	int count = 0;
+				    	int faults = 0,normals = 0;
 				    	while (iterator.hasNext()) {
 							String key = (String) iterator.next();
 							if (map.get(key).equals(HealthDegree.Degree.Fault)) {
-								count++;
+								faults++;
+							}else if (map.get(key).equals(HealthDegree.Degree.Normal)) {
+								normals++;
 							}
 						}
-				    	if (count>1) {
-							result.add(capacityWorkDto);
+				    	if (faults>=1) {
+				    		capacityWorkDto.setQuestionflag(1);
+							faultlist.add(capacityWorkDto);
+						}else if (normals>=16) {
+							capacityWorkDto.setQuestionflag(0);
+							normallist.add(capacityWorkDto);
+						}else {
+							capacityWorkDto.setQuestionflag(2);
+							others.add(capacityWorkDto);
 						}
-				    	
+				    	result.add(capacityWorkDto);
 					}
 				}
 			}
-			updateState(result);
+			long end = System.currentTimeMillis();
+			System.out.print("计算时长");
+			System.out.print(end-start);
+			System.out.println("秒");
+			System.out.println("总数："+result.size()+"，确定："+faultlist.size()+"，可疑："+normallist.size()+"，其他:"+others.size());
+			updateState(faultlist);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		if(flag==0){
+			return result;
+		}else {
+			return normallist;
+		}
+		
 	}
 	private void updateState(List<CapacityWorkDto> works){
 		for (CapacityWorkDto capacityWorkDto : works) {

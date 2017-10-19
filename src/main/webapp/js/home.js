@@ -16,7 +16,7 @@ $(function(){
 	});
     
     $.ajax({
-        url: "/sdas/capacitywork/doubttabletopsix",
+        url: "/sdas/work/validatedoubt",
         type:"GET",
         success:function(data,status){
             var temp = eval('(' + data + ')'); 
@@ -184,7 +184,7 @@ function refreshJqGrid2(list){
             },
             {
                 name: 'cellid',
-                index: 'cellid',
+                index: '小区名称',
                 width: 50
             },
             {

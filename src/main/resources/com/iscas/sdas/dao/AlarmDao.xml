@@ -10,10 +10,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		t_cell_result_info ORDER BY yyyyMMdd DESC LIMIT 1)) AS a WHERE
 		a.app_result=0 GROUP BY a.cell_code
 	</select>
-	<select id="allAlarm" resultType="com.iscas.sdas.dto.AlarmDto"
+	<select id="allDayAlarm" resultType="com.iscas.sdas.dto.AlarmDto"
 		parameterType="com.iscas.sdas.dto.AlarmDto">
-		SELECT cell_code,COUNT(cell_code) AS count,yyyyMMdd FROM
-		t_cell_result_info WHERE app_result=0
+		SELECT yyyyMMdd,cell_code,COUNT(*) AS count FROM t_cell_result_info WHERE app_result = 0 			
 		<if test="cell_code !=null">
 			<bind name="cellcode" value="'%'+ _parameter.getCell_code() +'%'" />
 			and cell_code like #{cellcode}
@@ -21,6 +20,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="yyyyMMdd != null">
 			and yyyyMMdd = #{yyyyMMdd}
 		</if>
-		GROUP BY cell_code
+		GROUP BY cell_code,yyyyMMdd ORDER BY yyyyMMdd
 	</select>
 </mapper>
