@@ -48,12 +48,15 @@ public class CellController {
 		String scene = request.getParameter("scene");
 		String type = request.getParameter("type");
 		if (!"".equals(name)&&name!=null) {
+			//name=new String(request.getParameter("cellname").getBytes("iso-8859-1"),"utf-8");
 			cellDto.setNetwork_name(name);
 		}
 		if (!"".equals(type)&&!"全部".equals(type)&&type!=null) {
+			//type=new String(request.getParameter("type").getBytes("iso-8859-1"),"utf-8");
 			cellDto.setGroup_type(type);
 		}
 		if (!"".equals(scene)&&!"全部".equals(scene)&&scene!=null) {
+			//scene=new String(request.getParameter("scene").getBytes("iso-8859-1"),"utf-8");
 			cellDto.setCover_scene(scene);
 		}
 		List<CellDto> cellDtos = cellService.getCellList(cellDto);
@@ -142,8 +145,8 @@ public class CellController {
 	@ResponseBody
 	public ModelMap alarm_healthtrend(HttpServletRequest request) throws UnsupportedEncodingException{
 		ModelMap map = new ModelMap();
-		String cellname = request.getParameter("cellname");
-		//String cellname =new String(request.getParameter("cellname").getBytes("iso-8859-1"),"utf-8");
+		//String cellname = request.getParameter("cellname");
+		String cellname =new String(request.getParameter("cellname").getBytes("iso-8859-1"),"utf-8");
 		
 		List<TotalHealthInfoDto> list = cellService.getalarmhealthtrend(cellname);
 		map.addAttribute(Constraints.RESULT_ROW, list);
