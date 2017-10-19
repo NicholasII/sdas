@@ -905,6 +905,8 @@ $(function() {
  			setInterval((function(){refreshAlarm()}),5*60*1000);
  		}
  	});
+    //实时简况度
+    rtRatio();
 });
 function refreshAlarm(){
 	console.info("refresh");
@@ -1488,4 +1490,44 @@ function alarmJqGrid(list) {
 				var width = $('.jqGrid_wrapper').width();
 				$('#alarm_table').setGridWidth(width);
 			});
+}
+setInterval(function(){
+   rtRatio() 
+},5*60*1000);
+
+var refreshcount = 0;
+function rtRatio(){
+    if(refreshcount<23){
+        refreshcount++;
+    }else{
+        refreshcount = 0;
+    }
+    $.ajax({
+                url : '/sdas/cell/rtratio',
+                type : "post",
+                data : {
+                    'cellname' : cellname,
+                    'count' : refreshcount
+                },
+                dataType : "json",
+                success : function(data, status) {
+                   var ratio = data.ratio;
+                   if(ratio!=undefined && ratio != "" && ratio != null){
+                        $("#b_ratio").text(ratio);
+                        if(ratio>80){
+                            $("#h_ratio").css("color","green");
+                        }else if(ratio>60 && ratio<=80){
+                            $("#h_ratio").css("color","#B9C83F");
+                        }else{
+                            $("#h_ratio").css("color","red");
+                        }
+                        $("#h_ratio").css("display","block");
+                        $("#h3_ratio").css("display","block");
+                   }else{
+                        $("#h_ratio").css("display","none");
+                        $("#h3_ratio").css("display","none");
+                   }
+
+                }
+            });
 }

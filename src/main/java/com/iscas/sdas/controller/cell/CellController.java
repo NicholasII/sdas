@@ -1,9 +1,8 @@
 package com.iscas.sdas.controller.cell;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,10 +14,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.iscas.sdas.dto.GroupIndexMeatdata;
 import com.iscas.sdas.dto.TotalHealthInfoDto;
+import com.iscas.sdas.dto.cell.BaseCellHealth;
 import com.iscas.sdas.dto.cell.CellDto;
 import com.iscas.sdas.service.cell.CellService;
+import com.iscas.sdas.util.CommonUntils;
 import com.iscas.sdas.util.Constraints;
 /**
  * 小区有关：全部表、分组、健康度 
@@ -145,11 +149,54 @@ public class CellController {
 	@ResponseBody
 	public ModelMap alarm_healthtrend(HttpServletRequest request) throws UnsupportedEncodingException{
 		ModelMap map = new ModelMap();
-		//String cellname = request.getParameter("cellname");
-		String cellname =new String(request.getParameter("cellname").getBytes("iso-8859-1"),"utf-8");
-		
+		String cellname = request.getParameter("cellname");	
 		List<TotalHealthInfoDto> list = cellService.getalarmhealthtrend(cellname);
 		map.addAttribute(Constraints.RESULT_ROW, list);
+		return map;
+	}
+	/**
+	 * 当前时刻蒋康度
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/rtratio")
+	@ResponseBody
+	public ModelMap rtratio(HttpServletRequest request){
+		ModelMap map = new ModelMap();
+		try {
+			String cellname = request.getParameter("cellname");
+			String count = request.getParameter("count");
+			BaseCellHealth baseCellHealth = cellService.newestHealth(cellname);
+			if (baseCellHealth!=null) {
+				String str_hour;
+				int hour;
+				if (CommonUntils.isempty(count)) {
+					hour = Calendar.HOUR_OF_DAY;
+					str_hour = hour>=10?hour+"":"0"+hour;
+				}else {
+					hour = Integer.parseInt(count);
+					str_hour = hour>=10?hour+"":"0"+hour;
+				}				
+				String range  = (String)baseCellHealth.getClass().getMethod("getRange_"+str_hour, null).invoke(baseCellHealth, null);
+				if (range!=null) {
+					JSONArray array = JSON.parseArray(range);
+					if (array!=null) {
+						for (int i = 0; i < array.size(); i++) {
+							JSONObject obj = array.getJSONObject(i);
+							if ("Ratio".equals(obj.getString("Key"))) {
+							    double ratio = Double.parseDouble(obj.get("Value").toString())*100;
+							    map.addAttribute("ratio", ratio);
+							    break;
+							}
+					
+						}
+					}
+				}
+				
+			}
+		} catch (Exception e) {	
+			e.printStackTrace();
+		}		
 		return map;
 	}
 }

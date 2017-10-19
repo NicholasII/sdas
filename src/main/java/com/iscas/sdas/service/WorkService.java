@@ -105,13 +105,13 @@ public class WorkService {
 							}
 						}
 				    	if (faults>=1) {
-				    		capacityWorkDto.setQuestionflag(1);
+				    		capacityWorkDto.setQuestionflag(1);//绿
 							faultlist.add(capacityWorkDto);
 						}else if (normals>=16) {
-							capacityWorkDto.setQuestionflag(0);
+							capacityWorkDto.setQuestionflag(2);//红
 							normallist.add(capacityWorkDto);
 						}else {
-							capacityWorkDto.setQuestionflag(2);
+							capacityWorkDto.setQuestionflag(3);//黄
 							others.add(capacityWorkDto);
 						}
 				    	result.add(capacityWorkDto);

@@ -144,6 +144,14 @@ public class CellService {
 		return list;
 	}
 	/**
+	 * 返回最近一天的小区健康度
+	 * @param cellname
+	 * @return
+	 */
+	public BaseCellHealth newestHealth(String cellname){
+		return cellDao.cellcurrenthealth(cellname);
+	}
+	/**
 	 * 小区实时健康度
 	 * @param cellname
 	 * @param type

@@ -22,6 +22,9 @@ input {
 .SelectGre{
 	color:green;
 }
+.SelectYel{
+	color: yellow;
+}
 </style>
 </head>
 <body style="margin-left: 5px;margin-right: 5px;">
