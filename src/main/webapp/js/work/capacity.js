@@ -186,7 +186,7 @@ $(function(){
 	$("#doubtwork").change(function() {
 		if ($("#doubtwork").is(':checked')) {
 			$.ajax({
-				url: doubutworkurl,
+				url: '/sdas/work/test',
 				type:"GET",
 				dataType:"json",
 				success:function(data,status){
@@ -201,7 +201,7 @@ $(function(){
 			});
 		}else{
 			$.ajax({
-				url: capacityworkurl,
+				url: '/sdas/work/alltest',
 				type:"GET",
 				dataType:"json",
 				success:function(data,status){	
