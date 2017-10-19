@@ -124,4 +124,34 @@ public class WorkController {
 		}
 		return map;
 	}
+	/**
+	 * 获取rt表中所有可疑工单（演示用）
+	 * @return
+	 */
+	@RequestMapping("/test")
+	@ResponseBody
+	public ModelMap test(){
+		ModelMap map = new ModelMap();
+		
+		List<CapacityWorkDto> capacityWorks = workService.getAllDoubtWorks();
+		if (capacityWorks.size()>0) {
+			map.addAttribute(Constraints.RESULT_ROW, capacityWorks);
+			map.addAttribute(Constraints.RESULT_SUCCESS, true);
+		}else {
+			map.addAttribute(Constraints.RESULT_SUCCESS, false);
+		}
+		return map;
+	}
+	/**
+	 * 获取rt表中所有可疑工单（演示用）
+	 * @return
+	 */
+	@RequestMapping("/alltest")
+	@ResponseBody
+	public ModelMap alltest(){
+		ModelMap map = new ModelMap();	
+		List<CapacityWorkDto> capacityWorks = workService.getAllWorks();
+		map.addAttribute(Constraints.RESULT_ROW, capacityWorks);
+		return map;
+	}
 }

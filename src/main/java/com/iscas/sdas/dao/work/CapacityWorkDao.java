@@ -26,6 +26,32 @@ public interface CapacityWorkDao {
 	List<CapacityWorkDto> getlistWhithinOneMonth(String cellname);
 	
 	List<CapacityWorkDto> getvalidatelist();
-	
+	/**
+	 * 更新确定工单
+	 * @param work
+	 * @return
+	 */
 	int update(CapacityWorkDto work);
+	/**
+	 * 更新可疑工单
+	 * @param work
+	 * @return
+	 */
+	int updatedoubtwork(CapacityWorkDto work);
+	/**
+	 * 更新预警工单
+	 * @param work
+	 * @return
+	 */
+	int updatealarmwork(CapacityWorkDto work);
+	/**
+	 * 临时演示用
+	 * @return
+	 */
+	List<CapacityWorkDto> getAllDoubtWorks();
+	/**
+	 * 临时演示用
+	 * @return
+	 */
+	List<CapacityWorkDto> getAllWorks();
 }

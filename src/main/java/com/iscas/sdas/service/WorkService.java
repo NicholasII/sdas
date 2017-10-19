@@ -124,6 +124,8 @@ public class WorkService {
 			System.out.println("秒");
 			System.out.println("总数："+result.size()+"，确定："+faultlist.size()+"，可疑："+normallist.size()+"，其他:"+others.size());
 			updateState(faultlist);
+			updateDoubtWork(normallist);
+			updateAlarmWork(others);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -139,7 +141,16 @@ public class WorkService {
 			capacityWorkDao.update(capacityWorkDto);
 		}
 	}
-	
+	private void updateDoubtWork(List<CapacityWorkDto> works){
+		for (CapacityWorkDto capacityWorkDto : works) {
+			capacityWorkDao.updatedoubtwork(capacityWorkDto);
+		}
+	}
+	private void updateAlarmWork(List<CapacityWorkDto> works){
+		for (CapacityWorkDto capacityWorkDto : works) {
+			capacityWorkDao.updatealarmwork(capacityWorkDto);
+		}
+	}
 	
 	@Test
 	public void test1(){
@@ -159,4 +170,11 @@ public class WorkService {
         double ss = SparkValidator.validate(sheetTime, sheetTypeString, cellid);
         System.out.println(ss);
 	}*/
+	
+	public List<CapacityWorkDto> getAllDoubtWorks(){
+		return capacityWorkDao.getAllDoubtWorks();
+	}
+	public List<CapacityWorkDto> getAllWorks(){
+		return capacityWorkDao.getAllWorks();
+	}
 }

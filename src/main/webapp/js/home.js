@@ -16,7 +16,7 @@ $(function(){
 	});
     
     $.ajax({
-        url: "/sdas/work/validatedoubt",
+        url: "/sdas/work/test",
         type:"GET",
         success:function(data,status){
             var temp = eval('(' + data + ')'); 

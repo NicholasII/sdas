@@ -92,6 +92,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update t_performance_work_rt
 		set questionflag = 1 where alarm_id = #{alarm_id}
 	</update>
+	<update id="updatedoubtwork" parameterType="com.iscas.sdas.dto.work.CapacityWorkDto">
+		update t_performance_work_rt
+		set questionflag = 0 where alarm_id = #{alarm_id}
+	</update>
+	<update id="updatealarmwork" parameterType="com.iscas.sdas.dto.work.CapacityWorkDto">
+		update t_performance_work_rt
+		set questionflag = 2 where alarm_id = #{alarm_id}
+	</update>
 	<select id="getListTheDay" resultType="com.iscas.sdas.dto.work.CapacityWorkDto">
 		select
 		occurrence_time,alarm_id,cellid,boutique_level,limit_times,belong_area,reasons,
@@ -101,5 +109,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		occurrence_time FROM t_performance_work_rt ORDER BY occurrence_time
 		DESC LIMIT 1),INTERVAL 1 DAY) AND (SELECT occurrence_time FROM
 		t_performance_work_rt ORDER BY occurrence_time DESC LIMIT 1)
+	</select>
+	<select id="getAllDoubtWorks" resultType="com.iscas.sdas.dto.work.CapacityWorkDto">
+		SELECT * FROM t_performance_work_rt WHERE questionflag = 0
+	</select>
+	<select id="getAllWorks" resultType="com.iscas.sdas.dto.work.CapacityWorkDto">
+		SELECT * FROM t_performance_work_rt WHERE questionflag = 0 or questionflag = 1 or questionflag = 2
 	</select>
 </mapper>

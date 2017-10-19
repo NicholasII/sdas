@@ -23,7 +23,7 @@ input {
 	color:green;
 }
 .SelectYel{
-	color: yellow;
+	color: #DFCD15;
 }
 </style>
 </head>
@@ -78,6 +78,11 @@ input {
 
 
 					</div>
+					<div class="footer" style="height: 60px;">
+							<div>
+								<span><i>备注：</i> </span> <span>红色为可疑工单；绿色为确定工单；黄色为预警工单</span>
+							</div>
+						</div>
 					<div class="jqGrid_wrapper">
 						<table class="table" id="table_list_1"></table>
 						<div id="pager_list_1"></div>

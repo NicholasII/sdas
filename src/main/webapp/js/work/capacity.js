@@ -10,7 +10,7 @@ var validateurl = ctx +"/work/validate";
 $(function(){
 	$.jgrid.defaults.styleUI = 'Bootstrap';
 	$.ajax({
-		url: capacityworkurl,
+		url: '/sdas/work/alltest',
 		type:"GET",
 		dataType:"json",
 		success:function(data,status){
@@ -132,9 +132,9 @@ function refreshJqGrid(list){
                 var id = ids[i];
                 var questionflag = $("#table_list_1").getCell(id,'questionflag');
                 var rowData = $("#table_list_1").getRowData(id);
-                 if(questionflag=="2"){
+                 if(questionflag=="0"){
                      $('#'+ids[i]).find("td").addClass("SelectRed");
-                 }else if(questionflag=="3"){
+                 }else if(questionflag=="2"){
                     $('#'+ids[i]).find("td").addClass("SelectYel");
                  }else if(questionflag=="1"){
                     $('#'+ids[i]).find("td").addClass("SelectGre");
