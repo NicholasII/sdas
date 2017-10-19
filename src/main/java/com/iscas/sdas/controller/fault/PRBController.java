@@ -26,7 +26,7 @@ public class PRBController {
 	@RequestMapping("/page")
 	public ModelAndView page(HttpServletRequest request) throws UnsupportedEncodingException{
 		ModelAndView modelAndView = new ModelAndView("fault/prb");
-		String cellname =new String(request.getParameter("name").getBytes("iso-8859-1"),"utf-8");
+		String cellname = request.getParameter("name");
 		//String cellname = request.getParameter("name");
 		if (!CommonUntils.isempty(cellname)) {
 			modelAndView.addObject("cellname", cellname);
