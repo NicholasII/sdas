@@ -21,7 +21,6 @@ import com.iscas.sdas.util.CommonUntils;
 import com.iscas.sdas.util.Constraints;
 import com.iscas.sdas.util.FileImport;
 
-import scala.collection.immutable.Stream.Cons;
 
 @Controller
 @RequestMapping("/work")

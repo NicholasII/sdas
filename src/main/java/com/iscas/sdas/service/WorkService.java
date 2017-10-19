@@ -20,8 +20,6 @@ import com.iscas.sdas.dao.WorkDao;
 import com.iscas.sdas.dao.work.CapacityWorkDao;
 import com.iscas.sdas.dto.PerformanceWorkDto;
 import com.iscas.sdas.dto.work.CapacityWorkDto;
-import com.iscas.utils.DateUtils;
-import com.iscas.validation.SparkValidator;
 
 @Service
 public class WorkService {
@@ -109,12 +107,12 @@ public class WorkService {
     	Map<String, HealthDegree.Degree> map = hd.getDegrees();
     	System.out.println(map);
 	}
-	@Test
+	/*@Test
 	public void test2(){
 		Date sheetTime = DateUtils.convert2Date("2017-08-03 13:00:00", "yyyy-MM-dd HH:mm:ss");
         String sheetTypeString = "新PRB利用率(4次连续)";
         String cellid = "广州五山科技街F-ZLH-1";
         double ss = SparkValidator.validate(sheetTime, sheetTypeString, cellid);
         System.out.println(ss);
-	}
+	}*/
 }
