@@ -47,18 +47,13 @@ public class CellController {
 		String name = request.getParameter("name");
 		String scene = request.getParameter("scene");
 		String type = request.getParameter("type");
-		
 		if (!"".equals(name)&&name!=null) {
-			name =new String(request.getParameter("name").getBytes("iso-8859-1"),"utf-8");
 			cellDto.setNetwork_name(name);
 		}
 		if (!"".equals(type)&&!"全部".equals(type)&&type!=null) {
-			type =new String(request.getParameter("type").getBytes("iso-8859-1"),"utf-8");
-			
 			cellDto.setGroup_type(type);
 		}
 		if (!"".equals(scene)&&!"全部".equals(scene)&&scene!=null) {
-			scene =new String(request.getParameter("scene").getBytes("iso-8859-1"),"utf-8");
 			cellDto.setCover_scene(scene);
 		}
 		List<CellDto> cellDtos = cellService.getCellList(cellDto);
@@ -97,14 +92,14 @@ public class CellController {
 	public ModelMap healthtrend(HttpServletRequest request,
 			@RequestParam(required=true,defaultValue="week",value="type")String type) throws UnsupportedEncodingException{
 		ModelMap map = new ModelMap();
-		//String cellname = request.getParameter("cellname");
-		String cellname =new String(request.getParameter("cellname").getBytes("iso-8859-1"),"utf-8");
+		String cellname = request.getParameter("cellname");
+		//String cellname =new String(request.getParameter("cellname").getBytes("iso-8859-1"),"utf-8");
 		String starttime = null,endtime = null;
 		if ("select".equals(type)) {
-			starttime =new String(request.getParameter("starttime").getBytes("iso-8859-1"),"utf-8");
-			endtime =new String(request.getParameter("endtime").getBytes("iso-8859-1"),"utf-8");
-			//starttime = request.getParameter("start");
-			//endtime = request.getParameter("end");
+			//starttime =new String(request.getParameter("starttime").getBytes("iso-8859-1"),"utf-8");
+			//endtime =new String(request.getParameter("endtime").getBytes("iso-8859-1"),"utf-8");
+			starttime = request.getParameter("start");
+			endtime = request.getParameter("end");
 		}
 		List<TotalHealthInfoDto> list = cellService.generateCellHealthTrend(cellname,type,starttime,endtime);
 		map.addAttribute(Constraints.RESULT_ROW, list);
