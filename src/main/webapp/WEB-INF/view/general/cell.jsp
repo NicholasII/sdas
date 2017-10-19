@@ -56,41 +56,10 @@
 						</div>
 					</div>
 					<div class="ibox-content">
-						<div class="jqGrid_wrapper">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>时间</th>
-										<th>指标值</th>
-									</tr>
-								</thead>
-								<tbody id="table">
-									<tr style="color: red;">
-										<td>2017-08-26 20:00</td>
-										<td>[YY-无线接通率]=20%</td>
-									</tr>
-									<tr>
-										<td>2017-08-26 19:15</td>
-										<td>[上行PRB利用率] = 64.44,[下行PRB利用率] = 61.95</td>
-									</tr>
-									<tr>
-										<td>2017-08-26 15:00</td>
-										<td>[RRC连接最大数] = 215.00</td>
-									</tr>
-									<tr>
-										<td>2017-08-26 20:00</td>
-										<td>[YY-无线接通率]=20%</td>
-									</tr>
-									<tr>
-										<td>2017-08-26 19:15</td>
-										<td>[上行PRB利用率] = 64.44,[下行PRB利用率] = 61.95</td>
-									</tr>
-									<tr>
-										<td>2017-08-26 15:00</td>
-										<td>[RRC连接最大数] = 215.00</td>
-									</tr>
-								</tbody>
-							</table>
+					<div class="jqGrid_wrapper"
+							style="margin: 0; padding: 0; width: 100%; overflow: auto;">
+							<table class="table" id="alarm_table"></table>
+							<div id="pager_alarm_table"></div>
 						</div>
 					</div>
 				</div>

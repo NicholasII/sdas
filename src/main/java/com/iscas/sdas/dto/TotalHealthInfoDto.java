@@ -12,6 +12,9 @@ public class TotalHealthInfoDto {
 	private int deviceworks;
 	private int osworks;
 	private int complaints;
+	private String alarm_name;
+	private int alarm_counts;
+	
 	public String getTime() {
 		return time;
 	}
@@ -47,6 +50,18 @@ public class TotalHealthInfoDto {
 	}
 	public void setComplaints(int complaints) {
 		this.complaints = complaints;
+	}
+	public String getAlarm_name() {
+		return alarm_name;
+	}
+	public void setAlarm_name(String alarm_name) {
+		this.alarm_name = alarm_name;
+	}
+	public int getAlarm_counts() {
+		return alarm_counts;
+	}
+	public void setAlarm_counts(int alarm_counts) {
+		this.alarm_counts = alarm_counts;
 	}
 	
 	

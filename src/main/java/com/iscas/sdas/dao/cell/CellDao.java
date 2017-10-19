@@ -77,4 +77,16 @@ public interface CellDao {
 	 * @return
 	 */
 	BaseCellHealth cellcurrenthealth(String cellname);
+	/**
+	 * 健康度异常预警
+	 * @param cellname
+	 * @return
+	 */
+	List<BaseCellHealth> alarmhealthtrend(String cellname);
+	/**
+	 * 异常预警指标名称
+	 * @param key
+	 * @return String
+	 */
+	String getalarmname(String key);
 }

@@ -157,6 +157,7 @@ public class CellService {
 			BaseCellHealth cellHealth = cellDao.cellcurrenthealth(cellname);
 
 			if (cellHealth!=null) {
+				
 				//List<String> perWorkCount = permanceWorkWithinCurrenttime(cellname); 
 				//List<String> deviceWorkCount = deviceWorkWithinCurrenttime(cellname);
 				//List<String> osWorkCount = osWorkWithinCurrenttime(cellname);
@@ -417,6 +418,87 @@ public class CellService {
 		logger.error("-------计算结束---------");
 		return result;
 	}
-	
-	
+	/**
+	 * 异常预警
+	 * @param cellname
+	 * @return
+	 */
+	public List<TotalHealthInfoDto> getalarmhealthtrend(String cellname){
+		List<TotalHealthInfoDto> list = new ArrayList<>();
+		try {
+			List<BaseCellHealth> cellHealths = cellDao.alarmhealthtrend(cellname);
+			if (cellHealths!=null && cellHealths.size()>0) {
+					BaseCellHealth cellHealth = cellHealths.get(0);
+					Method[] methods = cellHealth.getClass().getMethods();
+					List<TotalHealthInfoDto> keyArr=new ArrayList<>();
+					Boolean ifPushKey=true;
+					for (int i=0;i<methods.length;i++) {
+						if (methods[i].getName().startsWith("getRange")) {
+							String range = (String)methods[i].invoke(cellHealth, null);						
+							int  moment = Integer.parseInt(methods[i].getName().substring(methods[i].getName().lastIndexOf("_")+1));
+							//获取异常预警的指标名称和数量 
+							if(ifPushKey){
+								JSONArray array = JSON.parseArray(range);
+								if (array!=null&&array.size()>1) {
+								for (int j = 0; j < array.size(); j++) {
+									TotalHealthInfoDto info=new TotalHealthInfoDto();
+									JSONObject obj = array.getJSONObject(j);
+									String key=obj.getString("Key");
+									if(!key.equals("Ratio")){
+										int count=Integer.parseInt(obj.getString("Value"));
+										String year  = cellHealth.getYyyyMMdd().substring(0, 4);
+										String month  = cellHealth.getYyyyMMdd().substring(4, 6);
+										String day  = cellHealth.getYyyyMMdd().substring(6);
+										String time = year+"-"+month+"-"+day+" "+moment+":00:00";
+										info.setTime(time);
+										info.setAlarm_name(key);
+										info.setAlarm_counts(0);
+										keyArr.add(info);
+									}
+								}
+								ifPushKey=false;
+								}
+							}
+							keyArr=getAlarm(keyArr,range);
+						}		
+					}
+					
+					if(keyArr!=null&&keyArr.size()>1){
+						for(int j=0;j<keyArr.size();j++){
+							TotalHealthInfoDto info=new TotalHealthInfoDto();
+							if(keyArr.get(j).getAlarm_counts()>1){
+								info.setTime(keyArr.get(j).getTime());
+								String key=keyArr.get(j).getAlarm_name().split("_")[1];
+								info.setAlarm_name(cellDao.getalarmname(key));
+								info.setAlarm_counts(keyArr.get(j).getAlarm_counts());
+								list.add(info);
+							}
+						}
+					}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/**
+	 * 获取异常预警
+	 * @param 
+	 * @return
+	 */
+	private List<TotalHealthInfoDto> getAlarm(List<TotalHealthInfoDto> keyArr,String range){
+		if (keyArr!=null&&keyArr.size()>1) {
+			JSONArray array = JSON.parseArray(range);
+			if(array!=null&&array.size()>1){
+				for(int i=0;i<keyArr.size();i++){
+					JSONObject obj = array.getJSONObject(i);
+					int count=Integer.parseInt(obj.getString("Value"));
+					if(count==0){
+						keyArr.get(i).setAlarm_counts(keyArr.get(i).getAlarm_counts()+1);
+					}
+				}
+			}
+		}
+		return keyArr;
+	}
 }

@@ -5,6 +5,7 @@ $.jgrid.defaults.styleUI = 'Bootstrap';
 var index = ctx + "/cell/index";
 var weighturl = ctx + "/cell/weight";
 var healthtrendurl = ctx + "/cell/healthtrend";
+var alarm_url=ctx +"/cell/alarm_healthtrend";
 var name1 = '历史分析';
 var name2 = '实时数据';
 var nullchart = [];
@@ -887,8 +888,39 @@ $(function() {
                     rtratio.setOption(rt_health);
                 }
             });
+     ////////////
+     /*
+ 	 * 异常预警
+ 	 */
+ 	$.ajax({
+ 		url : alarm_url,
+ 		data : {
+ 			'cellname' : cellname
+ 		},
+ 		type : "POST",
+ 		dataType : "json",
+ 		success : function(data, status) {
+ 			var list = data.rows;
+ 			alarmJqGrid(list);
+ 			setInterval((function(){refreshAlarm()}),5*60*1000);
+ 		}
+ 	});
 });
-
+function refreshAlarm(){
+	console.info("refresh");
+	$.ajax({
+ 		url : alarm_url,
+ 		data : {
+ 			'cellname' : cellname
+ 		},
+ 		type : "POST",
+ 		dataType : "json",
+ 		success : function(data, status) {
+ 			var list = data.rows;
+ 			alarmJqGrid(list);
+ 		}
+ 	});
+}
 function groupindex(cellcode, indexcode) {
 	$.ajax({
 		url : "/sdas/cell/groupindexcontent",
@@ -1422,4 +1454,38 @@ function switchindex(indeicator_id) {
 				}
 			});
 
+}
+//
+function alarmJqGrid(list) {
+	$("#alarm_table").jqGrid({
+		data : list,
+		datatype : "local",
+		height : "auto",
+		autowidth : true,
+		shrinkToFit : true,
+		rowNum : 10,
+		rowList : [10, 20, 30],
+		colNames : ['时间', '指标名称', '次数'],
+		colModel : [{
+					name : 'time',
+					index : 'time',
+					width : 60
+				}, {
+					name : 'alarm_name',
+					index : 'alarm_name',
+					width : 60
+				}, {
+					name : 'alarm_counts',
+					index : 'alarm_counts',
+					width : 40
+				}],
+		pager : "#pager_alarm_table",
+		viewrecords : true,
+		hidegrid : false
+	});
+	// Add responsive to jqGrid
+	$(window).bind('resize', function() {
+				var width = $('.jqGrid_wrapper').width();
+				$('#alarm_table').setGridWidth(width);
+			});
 }
