@@ -46,7 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{grouptype}
     </select>
     <select id="getgroupindexcontent" resultType="com.iscas.sdas.dto.cell.BaseGroupIndex">
-		SELECT * FROM t_groupDetailInfo WHERE t_groupDetailInfo.cell_code = #{0} AND t_groupDetailInfo.indeicator_code=#{1};
+		SELECT * FROM t_groupDetailInfo WHERE cell_code = #{grouptype} AND indeicator_code=#{indexcode}
     </select>
     <select id="getgroup" parameterType="java.lang.String" resultType="java.lang.String">
 		SELECT group_type FROM t_groupBaseInfo WHERE cell_code = #{cellname} LIMIT 1

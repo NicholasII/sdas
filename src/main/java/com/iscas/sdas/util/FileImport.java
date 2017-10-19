@@ -59,7 +59,7 @@ public class FileImport {
 					continue;
 				}
 				int rowNum = sheet.getLastRowNum();
-				for (int i = 1; i <= 10; i++) {
+				for (int i = 1; i <= rowNum; i++) {
 					T t = result.get(i-1);
 					Row titlerow = sheet.getRow(0);
 					Row row = sheet.getRow(i);

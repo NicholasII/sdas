@@ -60,7 +60,7 @@ public class WorkController {
 		if (paths!=null && paths.size()>0) {
 			if (tableInfoDtos!=null && tableInfoDtos.size()>0) {
 				int rows = FileImport.tablerows(paths.get(0));
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < rows; i++) {
 					PerformanceWorkDto workDto = new PerformanceWorkDto();
 					performanceWorkDtos.add(workDto);
 				}
