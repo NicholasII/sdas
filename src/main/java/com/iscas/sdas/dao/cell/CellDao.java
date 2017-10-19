@@ -2,6 +2,8 @@ package com.iscas.sdas.dao.cell;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.iscas.sdas.dto.CellComplainDto;
 import com.iscas.sdas.dto.DeviceWorkDto;
 import com.iscas.sdas.dto.GroupIndexMeatdata;
@@ -19,7 +21,7 @@ public interface CellDao {
 	
 	List<GroupIndexMeatdata> getgroupindexs(String grouptype);
 	
-	BaseGroupIndex getgroupindexcontent(String grouptype,String indexcode);
+	BaseGroupIndex getgroupindexcontent(@Param("grouptype")String grouptype,@Param("indexcode")String indexcode);
 	
 	String getgroup(String cellname);
 	/**

@@ -6,7 +6,7 @@ package com.iscas.sdas.dto.cell;
  */
 public class BaseGroupIndex {
 
-	private String indeicator_name;
+	private String indeicator_code;
 
 	private String cell_code;
 
@@ -32,12 +32,13 @@ public class BaseGroupIndex {
 			range_10, range_11, range_12, range_13, range_14, range_15, range_16, range_17, range_18, range_19,
 			range_20, range_21, range_22, range_23;
 
-	public String getIndeicator_name() {
-		return indeicator_name;
+
+	public String getIndeicator_code() {
+		return indeicator_code;
 	}
 
-	public void setIndeicator_name(String indeicator_name) {
-		this.indeicator_name = indeicator_name;
+	public void setIndeicator_code(String indeicator_code) {
+		this.indeicator_code = indeicator_code;
 	}
 
 	public String getRange_00() {
