@@ -1,8 +1,10 @@
 package com.iscas.sdas.controller.cell;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -168,7 +170,7 @@ public class CellController {
 			String count = request.getParameter("count");
 			BaseCellHealth baseCellHealth = cellService.newestHealth(cellname);
 			if (baseCellHealth!=null) {
-				String str_hour;
+				/*String str_hour;
 				int hour;
 				if (CommonUntils.isempty(count)) {
 					hour = Calendar.HOUR_OF_DAY;
@@ -182,15 +184,41 @@ public class CellController {
 					JSONArray array = JSON.parseArray(range);
 					if (array!=null) {
 						for (int i = 0; i < array.size(); i++) {
-							JSONObject obj = array.getJSONObject(i);
-							if ("Ratio".equals(obj.getString("Key"))) {
-							    double ratio = Double.parseDouble(obj.get("Value").toString())*100;
-							    map.addAttribute("ratio", ratio);
-							    break;
-							}
-					
+								JSONObject obj = array.getJSONObject(i);
+								if ("Ratio".equals(obj.getString("Key"))) {
+								    double ratio = Double.parseDouble(obj.get("Value").toString())*100;
+								    map.addAttribute("ratio", ratio);
+								    break;
+								}
 						}
 					}
+				}*/
+				/////////////
+				Method[] methods = baseCellHealth.getClass().getMethods();
+				for (int i=0;i<methods.length;i++) {
+					if (methods[i].getName().startsWith("getRange")) {
+						String rangestr = (String)methods[i].invoke(baseCellHealth, null);						
+						int  moment = Integer.parseInt(methods[i].getName().substring(methods[i].getName().lastIndexOf("_")+1));
+						if (rangestr!=null) {
+							JSONArray array = JSON.parseArray(rangestr);
+							if (array.size()<2) {
+								String str_hour = (moment-1)>=10?(moment-1)+"":"0"+(moment-1);
+								String newrange  = (String)baseCellHealth.getClass().getMethod("getRange_"+str_hour, null).invoke(baseCellHealth, null);
+								JSONArray newarray = JSON.parseArray(newrange);
+								if (newarray!=null) {
+									for (int j = 0; j < newarray.size(); j++) {
+											JSONObject obj = newarray.getJSONObject(j);
+											if ("Ratio".equals(obj.getString("Key"))) {
+											    double ratio = Double.parseDouble(obj.get("Value").toString())*100;
+											    map.addAttribute("ratio", ratio);
+											}
+									}
+									break;
+								}
+							}
+						}
+					}	
+					
 				}
 				
 			}
