@@ -139,6 +139,12 @@ function refreshJqGrid(list){
                  }else if(questionflag=="1"){
                     $('#'+ids[i]).find("td").addClass("SelectGre");
                  }
+                 
+                 var id = ids[i];
+         	    var cellid = $("#table_list_1").getCell(id,'cellid');
+         	    var link = "/sdas/general/cellhome/";
+         	    var url='<a href=javascript:gotocellhome("'+link+'","'+cellid+'")>'+cellid+'</a>';
+         	    $("#table_list_1").jqGrid('setRowData',id,{cellid:url});
             }
         }
 	});
@@ -237,4 +243,32 @@ function validate(){
                     }                                
                 }
             });
+}
+function gotocellhome(url,params,station){
+	
+	var a_parent = $(".page-tabs-content",window.parent.document);
+	var iframe_parent = $("#content-main",window.parent.document);
+	
+	var item = $('<a href="javascript:;" class="active J_menuTab" data-id="'+url+'">日常监控 <i class="fa fa-times-circle"></i></a>');
+	var content = $('<iframe class="J_iframe" name="iframe10" width="100%" height="100%" src="'+url+'?name='+params+'&stationname='+station+'" frameborder="0" data-id="'+url+'" seamless></iframe>');
+	
+	a_parent.children("a").removeClass("active");
+
+	if(a_parent.has('a[data-id="'+url+'"]').length>0){
+		
+		a_parent.children('a[data-id="'+url+'"]').addClass("active");
+		iframe_parent.children("iframe").css("display","none");
+		iframe_parent.children().remove('iframe[data-id="'+url+'"]');
+		content.css("display","inline");
+		iframe_parent.prepend(content);
+	}else {
+		
+		content.css("display","inline");
+		a_parent.append(item);
+		iframe_parent.children("iframe").css("display","none");
+		iframe_parent.prepend(content);
+	}
+
+	
+
 }

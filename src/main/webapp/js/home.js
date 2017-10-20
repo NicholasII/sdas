@@ -105,6 +105,51 @@ function scroll2(){
 setInterval(() => {
 	scroll2()
 }, 10000);
+//指标异常预警
+/*function JqGridalarm_target(){
+	$.ajax({
+ 		url : ctx +"/cell/alarm_healthtrend",
+ 		type : "POST",
+ 		dataType : "json",
+ 		success : function(data, status) {
+ 			$("#alarm_target").jqGrid({
+ 		    	data : list,
+ 				datatype : "local",
+ 				height : "auto",
+ 				autowidth : true,
+ 				shrinkToFit : true,
+ 				rowNum : 10,
+ 				rowList : [10, 20, 30],
+ 				colNames : ['时间', '指标名称', '次数'],
+ 				colModel : [{
+ 							name : 'time',
+ 							index : 'time',
+ 							width : 60
+ 						}, {
+ 							name : 'alarm_name',
+ 							index : 'alarm_name',
+ 							width : 60
+ 						}, {
+ 							name : 'alarm_counts',
+ 							index : 'alarm_counts',
+ 							width : 40
+ 						}],
+ 				pager : "#pager_alarm_target",
+ 				viewrecords : true,
+ 				hidegrid : false
+ 			});
+ 			// Add responsive to jqGrid
+ 			$(window).bind('resize', function() {
+ 						var width = $('.jqGrid_wrapper').width();
+ 						$('#alarm_target').setGridWidth(width);
+ 					});
+ 			setInterval((function(){JqGridalarm_target()}),5*60*1000);
+ 		}
+ 	});
+	
+    
+}*/
+
 function alarmrefresh(){
     $.ajax({
         url: "/sdas/alarm/currentday",
