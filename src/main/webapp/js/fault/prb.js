@@ -106,7 +106,7 @@ function simpleCharts(url,attr,id,title,color){
 	if(Interval!=undefined){
 		clearInterval(Interval);
 	}
-	Interval=setInterval(function(){simpleCharts("'"+url+'","'+attr+'","'+id+'","'+title+'","'+color+"'")},5*60*1000);
+	Interval=setInterval(function(){simpleCharts(url,attr,id,title,color)},5*60*1000);
 }
 function drawEcharts(id,title,times,data,color){
 	var mycharts= echarts.init($(id).get(0));
