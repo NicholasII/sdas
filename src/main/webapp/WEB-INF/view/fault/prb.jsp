@@ -122,9 +122,9 @@ height: auto; /* let the content decide it */
 										<div class="tab-content">
 											<div id="tab-1" class="tab-pane active">
 												<div class="panel-body">
-													<div id="rrc" style="height: 400px"></div>
-													<div id="up_prb_rate" style="height: 400px"></div>
-													<div id="down_prb_rate" style="height: 400px"></div>
+													<div id="rrc" style="width:850px;height: 400px"></div>
+													<div id="up_prb_rate" style="width:850px;height: 400px"></div>
+													<div id="down_prb_rate" style="width:850px;height: 400px"></div>
 												</div>
 											</div>
 											<div id="tab-2" class="tab-pane">
@@ -282,8 +282,8 @@ height: auto; /* let the content decide it */
 										<div class="tab-content">
 											<div id="tab-2-1" class="tab-pane active">
 													<div class="panel-body">
-													<div id="switch_mon" style="width:750px;height: 400px"></div>
-													<div id="switch_success_rate" style="width:750px;height: 400px"></div>
+													<div id="switch_mon" style="width:850px;height: 400px"></div>
+													<div id="switch_success_rate" style="width:850px;height: 400px"></div>
 												</div>
 											</div>
 											<div id="tab-2-2" class="tab-pane">
