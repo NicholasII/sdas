@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		BY countnum DESC;
 	</select>
 	<select id="getcelllist" resultType="com.iscas.sdas.dto.CellComplainDto">
-	    <bind name="cellname" value="'%'+ _parameter +'%'"/>
+	   <!--  <bind name="cellname" value="'%'+ _parameter +'%'"/> -->
 		SELECT record_time,phone_number,live_cellname1,live_cellname2,live_cellname3
 		FROM t_complaint_residentarea WHERE
 		live_cellname1 LIKE #{cellname} OR
