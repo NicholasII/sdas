@@ -152,6 +152,18 @@ function refreshJqGrid_alarm(list){
                 width: 30
             }
         ],
+        gridComplete:function(){
+        	// 获取某列的每一行id
+        	var ids = jQuery("#table_list_alarm").jqGrid("getDataIDs");
+        	for(var i=0;i<ids.length;i++){
+        	    var id = ids[i];
+        	    var cell_code = $("#table_list_alarm").getCell(id,'cell_code');
+        	    var monitor_content = $("#table_list_alarm").getCell(id,'monitor_content');
+        	    var link2 = "/sdas/general/cellhome/";
+        	    var url2='<a href=javascript:gotocellhome("'+link2+'","'+cell_code+'")>'+cell_code+'</a>';
+        	    $("#table_list_alarm").jqGrid('setRowData',id,{cell_code:url2});
+        	}
+        },
         pager: "#pager_list_alarm",
         viewrecords: true,
         hidegrid: false

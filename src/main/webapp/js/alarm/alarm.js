@@ -60,6 +60,18 @@ function refreshJqGrid(list){
                 width: 50
             }
         ],
+        gridComplete:function(){
+        	// 获取某列的每一行id
+        	var ids = jQuery("#table_list_1").jqGrid("getDataIDs");
+        	for(var i=0;i<ids.length;i++){
+        	    var id = ids[i];
+        	    var cell_code = $("#table_list_1").getCell(id,'cell_code');
+        	    var monitor_content = $("#table_list_1").getCell(id,'monitor_content');
+        	    var link2 = "/sdas/general/cellhome/";
+        	    var url2='<a href=javascript:gotocellhome("'+link2+'","'+cell_code+'")>'+cell_code+'</a>';
+        	    $("#table_list_1").jqGrid('setRowData',id,{cell_code:url2});
+        	}
+        },
         pager: "#pager_list_1",
         viewrecords: true,
         hidegrid: false
@@ -96,4 +108,29 @@ function select(){
             alert(status);
         }
     });
+}
+function gotocellhome(url,params,station){
+	
+	var a_parent = $(".page-tabs-content",window.parent.document);
+	var iframe_parent = $("#content-main",window.parent.document);
+	
+	var item = $('<a href="javascript:;" class="active J_menuTab" data-id="'+url+'">日常监控 <i class="fa fa-times-circle"></i></a>');
+	var content = $('<iframe class="J_iframe" name="iframe10" width="100%" height="100%" src="'+url+'?name='+params+'&stationname='+station+'" frameborder="0" data-id="'+url+'" seamless></iframe>');
+	
+	a_parent.children("a").removeClass("active");
+
+	if(a_parent.has('a[data-id="'+url+'"]').length>0){
+		
+		a_parent.children('a[data-id="'+url+'"]').addClass("active");
+		iframe_parent.children("iframe").css("display","none");
+		iframe_parent.children().remove('iframe[data-id="'+url+'"]');
+		content.css("display","inline");
+		iframe_parent.prepend(content);
+	}else {
+		
+		content.css("display","inline");
+		a_parent.append(item);
+		iframe_parent.children("iframe").css("display","none");
+		iframe_parent.prepend(content);
+	}
 }

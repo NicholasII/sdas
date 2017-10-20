@@ -181,6 +181,8 @@ var histroy_trend = {
 	},
 	xAxis : {
 		type : 'category',
+		boundaryGap : false,
+		scale: true,
 		data : []
 	},
 	yAxis : {
@@ -224,9 +226,8 @@ var histroy_trend = {
 				name : '投诉',
 				data : [],
 				type : 'scatter',
-				symbolOffset : [0, 30],
 				symbolSize : function(data) {
-					return data[2] * 10;
+					return data[2] * 12;
 				},
 				label : {
 					emphasis : {
@@ -368,6 +369,7 @@ var rt_health = {
     },
     xAxis : {
         type : 'category',
+        boundaryGap : false,
         data : []
     },
     yAxis : {
