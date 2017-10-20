@@ -181,7 +181,6 @@ var histroy_trend = {
 	},
 	xAxis : {
 		type : 'category',
-		boundaryGap : false,
 		scale: true,
 		data : []
 	},
@@ -369,7 +368,6 @@ var rt_health = {
     },
     xAxis : {
         type : 'category',
-        boundaryGap : false,
         data : []
     },
     yAxis : {
