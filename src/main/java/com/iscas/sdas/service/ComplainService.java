@@ -1,10 +1,15 @@
 package com.iscas.sdas.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iscas.sdas.common.PageDto;
 import com.iscas.sdas.dao.ComplainDao;
 import com.iscas.sdas.dto.CellComplainDto;
 import com.iscas.sdas.dto.ComplainDto;
@@ -16,7 +21,7 @@ public class ComplainService {
 	@Autowired
 	ComplainDao complainDao;
 	
-	
+	private static final Logger loggger = LoggerFactory.getLogger(ComplainService.class);  
 	/**
 	 * 集中投诉
 	 * @return
@@ -33,12 +38,21 @@ public class ComplainService {
 		return encryption(complainDao.getcelllist(cellname));
 	}
 	/**
-	 * 所有投诉未分页
+	 * 所有投诉（未分页）
 	 * @return
 	 */
 	public List<CellComplainDto> getalllist(){		
-		return encryption(complainDao.getalllist());
+		return encryption(complainDao.getPageList());
 	}
+	/**
+	 * 所有投诉（分页）
+	 * @return
+	 */
+	public List<CellComplainDto> getpagelist(){
+
+		return encryption(complainDao.getPageList());
+	}
+	
 	
 	public List<CellComplainDto> getfocuslist(String cellname){
 		return encryption(complainDao.getfocuslist(cellname));

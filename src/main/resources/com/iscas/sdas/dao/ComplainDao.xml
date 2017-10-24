@@ -6,17 +6,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getlist" resultType="com.iscas.sdas.dto.ComplainDto">
 		SELECT time,phone_number
 		,cellname ,COUNT(*) as countnum FROM(
-		SELECT a.phone_number,a.record_time as time,a.live_cellname1 as cellname
+		SELECT
+		a.phone_number,a.record_time as time,a.live_cellname1 as cellname
 		FROM
 		t_complaint_residentarea a
 		WHERE a.record_time LIKE
 		&apos;%2017-08-01%&apos;
 		union
-		SELECT b.phone_number,b.record_time as time ,b.live_cellname2 as cellname
+		SELECT b.phone_number,b.record_time as
+		time ,b.live_cellname2 as cellname
 		FROM t_complaint_residentarea b
 		WHERE b.record_time LIKE &apos;%2017-08-01%&apos;
 		union
-		SELECT c.phone_number,c.record_time as time ,c.live_cellname3 as cellname
+		SELECT
+		c.phone_number,c.record_time as time ,c.live_cellname3 as cellname
 		FROM t_complaint_residentarea c
 		WHERE c.record_time LIKE
 		&apos;%2017-08-01%&apos;
@@ -24,28 +27,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		BY countnum DESC;
 	</select>
 	<select id="getcelllist" resultType="com.iscas.sdas.dto.CellComplainDto">
-	   <!--  <bind name="cellname" value="'%'+ _parameter +'%'"/> -->
-		SELECT record_time,phone_number,live_cellname1,live_cellname2,live_cellname3
-		FROM t_complaint_residentarea WHERE
-		live_cellname1 LIKE #{cellname} OR
-		live_cellname2 LIKE #{cellname} OR
-		live_cellname3 LIKE #{cellname}
-		GROUP BY phone_number ORDER BY record_time;
+		SELECT
+		t1.record_time,t1.phone_number,t1.complaint_detailinfo,t2.live_cellname1,t2.live_cellname2,t2.live_cellname3
+		FROM t_complaint_detail t1,t_complaint_residentarea t2
+		WHERE t1.phone_number=t2.phone_number AND
+		left(t1.record_time,10)=left(t2.record_time,10)
+		AND (t2.live_cellname1=#{cellname} OR t2.live_cellname2=#{cellname}
+		OR t2.live_cellname3=#{cellname} )
+		ORDER BY t1.record_time
 	</select>
-	<select id="getalllist" resultType="com.iscas.sdas.dto.CellComplainDto">
-		SELECT record_time,phone_number,live_cellname1,live_cellname2,live_cellname3
-		FROM t_complaint_residentarea GROUP BY phone_number LIMIT 1000;
+	<select id="getPageList" resultType="com.iscas.sdas.dto.CellComplainDto">
+		SELECT
+		record_time,phone_number,live_cellname1,live_cellname2,live_cellname3
+		FROM t_complaint_residentarea GROUP BY phone_number
 	</select>
-	
-	
+
+
 	<select id="getfocuslist" resultType="com.iscas.sdas.dto.CellComplainDto">
-	    <bind name="cellname" value="'%'+ _parameter +'%'"/>
-		SELECT record_time,phone_number,live_cellname1,live_cellname2,live_cellname3 FROM(
-		SELECT phone_number,record_time,live_cellname1,live_cellname2,live_cellname3
+		<bind name="cellname" value="'%'+ _parameter +'%'" />
+		SELECT
+		record_time,phone_number,live_cellname1,live_cellname2,live_cellname3
+		FROM(
+		SELECT
+		phone_number,record_time,live_cellname1,live_cellname2,live_cellname3
 		FROM
-		t_complaint_residentarea 
-		WHERE live_cellname1 LIKE #{cellname} OR live_cellname2 LIKE #{cellname} OR live_cellname3 LIKE #{cellname})t  
+		t_complaint_residentarea
+		WHERE live_cellname1 LIKE #{cellname} OR live_cellname2 LIKE #{cellname} OR
+		live_cellname3 LIKE #{cellname})t
 		WHERE record_time LIKE &apos;%2017-08-01%&apos;
 	</select>
-	
+
 </mapper>

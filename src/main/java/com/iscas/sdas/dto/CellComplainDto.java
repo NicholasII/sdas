@@ -11,6 +11,7 @@ public class CellComplainDto {
 	private Date record_time;
 	private String phone_number;
 	private String live_cellname1,live_cellname2,live_cellname3;
+	private String complaint_detailinfo;
 	public Date getRecord_time() {
 		return record_time;
 	}
@@ -40,6 +41,12 @@ public class CellComplainDto {
 	}
 	public void setLive_cellname3(String live_cellname3) {
 		this.live_cellname3 = live_cellname3;
+	}
+	public String getComplaint_detailinfo() {
+		return complaint_detailinfo;
+	}
+	public void setComplaint_detailinfo(String complaint_detailinfo) {
+		this.complaint_detailinfo = complaint_detailinfo;
 	}
 	
 	

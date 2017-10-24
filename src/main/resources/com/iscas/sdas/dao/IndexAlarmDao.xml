@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iscas.sdas.dao.IndexAlarmDao">
+	<select id="getPageListCurrentDay" resultType="com.iscas.sdas.dto.IndexAlarmDto">
+		SELECT
+		a.cell_code,a.yyyyMMdd,COUNT(*) AS count,a.app_hour,a.app_result,a.app_type FROM (SELECT * FROM
+		t_cell_result_index_info WHERE yyyyMMdd = (SELECT yyyyMMdd FROM
+		t_cell_result_index_info ORDER BY yyyyMMdd DESC LIMIT 1)) AS a WHERE
+		a.app_result=0 GROUP BY a.cell_code
+	</select>
+	<select id="getPageList" resultType="com.iscas.sdas.dto.IndexAlarmDto"
+		parameterType="com.iscas.sdas.dto.IndexAlarmDto">
+		SELECT yyyyMMdd,cell_code,COUNT(*) AS count,app_type FROM t_cell_result_index_info WHERE app_result = 0 			
+		<if test="cell_code !=null">
+			<bind name="cellcode" value="'%'+ _parameter.getCell_code() +'%'" />
+			and cell_code like #{cellcode}
+		</if>
+		<if test="yyyyMMdd != null">
+			and yyyyMMdd = #{yyyyMMdd}
+		</if>
+		GROUP BY cell_code,yyyyMMdd ORDER BY yyyyMMdd
+	</select>
+</mapper>

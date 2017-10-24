@@ -29,7 +29,7 @@
 						<a href="javascript:iframeconvert('/sdas/alarm/','小区健康异常预警')"><h5>小区健康异常预警</h5></a>
 						<div class="ibox-content">
 							<div class="jqGrid_wrapper">
-								<table class="table" id="table_list_alarm"></table>
+								<table id="table_list_alarm"></table>
 								<div id="pager_list_alarm"></div>
 							</div>
 						</div>
@@ -44,7 +44,7 @@
 					</div>
 					<div class="col-sm-12">
 						<div>
-							<h5 style="float: left;">小区指标异常预警</h5>
+							<a href="javascript:iframeconvert('/sdas/indexalarm/','小区指标异常预警')"><h5>小区指标异常预警</h5></a>
 							<div style="float: right;" class="ibox-tools">
 								<select><option>全部</option>
 									<option>PRB利用率</option>
@@ -53,36 +53,10 @@
 							</div>
 						</div>
 						<div class="ibox-content">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>时间</th>
-										<th>小区名称</th>
-										<th>次数</th>
-										<th>监控内容</th>
-									</tr>
-								</thead>
-								<tbody id="table1">
-									<tr>
-										<td>2017-08-26 20:00</td>
-										<td>广州白云区朝阳工业区F-ZLH-1</td>
-										<td>10</td>
-										<td>新PRB利用率(4次连续)</td>
-									</tr>
-									<tr>
-										<td>2017-08-26 19:15</td>
-										<td>广州西区和辉花园D-ZLH-3</td>
-										<td>5</td>
-										<td>新切换出成功率(4次连续)</td>
-									</tr>
-									<tr>
-										<td>2017-08-26 15:00</td>
-										<td>新PRB利用率(4次连续)</td>
-										<td>3</td>
-										<td>新切换出成功率(4次连续)</td>
-									</tr>
-								</tbody>
-							</table>
+							<div class="jqGrid_wrapper">
+								<table id="table_list_alarm_index"></table>
+								<div id="pager_list_alarm_index"></div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -98,168 +72,15 @@
 						<a href="javascript:iframeconvert('/sdas/work/capacity','性能工单')"><h5>可疑工单</h5></a>
 						<div class="ibox-content">
 							<div class="jqGrid_wrapper">
-								<table class="table" id="table_list_2"></table>
-								<div id="pager_list_2"></div>
+								<table id="table_list_work"></table>
+								<div id="pager_list_work"></div>
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-7" style="display: none;">
-						<h5>性能工单数量统计</h5>
-						<div class="ibox-content">
-							<div id="line" style="height: 300px;"></div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row" style="display: none;">
-			<div class="col-sm-6">
-				<div class="ibox float-e-margins">
-					<div class="ibox-title">
-						<a href="${context}/work/complaint"><h5>集中投诉</h5></a>
-
-					</div>
-					<div class="ibox-content">
-						<div class="jqGrid_wrapper">
-							<table class="table" id="table_list_1"></table>
-							<div id="pager_list_1"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-6">
-				<div class="ibox float-e-margins">
-					<div class="ibox-title">
-						<h5>性能工单原因统计</h5>
-					</div>
-					<div id="pie" style="height: 300px;"></div>
-				</div>
-			</div>
-		</div>
-
 	</div>
-	<script type="text/javascript">
-		var linechart = echarts.init($("#line").get(0));
-		var data = [ 19, 1, 1, 21, 2, 3, 4, 5, 6, 2, 7, 8, 8, 1, 2, 3, 4, 5, 6,
-				7, 6, 2, 2, 4 ];
-		var option = {
-			legend : {
-				data : [ '日常工单', '可疑工单', '实时工单' ]
-			},
-			tooltip : {
-				trigger : 'axis'
-			},
-			xAxis : {
-				type : 'category',
-				data : [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-						17, 18, 19, 20, 21, 22, 23 ],
-				axisLine : {
-					lineStyles : {
-						color : "#FFFFFF"
-					}
-				},
-				axisLabel : {
-					formatter : '{value}时'
-				}
-			},
-			yAxis : {
-				type : 'value',
-				axisLine : {
-					lineStyles : {
-						color : "#FFFFFF"
-					}
-				},
-				axisLabel : {
-					formatter : '{value}个'
-				}
-			},
-			series : [
-					{
-						name : "可疑工单",
-						type : 'line',
-						lineStyle : {
-							normal : {
-								color : '#DC143C'
-							}
-						},
-						smooth : true,
-						showSymbol : true,
-						data : [ 1, 5, 21, 2, 3, 4, 15, 6, 2, 7, 8, 8, 1, 2, 3,
-								4, 25, 6, 7, 6, 12, 2, 4 ]
-					},
-					{
-						name : "日常工单",
-						type : 'line',
-						lineStyle : {
-							normal : {
-								color : '#0994E5'
-							}
-						},
-						smooth : true,
-						showSymbol : true,
-						data : [ 1, 0, 21, 2, 3, 4, 5, 6, 2, 7, 8, 18, 1, 2, 3,
-								4, 5, 6, 7, 16, 2, 2, 4 ]
-					},
-					{
-						name : "实时工单",
-						type : 'line',
-						lineStyle : {
-							normal : {
-								color : '#FFFF00'
-							}
-						},
-						smooth : true,
-						showSymbol : true,
-						data : [ 11, 10, 10, 2, 3, 4, 5, 6, 2, 7, 8, 8, 1, 2,
-								3, 4, 15, 6, 7, 6, 2, 2, 4 ]
-					} ]
-
-		};
-		linechart.setOption(option);
-		var piechart = echarts.init($("#pie").get(0));
-		var option1 = {
-			tooltip : {
-				trigger : 'item',
-				formatter : "{a} <br/>{b} : {c} ({d}%)"
-			},
-			legend : {
-				orient : 'vertical',
-				left : 'left',
-				data : [ '新0流量(2次连续)', '新无线接通率(4次连续)', '新切换出成功率(4次连续)',
-						'新无线接通率(4次连续)', '小区间切换出准备请求次数>100' ]
-			},
-			series : [ {
-				name : '访问来源',
-				type : 'pie',
-				radius : '55%',
-				center : [ '50%', '60%' ],
-				data : [ {
-					value : 335,
-					name : '新0流量(2次连续)'
-				}, {
-					value : 310,
-					name : '新无线接通率(4次连续)'
-				}, {
-					value : 234,
-					name : '新切换出成功率(4次连续)'
-				}, {
-					value : 135,
-					name : '新无线接通率(4次连续)'
-				}, {
-					value : 1548,
-					name : '小区间切换出准备请求次数>100'
-				} ],
-				itemStyle : {
-					emphasis : {
-						shadowBlur : 10,
-						shadowOffsetX : 0,
-						shadowColor : 'rgba(0, 0, 0, 0.5)'
-					}
-				}
-			} ]
-		};
-		piechart.setOption(option1);
-	</script>
 	<script type="text/javascript">
 		// 百度地图API功能
 		var map = new BMap.Map("allmap"); // 创建Map实例
@@ -297,6 +118,6 @@
 		});
 	</script>
 
-	<script type="text/javascript" src="${context }/js/home.js"></script>
+	<script type="text/javascript" src="${context}/js/home.js"></script>
 </body>
 </html>
