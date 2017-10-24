@@ -50,7 +50,7 @@ a:focus {
 }
 
 .nav > li > a {
-    color: #a7b1c2;
+    color: #fff;
     font-weight: 600;
     padding: 14px 20px 14px 25px;
 }
@@ -70,7 +70,7 @@ a:focus {
 
 .navbar-default .nav > li > a:hover,
 .navbar-default .nav > li > a:focus {
-    background-color: #293846;
+    background-color: #1c2f59;
     color: white;
 }
 
@@ -90,7 +90,7 @@ a:focus {
 
 .navbar-default {
     background-color: transparent;
-    border-color: #2f4050;
+    border-color: #254d7f;
     position: relative;
 }
 
@@ -202,7 +202,7 @@ body.body-small .navbar-top-links li:last-child {
 
 .nav-header {
     padding: 33px 25px;
-    background: url("patterns/header-profile.png") no-repeat;
+    background: url("header-profile-skin-1.png") no-repeat;
 }
 
 .pace-done .nav-header {
@@ -211,8 +211,8 @@ body.body-small .navbar-top-links li:last-child {
 }
 
 .nav > li.active {
-    border-left: 4px solid #19aa8d;
-    background: #293846;
+    border-left: 4px solid #1c84c6;
+    background: #1c2f59;
 }
 
 .nav.nav-second-level > li.active {
@@ -329,7 +329,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 }
 
 .canvas-menu.mini-navbar .nav-second-level {
-    background: #293846;
+    background: #1c2f59;
 }
 
 .mini-navbar li.active .nav-second-level {
@@ -494,7 +494,7 @@ body.body-small.fixed-sidebar.mini-navbar .navbar-static-side {
     position: absolute;
     left: 70px;
     top: 0px;
-    background-color: #2f4050;
+    background-color: #254d7f;
     padding: 10px 10px 0 10px;
     font-size: 12px;
     display: block;
@@ -531,7 +531,7 @@ body.canvas-menu.mini-navbar .navbar-default .nav > li > .nav-second-level li a 
 
 body.canvas-menu nav.navbar-static-side {
     z-index: 2001;
-    background: #2f4050;
+    background: #254d7f;
     height: 100%;
     position: fixed;
     display: none;
@@ -1383,23 +1383,23 @@ button.dim:active:before {
 /* TOOLTIPS */
 
 .tooltip-inner {
-    background-color: #2F4050;
+    background-color: #254d7f;
 }
 
 .tooltip.top .tooltip-arrow {
-    border-top-color: #2F4050;
+    border-top-color: #254d7f;
 }
 
 .tooltip.right .tooltip-arrow {
-    border-right-color: #2F4050;
+    border-right-color: #254d7f;
 }
 
 .tooltip.bottom .tooltip-arrow {
-    border-bottom-color: #2F4050;
+    border-bottom-color: #254d7f;
 }
 
 .tooltip.left .tooltip-arrow {
-    border-left-color: #2F4050;
+    border-left-color: #254d7f;
 }
 
 
@@ -3257,7 +3257,7 @@ a.forum-item-title:hover {
     padding: 12px 10px;
     margin: 0;
     border-radius: 0;
-    background: #2f4050;
+    background: #254d7f;
     color: #fff;
     text-align: center;
     border-right: 1px solid #334556;
@@ -3366,7 +3366,7 @@ body.boxed-layout {
 }
 
 body.boxed-layout #wrapper {
-    background-color: #2f4050;
+    background-color: #254d7f;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -3511,7 +3511,7 @@ video {
 #wrapper {
     width: 100%;
     overflow-x: hidden;
-    background-color: #2f4050;
+    background-color: #254d7f;
 }
 
 .wrapper {
@@ -3806,7 +3806,7 @@ nav.page-tabs .page-tabs-content {
 }
 
 .nav-tabs > li > a {
-    color: #A7B1C2;
+    color: #fff;
     font-weight: 600;
     padding: 10px 20px 10px 25px;
 }
@@ -4353,7 +4353,7 @@ a.close-canvas-menu {
     top: 10px;
     right: 15px;
     z-index: 1011;
-    color: #a7b1c2;
+    color: #fff;
 }
 
 a.close-canvas-menu:hover {
@@ -5622,7 +5622,7 @@ dd.project-people {
 .article h1 {
     font-size: 48px;
     font-weight: 700;
-    color: #2F4050;
+    color: #254d7f;
 }
 
 .article p {
@@ -5790,7 +5790,7 @@ del {
 }
 
 .small-chat-box .heading {
-    background: #2f4050;
+    background: #254d7f;
     padding: 8px 15px;
     font-weight: bold;
     color: #fff;
@@ -7183,7 +7183,7 @@ body.rtls.top-navigation .footer.fixed {
 }
 
 .content-tabs {
-    border-bottom: solid 2px #2f4050;
+    border-bottom: solid 2px #254d7f;
 }
 
 .page-tabs a {
@@ -7195,13 +7195,13 @@ body.rtls.top-navigation .footer.fixed {
 }
 
 .page-tabs a.active {
-    background: #2f4050;
-    color: #a7b1c2;
+    background: #254d7f;
+    color: #fff;
 }
 
 .page-tabs a.active:hover,
 .page-tabs a.active i:hover {
-    background: #293846;
+    background: #1c2f59;
     color: #fff;
 }
 
@@ -7572,7 +7572,7 @@ body.skin-3 {
 }
 
 .navbar-static-side {
-    background: #2f4050;
+    background: #254d7f;
 }
 
 .nav-close {
@@ -7819,7 +7819,7 @@ body.skin-3 {
     height: 38px;
     width: 38px;
     display: block;
-    background: #2f4050;
+    background: #254d7f;
     padding: 9px 8px;
     text-align: center;
     color: #fff;

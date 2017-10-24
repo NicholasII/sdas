@@ -19,27 +19,20 @@
 <body class="signin">
     <div class="signinpanel">
         <div class="row">
-            <div class="col-sm-7">
+            <div class="col-sm-7" style="width:450px;position: fixed;">
                 <div class="signin-info">
                     <div class="logopanel m-b">
-                        <h1>广州移动基站数据分析系统</h1>
+                        <h1>广州移动基站维护数据分析系统</h1>
                     </div>
-                    <div class="m-b"></div>
-                    <h4>欢迎使用 <strong>广州移动基站数据分析系统</strong></h4>
-                    <ul class="m-b">
-                        <!-- <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势一</li>
-                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势二</li>
-                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势三</li>
-                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势四</li>
-                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势五</li> -->
-                    </ul>
-                    <strong>还没有账号? <a href="#">立即注册&raquo;</a></strong>
+                    <h4>欢迎使用: <strong>广州移动基站维护数据分析系统</strong></h4>
+                    
                 </div>
             </div>
-            <div class="col-sm-5">
+            <div class="col-sm-5 loginform" style=";position: fixed;padding-top: 40px;">
+            
                 <form id="defaultForm" method="post" action="${context}/main">
                     <h4 class="no-margins">登录：</h4>
-                    <p class="m-t-md">登录到SDAS后台系统</p>
+                    <p class="m-t-md">登录到广州移动基站维护数据分析系统</p>
                     <div class="form-group">
                     	<lable class="sr-only" for="username">用户名</lable>
                     	<input type="text" name="username" id="username" class="form-control uname" placeholder="用户名"/>
@@ -75,7 +68,7 @@
 					</c:if> --%>
 					<div class="row">
 						<div class="col-xs-5" align="left">
-							<a href="#">忘记密码了?</a>
+							<a href="#" style="color:#fff">忘记密码了?</a>
 						</div>
                     	<%-- <c:if test="${env != 'dev' }">
 						<div class="col-xs-6" align="right">
@@ -89,7 +82,7 @@
         </div>
         <div class="signup-footer">
             <div class="pull-left">
-                &copy; 2015 All Rights Reserved.
+               <!--  &copy; 2015 All Rights Reserved. -->
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="renderer" content="webkit">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<title>移动基站数据分析平台</title>
+<title>广州移动基站维护数据分析系统</title>
 <%@ include file="/include/common.jsp"%>
 <script type="text/javascript" src="${context}/js/login/main.js"></script>
 </head>
@@ -23,8 +23,9 @@
 			<ul class="nav" id="side-menu">
 				<li class="nav-header">
 					<div class="dropdown profile-element">
-						<h3>
-							<b style="color: white">移动基站数据分析平台</b>
+						<h3 style="text-align:center">
+							<b style="color: white">广州移动基站</b><br><br>
+							<b style="color: white">维护数据分析系统</b>
 						</h3>
 					</div>
 					<div class="logo-element">J+</div>
