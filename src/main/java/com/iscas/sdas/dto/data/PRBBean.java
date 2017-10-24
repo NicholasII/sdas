@@ -18,6 +18,10 @@ public class PRBBean {
 	private String yysucces;
 	private String yyrrc;
 	private String yywire;
+	private Integer daynum;
+	private String starttime;
+	private String endtime;
+	
 	public String getSwitchs() {
 		return switchs;
 	}
@@ -101,6 +105,24 @@ public class PRBBean {
 	}
 	public void setYysucces(String yysucces) {
 		this.yysucces = yysucces;
+	}
+	public Integer getDaynum() {
+		return daynum;
+	}
+	public void setDaynum(Integer daynum) {
+		this.daynum = daynum;
+	}
+	public String getStarttime() {
+		return starttime;
+	}
+	public void setStarttime(String starttime) {
+		this.starttime = starttime;
+	}
+	public String getEndtime() {
+		return endtime;
+	}
+	public void setEndtime(String endtime) {
+		this.endtime = endtime;
 	}
 	
 }

@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script src="${context}/lib/hplus/js/plugins/layer/laydate/laydate.js"></script>
 <style type="text/css">
 .tab-content > .tab-pane,
 .pill-content > .pill-pane {
@@ -22,10 +23,10 @@ height: auto; /* let the content decide it */
 <body>
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="tabs-container">
-			<ul class="nav nav-tabs">
+			<ul class="nav nav-tabs" id="topTabs">
 				<li class="active"><a href="#tab-11" data-toggle="tab"
 					aria-expanded="true">新PRB利用率(4次连续)</a></li>
-				<li class="" onclick="switchCharts()"><a href="#tab-12"
+				<li class=""><a href="#tab-12"
 					data-toggle="tab" aria-expanded="false">新切换出成功率(4次连续)</a></li>
 			</ul>
 			<div class="tab-content">
@@ -92,30 +93,43 @@ height: auto; /* let the content decide it */
 							<div class="ibox float-e-margins">
 								<div class="ibox-title">
 									<h5>关键指标</h5>
-									<div class="ibox-tools"></div>
+										<div class="ibox-tools">
+											<div class="btn-group" id="datePicker">
+												<button class="btn btn-info datePicker" type="button">今日</button>
+												<button class="btn btn-white datePicker" type="button">昨天</button>
+												<button class="btn btn-white datePicker" type="button">最近7日</button>
+												<button class="btn btn-white datePicker" type="button">最近30日</button>
+												<button class="btn btn-white datePicker" type="button">按时间选择</button>
+												<div id="timeselect" style="display: none;">
+													<input style="margin-left:5px;margin-top: -7px !important;" id="starttime_prb"
+														class="layer-date starttime" placeholder="请输入开始时间"
+														onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+													<span id="span" style="margin-top: -10px ;display: inline !important;"
+														class="input-group-addon">到</span> 
+													<input  style="margin-top: -7px !important;" class="layer-date endtime" id="endtime_prb"
+														placeholder="请输入结束时间"
+														onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+													<button class="btn btn-info search" type="button" onclick="query('prb')">确定</button>
+												</div>
+											</div>
+										</div>
 								</div>
 								<div class="ibox-content">
 									<div class="tabs-container">
-										<ul class="nav nav-tabs">
+										<ul class="nav nav-tabs" id="tab">
 
-											<li class="active" onclick="PRBCharts()"><a
+											<li class="active"><a
 												href="#tab-1" data-toggle="tab" aria-expanded="true">关联指标对比</a></li>
-											<li class=""
-												onclick='simpleCharts("/sdas/fault/getprbothers","uecounts","#UE","用户面最大激活UE数","#2EC7C9")'>
+											<li class="">
 												<a href="#tab-2" data-toggle="tab" aria-expanded="false">用户面最大激活UE数</a>
 											</li>
-											<li class=""
-												onclick="simpleCharts('/sdas/fault/getprbothers','pucch','#PUCCH','PUCCH SR 资源使用量','#385Ad3')"><a
-												href="#tab-3" data-toggle="tab" aria-expanded="false">PUCCH
-													SR 资源使用量</a></li>
-											<li class=""
-												onclick="simpleCharts('/sdas/fault/getprbothers','cce','#CCE','CCE聚合度为2的次数','#823B93')"><a
+											<li class=""><a
+												href="#tab-3" data-toggle="tab" aria-expanded="false">PUCCH SR 资源使用量</a></li>
+											<li class=""><a
 												href="#tab-4" data-toggle="tab" aria-expanded="true">CCE聚合度为2的次数</a></li>
-											<li class=""
-												onclick="simpleCharts('/sdas/fault/getprbothers','puschprb','#PUSCH_PRB','小区载频PUSCH实际使用PRB个数','#27727B')"><a
+											<li class=""><a
 												href="#tab-5" data-toggle="tab" aria-expanded="true">小区载频PUSCH实际使用PRB个数</a></li>
-											<li class=""
-												onclick="simpleCharts('/sdas/fault/getprbothers','uprealprb','#PRB_count','小区上行信道实际使用PRB个数','#9BCA63')"><a
+											<li class=""><a
 												href="#tab-6" data-toggle="tab" aria-expanded="true">小区上行信道实际使用PRB个数</a></li>
 
 										</ul>
@@ -265,18 +279,35 @@ height: auto; /* let the content decide it */
 							<div class="ibox float-e-margins">
 								<div class="ibox-title">
 									<h5>关键指标</h5>
-									<div class="ibox-tools"></div>
+									<div class="ibox-tools">
+										<div class="btn-group">
+											<button class="btn btn-info datePicker" type="button">今日</button>
+												<button class="btn btn-white datePicker" type="button">昨天</button>
+												<button class="btn btn-white datePicker" type="button">最近7日</button>
+												<button class="btn btn-white datePicker" type="button">最近30日</button>
+												<button class="btn btn-white datePicker" type="button">按时间选择</button>
+											<div id="timeselect_switch" style="display: none;">
+												<input style="margin-left:5px;margin-top: -7px !important;" id="starttime_switch"
+													class="layer-date" placeholder="请输入开始时间"
+													onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+												<span id="span_switch" style="margin-top: -10px ;display: inline !important;"
+													class="input-group-addon">到</span> 
+												<input style="margin-top: -7px !important;" class="layer-date" id="endtime_switch"
+													placeholder="请输入结束时间"
+													onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+												<button class="btn btn-info search" type="button" onclick="query('switch')">确定</button>
+											</div>
+										</div>
+									</div>
 								</div>
 								<div class="ibox-content">
 									<div class="tabs-container">
-										<ul class="nav nav-tabs">
-											<li class="active" onclick="switchCharts()"><a
+										<ul class="nav nav-tabs" id="tab_switch">
+											<li class="active"><a
 												href="#tab-2-1" data-toggle="tab" aria-expanded="true">关联指标对比</a></li>
-											<li class=""
-												onclick="simpleCharts('/sdas/fault/getswitchothers','yyrrc','#YY-RRC_rate','YY-RRC连接建立成功率','#9BCA63')"><a
+											<li class=""><a
 												href="#tab-2-2" data-toggle="tab" aria-expanded="false">YY-RRC连接建立成功率</a></li>
-											<li class=""
-												onclick="simpleCharts('/sdas/fault/getswitchothers','yywire','#yywire_rate','YY-无线接通率','#385Ad3')"><a
+											<li class=""><a
 												href="#tab-2-3" data-toggle="tab" aria-expanded="false">YY-无线接通率</a></li>
 										</ul>
 										<div class="tab-content">

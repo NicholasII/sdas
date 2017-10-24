@@ -2,6 +2,7 @@ package com.iscas.sdas.service.fault;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +15,16 @@ public class FaultService {
 	@Autowired
 	FaultDao faultDao;
 	
-	public List<PRBBean> getprbs(){
-		return faultDao.getprb();
+	public List<PRBBean> getprbs(Integer daynum,String starttime,String endtime){
+		return faultDao.getprb(daynum,starttime,endtime);
 	}
-	public List<PRBBean> getprbothers(){
-		return faultDao.getprbothers();
+	public List<PRBBean> getprbothers(Integer daynum,String starttime,String endtime){
+		return faultDao.getprbothers(daynum,starttime,endtime);
 	}
-	public List<PRBBean> getswitch(){
-		return faultDao.getswitch();
+	public List<PRBBean> getswitch(Integer daynum,String starttime,String endtime){
+		return faultDao.getswitch(daynum,starttime,endtime);
 	}
-	public List<PRBBean> getswitchothers(){
-		return faultDao.getswitchothers();
+	public List<PRBBean> getswitchothers(Integer daynum,String starttime,String endtime){
+		return faultDao.getswitchothers(daynum,starttime,endtime);
 	}
 }

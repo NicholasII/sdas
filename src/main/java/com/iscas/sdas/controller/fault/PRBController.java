@@ -5,10 +5,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,8 +39,15 @@ public class PRBController {
 	@RequestMapping("/prb")
 	@ResponseBody
 	public ModelMap getprb(HttpServletRequest request){
+		Integer daynum=0;
+		String daynumStr=request.getParameter("daynum");
+		String starttime=request.getParameter("starttime");
+		String endtime=request.getParameter("endtime");
+		if(daynumStr!=null&&daynumStr!=""){
+			daynum=Integer.parseInt(daynumStr);
+		}
 		ModelMap map = new ModelMap();
-		List<PRBBean> prbBeans = faultService.getprbs();
+		List<PRBBean> prbBeans = faultService.getprbs(daynum,starttime,endtime);
 		if (prbBeans!=null) {
 			map.addAttribute(Constraints.RESULT_ROW, prbBeans);
 			map.addAttribute(Constraints.RESULT_SUCCESS, true);
@@ -50,8 +59,15 @@ public class PRBController {
 	@RequestMapping("/getprbothers")
 	@ResponseBody
 	public ModelMap getprbothers(HttpServletRequest request){
+		Integer daynum=0;
+		String daynumStr=request.getParameter("daynum");
+		String starttime=request.getParameter("starttime");
+		String endtime=request.getParameter("endtime");
+		if(daynumStr!=null&&daynumStr!=""){
+			daynum=Integer.parseInt(daynumStr);
+		}
 		ModelMap map = new ModelMap();
-		List<PRBBean> prbothers = faultService.getprbothers();
+		List<PRBBean> prbothers = faultService.getprbothers(daynum,starttime,endtime);
 		if (prbothers!=null) {
 			map.addAttribute(Constraints.RESULT_ROW, prbothers);
 			map.addAttribute(Constraints.RESULT_SUCCESS, true);
@@ -63,8 +79,15 @@ public class PRBController {
 	@RequestMapping("/switch")
 	@ResponseBody
 	public ModelMap getswitch(HttpServletRequest request){
+		Integer daynum=0;
+		String daynumStr=request.getParameter("daynum");
+		String starttime=request.getParameter("starttime");
+		String endtime=request.getParameter("endtime");
+		if(daynumStr!=null&&daynumStr!=""){
+			daynum=Integer.parseInt(daynumStr);
+		}
 		ModelMap map = new ModelMap();
-		List<PRBBean> switchBeans = faultService.getswitch();
+		List<PRBBean> switchBeans = faultService.getswitch(daynum,starttime,endtime);
 		if (switchBeans!=null) {
 			map.addAttribute(Constraints.RESULT_ROW, switchBeans);
 			map.addAttribute(Constraints.RESULT_SUCCESS, true);
@@ -76,8 +99,15 @@ public class PRBController {
 	@RequestMapping("/getswitchothers")
 	@ResponseBody
 	public ModelMap getswitchothers(HttpServletRequest request){
+		Integer daynum=0;
+		String daynumStr=request.getParameter("daynum");
+		String starttime=request.getParameter("starttime");
+		String endtime=request.getParameter("endtime");
+		if(daynumStr!=null&&daynumStr!=""){
+			daynum=Integer.parseInt(daynumStr);
+		}
 		ModelMap map = new ModelMap();
-		List<PRBBean> switchothers = faultService.getswitchothers();
+		List<PRBBean> switchothers = faultService.getswitchothers(daynum,starttime,endtime);
 		if (switchothers!=null) {
 			map.addAttribute(Constraints.RESULT_ROW, switchothers);
 			map.addAttribute(Constraints.RESULT_SUCCESS, true);
