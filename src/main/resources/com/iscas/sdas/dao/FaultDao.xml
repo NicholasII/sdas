@@ -4,19 +4,88 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iscas.sdas.dao.fault.FaultDao">
 	<select id="getprb" resultType="com.iscas.sdas.dto.data.PRBBean">
-		Select * from (SELECT test.time1 as timestamp,test.key30 as rrc,test.key58	as upprb,test.key59 as downprb FROM
-		test_rtdata_net test WHERE test.time1 order by test.time1  DESC limit 288) as counts order by timestamp;
+	Select * from (SELECT test.time1 as timestamp,test.key30 as rrc,test.key58	as upprb,test.key59 as downprb FROM
+		test_rtdata_net test 
+		<if test="starttime!='' and starttime!=''">
+		 WHERE test.time1 &gt;=#{starttime} and test.time1 &lt;=#{endtime}
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==7">
+		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=75<!-- #{daynum} -->
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==30">
+		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=76
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==0">
+		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) =73
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==1">
+		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) =74
+		</if>
+		) as counts order by timestamp;
 	</select>
+	
 	<select id="getprbothers" resultType="com.iscas.sdas.dto.data.PRBBean">
 		Select * from (SELECT test.time1 as timestamp,test.key32 as UECounts,test.key33	as PUCCH,test.key45 as CCE,test.key48 as PUSCHPRB,test.key54 as uprealprb FROM
-		test_rtdata_net test WHERE test.time1 order by test.time1  DESC limit 288) as counts order by timestamp;
+		test_rtdata_net test
+		<if test="starttime!='' and starttime!=''">
+		 WHERE test.time1 &gt;=#{starttime} and test.time1 &lt;=#{endtime}
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==7">
+		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=75<!-- #{daynum} -->
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==30">
+		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=76
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==0">
+		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) =73
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==1">
+		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) =74
+		</if>
+		) as counts order by timestamp;
 	</select>
 	<select id="getswitch" resultType="com.iscas.sdas.dto.data.PRBBean">
+		<!-- Select * from (SELECT test.time1 as timestamp,test.key26 as yymon,test.key27 as yysucces FROM
+		test_rtdata_net test WHERE test.time1 order by test.time1  DESC limit 288) as counts order by timestamp; -->
 		Select * from (SELECT test.time1 as timestamp,test.key26 as yymon,test.key27 as yysucces FROM
-		test_rtdata_net test WHERE test.time1 order by test.time1  DESC limit 288) as counts order by timestamp;
+		test_rtdata_net test
+		<if test="starttime!='' and starttime!=''">
+		 WHERE test.time1 &gt;=#{starttime} and test.time1 &lt;=#{endtime}
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==7">
+		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=75<!-- #{daynum} -->
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==30">
+		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=76
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==0">
+		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) =73
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==1">
+		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) =74
+		</if>
+		) as counts order by timestamp;
 	</select>
 	<select id="getswitchothers" resultType="com.iscas.sdas.dto.data.PRBBean">
+		<!-- Select * from (SELECT test.time1 as timestamp,test.key17 as yyrrc,test.key21	as yywire FROM
+		test_rtdata_net test WHERE test.time1 order by test.time1  DESC limit 288) as counts order by timestamp; -->
 		Select * from (SELECT test.time1 as timestamp,test.key17 as yyrrc,test.key21	as yywire FROM
-		test_rtdata_net test WHERE test.time1 order by test.time1  DESC limit 288) as counts order by timestamp;
+		test_rtdata_net test
+		<if test="starttime!='' and starttime!=''">
+		 WHERE test.time1 &gt;=#{starttime} and test.time1 &lt;=#{endtime}
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==7">
+		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=75<!-- #{daynum} -->
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==30">
+		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=76
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==0">
+		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) =73
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==1">
+		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) =74
+		</if>
+		) as counts order by timestamp;
 	</select>
 </mapper>
