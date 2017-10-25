@@ -202,7 +202,7 @@ body.body-small .navbar-top-links li:last-child {
 
 .nav-header {
     padding: 33px 25px;
-    background: url("header-profile-skin-1.png") no-repeat;
+    /* background: url("patterns/header-profile-skin-1.png") no-repeat; */
 }
 
 .pace-done .nav-header {
@@ -701,7 +701,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
 }
 
 .btn-info.btn-outline {
-    color: #23c6c8;
+    color: #1c84c6;
 }
 
 .btn-warning.btn-outline {
@@ -803,8 +803,8 @@ fieldset[disabled] .btn-success.active {
 }
 
 .btn-info {
-    background-color: #23c6c8;
-    border-color: #23c6c8;
+    background-color: #1c84c6;
+    border-color: #1c84c6;
     color: #FFFFFF;
 }
 
@@ -813,8 +813,8 @@ fieldset[disabled] .btn-success.active {
 .btn-info:active,
 .btn-info.active,
 .open .dropdown-toggle.btn-info {
-    background-color: #21b9bb;
-    border-color: #21b9bb;
+    background-color: #5bc0de;
+    border-color: #5bc0de;
     color: #FFFFFF;
 }
 
@@ -1214,7 +1214,7 @@ button.dim:active:before {
 
 .label-info,
 .badge-info {
-    background-color: #23c6c8;
+    background-color: #1c84c6;
     color: #FFFFFF;
 }
 
@@ -2748,7 +2748,7 @@ label.error {
 }
 
 .toast-info {
-    background-color: #23c6c8;
+    background-color: #1c84c6;
 }
 
 .toast-warning {
@@ -3806,7 +3806,7 @@ nav.page-tabs .page-tabs-content {
 }
 
 .nav-tabs > li > a {
-    color: #fff;
+    color: #555;
     font-weight: 600;
     padding: 10px 20px 10px 25px;
 }
@@ -4157,7 +4157,7 @@ table.table-mail tr td {
 }
 
 .lazur-bg {
-    background-color: #23c6c8;
+    background-color: #1c84c6;
     color: #ffffff;
 }
 
@@ -4195,12 +4195,12 @@ table.table-mail tr td {
 }
 
 .panel-info {
-    border-color: #23c6c8;
+    border-color: #1c84c6;
 }
 
 .panel-info > .panel-heading {
-    background-color: #23c6c8;
-    border-color: #23c6c8;
+    background-color: #1c84c6;
+    border-color: #1c84c6;
     color: #ffffff;
 }
 
@@ -4253,7 +4253,7 @@ table.table-mail tr td {
 }
 
 .progress-bar-info {
-    background-color: #23c6c8;
+    background-color: #1c84c6;
 }
 
 .progress-bar-warning {
@@ -4293,7 +4293,7 @@ table.table-mail tr td {
 }
 
 .text-info {
-    color: #23c6c8;
+    color: #1c84c6;
 }
 
 .text-warning {
@@ -5091,7 +5091,7 @@ ul.notes li div {
 }
 
 .category-list li a .text-info {
-    color: #23c6c8;
+    color: #1c84c6;
 }
 
 .category-list li a .text-danger {
@@ -5388,7 +5388,7 @@ dd.project-people {
 }
 
 .faq-question:hover {
-    color: #179d82;
+    color: #5bc0de;
 }
 
 .faq-answer {
@@ -5761,7 +5761,7 @@ del {
 
 .open-small-chat:hover {
     color: white;
-    background: #1ab394;
+    background: #5bc0de;
 }
 
 .small-chat-box {
@@ -7161,7 +7161,7 @@ body.rtls.top-navigation .footer.fixed {
 }
 
 .default-skin:hover {
-    background: #199d82;
+    background: #5bc0de;
 }
 
 .blue-skin {
