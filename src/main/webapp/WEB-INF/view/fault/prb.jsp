@@ -43,7 +43,7 @@ height: auto; /* let the content decide it */
 								<div class="ibox-content" style="padding-top: 30px;">
 									<div class="row">
 										<div class="col-sm-2">
-											<div class="lazur-bg p-xl" style="padding: 5px;">
+											<div class="lazur-bg p-xl" style="padding: 5px;border-radius: 8px;">
 												<h3>
 													<b>判断规则</b>
 												</h3>

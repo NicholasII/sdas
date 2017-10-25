@@ -28,7 +28,7 @@
 							<b style="color: white">维护数据分析系统</b>
 						</h3>
 					</div>
-					<div class="logo-element">J+</div>
+					<div class="logo-element">SDAS</div>
 				</li>
 				<c:forEach items="${firstMenu}" var="menu">
 					<!-- 只有一级菜单的情况 -->
@@ -138,7 +138,7 @@
 				</a>
 
 			</div>
-			<div class="row J_mainContent" id="content-main" style="height: 100%">
+			<div class="row J_mainContent" id="content-main">
 				<iframe class="J_iframe" name="iframe0" width="100%" height="100%"
 					src="${context}/general/home" frameborder="0"
 					data-id="${context}/general/home" seamless></iframe>
