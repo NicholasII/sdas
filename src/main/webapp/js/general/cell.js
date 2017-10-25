@@ -5,7 +5,7 @@ $.jgrid.defaults.styleUI = 'Bootstrap';
 var index = ctx + "/cell/index";
 var weighturl = ctx + "/cell/weight";
 var healthtrendurl = ctx + "/cell/healthtrend";
-var alarm_url=ctx +"/cell/alarm_healthtrend";
+var alarm_url = ctx + "/cell/alarm_healthtrend";
 var name1 = '历史分析';
 var name2 = '实时数据';
 var nullchart = [];
@@ -181,7 +181,7 @@ var histroy_trend = {
 	},
 	xAxis : {
 		type : 'category',
-		scale: true,
+		scale : true,
 		data : []
 	},
 	yAxis : {
@@ -338,134 +338,134 @@ var top_split2 = [];
 var bottom_spli2 = [];
 var middle_split2 = [];
 for (var i = 0; i < 24; i++) {
-    var b_arr = [];
-    b_arr.push(i);
-    b_arr.push(25);
-    bottom_spli2.push(b_arr);
-    var s_arr = [];
-    s_arr.push(i);
-    s_arr.push(55);
-    middle_split2.push(s_arr);
-    var t_arr = [];
-    t_arr.push(i);
-    t_arr.push(20);
-    top_split2.push(t_arr);
+	var b_arr = [];
+	b_arr.push(i);
+	b_arr.push(25);
+	bottom_spli2.push(b_arr);
+	var s_arr = [];
+	s_arr.push(i);
+	s_arr.push(55);
+	middle_split2.push(s_arr);
+	var t_arr = [];
+	t_arr.push(i);
+	t_arr.push(20);
+	top_split2.push(t_arr);
 }
 var rt_health = {
-    tooltip : { // 提示框
-        trigger : 'axis', // 触发类型：坐标轴触发
-        axisPointer : { // 坐标轴指示器配置项
-            type : 'cross' // 指示器类型，十字准星
-        },
-        formatter : function(params) {
-            if (params.length > 3) {
-                var res = params[0].seriesName + ': ' + (params[0].value[1])
-                        + '<br/>';
-                return res;
-            }
+	tooltip : { // 提示框
+		trigger : 'axis', // 触发类型：坐标轴触发
+		axisPointer : { // 坐标轴指示器配置项
+			type : 'cross' // 指示器类型，十字准星
+		},
+		formatter : function(params) {
+			if (params.length > 3) {
+				var res = params[0].seriesName + ': ' + (params[0].value[1])
+						+ '<br/>';
+				return res;
+			}
 
-        }
-    },
-    xAxis : {
-        type : 'category',
-        data : []
-    },
-    yAxis : {
-        splitLine : {
-            show : false
-        },
-        max : 100
-    },
-    legend : {
-        data : [{
-                    'name' : "实时健康度"
-                }]
-    },
-    dataZoom : [{
-                type : 'slider',
-                startValue : 0,
-                endValue : 23
-            }],
-    series : [{
-                name : '实时健康度',
-                type : 'line',
-                data : [],
-                markLine : {
-                    silent : true,
-                    data : [{
-                                yAxis : 60
-                            }]
-                },
-                label : {
-                    emphasis : {
-                        show : true,
-                        formatter : function(param) {
-                            return "健康度";
-                        },
-                        position : 'top'
-                    }
-                }
-            },  {
-                name : '',
-                type : 'line',
-                smooth : true,
-                symbol : "none",
-                stack : true,
-                itemStyle : {
-                    normal : {
-                        opacity : 0.1,
-                        color : 'rgb(231,133,131)',
-                        lineStyle : {
-                            opacity : 0.1,
-                            color : 'rgb(231,133,131)'
-                        },
-                        areaStyle : {
-                            type : 'default'
-                        }
-                    }
-                },
-                data : bottom_spli2
-            }, {
-                name : '',
-                type : 'line',
-                smooth : true,
-                symbol : "none",
-                stack : true,
-                itemStyle : {
-                    normal : {
-                        opacity : 0.1,
-                        color : 'rgb(231,233,131)',
-                        lineStyle : {
-                            opacity : 0.1,
-                            color : 'rgb(231,233,131)'
-                        },
-                        areaStyle : {
-                            type : 'default'
-                        }
-                    }
-                },
-                data : middle_split2
-            }, {
-                name : '',
-                type : 'line',
-                smooth : true,
-                symbol : "none",
-                stack : true,
-                itemStyle : {
-                    normal : {
-                        opacity : 0.1,
-                        color : 'rgb(172,231,131)',
-                        lineStyle : {
-                            opacity : 0.1,
-                            color : 'rgb(172,231,131)'
-                        },
-                        areaStyle : {
-                            type : 'default'
-                        }
-                    }
-                },
-                data : top_split2
-            }]
+		}
+	},
+	xAxis : {
+		type : 'category',
+		data : []
+	},
+	yAxis : {
+		splitLine : {
+			show : false
+		},
+		max : 100
+	},
+	legend : {
+		data : [{
+					'name' : "实时健康度"
+				}]
+	},
+	dataZoom : [{
+				type : 'slider',
+				startValue : 0,
+				endValue : 23
+			}],
+	series : [{
+				name : '实时健康度',
+				type : 'line',
+				data : [],
+				markLine : {
+					silent : true,
+					data : [{
+								yAxis : 60
+							}]
+				},
+				label : {
+					emphasis : {
+						show : true,
+						formatter : function(param) {
+							return "健康度";
+						},
+						position : 'top'
+					}
+				}
+			}, {
+				name : '',
+				type : 'line',
+				smooth : true,
+				symbol : "none",
+				stack : true,
+				itemStyle : {
+					normal : {
+						opacity : 0.1,
+						color : 'rgb(231,133,131)',
+						lineStyle : {
+							opacity : 0.1,
+							color : 'rgb(231,133,131)'
+						},
+						areaStyle : {
+							type : 'default'
+						}
+					}
+				},
+				data : bottom_spli2
+			}, {
+				name : '',
+				type : 'line',
+				smooth : true,
+				symbol : "none",
+				stack : true,
+				itemStyle : {
+					normal : {
+						opacity : 0.1,
+						color : 'rgb(231,233,131)',
+						lineStyle : {
+							opacity : 0.1,
+							color : 'rgb(231,233,131)'
+						},
+						areaStyle : {
+							type : 'default'
+						}
+					}
+				},
+				data : middle_split2
+			}, {
+				name : '',
+				type : 'line',
+				smooth : true,
+				symbol : "none",
+				stack : true,
+				itemStyle : {
+					normal : {
+						opacity : 0.1,
+						color : 'rgb(172,231,131)',
+						lineStyle : {
+							opacity : 0.1,
+							color : 'rgb(172,231,131)'
+						},
+						areaStyle : {
+							type : 'default'
+						}
+					}
+				},
+				data : top_split2
+			}]
 }
 function timeselect() {
 	$("#trendinselect").addClass("btn-info");
@@ -670,61 +670,61 @@ function workQuery(type, start, end) {
 		}
 	} else if (isoutservework) {
 		if ("week" == type) {
-            $.ajax({
-                        url : outserviceweek,
-                        data : {
-                            'cellname' : cellname
-                        },
-                        type : "POST",
-                        dataType : "json",
-                        success : function(data, status) {
-                            var list = data.rows;
-                            $("#table_list_work3").jqGrid('clearGridData');
-                            $("#table_list_work3").jqGrid('setGridParam', {
-                                        datatype : 'local',
-                                        data : list,
-                                        page : 1
-                                    }).trigger("reloadGrid");
-                        }
-                    });
+			$.ajax({
+						url : outserviceweek,
+						data : {
+							'cellname' : cellname
+						},
+						type : "POST",
+						dataType : "json",
+						success : function(data, status) {
+							var list = data.rows;
+							$("#table_list_work3").jqGrid('clearGridData');
+							$("#table_list_work3").jqGrid('setGridParam', {
+										datatype : 'local',
+										data : list,
+										page : 1
+									}).trigger("reloadGrid");
+						}
+					});
 		} else if ("month" == type) {
-            $.ajax({
-                        url : outservicemonth,
-                        data : {
-                            'cellname' : cellname
-                        },
-                        type : "POST",
-                        dataType : "json",
-                        success : function(data, status) {
-                            var list = data.rows;
-                            $("#table_list_work3").jqGrid('clearGridData');
-                            $("#table_list_work3").jqGrid('setGridParam', {
-                                        datatype : 'local',
-                                        data : list,
-                                        page : 1
-                                    }).trigger("reloadGrid");
-                        }
-                    });
+			$.ajax({
+						url : outservicemonth,
+						data : {
+							'cellname' : cellname
+						},
+						type : "POST",
+						dataType : "json",
+						success : function(data, status) {
+							var list = data.rows;
+							$("#table_list_work3").jqGrid('clearGridData');
+							$("#table_list_work3").jqGrid('setGridParam', {
+										datatype : 'local',
+										data : list,
+										page : 1
+									}).trigger("reloadGrid");
+						}
+					});
 		} else {
-            $.ajax({
-                        url : outservicemonth,
-                        data : {
-                            'cellname' : cellname,
-                            'starttime' : start,
-                            'endtime' : end
-                        },
-                        type : "POST",
-                        dataType : "json",
-                        success : function(data, status) {
-                            var list = data.rows;
-                            $("#table_list_work3").jqGrid('clearGridData');
-                            $("#table_list_work3").jqGrid('setGridParam', {
-                                        datatype : 'local',
-                                        data : list,
-                                        page : 1
-                                    }).trigger("reloadGrid");
-                        }
-                    });
+			$.ajax({
+						url : outservicemonth,
+						data : {
+							'cellname' : cellname,
+							'starttime' : start,
+							'endtime' : end
+						},
+						type : "POST",
+						dataType : "json",
+						success : function(data, status) {
+							var list = data.rows;
+							$("#table_list_work3").jqGrid('clearGridData');
+							$("#table_list_work3").jqGrid('setGridParam', {
+										datatype : 'local',
+										data : list,
+										page : 1
+									}).trigger("reloadGrid");
+						}
+					});
 		}
 	}
 }
@@ -860,68 +860,70 @@ $(function() {
 					ratiotrend.setOption(histroy_trend);
 				}
 			});
-     /**
-      * 实时健康度
-      */
-     $.ajax({
-                url : "/sdas/cell/rthealth",
-                data : {
-                    'cellname' : cellname
-                },
-                type : "POST",
-                dataType : "json",
-                success : function(data, status) {
-                    var list = data.rows;
-                    var axis = [];
-                    var data2 = [];
-                    for (var z = 0; z < list.length; z++) {
-                        var timer = list[z].time;
-                        var ratio = list[z].ratio;
-                        var temp = []
-                        axis.push(timer);
-                        temp.push(timer);
-                        temp.push(ratio);
-                        data2.push(temp);
-                    }
-                    rt_health.xAxis.data = axis;
-                    rt_health.series[0].data = data2;
-                    rtratio.setOption(rt_health);
-                }
-            });
-     ////////////
-     /*
- 	 * 异常预警
- 	 */
- 	$.ajax({
- 		url : alarm_url,
- 		data : {
- 			'cellname' : cellname
- 		},
- 		type : "POST",
- 		dataType : "json",
- 		success : function(data, status) {
- 			var list = data.rows;
- 			alarmJqGrid(list);
- 			setInterval((function(){refreshAlarm()}),5*60*1000);
- 		}
- 	});
-    //实时简况度
-    rtRatio();
+	/**
+	 * 实时健康度
+	 */
+	$.ajax({
+				url : "/sdas/cell/rthealth",
+				data : {
+					'cellname' : cellname
+				},
+				type : "POST",
+				dataType : "json",
+				success : function(data, status) {
+					var list = data.rows;
+					var axis = [];
+					var data2 = [];
+					for (var z = 0; z < list.length; z++) {
+						var timer = list[z].time;
+						var ratio = list[z].ratio;
+						var temp = []
+						axis.push(timer);
+						temp.push(timer);
+						temp.push(ratio);
+						data2.push(temp);
+					}
+					rt_health.xAxis.data = axis;
+					rt_health.series[0].data = data2;
+					rtratio.setOption(rt_health);
+				}
+			});
+	////////////
+	/*
+	 * 异常预警
+	 */
+	$.ajax({
+				url : alarm_url,
+				data : {
+					'cellname' : cellname
+				},
+				type : "POST",
+				dataType : "json",
+				success : function(data, status) {
+					var list = data.rows;
+					alarmJqGrid(list);
+					setInterval((function() {
+								refreshAlarm()
+							}), 5 * 60 * 1000);
+				}
+			});
+	//实时简况度
+	rtRatio();
 });
-function refreshAlarm(){
+function refreshAlarm() {
 	console.info("refresh");
 	$.ajax({
- 		url : alarm_url,
- 		data : {
- 			'cellname' : cellname
- 		},
- 		type : "POST",
- 		dataType : "json",
- 		success : function(data, status) {
- 			var list = data.rows;
- 			alarmJqGrid(list);
- 		}
- 	});
+				url : alarm_url,
+				data : {
+					'cellname' : cellname
+				},
+				type : "POST",
+				dataType : "json",
+				success : function(data, status) {
+					var list = data.rows;
+					alarmJqGrid(list);
+				}
+			});
 }
 function groupindex(cellcode, indexcode) {
 	$.ajax({
@@ -1027,7 +1029,7 @@ function refreshJqGrid(list) {
 		shrinkToFit : true,
 		rowNum : 10,
 		rowList : [10, 20, 30],
-		colNames : ['受理时间', '受理号码', '问题细项','常住小区1', '常住小区2', '常住小区3'],
+		colNames : ['受理时间', '受理号码', '问题细项', '常住小区1', '常住小区2', '常住小区3'],
 		colModel : [{
 					name : 'record_time',
 					index : 'record_time',
@@ -1039,11 +1041,11 @@ function refreshJqGrid(list) {
 					name : 'phone_number',
 					index : 'phone_number',
 					width : 40
-				},{
-                    name : 'complaint_detailinfo',
-                    index : 'complaint_detailinfo',
-                    width : 60
-                }, {
+				}, {
+					name : 'complaint_detailinfo',
+					index : 'complaint_detailinfo',
+					width : 60
+				}, {
 					name : 'live_cellname1',
 					index : 'live_cellname1',
 					width : 60
@@ -1064,12 +1066,27 @@ function refreshJqGrid(list) {
 			var ids = jQuery("#table_list_complain").jqGrid("getDataIDs");
 			for (var i = 0; i < ids.length; i++) {
 				var id = ids[i];
-				var names = $("#table_list_complain").getCell(id, 'countnum');
-				var datas = $("#table_list_complain").getCell(id, 'cellname');
-				var url = "<a href=/sdas/work/complaint/?cellname='" + datas
-						+ "'>" + names + "</a>";
+				var live_cellname1 = $("#table_list_complain").getCell(id,
+						'live_cellname1');
+				var live_cellname2 = $("#table_list_complain").getCell(id,
+						'live_cellname2');
+				var live_cellname3 = $("#table_list_complain").getCell(id,
+						'live_cellname3');
+				var link = "/sdas/general/cellhome/";
+				var url1 = '<a href=javascript:gotocellhome("' +link +'","' + live_cellname1
+						+ '")>' + live_cellname1 + '</a>';
+				var url2 = '<a href=javascript:gotocellhome("' +link +'","' + live_cellname2
+						+ '")>' + live_cellname2 + '</a>';
+				var url3 = '<a href=javascript:gotocellhome("' +link +'","' + live_cellname3
+						+ '")>' + live_cellname3 + '</a>';
 				$("#table_list_complain").jqGrid('setRowData', id, {
-							countnum : url
+							live_cellname1 : url1
+						});
+				$("#table_list_complain").jqGrid('setRowData', id, {
+							live_cellname2 : url2
+						});
+				$("#table_list_complain").jqGrid('setRowData', id, {
+							live_cellname3 : url3
 						});
 			}
 		}
@@ -1464,74 +1481,110 @@ function switchindex(indeicator_id) {
 //
 function alarmJqGrid(list) {
 	$("#alarm_table").jqGrid({
-		data : list,
-		datatype : "local",
-		height : "auto",
-		autowidth : true,
-		shrinkToFit : true,
-		rowNum : 10,
-		rowList : [10, 20, 30],
-		colNames : ['时间', '指标名称', '次数'],
-		colModel : [{
-					name : 'time',
-					index : 'time',
-					width : 60
-				}, {
-					name : 'alarm_name',
-					index : 'alarm_name',
-					width : 60
-				}, {
-					name : 'alarm_counts',
-					index : 'alarm_counts',
-					width : 40
-				}],
-		pager : "#pager_alarm_table",
-		viewrecords : true,
-		hidegrid : false
-	});
+				data : list,
+				datatype : "local",
+				height : "auto",
+				autowidth : true,
+				shrinkToFit : true,
+				rowNum : 10,
+				rowList : [10, 20, 30],
+				colNames : ['时间', '指标名称', '次数'],
+				colModel : [{
+							name : 'time',
+							index : 'time',
+							width : 60
+						}, {
+							name : 'alarm_name',
+							index : 'alarm_name',
+							width : 60
+						}, {
+							name : 'alarm_counts',
+							index : 'alarm_counts',
+							width : 40
+						}],
+				pager : "#pager_alarm_table",
+				viewrecords : true,
+				hidegrid : false
+			});
 	// Add responsive to jqGrid
 	$(window).bind('resize', function() {
 				var width = $('.jqGrid_wrapper').width();
 				$('#alarm_table').setGridWidth(width);
 			});
 }
-setInterval(function(){
-   rtRatio() 
-},5*60*1000);
+setInterval(function() {
+			rtRatio()
+		}, 5 * 60 * 1000);
 
 var refreshcount = 0;
-function rtRatio(){
-    if(refreshcount<23){
-        refreshcount++;
-    }else{
-        refreshcount = 0;
-    }
-    $.ajax({
-                url : '/sdas/cell/rtratio',
-                type : "post",
-                data : {
-                    'cellname' : cellname,
-                    'count' : refreshcount
-                },
-                dataType : "json",
-                success : function(data, status) {
-                   var ratio = data.ratio;
-                   if(ratio!=undefined && ratio != "" && ratio != null){
-                        $("#b_ratio").text(ratio);
-                        if(ratio>80){
-                            $("#h_ratio").css("color","green");
-                        }else if(ratio>60 && ratio<=80){
-                            $("#h_ratio").css("color","#B9C83F");
-                        }else{
-                            $("#h_ratio").css("color","red");
-                        }
-                        $("#h_ratio").css("display","block");
-                        $("#h3_ratio").css("display","block");
-                   }else{
-                        $("#h_ratio").css("display","none");
-                        $("#h3_ratio").css("display","none");
-                   }
+function rtRatio() {
+	if (refreshcount < 23) {
+		refreshcount++;
+	} else {
+		refreshcount = 0;
+	}
+	$.ajax({
+				url : '/sdas/cell/rtratio',
+				type : "post",
+				data : {
+					'cellname' : cellname,
+					'count' : refreshcount
+				},
+				dataType : "json",
+				success : function(data, status) {
+					var ratio = data.ratio;
+					if (ratio != undefined && ratio != "" && ratio != null) {
+						$("#b_ratio").text(ratio);
+						if (ratio > 80) {
+							$("#h_ratio").css("color", "green");
+						} else if (ratio > 60 && ratio <= 80) {
+							$("#h_ratio").css("color", "#B9C83F");
+						} else {
+							$("#h_ratio").css("color", "red");
+						}
+						$("#h_ratio").css("display", "block");
+						$("#h3_ratio").css("display", "block");
+					} else {
+						$("#h_ratio").css("display", "none");
+						$("#h3_ratio").css("display", "none");
+					}
 
-                }
-            });
+				}
+			});
+}
+function gotocellhome(url, cellname, station, scene, band) {
+
+	var a_parent = $(".page-tabs-content", window.parent.document);
+	var iframe_parent = $("#content-main", window.parent.document);
+
+	var item = $('<a href="javascript:;" class="active J_menuTab" data-id="'
+			+ url + '">日常监控 <i class="fa fa-times-circle"></i></a>');
+	var content = $('<iframe class="J_iframe" name="iframe10" width="100%" height="100%" src="'
+			+ url
+			+ '?name='
+			+ cellname
+			+ '&stationname='
+			+ station
+			+ '&cover_scene='
+			+ scene
+			+ '&used_band='
+			+ band
+			+ '" frameborder="0" data-id="' + url + '" seamless></iframe>');
+
+	a_parent.children("a").removeClass("active");
+
+	if (a_parent.has('a[data-id="' + url + '"]').length > 0) {
+
+		a_parent.children('a[data-id="' + url + '"]').addClass("active");
+		iframe_parent.children("iframe").css("display", "none");
+		iframe_parent.children().remove('iframe[data-id="' + url + '"]');
+		content.css("display", "inline");
+		iframe_parent.prepend(content);
+	} else {
+
+		content.css("display", "inline");
+		a_parent.append(item);
+		iframe_parent.children("iframe").css("display", "none");
+		iframe_parent.prepend(content);
+	}
 }

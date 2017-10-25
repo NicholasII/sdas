@@ -10,12 +10,11 @@
 <meta http-equiv="expires" content="0">
 <title>小区综合页面</title>
 <%@ include file="/include/common.jsp"%>
-<script type="text/javascript" src="${context }/include/time.js"></script>
+<script type="text/javascript" src="${context}/include/time.js"></script>
 <script src="${context}/lib/hplus/js/plugins/layer/laydate/laydate.js"></script>
 <script type="text/javascript"
 	src="http://api.map.baidu.com/api?v=2.0&ak=EmXf0NLcNCvBO5hdDliGtvC9D5v6GA5K"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
-
 	
 <style type="text/css">
 	td {

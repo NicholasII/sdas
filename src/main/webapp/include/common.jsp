@@ -37,11 +37,15 @@
 <script src="${context}/lib/hplus/js/plugins/layer/layer.min.js"></script>
 <link href="${context}/lib/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
 
-<script type="text/javascript" src="${context}/lib/hplus/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 <script type="text/javascript" src="${context}/lib/bootstrapValivator/src/js/bootstrapValidator.js"></script>
 <link href="${context}/lib/bootstrapValivator/src/css/bootstrapValidator.css" rel="stylesheet">
-<link href="${context}/lib/hplus/css/plugins/bootstrap-table/bootstrap-table.min.css" type="text/css" rel="stylesheet">
 
+
+<link href="${context}/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<script type="text/javascript" src="${context}/lib/bootstrap-table/bootstrap-table.min.js"></script>
+<%-- <script type="text/javascript" src="${context}/lib/bootstrap-table/bootstrap-table-mobile.min.js"></script> --%>
+
+<script type="text/javascript" src="${context}/lib/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
 <script>
   var ctx = "${context}";
 </script>

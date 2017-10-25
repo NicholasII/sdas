@@ -38,18 +38,10 @@ public class ComplainService {
 		return encryption(complainDao.getcelllist(cellname));
 	}
 	/**
-	 * 所有投诉（未分页）
+	 * 所有投诉
 	 * @return
 	 */
 	public List<CellComplainDto> getalllist(){		
-		return encryption(complainDao.getPageList());
-	}
-	/**
-	 * 所有投诉（分页）
-	 * @return
-	 */
-	public List<CellComplainDto> getpagelist(){
-
 		return encryption(complainDao.getPageList());
 	}
 	

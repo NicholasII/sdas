@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.iscas.sdas.common.PageDto;
 import com.iscas.sdas.dto.CellComplainDto;
 import com.iscas.sdas.dto.ComplainDto;
 import com.iscas.sdas.service.ComplainService;
@@ -90,31 +91,18 @@ public class ComplainController {
 		return map;
 	}
 	
+	
 	@RequestMapping("/getalllist")
 	@ResponseBody
-	public ModelMap getalllist(){
+	public ModelMap getpagelist(){
 		ModelMap map = new ModelMap();
 		try {
+			//int pageNum = Integer.parseInt(num);
+			//int pageSize = Integer.parseInt(size);
+			//PageHelper.startPage(pageNum, pageSize); 
 			List<CellComplainDto> cellComplainDtos = complainService.getalllist();
+			//PageInfo<CellComplainDto> pageInfo = new PageInfo<>(cellComplainDtos);			
 			map.addAttribute(Constraints.RESULT_ROW, cellComplainDtos);
-		} catch (Exception e) {
-			e.printStackTrace();
-			map.addAttribute(Constraints.RESULT_SUCCESS, false);
-		}
-		return map;
-	}
-	
-	@RequestMapping("/getpagelist")
-	@ResponseBody
-	public ModelMap getpagelist(@RequestParam(value="num",required=true,defaultValue="1")String num,@RequestParam(value="size",required=true,defaultValue="10")String size){
-		ModelMap map = new ModelMap();
-		try {
-			int pageNum = Integer.parseInt(num);
-			int pageSize = Integer.parseInt(size);
-			PageHelper.startPage(pageNum, pageSize); 
-			List<CellComplainDto> cellComplainDtos = complainService.getpagelist();
-			PageInfo<CellComplainDto> pageInfo = new PageInfo<>(cellComplainDtos);
-			map.addAttribute(Constraints.RESULT_ROW, pageInfo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			map.addAttribute(Constraints.RESULT_SUCCESS, false);
