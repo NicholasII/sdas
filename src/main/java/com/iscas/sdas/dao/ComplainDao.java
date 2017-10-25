@@ -11,7 +11,7 @@ public interface ComplainDao {
 	
 	List<CellComplainDto> getcelllist(String cellname);
 	
-	List<CellComplainDto> getalllist();
+	List<CellComplainDto> getPageList();
 	
 	List<CellComplainDto> getfocuslist(String cellname);
 

@@ -11,7 +11,7 @@
 	<!-- 项目属性 -->
 	<properties>
 		<!-- spring版本号 -->
-		<spring.version>4.0.2.RELEASE</spring.version>
+		<spring.version>4.0.0.RELEASE</spring.version>
 		<!-- mybatis版本号 -->
 		<mybatis.version>3.4.5</mybatis.version>
 		<!-- log4j日志文件管理包版本 -->
@@ -176,6 +176,11 @@
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
 			<version>${poi.verion}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>5.1.2</version>
 		</dependency>
 	</dependencies>
 

@@ -1027,7 +1027,7 @@ function refreshJqGrid(list) {
 		shrinkToFit : true,
 		rowNum : 10,
 		rowList : [10, 20, 30],
-		colNames : ['时间', '电话', '常住小区1', '常住小区2', '常住小区3'],
+		colNames : ['受理时间', '受理号码', '问题细项','常住小区1', '常住小区2', '常住小区3'],
 		colModel : [{
 					name : 'record_time',
 					index : 'record_time',
@@ -1039,7 +1039,11 @@ function refreshJqGrid(list) {
 					name : 'phone_number',
 					index : 'phone_number',
 					width : 40
-				}, {
+				},{
+                    name : 'complaint_detailinfo',
+                    index : 'complaint_detailinfo',
+                    width : 60
+                }, {
 					name : 'live_cellname1',
 					index : 'live_cellname1',
 					width : 60

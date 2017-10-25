@@ -9,10 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.iscas.sdas.dto.CellComplainDto;
 import com.iscas.sdas.dto.ComplainDto;
 import com.iscas.sdas.service.ComplainService;
@@ -93,6 +97,24 @@ public class ComplainController {
 		try {
 			List<CellComplainDto> cellComplainDtos = complainService.getalllist();
 			map.addAttribute(Constraints.RESULT_ROW, cellComplainDtos);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.addAttribute(Constraints.RESULT_SUCCESS, false);
+		}
+		return map;
+	}
+	
+	@RequestMapping("/getpagelist")
+	@ResponseBody
+	public ModelMap getpagelist(@RequestParam(value="num",required=true,defaultValue="1")String num,@RequestParam(value="size",required=true,defaultValue="10")String size){
+		ModelMap map = new ModelMap();
+		try {
+			int pageNum = Integer.parseInt(num);
+			int pageSize = Integer.parseInt(size);
+			PageHelper.startPage(pageNum, pageSize); 
+			List<CellComplainDto> cellComplainDtos = complainService.getpagelist();
+			PageInfo<CellComplainDto> pageInfo = new PageInfo<>(cellComplainDtos);
+			map.addAttribute(Constraints.RESULT_ROW, pageInfo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			map.addAttribute(Constraints.RESULT_SUCCESS, false);

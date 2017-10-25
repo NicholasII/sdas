@@ -1,27 +1,18 @@
 /**
- * by dq 2017年9月14日下午8:00:31 TODO
+ * by dq 2017年9月14日下午8:00:31
  */
- $.jgrid.defaults.styleUI = 'Bootstrap';
 $(function(){
-
-	$.ajax({
-		url: "/sdas/complain/getlist",
-		type:"GET",
-		dataType:"json",
-		success:function(data,status){
-			var list = data.rows;
-			refreshJqGrid(list);
-			
-		}
-	});
-    
+    $.jgrid.defaults.styleUI = 'Bootstrap';
+    /*
+     * 可疑工单
+     */
     $.ajax({
         url: "/sdas/work/test",
         type:"GET",
         success:function(data,status){
             var temp = eval('(' + data + ')'); 
             var list = temp.rows;
-            refreshJqGrid2(list);
+            refreshJqGrid(list);
             
         },
         error:function(data){
@@ -42,113 +33,34 @@ $(function(){
         error:function(data){
             alert("fail");
         }
-    }); 
-});
-function refreshJqGrid(list){
-	$("#table_list_1").jqGrid({
-		data:list,
-		datatype: "local",
-        height: "auto",
-        autowidth: true,
-        shrinkToFit: true,
-        rowNum: 5,
-        rowList: [10, 20, 30],
-        colNames: ['时间', '小区名称', '投诉次数'],
-        colModel: [
-            {
-                name: 'time',
-                index: 'time',
-                width: 40,
-                formatter:function(cellvalue, options, rowObject) {  
-                    return $.hd_jqGrid.dateTimeFormatter(cellvalue);  
-                }
-            },
-            {
-                name: 'cellname',
-                index: 'cellname',
-                width: 60
-            },
-            {
-                name: 'countnum',
-                index: 'countnum',
-                width: 30
-            }
-        ],
-        pager: "#pager_list_1",
-        viewrecords: true,
-        hidegrid: false,
-        gridComplete:function(){
-        	// 获取某列的每一行id
-        	var ids = jQuery("#table_list_1").jqGrid("getDataIDs");
-        	for(var i=0;i<ids.length;i++){
-        	    var id = ids[i];
-        	    var names = $("#table_list_1").getCell(id,'countnum');
-        	    var datas = $("#table_list_1").getCell(id,'cellname');
-        	    var url="<a href=/sdas/complain/page/?cellname="+datas+">"+names+"</a>";
-        	    $("#table_list_1").jqGrid('setRowData',id,{countnum:url});
-        	}
-        }
-	});
-	// Add responsive to jqGrid
-    $(window).bind('resize', function () {
-        var width = $('.jqGrid_wrapper').width();
-        $('#table_list_1').setGridWidth(width);
-
     });
-}
+	 
+	/*
+     * 指标预警
+     */	 
+    $.ajax({
+        url: "/sdas/indexalarm/currentday",
+        type:"GET",
+        success:function(data,status){
+            var temp = eval('(' + data + ')'); 
+            var list = temp.rows;
+            refreshJqGrid_alarm_index(list);
+        },
+        error:function(data){
+            alert("fail");
+        }
+    });
+});
 
-function scroll2(){
+
+/*function scroll2(){
  
     $("#table tr:first").appendTo($("#table"));
     $("#table1 tr:first").appendTo($("#table1"));
 }
-setInterval(() => {
-	scroll2()
-}, 10000);
-//指标异常预警
-/*function JqGridalarm_target(){
-	$.ajax({
- 		url : ctx +"/cell/alarm_healthtrend",
- 		type : "POST",
- 		dataType : "json",
- 		success : function(data, status) {
- 			$("#alarm_target").jqGrid({
- 		    	data : list,
- 				datatype : "local",
- 				height : "auto",
- 				autowidth : true,
- 				shrinkToFit : true,
- 				rowNum : 10,
- 				rowList : [10, 20, 30],
- 				colNames : ['时间', '指标名称', '次数'],
- 				colModel : [{
- 							name : 'time',
- 							index : 'time',
- 							width : 60
- 						}, {
- 							name : 'alarm_name',
- 							index : 'alarm_name',
- 							width : 60
- 						}, {
- 							name : 'alarm_counts',
- 							index : 'alarm_counts',
- 							width : 40
- 						}],
- 				pager : "#pager_alarm_target",
- 				viewrecords : true,
- 				hidegrid : false
- 			});
- 			// Add responsive to jqGrid
- 			$(window).bind('resize', function() {
- 						var width = $('.jqGrid_wrapper').width();
- 						$('#alarm_target').setGridWidth(width);
- 					});
- 			setInterval((function(){JqGridalarm_target()}),5*60*1000);
- 		}
- 	});
-	
-    
-}*/
+setInterval(function(){
+    scroll2()
+},1000);*/
 
 function alarmrefresh(){
     $.ajax({
@@ -161,7 +73,7 @@ function alarmrefresh(){
             $("#table_list_alarm").jqGrid('setGridParam',{
                  datatype:'local',
                  data:list,// newData是符合格式要求的重新加载的数据
-                page:1// 哪一页的值       
+                page:1// 哪一页的值
             }).trigger("reloadGrid");
         }
     }); 
@@ -169,6 +81,64 @@ function alarmrefresh(){
 setInterval(function(){
     alarmrefresh()
 },15*60*1000);
+
+function refreshJqGrid(list){
+    $.jgrid.defaults.styleUI = 'Bootstrap';
+    $("#table_list_work").jqGrid({
+        data:list,
+        datatype: "local",
+        height: "auto",
+        autowidth: true,
+        shrinkToFit: true,
+        rowNum: 10,
+        rowList: [10, 20, 30],
+        colNames: ['发生时间', '小区名称', '监控内容'],
+        colModel: [
+            {
+                name: 'occurrence_time',
+                index: 'occurrence_time',
+                width: 50,
+                formatter:function(cellvalue, options, rowObject) {  
+                    return $.hd_jqGrid.dateTimeFormatter(cellvalue);  
+                }
+            },
+            {
+                name: 'cellid',
+                index: '小区名称',
+                width: 50
+            },
+            {
+                name: 'monitor_content',
+                index: 'monitor_content',
+                width: 50
+            }
+        ],
+        pager: "#pager_list_work",
+        viewrecords: true,
+        hidegrid: false,
+        gridComplete:function(){
+            // 获取某列的每一行id
+            var ids = jQuery("#table_list_work").jqGrid("getDataIDs");
+            for(var i=0;i<ids.length;i++){
+                var id = ids[i];
+                var cellid = $("#table_list_work").getCell(id,'cellid');
+                var monitor_content = $("#table_list_work").getCell(id,'monitor_content');
+                var link2 = "/sdas/general/cellhome/";
+                var url2='<a href=javascript:gotocellhome("'+link2+'","'+cellid+'")>'+cellid+'</a>';
+                var link3 = "/sdas/fault/page";             
+                var url3='<a href=javascript:gotoprb("'+link3+'","'+monitor_content+'")>'+monitor_content+'</a>';
+                $("#table_list_work").jqGrid('setRowData',id,{cellid:url2});
+                $("#table_list_work").jqGrid('setRowData',id,{monitor_content:url3});
+            }
+        }
+    });
+    $(window).bind('resize', function () {
+        var width = $('.jqGrid_wrapper').width();
+        $('#table_list_work').setGridWidth(width);
+
+    });
+}
+
 function refreshJqGrid_alarm(list){
     
     $("#table_list_alarm").jqGrid({
@@ -219,59 +189,63 @@ function refreshJqGrid_alarm(list){
 
     });
 }
-function refreshJqGrid2(list){
-	$.jgrid.defaults.styleUI = 'Bootstrap';
-	$("#table_list_2").jqGrid({
-		data:list,
-		datatype: "local",
+
+
+function refreshJqGrid_alarm_index(list){
+    
+    $("#table_list_alarm_index").jqGrid({
+        data:list,
+        datatype: "local",
         height: "auto",
         autowidth: true,
         shrinkToFit: true,
-        rowNum: 10,
+        rowNum: 5,
         rowList: [10, 20, 30],
-        colNames: ['发生时间', '小区名称', '监控内容'],
+        jsonReader: {  
+                 root:"list", page:"pageNum", total:"pages",
+                 records:"total", repeatitems:false, id : "id"
+             },
+        colNames: ['发生时间', '小区名称','指标', '次数'],
         colModel: [
             {
-                name: 'occurrence_time',
-                index: 'occurrence_time',
-                width: 50,
-                formatter:function(cellvalue, options, rowObject) {  
-                    return $.hd_jqGrid.dateTimeFormatter(cellvalue);  
-                }
+                name: 'yyyyMMdd',
+                index: 'yyyyMMdd',
+                width: 40
             },
             {
-                name: 'cellid',
-                index: '小区名称',
+                name: 'cell_code',
+                index: 'cell_code',
                 width: 50
+            },{
+                name: 'app_type',
+                index: 'app_type',
+                width: 30
             },
             {
-                name: 'monitor_content',
-                index: 'monitor_content',
-                width: 50
+                name: 'count',
+                index: 'count',
+                width: 30
             }
         ],
-        pager: "#pager_list_2",
-        viewrecords: true,
-        hidegrid: false,
         gridComplete:function(){
-        	// 获取某列的每一行id
-        	var ids = jQuery("#table_list_2").jqGrid("getDataIDs");
-        	for(var i=0;i<ids.length;i++){
-        	    var id = ids[i];
-        	    var cellid = $("#table_list_2").getCell(id,'cellid');
-        	    var monitor_content = $("#table_list_2").getCell(id,'monitor_content');
-        	    var link2 = "/sdas/general/cellhome/";
-        	    var url2='<a href=javascript:gotocellhome("'+link2+'","'+cellid+'")>'+cellid+'</a>';
-        	    var link3 = "/sdas/fault/page";      	    
-        	    var url3='<a href=javascript:gotoprb("'+link3+'","'+monitor_content+'")>'+monitor_content+'</a>';
-        	    $("#table_list_2").jqGrid('setRowData',id,{cellid:url2});
-        	    $("#table_list_2").jqGrid('setRowData',id,{monitor_content:url3});
-        	}
-        }
-	});
+            // 获取某列的每一行id
+            var ids = jQuery("#table_list_alarm_index").jqGrid("getDataIDs");
+            for(var i=0;i<ids.length;i++){
+                var id = ids[i];
+                var cell_code = $("#table_list_alarm_index").getCell(id,'cell_code');
+                var monitor_content = $("#table_list_alarm_index").getCell(id,'monitor_content');
+                var link2 = "/sdas/general/cellhome/";
+                var url2='<a href=javascript:gotocellhome("'+link2+'","'+cell_code+'")>'+cell_code+'</a>';
+                $("#table_list_alarm").jqGrid('setRowData',id,{cell_code:url2});
+            }
+        },
+        pager: "#pager_list_alarm_index",
+        viewrecords: true,
+        hidegrid: false
+    });
     $(window).bind('resize', function () {
         var width = $('.jqGrid_wrapper').width();
-        $('#table_list_2').setGridWidth(width);
+        $('#table_list_alarm_index').setGridWidth(width);
 
     });
 }
