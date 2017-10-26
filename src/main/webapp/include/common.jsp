@@ -38,6 +38,7 @@
 <link href="${context}/lib/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
 
 <script type="text/javascript" src="${context}/lib/hplus/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="${context}/lib/hplus/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
 <script type="text/javascript" src="${context}/lib/bootstrapValivator/src/js/bootstrapValidator.js"></script>
 <link href="${context}/lib/bootstrapValivator/src/css/bootstrapValidator.css" rel="stylesheet">
 <link href="${context}/lib/hplus/css/plugins/bootstrap-table/bootstrap-table.min.css" type="text/css" rel="stylesheet">

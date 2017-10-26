@@ -24,7 +24,7 @@
 	            <div style="width:640px;position: fixed;margin-top: -130px;margin-left: -200px;height:80px">
 	                <div class="signin-info" style="height:100%">
 	                    <div class="logopanel m-b">
-	                    <img src="${context}/lib/hplus/img/logo_.jpg" style="float: left;margin-right: 10px;border-radius: 15px;top:12px">
+	                    <img src="${context}/lib/hplus/img/logo_1.jpg" style="float: left;margin-right: 10px;border-radius: 15px;top:12px">
 	                        <h1 style="float: left">广州移动基站维护数据分析系统</h1>
 	                    </div>
 	                   <!--  <h4>欢迎使用: <strong>广州移动基站维护数据分析系统</strong></h4> -->
