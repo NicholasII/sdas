@@ -25,6 +25,10 @@ public class IndexAlarmDto extends BaseDto {
 	
 	private int app_type;
 
+	private int daynum;
+	private String starttime;
+	private String endtime;
+	
 	public String getCell_code() {
 		return cell_code;
 	}
@@ -87,6 +91,34 @@ public class IndexAlarmDto extends BaseDto {
 
 	public void setApp_type(int app_type) {
 		this.app_type = app_type;
+	}
+
+	public int getDaynum() {
+		return daynum;
+	}
+
+	public void setDaynum(int daynum) {
+		this.daynum = daynum;
+	}
+
+	public String getStarttime() {
+		return starttime;
+	}
+
+	public void setStarttime(String starttime) {
+		this.starttime = starttime;
+	}
+
+	public String getEndtime() {
+		return endtime;
+	}
+
+	public void setEndtime(String endtime) {
+		this.endtime = endtime;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 }

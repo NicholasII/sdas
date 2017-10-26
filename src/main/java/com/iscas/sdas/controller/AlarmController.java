@@ -44,12 +44,20 @@ public class AlarmController {
 		ModelMap map = new ModelMap();
 		AlarmDto alarmDto = new AlarmDto();
 		String cellname = request.getParameter("cellname");
-		String time = request.getParameter("time");
-		if (!CommonUntils.isempty(cellname)) {
+		String daynum = request.getParameter("daynum");
+		String starttime = request.getParameter("starttime");
+		String endtime = request.getParameter("endtime");
+		if (cellname!=null) {
 			alarmDto.setCell_code(cellname);
 		}
-		if (!CommonUntils.isempty(time)) {
-			alarmDto.setYyyyMMdd(time);
+		if (daynum!=null) {
+			alarmDto.setDaynum(Integer.parseInt(daynum));
+		}
+		if (starttime!=null) {
+			alarmDto.setStarttime(starttime);
+		}
+		if (endtime!=null) {
+			alarmDto.setEndtime(endtime);
 		}
 		List<AlarmDto> alarmDtos =  alarmService.allAlarm(alarmDto);
 		map.addAttribute(Constraints.RESULT_ROW
