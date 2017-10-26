@@ -562,7 +562,12 @@ function work_table(id,pageid,list) {
 	          columns: [{
 	              field: 'timestamp',
 	              title: '发生时间',
-	              width:500
+	              width:500,
+	              formatter:function(value,row,index){
+	                  var jsDate = new Date(value);
+	                  var UnixTimeToDate = jsDate.getFullYear() + '/' + (jsDate.getMonth() + 1) + '/'+jsDate.getDate()+ ' ' + jsDate.getHours() + ':' + jsDate.getMinutes() + ':' + jsDate.getSeconds();
+	                   return UnixTimeToDate;
+	                 }
 	          },{
 	              field: 'monitor_value',
 	              title: '监控时值',
