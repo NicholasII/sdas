@@ -93,11 +93,21 @@ public class CellService {
 									TotalHealthInfoDto infoDto  = result.get(i);
 									String range = (String)method.invoke(cellHealth, null);						
 									int  moment = Integer.parseInt(method.getName().substring(method.getName().lastIndexOf("_")+1));
+									
 									Double ratio = parseRatio(range);
 									String time = formattime(cellHealth.getYyyyMMdd(), moment);
 									if (result.get(i).getTime().equals(time)) {
 										infoDto.setRatio(ratio);
-										logger.info("-----------------坐标轴："+result.get(i).getTime()+"ratio："+time);								
+										logger.info("-----------------坐标轴："+result.get(i).getTime()+"ratio："+time);
+										String hour = moment>=10?moment+"":"0"+moment;
+										Integer app_result = cellDao.getHealthRatio(cellname, cellHealth.getYyyyMMdd(), hour);
+										if (app_result!=null) {
+											if (app_result==0) {
+												infoDto.setResult_fault(1);
+											}else if (app_result==2) {
+												infoDto.setResult_warnning(1);
+											}
+										}	
 									}
 								}		
 							}
@@ -244,12 +254,10 @@ public class CellService {
 		for (int i = 0; i < day; i++) {
 			int tempyear  = Integer.parseInt(begintime.substring(0, 4));
 			int tempmonth  = Integer.parseInt(begintime.substring(4, 6));
-			int tempday;//2月为28天其他为30天
-			if (tempmonth==2) {
-				tempday  =  Integer.parseInt(begintime.substring(6))+i<=20?Integer.parseInt(begintime.substring(6))+i:Integer.parseInt(begintime.substring(6))+i-28;
-			}else {
-				tempday  =  Integer.parseInt(begintime.substring(6))+i<=30?Integer.parseInt(begintime.substring(6))+i:Integer.parseInt(begintime.substring(6))+i-30;
-			}
+			int tempday;
+			int days = CommonUntils.daysInMonth(tempyear, tempmonth);//一月多少天
+			tempday  =  Integer.parseInt(begintime.substring(6))+i<=days?Integer.parseInt(begintime.substring(6))+i:Integer.parseInt(begintime.substring(6))+i-days;
+
 			if (Integer.parseInt(begintime.substring(6))+i>30) {
 				if (tempmonth<12) {
 					tempmonth = tempmonth + 1;
