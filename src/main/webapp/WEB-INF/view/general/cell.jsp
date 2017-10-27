@@ -32,13 +32,7 @@
 	.ibox-content .gray{color:gray}.ibox-content .red{color:red}.ibox-content .yellow{color:yellow}
 </style>
 </head>
-<body class="gray-bg">
-<div id="loader-wrapper">
-		<div id="loader"></div>
-		<div class="loader-section section-left"></div>
-		<div class="loader-section section-right"></div>
-		<div class="load_title">正在加载日常监控数据...</div>
-</div>
+<body> 
 	
 	<script type="text/javascript">
 		var cellname = '${cellname}';

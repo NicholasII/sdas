@@ -16,7 +16,7 @@ var upColor = '#68C5CC';
 var upBorderColor = '#19B7CF';
 var downColor = '#68C5CC';
 var downBorderColor = '#19B7CF';
-var color = ['rgba(104, 197, 204, 0.73)', 'rgba(51,51,204, 0.53)',
+var color = ['rgba(104, 197, 204, 0.73)', 'rgba(51,51,204, 0.23)',
 		'rgba(171, 226, 98, 0.62)'];
 var borderColor = ['rgb(25, 183, 207)', 'rgb(51,51,204,)', 'rgb(163, 222, 84)'];
 var echart_option = {
@@ -136,7 +136,7 @@ var line = {
 	smooth : true,
 	lineStyle : {
 		normal : {
-			opacity : 0.5
+			opacity : 0.2
 		}
 	}
 }
@@ -210,12 +210,12 @@ var histroy_trend = {
 				name : '历史健康度',
 				type : 'line',
 				data : [],
-				markLine : {
+				/*markLine : {
 					silent : true,
 					data : [{
 								yAxis : 60
 							}]
-				},
+				},*/
 				label : {
 					emphasis : {
 						show : true,
@@ -223,6 +223,14 @@ var histroy_trend = {
 							return "健康度";
 						},
 						position : 'top'
+					}
+				},
+				itemStyle : {
+					normal : {
+						color : 'rgb(46,199,201)',
+						lineStyle : {
+							color : 'rgb(46,199,201)'
+						}
 					}
 				}
 			}, {
@@ -244,15 +252,15 @@ var histroy_trend = {
 				itemStyle : {
 					normal : {
 						shadowBlur : 10,
-						shadowColor : 'rgba(120, 36, 50, 0.5)',
+						shadowColor : 'rgba(166,136,224, 0.2)',
 						shadowOffsetY : 5,
-						color : new echarts.graphic.RadialGradient(0.4, 0.3, 1,
+						color : new echarts.graphic.RadialGradient(0.4, 0.2, 1,
 								[{
 											offset : 0,
-											color : 'rgb(51, 118, 123)'
+											color : 'rgb(166,136,224)'
 										}, {
 											offset : 1,
-											color : 'rgb(204, 46, 72)'
+											color : 'rgb(166,136,224)'
 										}])
 					}
 				}
@@ -275,15 +283,15 @@ var histroy_trend = {
                 itemStyle : {
                     normal : {
                         shadowBlur : 10,
-                        shadowColor : 'rgba(120, 36, 50, 0.5)',
+                        shadowColor : 'rgba(216,122,128, 0.2)',
                         shadowOffsetY : 5,
-                        color : new echarts.graphic.RadialGradient(0.4, 0.3, 1,
+                        color : new echarts.graphic.RadialGradient(0.4, 0.2, 1,
                                 [{
                                             offset : 0,
-                                            color : 'rgb(51, 118, 123)'
+                                            color : 'rgb(216,122,128)'
                                         }, {
                                             offset : 1,
-                                            color : 'rgb(9, 97, 97)'
+                                            color : 'rgb(216,122,128)'
                                         }])
                     }
                 }
@@ -306,15 +314,15 @@ var histroy_trend = {
                 itemStyle : {
                     normal : {
                         shadowBlur : 10,
-                        shadowColor : 'rgba(120, 36, 50, 0.5)',
+                        shadowColor : 'rgba(248,172,89, 0.2)',
                         shadowOffsetY : 5,
-                        color : new echarts.graphic.RadialGradient(0.4, 0.3, 1,
+                        color : new echarts.graphic.RadialGradient(0.4, 0.2, 1,
                                 [{
                                             offset : 0,
-                                            color : 'rgb(51, 118, 123)'
+                                            color : 'rgb(248,172,89)'
                                         }, {
                                             offset : 1,
-                                            color : 'rgb(225, 240, 16)'
+                                            color : 'rgb(248,172,89)'
                                         }])
                     }
                 }
@@ -326,11 +334,11 @@ var histroy_trend = {
 				stack : true,
 				itemStyle : {
 					normal : {
-						opacity : 0.1,
-						color : 'rgb(231,133,131)',
+						opacity : 0.2,
+						color : 'rgba(231,133,131,0.2)',
 						lineStyle : {
-							opacity : 0.1,
-							color : 'rgb(231,133,131)'
+							opacity : 0.2,
+							color : 'rgba(231,133,131,0.2)'
 						},
 						areaStyle : {
 							type : 'default'
@@ -346,11 +354,11 @@ var histroy_trend = {
 				stack : true,
 				itemStyle : {
 					normal : {
-						opacity : 0.1,
-						color : 'rgb(231,233,131)',
+						opacity : 0.2,
+						color : 'rgba(231,233,131,0.2)',
 						lineStyle : {
-							opacity : 0.1,
-							color : 'rgb(231,233,131)'
+							opacity : 0.2,
+							color : 'rgba(231,233,131,0.2)'
 						},
 						areaStyle : {
 							type : 'default'
@@ -366,11 +374,11 @@ var histroy_trend = {
 				stack : true,
 				itemStyle : {
 					normal : {
-						opacity : 0.1,
-						color : 'rgb(172,231,131)',
+						opacity : 0.2,
+						color : 'rgba(172,231,131,0.2)',
 						lineStyle : {
-							opacity : 0.1,
-							color : 'rgb(172,231,131)'
+							opacity : 0.2,
+							color : 'rgba(172,231,131,0.2)'
 						},
 						areaStyle : {
 							type : 'default'
@@ -456,12 +464,12 @@ var rt_health = {
 				name : '实时健康度',
 				type : 'line',
 				data : [],
-				markLine : {
+				/*markLine : {
 					silent : true,
 					data : [{
 								yAxis : 60
 							}]
-				},
+				},*/
 				label : {
 					emphasis : {
 						show : true,
@@ -469,6 +477,14 @@ var rt_health = {
 							return "健康度";
 						},
 						position : 'top'
+					}
+				},
+				itemStyle : {
+					normal : {
+						color : 'rgb(46,199,201)',
+						lineStyle : {
+							color : 'rgb(46,199,201)'
+						}
 					}
 				}
 			}, {
@@ -479,18 +495,18 @@ var rt_health = {
 				stack : true,
 				itemStyle : {
 					normal : {
-						opacity : 0.1,
-						color : 'rgb(231,133,131)',
+						opacity : 0.2,
+						color : 'rgba(231,133,131,0.2)',
 						lineStyle : {
-							opacity : 0.1,
-							color : 'rgb(231,133,131)'
+							opacity : 0.2,
+							color : 'rgba(231,133,131,0.2)'
 						},
 						areaStyle : {
 							type : 'default'
 						}
 					}
 				},
-				data : bottom_spli2
+				data : bottom_spli
 			}, {
 				name : '',
 				type : 'line',
@@ -499,18 +515,18 @@ var rt_health = {
 				stack : true,
 				itemStyle : {
 					normal : {
-						opacity : 0.1,
-						color : 'rgb(231,233,131)',
+						opacity : 0.2,
+						color : 'rgba(231,233,131,0.2)',
 						lineStyle : {
-							opacity : 0.1,
-							color : 'rgb(231,233,131)'
+							opacity : 0.2,
+							color : 'rgba(231,233,131,0.2)'
 						},
 						areaStyle : {
 							type : 'default'
 						}
 					}
 				},
-				data : middle_split2
+				data : middle_split
 			}, {
 				name : '',
 				type : 'line',
@@ -519,11 +535,11 @@ var rt_health = {
 				stack : true,
 				itemStyle : {
 					normal : {
-						opacity : 0.1,
-						color : 'rgb(172,231,131)',
+						opacity : 0.2,
+						color : 'rgba(172,231,131,0.2)',
 						lineStyle : {
-							opacity : 0.1,
-							color : 'rgb(172,231,131)'
+							opacity : 0.2,
+							color : 'rgba(172,231,131,0.2)'
 						},
 						areaStyle : {
 							type : 'default'
@@ -857,7 +873,6 @@ $(function() {
                     'cellname' : cellname
                 },
                 type : "POST",
-                async:false,
                 dataType : "json",
                 success : function(data, status) {
                     var list = data.rows;
@@ -1536,8 +1551,8 @@ function refresh_healthtable(list) {
 	});
 	$("#table_list_healthtable").append("</tbody>");
 	////
-	$('body').addClass('loaded');
-    $('#loader-wrapper .load_title').remove();
+	/*$('body').addClass('loaded');
+    $('#loader-wrapper .load_title').remove();*/
 }
 
 function scroll() {
