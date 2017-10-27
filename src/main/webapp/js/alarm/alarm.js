@@ -13,6 +13,7 @@ $(function(){
     $.ajax({
         url: alarmurl,
         data:{
+        	'cellid':'',
         	'daynum':work_date,
         	'starttime':starttime,
             'endtime':endtime},

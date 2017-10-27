@@ -3,15 +3,24 @@
  * 2017年9月20日下午9:10:31
  * TODO
  */
-var capacityworkurl = ctx + "/capacitywork/gettable";
+var capacityworkurl = "/sdas/work/alltest";
+//var capacityworkurl = ctx + "/capacitywork/gettable";
 var doubutworkurl = ctx +"/work/validatedoubt";
 var aeraurl = ctx + "/capacitywork/belongare";
 var validateurl = ctx +"/work/validate";
+var starttime="";
+var endtime="";
+var work_date=7;
 $(function(){
 	$.jgrid.defaults.styleUI = 'Bootstrap';
 	$.ajax({
 		url: '/sdas/work/alltest',
 		type:"GET",
+		data:{
+        	'daynum':work_date,
+        	'starttime':starttime,
+            'endtime':endtime
+            },
 		dataType:"json",
 		success:function(data,status){
 			var list = data.rows;
@@ -33,20 +42,40 @@ $(function(){
 			}
 		}
 	});
-	$("#timeselect").change(function(){
-		if ($("#timeselect").val()=='按时间段') {
-			$("#starttime").removeAttr("disabled");
-			$("#endtime").removeAttr("disabled");
-			$("#starttime").attr("placeholder",'请输入开始时间');
-		}else if($("#timeselect").val()=='按日期'){
-			$("#endtime").attr("disabled",true);
-			$("#starttime").attr("placeholder",'请输入发生时间');
-		}else {
-			$("#starttime").attr("disabled",true);
-			$("#endtime").attr("disabled",true);
-			$("#starttime").attr("placeholder",'请输入开始时间');
-		}
-	});
+	//列表时间选择
+	$(".datePicker").click(function() {
+		 $("#starttime").val("");
+	     $("#endtime").val("");
+		$(this).parent().find(".btn-info").removeClass("btn-info");
+		$(this).parent().find(".btn-white").removeClass("btn-white");
+		$(this).parent().find("button").addClass("btn-white");
+		$(".search").removeClass("btn-white");
+		$(".search").addClass("btn-info");
+		$(this).parent().children(":last").css("display", "none");
+				starttime="";
+				endtime=""
+			if ($(this).html() == "今日") {
+				work_date = 0;
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+			} else if ($(this).html() == "一周") {
+				work_date = 7;
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+			} else if ($(this).html() == "一月") {
+				work_date = 30;
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+			} else if ($(this).html() == "按时间选择") {
+				work_date=null;
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+				$(this).parent().children(":last").css("display", "block");
+			}
+			if(work_date!=null){
+				select(work_date);
+			}
+		});
 });
 
 function refreshJqGrid(list){
@@ -154,25 +183,26 @@ function refreshJqGrid(list){
 
     });
 }
-function select(){
+function select(daynum){
 	var name = $("#name").val();
 	var area = $("#area").val();
-	var starttime = $("#starttime").val();
-	var endtime = $("#endtime").val();
 	var content = $("#content").val();
-	if ($("#timeselect").val()=='最近一日') {
-		
-	}
+	if(work_date==null){
+    	starttime = $("#starttime").val();
+        endtime = $("#endtime").val();
+    }
+	
 	$("#table_list_1").jqGrid("clearGridData");
 	$.ajax({
 		url:capacityworkurl,
 		type:"post",
 		dataType:"json",
 		data:{
-			'cellname':name,
+			'cellid':name,
 			'area':area,
-			'starttime':starttime,
-			'endtime':endtime,
+			'daynum':daynum,
+            'starttime':starttime,
+            'endtime':endtime,
 			'content':content
 		},
 		success:function(data,status){

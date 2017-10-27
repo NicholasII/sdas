@@ -103,7 +103,6 @@ public class ComplainController {
 		}
 		return map;
 	}
-	
 	@RequestMapping("/getpagelist")
 	@ResponseBody
 	public ModelMap getpagelist(@RequestParam(value="num",required=true,defaultValue="1")String num,@RequestParam(value="size",required=true,defaultValue="10")String size){
@@ -121,4 +120,32 @@ public class ComplainController {
 		}
 		return map;
 	}
+	@RequestMapping("/getcomplist")
+	@ResponseBody
+	public ModelMap getcomplist(HttpServletRequest request){
+		ModelMap map = new ModelMap();
+		CellComplainDto cellComplainDto=new CellComplainDto();
+		ComplainDto ComplainDto =new ComplainDto();
+		try {
+			String daynum = request.getParameter("daynum");
+			String starttime = request.getParameter("starttime");
+			String endtime = request.getParameter("endtime");
+			if (daynum!=null) {
+				ComplainDto.setDaynum(Integer.parseInt(daynum));
+			}
+			if (starttime!=null) {
+				ComplainDto.setStarttime(starttime);
+			}
+			if (endtime!=null) {
+				ComplainDto.setEndtime(endtime);
+			}
+			List<CellComplainDto> cellComplainDtos = complainService.getcomplist(ComplainDto);
+			map.addAttribute(Constraints.RESULT_ROW, cellComplainDtos);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.addAttribute(Constraints.RESULT_SUCCESS, false);
+		}
+		return map;
+	}
+	
 }

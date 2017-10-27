@@ -16,6 +16,9 @@ public class CapacityWorkDto {
 	private String alerm_level;
 	private Timestamp complete_time;
 	private int questionflag;
+	private int daynum;
+	private String starttime;
+	private String endtime;
 	public Timestamp getOccurrence_time() {
 		return occurrence_time;
 	}
@@ -87,6 +90,24 @@ public class CapacityWorkDto {
 	}
 	public void setQuestionflag(int questionflag) {
 		this.questionflag = questionflag;
+	}
+	public int getDaynum() {
+		return daynum;
+	}
+	public void setDaynum(int daynum) {
+		this.daynum = daynum;
+	}
+	public String getStarttime() {
+		return starttime;
+	}
+	public void setStarttime(String starttime) {
+		this.starttime = starttime;
+	}
+	public String getEndtime() {
+		return endtime;
+	}
+	public void setEndtime(String endtime) {
+		this.endtime = endtime;
 	}
 	
 	

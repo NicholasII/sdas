@@ -12,6 +12,11 @@ public class DeviceWorkDto {
 	private String cell_name;
 	private String fault_occus_time;
 	private String transt_reason;
+	
+	private int daynum;
+	private String starttime;
+	private String endtime;
+	
 	public String getOrder_title() {
 		return order_title;
 	}
@@ -59,6 +64,24 @@ public class DeviceWorkDto {
 	}
 	public void setTranst_reason(String transt_reason) {
 		this.transt_reason = transt_reason;
+	}
+	public int getDaynum() {
+		return daynum;
+	}
+	public void setDaynum(int daynum) {
+		this.daynum = daynum;
+	}
+	public String getStarttime() {
+		return starttime;
+	}
+	public void setStarttime(String starttime) {
+		this.starttime = starttime;
+	}
+	public String getEndtime() {
+		return endtime;
+	}
+	public void setEndtime(String endtime) {
+		this.endtime = endtime;
 	}
 	
 	

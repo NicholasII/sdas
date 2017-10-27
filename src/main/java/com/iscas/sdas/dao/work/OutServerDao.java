@@ -15,4 +15,6 @@ public interface OutServerDao {
 	List<OutServerDto> getlistWhithinOneWeek(String cellname);
 
 	List<OutServerDto> getlistWhithinOneMonth(String cellname);
+	
+	List<OutServerDto> getlistout(OutServerDto outServerDto);
 }
