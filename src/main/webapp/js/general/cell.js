@@ -857,10 +857,11 @@ $(function() {
                     'cellname' : cellname
                 },
                 type : "POST",
+                async:false,
                 dataType : "json",
                 success : function(data, status) {
                     var list = data.rows;
-                    refreshJqGrid_healthtable(list);
+                    refresh_healthtable(list);
                 }
      });
 	/*
@@ -1505,123 +1506,38 @@ function refreshJqGrid_weight(list) {
         hidegrid : false
     });
 }
-function refreshJqGrid_healthtable(list) {
-	$("#table_list_healthtable").jqGrid({
-		data : list,
-		datatype : "local",
-		height : "auto",
-		autowidth : false,
-		shrinkToFit : false,
-		rowNum : 10,
-		rowList : [10, 20, 30],
-		colNames : ['时间', '0点', '1点', '2点', '3点', '4点', '5点', '6点', '7点',
-				'8点', '9点', '10点', '11点', '12点', '13点', '14点', '15点', '16点',
-				'17点', '18点', '19点', '20点', '21点', '22点', '23点'],
-		colModel : [{
-					name : 'yyyyMMdd',
-					index : '时间',
-					width : 120
-				}, {
-					name : 'range_00',
-					index : '0点',
-					width : 100
-				}, {
-					name : 'range_01',
-					index : '1点',
-					width : 100
-				}, {
-					name : 'range_02',
-					index : '2点',
-					width : 100
-				}, {
-					name : 'range_03',
-					index : '3点',
-					width : 100
-				}, {
-					name : 'range_04',
-					index : '4点',
-					width : 100
-				}, {
-					name : 'range_05',
-					index : '5点',
-					width : 100
-				}, {
-					name : 'range_06',
-					index : '6点',
-					width : 100
-				}, {
-					name : 'range_07',
-					index : '7点',
-					width : 100
-				}, {
-					name : 'range_08',
-					index : '8点',
-					width : 100
-				}, {
-					name : 'range_09',
-					index : '9点',
-					width : 100
-				}, {
-					name : 'range_10',
-					index : '10点',
-					width : 100
-				}, {
-					name : 'range_11',
-					index : '11点',
-					width : 100
-				}, {
-					name : 'range_12',
-					index : '12点',
-					width : 100
-				}, {
-					name : 'range_13',
-					index : '13点',
-					width : 100
-				}, {
-					name : 'range_14',
-					index : '14点',
-					width : 100
-				}, {
-					name : 'range_15',
-					index : '15点',
-					width : 100
-				}, {
-					name : 'range_16',
-					index : '16点',
-					width : 100
-				}, {
-					name : 'range_17',
-					index : '17点',
-					width : 100
-				}, {
-					name : 'range_18',
-					index : '18点',
-					width : 100
-				}, {
-					name : 'range_19',
-					index : '19点',
-					width : 100
-				}, {
-					name : 'range_20',
-					index : '20点',
-					width : 100
-				}, {
-					name : 'range_21',
-					index : '21点',
-					width : 100
-				}, {
-					name : 'range_22',
-					index : '22点',
-					width : 100
-				}, {
-					name : 'range_23',
-					index : '23点',
-					width : 100
-				}],
-		pager : "#pager_list_healthtable",
-		viewrecords : true,
-		hidegrid : false
+function refresh_healthtable(list) {
+	var html="<tr style='background-color:#F5F5F6;'><th>时间</th>";
+	$.each(list[0].moments,function(i,e){
+		html+="<th>"+i+"点</th>";
 	});
+	html+="</tr>";
+	$("#table_list_healthtable").append(html);
+	$("#table_list_healthtable").append("<tbody>");
+	$.each(list,function(m,n){
+		var str="<tr><td>"+n.yyyyMMdd+"</td>";
+		$.each(n.moments,function(j,k){
+			if(k.result==-1){//查询不到
+				str+="<td class='gray'>"+k.ratio+"</td>";
+			}else if(k.result==0){//Fault
+				str+="<td class='red'>"+k.ratio+"</td>";
+			}else if(k.result==1){//Normal
+				str+="<td>"+k.ratio+"</td>";
+			}else if(k.result==2){//Warning
+				str+="<td class='yellow'>"+k.ratio+"</td>";
+			}else if(k.result==3){//Unkonw
+				str+="<td class='gray'>"+k.ratio+"</td>";
+			}else if(k.result==4){//Error
+				str+="<td class='gray'>"+k.ratio+"</td>";
+			}
+		});
+		str+="</tr>";
+		$("#table_list_healthtable").append(str);
+	});
+	$("#table_list_healthtable").append("</tbody>");
+	////
+	$('body').addClass('loaded');
+    $('#loader-wrapper .load_title').remove();
 }
 
 function scroll() {

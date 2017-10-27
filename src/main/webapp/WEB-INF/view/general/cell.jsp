@@ -15,7 +15,11 @@
 <script type="text/javascript"
 	src="http://api.map.baidu.com/api?v=2.0&ak=EmXf0NLcNCvBO5hdDliGtvC9D5v6GA5K"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
-	
+	<link href="${context}/style/loader.css" rel="stylesheet"
+	type="text/css">
+<link
+	href="${context}/lib/hplus/css/plugins/dataTables/dataTables.bootstrap.css"
+	rel="stylesheet">
 <style type="text/css">
 	td {
 		margin-left: 10px;
@@ -24,9 +28,18 @@
 	input{
 	    padding-top: 5px;padding-bottom: 5px;margin-top: 0px;margin-bottom: 0px
 	}
+	#table_list_healthtable th,#table_list_healthtable td{border:1px solid #ddd}
+	.ibox-content .gray{color:gray}.ibox-content .red{color:red}.ibox-content .yellow{color:yellow}
 </style>
 </head>
-<body>
+<body class="gray-bg">
+<div id="loader-wrapper">
+		<div id="loader"></div>
+		<div class="loader-section section-left"></div>
+		<div class="loader-section section-right"></div>
+		<div class="load_title">正在加载日常监控数据...</div>
+</div>
+	
 	<script type="text/javascript">
 		var cellname = '${cellname}';
 		var stationname = '${stationname}';
@@ -334,10 +347,8 @@
 						<div class="ibox-tools"></div>
 					</div>
 					<div class="ibox-content">
-						<div class="jqGrid_wrapper"
-							style="margin: 0; padding: 0; width: 100%; overflow: auto;">
-							<table id="table_list_healthtable"></table>
-							<div id="pager_list_healthtable"></div>
+						<div class="table" style="margin-left: 20px; width: 80%;">
+							<table id="table_list_healthtable" class="table"></table>
 						</div>
 					</div>
 				</div>
