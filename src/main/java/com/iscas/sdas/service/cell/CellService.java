@@ -127,7 +127,7 @@ public class CellService {
 		
 		List<CellHealthTableDto> list = new ArrayList<>();
 		
-		List<BaseCellHealth> cellHealths = cellDao.cellhealthtrend(cellname);
+		List<BaseCellHealth> cellHealths = cellDao.cellhealthtrendWithinOneMonth(cellname);
 		if (cellHealths != null) {
 			try {
 				for (int j = 0; j < cellHealths.size(); j++) {
