@@ -11,6 +11,9 @@ public class AlarmDto {
 	private String app_hour;
 	
 	private int app_result;
+	private int daynum;
+	private String starttime;
+	private String endtime;
 	
 
 	public String getCell_code() {
@@ -51,6 +54,30 @@ public class AlarmDto {
 
 	public void setApp_result(int app_result) {
 		this.app_result = app_result;
+	}
+
+	public int getDaynum() {
+		return daynum;
+	}
+
+	public void setDaynum(int daynum) {
+		this.daynum = daynum;
+	}
+
+	public String getStarttime() {
+		return starttime;
+	}
+
+	public void setStarttime(String starttime) {
+		this.starttime = starttime;
+	}
+
+	public String getEndtime() {
+		return endtime;
+	}
+
+	public void setEndtime(String endtime) {
+		this.endtime = endtime;
 	}
 	
 }

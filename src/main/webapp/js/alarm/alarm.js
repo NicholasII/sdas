@@ -5,11 +5,18 @@
  * TODO
  */
 var alarmurl = ctx + "/alarm/all";
-
+var starttime="";
+var endtime="";
+var work_date=7;
 $(function(){
     $.jgrid.defaults.styleUI = 'Bootstrap';
     $.ajax({
         url: alarmurl,
+        data:{
+        	'cellid':'',
+        	'daynum':work_date,
+        	'starttime':starttime,
+            'endtime':endtime},
         type:"GET",
         dataType:"json",
         success:function(data,status){
@@ -17,20 +24,40 @@ $(function(){
             refreshJqGrid(list);
         }
     });   
-    $("#timeselect").change(function(){
-        if ($("#timeselect").val()=='按时间段') {
-            $("#starttime").removeAttr("disabled");
-            $("#endtime").removeAttr("disabled");
-            $("#starttime").attr("placeholder",'请输入开始时间');
-        }else if($("#timeselect").val()=='按日期'){
-            $("#endtime").attr("disabled",true);
-            $("#starttime").attr("placeholder",'请输入发生时间');
-        }else {
-            $("#starttime").attr("disabled",true);
-            $("#endtime").attr("disabled",true);
-            $("#starttime").attr("placeholder",'请输入开始时间');
-        }
-    });
+  //列表时间选择
+	$(".datePicker").click(function() {
+		 $("#starttime").val("");
+	     $("#endtime").val("");
+		$(this).parent().find(".btn-info").removeClass("btn-info");
+		$(this).parent().find(".btn-white").removeClass("btn-white");
+		$(this).parent().find("button").addClass("btn-white");
+		$(".search").removeClass("btn-white");
+		$(".search").addClass("btn-info");
+		$(this).parent().children(":last").css("display", "none");
+				starttime="";
+				endtime=""
+			if ($(this).html() == "今日") {
+				work_date = 0;
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+			} else if ($(this).html() == "一周") {
+				work_date = 7;
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+			} else if ($(this).html() == "一月") {
+				work_date = 30;
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+			} else if ($(this).html() == "按时间选择") {
+				work_date=null;
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+				$(this).parent().children(":last").css("display", "block");
+			}
+			if(work_date!=null){
+				select(work_date);
+			}
+		});
 });
 
 function refreshJqGrid(list){
@@ -82,10 +109,12 @@ function refreshJqGrid(list){
 
     });
 }
-function select(){
-    var name = $("#name").val();
-    var starttime = $("#starttime").val();
-    var endtime = $("#endtime").val();
+function select(daynum){
+    var name = $("#cellname").val();
+    if(work_date==null){
+    	starttime = $("#starttime").val();
+        endtime = $("#endtime").val();
+    }
     $("#table_list_1").jqGrid("clearGridData");
     $.ajax({
         url:alarmurl,
@@ -93,6 +122,7 @@ function select(){
         dataType:"json",
         data:{
             'cellname':name,
+            'daynum':daynum,
             'starttime':starttime,
             'endtime':endtime,
         },

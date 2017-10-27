@@ -3,14 +3,21 @@
  * 2017年9月20日下午10:19:48
  * TODO
  */
-var capacityworkurl = ctx + "/outserverwork/getlist";
-
+var capacityworkurl = ctx + "/outserverwork/getlistout";
+var starttime="";
+var endtime="";
+var work_date=7;
 
 $(function(){
 	$.jgrid.defaults.styleUI = 'Bootstrap';
 	$.ajax({
 		url: capacityworkurl,
 		type:"GET",
+		data:{
+        	'daynum':work_date,
+        	'starttime':starttime,
+            'endtime':endtime
+            },
 		dataType:"json",
 		success:function(data,status){
 			var list = data.rows;
@@ -18,7 +25,41 @@ $(function(){
 			$('body').addClass('loaded');
 	        $('#loader-wrapper .load_title').remove();
 		}
-	});     
+	});  
+	//列表时间选择
+	$(".datePicker").click(function() {
+		 $("#starttime").val("");
+	     $("#endtime").val("");
+		$(this).parent().find(".btn-info").removeClass("btn-info");
+		$(this).parent().find(".btn-white").removeClass("btn-white");
+		$(this).parent().find("button").addClass("btn-white");
+		$(".search").removeClass("btn-white");
+		$(".search").addClass("btn-info");
+		$(this).parent().children(":last").css("display", "none");
+				starttime="";
+				endtime=""
+			if ($(this).html() == "今日") {
+				work_date = 0;
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+			} else if ($(this).html() == "一周") {
+				work_date = 7;
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+			} else if ($(this).html() == "一月") {
+				work_date = 30;
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+			} else if ($(this).html() == "按时间选择") {
+				work_date=null;
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+				$(this).parent().children(":last").css("display", "block");
+			}
+			if(work_date!=null){
+				select(work_date);
+			}
+		});
 });
 function refreshJqGrid(list){
 	$("#table_list_1").jqGrid({
@@ -97,19 +138,19 @@ function refreshJqGrid(list){
 
     });
 }
-function select(){
-	var name = $("#name").val();
+function select(daynum){
+	/*var name = $("#name").val();
 	var scene = $("#scene").val();
-	var type = $("#type").val();
+	var type = $("#type").val();*/
 	$("#table_list_1").jqGrid("clearGridData");
 	$.ajax({
 		url:capacityworkurl,
 		type:"post",
 		dataType:"json",
 		data:{
-			'name':name,
-			'scene':scene,
-			'type':type
+			'daynum':daynum,
+            'starttime':starttime,
+            'endtime':endtime,
 		},
 		success:function(data,status){
 			var list = data.rows;

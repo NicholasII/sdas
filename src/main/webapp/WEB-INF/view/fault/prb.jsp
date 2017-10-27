@@ -96,11 +96,10 @@ height: auto; /* let the content decide it */
 										<div class="ibox-tools">
 											<div class="btn-group" id="datePicker">
 												<button class="btn btn-info datePicker" type="button">今日</button>
-												<button class="btn btn-white datePicker" type="button">昨天</button>
-												<button class="btn btn-white datePicker" type="button">最近7日</button>
-												<button class="btn btn-white datePicker" type="button">最近30日</button>
+												<button class="btn btn-white datePicker" type="button">一周</button>
+												<button class="btn btn-white datePicker" type="button">一月</button>
 												<button class="btn btn-white datePicker" type="button">按时间选择</button>
-												<div id="timeselect" style="display: none;">
+												<div id="timeselect" style="display: none;float: left;">
 													<input style="margin-left:5px;margin-top: -7px !important;" id="starttime_prb"
 														class="layer-date starttime" placeholder="请输入开始时间"
 														onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
@@ -178,36 +177,30 @@ height: auto; /* let the content decide it */
 							<div class="ibox float-e-margins">
 								<div class="ibox-title">
 									<h5>性能工单</h5>
-									<div class="ibox-tools"></div>
+									<div class="ibox-tools">
+										<div class="btn-group">
+												<button class="btn btn-info workPicker" type="button">今日</button>
+												<button class="btn btn-white workPicker" type="button">一周</button>
+												<button class="btn btn-white workPicker" type="button">一月</button>
+												<button class="btn btn-white workPicker" type="button">按时间选择</button>
+											<div id="timeselect_work_switch" style="display: none;float: left;">
+												<input style="margin-left:5px;margin-top: -7px !important;" id="starttime_work"
+													class="layer-date" placeholder="请输入开始时间"
+													onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+												<span id="span_work" style="margin-top: -10px ;display: inline !important;"
+													class="input-group-addon">到</span> 
+												<input style="margin-top: -7px !important;" class="layer-date" id="endtime_work"
+													placeholder="请输入结束时间"
+													onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+												<button class="btn btn-info search" type="button" onclick="query_work('')">确定</button>
+											</div>
+										</div>
+									</div>
 								</div>
 								<div class="ibox-content">
-									<div class="jqGrid_wrapper">
-										<table class="table">
-											<thead>
-												<tr>
-													<th>时间</th>
-													<th>次数</th>
-													<th>指标值</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>2017-08-26 20:00</td>
-													<td>10</td>
-													<td>[YY-无线接通率]=20%</td>
-												</tr>
-												<tr>
-													<td>2017-08-26 19:15</td>
-													<td>5</td>
-													<td>[上行PRB利用率] = 64.44,[下行PRB利用率] = 61.95</td>
-												</tr>
-												<tr>
-													<td>2017-08-26 15:00</td>
-													<td>3</td>
-													<td>[RRC连接最大数] = 215.00</td>
-												</tr>
-											</tbody>
-										</table>
+									<div class="jqGrid_wrapper" style="margin: 0; padding: 0; width: 100%; overflow: auto;">
+										<div class="table" id="work_table"></div>
+										<div id="pager_work_table"></div>
 									</div>
 
 								</div>
@@ -281,12 +274,11 @@ height: auto; /* let the content decide it */
 									<h5>关键指标</h5>
 									<div class="ibox-tools">
 										<div class="btn-group">
-											<button class="btn btn-info datePicker" type="button">今日</button>
-												<button class="btn btn-white datePicker" type="button">昨天</button>
-												<button class="btn btn-white datePicker" type="button">最近7日</button>
-												<button class="btn btn-white datePicker" type="button">最近30日</button>
+										 		<button class="btn btn-info datePicker" type="button">今日</button>
+												<button class="btn btn-white datePicker" type="button">一周</button>
+												<button class="btn btn-white datePicker" type="button">一月</button>
 												<button class="btn btn-white datePicker" type="button">按时间选择</button>
-											<div id="timeselect_switch" style="display: none;">
+											<div id="timeselect_switch" style="display: none;float: left;">
 												<input style="margin-left:5px;margin-top: -7px !important;" id="starttime_switch"
 													class="layer-date" placeholder="请输入开始时间"
 													onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
@@ -338,36 +330,30 @@ height: auto; /* let the content decide it */
 							<div class="ibox float-e-margins">
 								<div class="ibox-title">
 									<h5>性能工单</h5>
-									<div class="ibox-tools"></div>
+									<div class="ibox-tools">
+										<div class="btn-group">
+												<button class="btn btn-info workPicker" type="button">今日</button>
+												<button class="btn btn-white workPicker" type="button">一周</button>
+												<button class="btn btn-white workPicker" type="button">一月</button>
+												<button class="btn btn-white workPicker" type="button">按时间选择</button>
+											<div id="timeselect_work_switch" style="display: none;float: left;">
+												<input style="margin-left:5px;margin-top: -7px !important;" id="starttime_work_switch"
+													class="layer-date" placeholder="请输入开始时间"
+													onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+												<span id="span_work_switch" style="margin-top: -10px ;display: inline !important;"
+													class="input-group-addon">到</span> 
+												<input style="margin-top: -7px !important;" class="layer-date" id="endtime_work_switch"
+													placeholder="请输入结束时间"
+													onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+												<button class="btn btn-info search" type="button" onclick="query_work('work_switch')">确定</button>
+											</div>
+										</div>
+									</div>
 								</div>
 								<div class="ibox-content">
-									<div class="jqGrid_wrapper">
-										<table class="table">
-											<thead>
-												<tr>
-													<th>时间</th>
-													<th>次数</th>
-													<th>指标值</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>2017-08-26 20:00</td>
-													<td>10</td>
-													<td>[YY-无线接通率]=20%</td>
-												</tr>
-												<tr>
-													<td>2017-08-26 19:15</td>
-													<td>5</td>
-													<td>[上行PRB利用率] = 64.44,[下行PRB利用率] = 61.95</td>
-												</tr>
-												<tr>
-													<td>2017-08-26 15:00</td>
-													<td>3</td>
-													<td>[RRC连接最大数] = 215.00</td>
-												</tr>
-											</tbody>
-										</table>
+									<div class="jqGrid_wrapper" style="margin: 0; padding: 0; width: 100%; overflow: auto;">
+										<div class="table" id="work_table_switch"></div>
+										<div id="pager_work_table_switch"></div>
 									</div>
 
 								</div>
@@ -380,6 +366,10 @@ height: auto; /* let the content decide it */
 		</div>
 		
 	</div>
+	<script type="text/javascript">
+	var cellname='${cellname}';
+	</script>
+	
 	<script type="text/javascript" src="${context}/js/fault/prb.js"></script>
 </body>
 </html>

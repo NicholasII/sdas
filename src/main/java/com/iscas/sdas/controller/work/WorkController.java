@@ -148,8 +148,25 @@ public class WorkController {
 	 */
 	@RequestMapping("/alltest")
 	@ResponseBody
-	public ModelMap alltest(){
-		ModelMap map = new ModelMap();	
+	public ModelMap alltest(HttpServletRequest request){
+		ModelMap map = new ModelMap();
+		CapacityWorkDto cwdto=new CapacityWorkDto();
+		String cellid = request.getParameter("cellid");
+		String daynum = request.getParameter("daynum");
+		String starttime = request.getParameter("starttime");
+		String endtime = request.getParameter("endtime");
+		if (cellid!=null) {
+			cwdto.setCellid(cellid);
+		}else{cwdto.setCellid("");}
+		if (daynum!=null) {
+			cwdto.setDaynum(Integer.parseInt(daynum));
+		}
+		if (starttime!=null) {
+			cwdto.setStarttime(starttime);
+		}
+		if (endtime!=null) {
+			cwdto.setEndtime(endtime);
+		}
 		List<CapacityWorkDto> capacityWorks = workService.getAllWorks();
 		map.addAttribute(Constraints.RESULT_ROW, capacityWorks);
 		return map;

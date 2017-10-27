@@ -11,7 +11,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.iscas.sdas.dto.work.DeviceWorkDto;
 import com.iscas.sdas.dto.work.OutServerDto;
 import com.iscas.sdas.service.work.OutServerService;
 import com.iscas.sdas.util.CommonUntils;
@@ -69,6 +68,29 @@ public class OutServerController {
 		String cellname = request.getParameter("cellname");
 		if (cellname!=null) {
 			List<OutServerDto> works = outServerService.getlistonemonth(cellname);
+			map.addAttribute(Constraints.RESULT_ROW, works);
+		}			
+		return map;
+	}
+	@RequestMapping("/getlistout")
+	@ResponseBody
+	public ModelMap getlistout(HttpServletRequest request){
+		ModelMap map = new ModelMap();
+		OutServerDto outServerDto=new OutServerDto();
+		String daynum = request.getParameter("daynum");
+		String starttime = request.getParameter("starttime");
+		String endtime = request.getParameter("endtime");
+		if (daynum!=null) {
+			outServerDto.setDaynum(Integer.parseInt(daynum));
+		}
+		if (starttime!=null) {
+			outServerDto.setStarttime(starttime);
+		}
+		if (endtime!=null) {
+			outServerDto.setEndtime(endtime);
+		}
+		List<OutServerDto> works = outServerService.getlistout(outServerDto);
+		if (works!=null) {
 			map.addAttribute(Constraints.RESULT_ROW, works);
 		}			
 		return map;

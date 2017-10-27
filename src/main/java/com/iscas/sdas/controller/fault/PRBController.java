@@ -40,6 +40,7 @@ public class PRBController {
 	@ResponseBody
 	public ModelMap getprb(HttpServletRequest request){
 		Integer daynum=0;
+		String cellname=request.getParameter("cellname");
 		String daynumStr=request.getParameter("daynum");
 		String starttime=request.getParameter("starttime");
 		String endtime=request.getParameter("endtime");
@@ -47,9 +48,12 @@ public class PRBController {
 			daynum=Integer.parseInt(daynumStr);
 		}
 		ModelMap map = new ModelMap();
-		List<PRBBean> prbBeans = faultService.getprbs(daynum,starttime,endtime);
+		List<PRBBean> prbBeans = faultService.getprbs(cellname,daynum,starttime,endtime);
+		//获取性能工单数据
+		List<PRBBean> workprb = faultService.getworkprb(cellname,daynum,starttime,endtime);
 		if (prbBeans!=null) {
 			map.addAttribute(Constraints.RESULT_ROW, prbBeans);
+			map.addAttribute(Constraints.RESULT_WORKS, workprb);
 			map.addAttribute(Constraints.RESULT_SUCCESS, true);
 		}else {
 			map.addAttribute(Constraints.RESULT_SUCCESS,false);
@@ -60,6 +64,7 @@ public class PRBController {
 	@ResponseBody
 	public ModelMap getprbothers(HttpServletRequest request){
 		Integer daynum=0;
+		String cellname=request.getParameter("cellname");
 		String daynumStr=request.getParameter("daynum");
 		String starttime=request.getParameter("starttime");
 		String endtime=request.getParameter("endtime");
@@ -67,9 +72,12 @@ public class PRBController {
 			daynum=Integer.parseInt(daynumStr);
 		}
 		ModelMap map = new ModelMap();
-		List<PRBBean> prbothers = faultService.getprbothers(daynum,starttime,endtime);
+		List<PRBBean> prbothers = faultService.getprbothers(cellname,daynum,starttime,endtime);
+		//获取性能工单数据
+		List<PRBBean> workprb = faultService.getworkprb(cellname,daynum,starttime,endtime);
 		if (prbothers!=null) {
 			map.addAttribute(Constraints.RESULT_ROW, prbothers);
+			map.addAttribute(Constraints.RESULT_WORKS, workprb);
 			map.addAttribute(Constraints.RESULT_SUCCESS, true);
 		}else {
 			map.addAttribute(Constraints.RESULT_SUCCESS,false);
@@ -80,6 +88,7 @@ public class PRBController {
 	@ResponseBody
 	public ModelMap getswitch(HttpServletRequest request){
 		Integer daynum=0;
+		String cellname=request.getParameter("cellname");
 		String daynumStr=request.getParameter("daynum");
 		String starttime=request.getParameter("starttime");
 		String endtime=request.getParameter("endtime");
@@ -87,9 +96,11 @@ public class PRBController {
 			daynum=Integer.parseInt(daynumStr);
 		}
 		ModelMap map = new ModelMap();
-		List<PRBBean> switchBeans = faultService.getswitch(daynum,starttime,endtime);
+		List<PRBBean> switchBeans = faultService.getswitch(cellname,daynum,starttime,endtime);
+		List<PRBBean> workswitch = faultService.getworkswitch(cellname,daynum,starttime,endtime);
 		if (switchBeans!=null) {
 			map.addAttribute(Constraints.RESULT_ROW, switchBeans);
+			map.addAttribute(Constraints.RESULT_WORKS, workswitch);
 			map.addAttribute(Constraints.RESULT_SUCCESS, true);
 		}else {
 			map.addAttribute(Constraints.RESULT_SUCCESS,false);
@@ -100,6 +111,7 @@ public class PRBController {
 	@ResponseBody
 	public ModelMap getswitchothers(HttpServletRequest request){
 		Integer daynum=0;
+		String cellname=request.getParameter("cellname");
 		String daynumStr=request.getParameter("daynum");
 		String starttime=request.getParameter("starttime");
 		String endtime=request.getParameter("endtime");
@@ -107,9 +119,53 @@ public class PRBController {
 			daynum=Integer.parseInt(daynumStr);
 		}
 		ModelMap map = new ModelMap();
-		List<PRBBean> switchothers = faultService.getswitchothers(daynum,starttime,endtime);
+		List<PRBBean> switchothers = faultService.getswitchothers(cellname,daynum,starttime,endtime);
+		List<PRBBean> workswitch = faultService.getworkswitch(cellname,daynum,starttime,endtime);
 		if (switchothers!=null) {
 			map.addAttribute(Constraints.RESULT_ROW, switchothers);
+			map.addAttribute(Constraints.RESULT_WORKS, workswitch);
+			map.addAttribute(Constraints.RESULT_SUCCESS, true);
+		}else {
+			map.addAttribute(Constraints.RESULT_SUCCESS,false);
+		}
+		return map;
+	}
+	@RequestMapping("/getworkprb")
+	@ResponseBody
+	public ModelMap getworkprb(HttpServletRequest request){
+		Integer daynum=0;
+		String cellname=request.getParameter("cellname");
+		String daynumStr=request.getParameter("daynum");
+		String starttime=request.getParameter("starttime");
+		String endtime=request.getParameter("endtime");
+		if(daynumStr!=null&&daynumStr!=""){
+			daynum=Integer.parseInt(daynumStr);
+		}
+		ModelMap map = new ModelMap();
+		List<PRBBean> workprb = faultService.getworkprb(cellname,daynum,starttime,endtime);
+		if (workprb!=null) {
+			map.addAttribute(Constraints.RESULT_ROW, workprb);
+			map.addAttribute(Constraints.RESULT_SUCCESS, true);
+		}else {
+			map.addAttribute(Constraints.RESULT_SUCCESS,false);
+		}
+		return map;
+	}
+	@RequestMapping("/getworkswitch")
+	@ResponseBody
+	public ModelMap getworkswitch(HttpServletRequest request){
+		Integer daynum=0;
+		String cellname=request.getParameter("cellname");
+		String daynumStr=request.getParameter("daynum");
+		String starttime=request.getParameter("starttime");
+		String endtime=request.getParameter("endtime");
+		if(daynumStr!=null&&daynumStr!=""){
+			daynum=Integer.parseInt(daynumStr);
+		}
+		ModelMap map = new ModelMap();
+		List<PRBBean> workswitch = faultService.getworkswitch(cellname,daynum,starttime,endtime);
+		if (workswitch!=null) {
+			map.addAttribute(Constraints.RESULT_ROW, workswitch);
 			map.addAttribute(Constraints.RESULT_SUCCESS, true);
 		}else {
 			map.addAttribute(Constraints.RESULT_SUCCESS,false);

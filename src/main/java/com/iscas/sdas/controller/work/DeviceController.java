@@ -74,4 +74,27 @@ public class DeviceController {
 		}			
 		return map;
 	}
+	@RequestMapping("/getlistdevice")
+	@ResponseBody
+	public ModelMap getlistdevice(HttpServletRequest request){
+		ModelMap map = new ModelMap();
+		DeviceWorkDto deviceWorkDto=new DeviceWorkDto();
+		String daynum = request.getParameter("daynum");
+		String starttime = request.getParameter("starttime");
+		String endtime = request.getParameter("endtime");
+		if (daynum!=null) {
+			deviceWorkDto.setDaynum(Integer.parseInt(daynum));
+		}
+		if (starttime!=null) {
+			deviceWorkDto.setStarttime(starttime);
+		}
+		if (endtime!=null) {
+			deviceWorkDto.setEndtime(endtime);
+		}
+		List<DeviceWorkDto> works = deviceWorkService.getlistdevice(deviceWorkDto);
+		if (works!=null) {
+			map.addAttribute(Constraints.RESULT_ROW, works);
+		}			
+		return map;
+	}
 }

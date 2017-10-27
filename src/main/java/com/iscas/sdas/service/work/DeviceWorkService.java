@@ -35,4 +35,8 @@ public class DeviceWorkService {
 	public List<DeviceWorkDto> getlistonemonth(String cellname){
 		return deviceWorkDao.getlistWhithinOneMonth(cellname);
 	}
+	
+	public List<DeviceWorkDto> getlistdevice(DeviceWorkDto deviceWorkDto){
+		return deviceWorkDao.getlistdevice(deviceWorkDto);
+	}
 }

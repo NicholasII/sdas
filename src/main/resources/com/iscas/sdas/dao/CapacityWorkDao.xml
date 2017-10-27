@@ -114,6 +114,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM t_performance_work_rt WHERE questionflag = 0
 	</select>
 	<select id="getAllWorks" resultType="com.iscas.sdas.dto.work.CapacityWorkDto">
-		SELECT * FROM t_performance_work_rt WHERE questionflag = 0 or questionflag = 1 or questionflag = 2
+		SELECT * FROM t_performance_work_rt WHERE questionflag = 0 or questionflag = 1 or questionflag = 2 
+		<if test="cellid!=''">
+		 and cellid like #{cellid}
+		</if>
+		<if test="starttime!='' and starttime!=''">
+		 and occurrence_time &gt;=#{starttime} and occurrence_time &lt;=#{endtime}
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==7">
+		and TO_DAYS(NOW())-TO_DAYS(occurrence_time) &lt;=#{daynum}<!-- #{daynum} -->
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==30">
+		and TO_DAYS(NOW())-TO_DAYS(occurrence_time) &lt;=#{daynum}
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==0">
+		and TO_DAYS(NOW())-TO_DAYS(occurrence_time) =#{daynum}
+		</if>
 	</select>
 </mapper>

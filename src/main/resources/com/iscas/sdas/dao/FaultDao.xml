@@ -5,42 +5,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.iscas.sdas.dao.fault.FaultDao">
 	<select id="getprb" resultType="com.iscas.sdas.dto.data.PRBBean">
 	Select * from (SELECT test.time1 as timestamp,test.key30 as rrc,test.key58	as upprb,test.key59 as downprb FROM
-		test_rtdata_net test 
+		test_rtdata_net test where test.cellcode9=#{cellname}
 		<if test="starttime!='' and starttime!=''">
-		 WHERE test.time1 &gt;=#{starttime} and test.time1 &lt;=#{endtime}
+		 and test.time1 &gt;=#{starttime} and test.time1 &lt;=#{endtime}
 		</if>
 		<if test="starttime=='' and endtime=='' and daynum==7">
-		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=75<!-- #{daynum} -->
+		and TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=76<!-- #{daynum} -->
 		</if>
 		<if test="starttime=='' and endtime=='' and daynum==30">
-		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=76
+		and TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=80
 		</if>
 		<if test="starttime=='' and endtime=='' and daynum==0">
-		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) =73
+		and TO_DAYS(NOW())-TO_DAYS(test.time1) =74
 		</if>
 		<if test="starttime=='' and endtime=='' and daynum==1">
-		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) =74
+		and TO_DAYS(NOW())-TO_DAYS(test.time1) =75
 		</if>
 		) as counts order by timestamp;
 	</select>
 	
 	<select id="getprbothers" resultType="com.iscas.sdas.dto.data.PRBBean">
 		Select * from (SELECT test.time1 as timestamp,test.key32 as UECounts,test.key33	as PUCCH,test.key45 as CCE,test.key48 as PUSCHPRB,test.key54 as uprealprb FROM
-		test_rtdata_net test
+		test_rtdata_net test where test.cellcode9=#{cellname}
 		<if test="starttime!='' and starttime!=''">
-		 WHERE test.time1 &gt;=#{starttime} and test.time1 &lt;=#{endtime}
+		 and test.time1 &gt;=#{starttime} and test.time1 &lt;=#{endtime}
 		</if>
 		<if test="starttime=='' and endtime=='' and daynum==7">
-		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=75<!-- #{daynum} -->
+		and TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=76<!-- #{daynum} -->
 		</if>
 		<if test="starttime=='' and endtime=='' and daynum==30">
-		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=76
+		and TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=80
 		</if>
 		<if test="starttime=='' and endtime=='' and daynum==0">
-		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) =73
+		and TO_DAYS(NOW())-TO_DAYS(test.time1) =74
 		</if>
 		<if test="starttime=='' and endtime=='' and daynum==1">
-		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) =74
+		and TO_DAYS(NOW())-TO_DAYS(test.time1) =75
 		</if>
 		) as counts order by timestamp;
 	</select>
@@ -48,21 +48,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<!-- Select * from (SELECT test.time1 as timestamp,test.key26 as yymon,test.key27 as yysucces FROM
 		test_rtdata_net test WHERE test.time1 order by test.time1  DESC limit 288) as counts order by timestamp; -->
 		Select * from (SELECT test.time1 as timestamp,test.key26 as yymon,test.key27 as yysucces FROM
-		test_rtdata_net test
+		test_rtdata_net test where test.cellcode9=#{cellname}
 		<if test="starttime!='' and starttime!=''">
-		 WHERE test.time1 &gt;=#{starttime} and test.time1 &lt;=#{endtime}
+		 and test.time1 &gt;=#{starttime} and test.time1 &lt;=#{endtime}
 		</if>
 		<if test="starttime=='' and endtime=='' and daynum==7">
-		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=75<!-- #{daynum} -->
+		and TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=76<!-- #{daynum} -->
 		</if>
 		<if test="starttime=='' and endtime=='' and daynum==30">
-		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=76
+		and TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=80
 		</if>
 		<if test="starttime=='' and endtime=='' and daynum==0">
-		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) =73
+		and TO_DAYS(NOW())-TO_DAYS(test.time1) =74
 		</if>
 		<if test="starttime=='' and endtime=='' and daynum==1">
-		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) =74
+		and TO_DAYS(NOW())-TO_DAYS(test.time1) =75
 		</if>
 		) as counts order by timestamp;
 	</select>
@@ -70,21 +70,61 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<!-- Select * from (SELECT test.time1 as timestamp,test.key17 as yyrrc,test.key21	as yywire FROM
 		test_rtdata_net test WHERE test.time1 order by test.time1  DESC limit 288) as counts order by timestamp; -->
 		Select * from (SELECT test.time1 as timestamp,test.key17 as yyrrc,test.key21	as yywire FROM
-		test_rtdata_net test
+		test_rtdata_net test where test.cellcode9=#{cellname}
 		<if test="starttime!='' and starttime!=''">
-		 WHERE test.time1 &gt;=#{starttime} and test.time1 &lt;=#{endtime}
+		 and test.time1 &gt;=#{starttime} and test.time1 &lt;=#{endtime}
 		</if>
 		<if test="starttime=='' and endtime=='' and daynum==7">
-		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=75<!-- #{daynum} -->
+		and TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=76<!-- #{daynum} -->
 		</if>
 		<if test="starttime=='' and endtime=='' and daynum==30">
-		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=76
+		and TO_DAYS(NOW())-TO_DAYS(test.time1) &lt;=80
 		</if>
 		<if test="starttime=='' and endtime=='' and daynum==0">
-		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) =73
+		and TO_DAYS(NOW())-TO_DAYS(test.time1) =74
 		</if>
 		<if test="starttime=='' and endtime=='' and daynum==1">
-		WHERE TO_DAYS(NOW())-TO_DAYS(test.time1) =74
+		and TO_DAYS(NOW())-TO_DAYS(test.time1) =75
+		</if>
+		) as counts order by timestamp;
+	</select>
+	<select id="getworkprb" resultType="com.iscas.sdas.dto.data.PRBBean">
+	Select * from (SELECT occurrence_time as timestamp,monitor_value,reasons FROM t_performance_work_rt as test 
+	WHERE cellid = #{cellname} and monitor_content='新PRB利用率(4次连续)'
+		<if test="starttime!='' and starttime!=''">
+		 AND test.occurrence_time &gt;=#{starttime} and test.occurrence_time &lt;=#{endtime}
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==7">
+		AND TO_DAYS(NOW())-TO_DAYS(test.occurrence_time) &lt;=76<!-- #{daynum} -->
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==30">
+		AND TO_DAYS(NOW())-TO_DAYS(test.occurrence_time) &lt;=80
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==0">
+		AND TO_DAYS(NOW())-TO_DAYS(test.occurrence_time) =74
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==1">
+		AND TO_DAYS(NOW())-TO_DAYS(test.occurrence_time) =75
+		</if>
+		) as counts order by timestamp;
+	</select>
+	<select id="getworkswitch" resultType="com.iscas.sdas.dto.data.PRBBean">
+	Select * from (SELECT occurrence_time as timestamp,monitor_value,reasons FROM t_performance_work_rt as test 
+	WHERE cellid = #{cellname} and monitor_content='新切换出成功率(4次连续)'
+	<if test="starttime!='' and starttime!=''">
+		 AND test.occurrence_time &gt;=#{starttime} and test.occurrence_time &lt;=#{endtime}
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==7">
+		AND TO_DAYS(NOW())-TO_DAYS(test.occurrence_time) &lt;=76<!-- #{daynum} -->
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==30">
+		AND TO_DAYS(NOW())-TO_DAYS(test.occurrence_time) &lt;=80
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==0">
+		AND TO_DAYS(NOW())-TO_DAYS(test.occurrence_time) =74
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==1">
+		AND TO_DAYS(NOW())-TO_DAYS(test.occurrence_time) =75
 		</if>
 		) as counts order by timestamp;
 	</select>

@@ -5,4 +5,3 @@
 <script src="${context}/lib/hplus/js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
 <script src="${context}/lib/hplus/js/plugins/clockpicker/clockpicker.js"></script>
 <script src="${context}/lib/hplus/js/plugins/cropper/cropper.min.js"></script>
-<script src="${context}/lib/hplus/js/demo/form-advanced-demo.js"></script>

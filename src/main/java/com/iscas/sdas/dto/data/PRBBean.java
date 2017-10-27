@@ -21,6 +21,9 @@ public class PRBBean {
 	private Integer daynum;
 	private String starttime;
 	private String endtime;
+	private String cellname;
+	private String monitor_value;
+	private String reasons;
 	
 	public String getSwitchs() {
 		return switchs;
@@ -123,6 +126,24 @@ public class PRBBean {
 	}
 	public void setEndtime(String endtime) {
 		this.endtime = endtime;
+	}
+	public String getMonitor_value() {
+		return monitor_value;
+	}
+	public void setMonitor_value(String monitor_value) {
+		this.monitor_value = monitor_value;
+	}
+	public String getReasons() {
+		return reasons;
+	}
+	public void setReasons(String reasons) {
+		this.reasons = reasons;
+	}
+	public String getCellname() {
+		return cellname;
+	}
+	public void setCellname(String cellname) {
+		this.cellname = cellname;
 	}
 	
 }

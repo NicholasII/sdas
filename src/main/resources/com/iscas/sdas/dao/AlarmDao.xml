@@ -17,8 +17,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<bind name="cellcode" value="'%'+ _parameter.getCell_code() +'%'" />
 			and cell_code like #{cellcode}
 		</if>
-		<if test="yyyyMMdd != null">
-			and yyyyMMdd = #{yyyyMMdd}
+		<if test="starttime!='' and starttime!=''">
+		 and create_time &gt;=#{starttime} and create_time &lt;=#{endtime}
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==7">
+		and TO_DAYS(NOW())-TO_DAYS(create_time) &lt;=15<!-- #{daynum} -->
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==30">
+		and TO_DAYS(NOW())-TO_DAYS(create_time) &lt;=80
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==0">
+		and TO_DAYS(NOW())-TO_DAYS(create_time) =15
 		</if>
 		GROUP BY cell_code,yyyyMMdd ORDER BY yyyyMMdd
 	</select>

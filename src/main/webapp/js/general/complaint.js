@@ -3,20 +3,29 @@
  * 2017年9月15日上午9:27:33
  * TODO
  */
+var starttime="";
+var endtime="";
+var work_date=7;
+
 $.jgrid.defaults.styleUI = 'Bootstrap';
 if (celldata != undefined) {
 	var list = JSON.parse(celldata);
 	refreshJqGrid(list);
 } else {
 	$.ajax({
-				url : "/sdas/complain/getalllist",
-				type : "GET",
-				dataType : "json",
-				success : function(data, status) {
-					var list = data.rows;
-					//refreshGrid(data);
-					refreshJqGrid(data);
-				},
+		url: "/sdas/complain/getcomplist",
+		type:"GET",
+		data:{
+        	'daynum':work_date,
+        	'starttime':starttime,
+            'endtime':endtime
+            },
+		dataType:"json",
+		success:function(data,status){
+			var list = data.rows;
+			refreshJqGrid(list);
+			
+		},
                 error:function(data){
                     alert("fail");
                 }
@@ -85,6 +94,40 @@ function refreshGrid(target) {
               return param;                   
       } 
 	});
+	//列表时间选择
+	$(".datePicker").click(function() {
+		 $("#starttime").val("");
+	     $("#endtime").val("");
+		$(this).parent().find(".btn-info").removeClass("btn-info");
+		$(this).parent().find(".btn-white").removeClass("btn-white");
+		$(this).parent().find("button").addClass("btn-white");
+		$(".search").removeClass("btn-white");
+		$(".search").addClass("btn-info");
+		$(this).parent().children(":last").css("display", "none");
+				starttime="";
+				endtime=""
+			if ($(this).html() == "今日") {
+				work_date = 0;
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+			} else if ($(this).html() == "一周") {
+				work_date = 7;
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+			} else if ($(this).html() == "一月") {
+				work_date = 30;
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+			} else if ($(this).html() == "按时间选择") {
+				work_date=null;
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+				$(this).parent().children(":last").css("display", "block");
+			}
+			if(work_date!=null){
+				select(work_date);
+			}
+		});
 }
 function refreshJqGrid(data1) {
 	$("#table_list_1").jqGrid({
@@ -155,23 +198,31 @@ function refreshJqGrid(data1) {
 
 			});
 }
-function select() {
+
+function select(daynum){
 	$("#table_list_1").jqGrid("clearGridData");
 	var cellname = $("#name").val();
+	if(work_date==null){
+    	starttime = $("#starttime").val();
+        endtime = $("#endtime").val();
+    }
 	$.ajax({
-				url : "/sdas/complain/getcelllist",
-				type : "POST",
-				data : {
-					'cellname' : cellname
-				},
-				dataType : "json",
-				success : function(data, status) {
-					var list = data.rows;
-					$("#table_list_1").jqGrid('setGridParam', { // 重新加载数据
-						datatype : 'local',
-						data : list, //  newdata 是符合格式要求的需要重新加载的数据 
-						page : 1
-					}).trigger("reloadGrid");
-				}
-			});
+		url: "/sdas/complain/getcomplist",
+		type:"POST",
+		data:{
+			'cellname':cellname,
+			'daynum':daynum,
+            'starttime':starttime,
+            'endtime':endtime,
+		},
+		dataType:"json",
+		success:function(data,status){
+			var list = data.rows;
+			$("#table_list_1").jqGrid('setGridParam',{  // 重新加载数据
+			      datatype:'local',
+			      data : list,   //  newdata 是符合格式要求的需要重新加载的数据 
+			      page:1
+			}).trigger("reloadGrid");
+		}
+	}); 
 }

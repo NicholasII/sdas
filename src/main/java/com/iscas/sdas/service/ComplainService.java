@@ -67,5 +67,8 @@ public class ComplainService {
 		return list;
 	}
 	
+	public List<CellComplainDto> getcomplist(ComplainDto ComplainDto){
+		return encryption(complainDao.getcomplist(ComplainDto));
+	}
 	
 }

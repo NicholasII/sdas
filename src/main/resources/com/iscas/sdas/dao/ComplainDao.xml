@@ -58,6 +58,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		live_cellname3 LIKE #{cellname})t
 		WHERE record_time LIKE &apos;%2017-08-01%&apos;
 	</select>
+	<select id="getcomplist" resultType="com.iscas.sdas.dto.CellComplainDto">
+		SELECT record_time,phone_number,live_cellname1,live_cellname2,live_cellname3
+		FROM t_complaint_residentarea where 1=1
+		<if test="starttime!='' and starttime!=''">
+		and record_time &gt;=#{starttime} and record_time &lt;=#{endtime}
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==7">
+		and TO_DAYS(NOW())-TO_DAYS(record_time) &lt;=#{daynum}<!-- #{daynum} -->
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==30">
+		and TO_DAYS(NOW())-TO_DAYS(record_time) &lt;=#{daynum}
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==0">
+		and TO_DAYS(NOW())-TO_DAYS(record_time) =#{daynum}
+		</if>
+		 GROUP BY phone_number
+	</select>
+	
+
 	<select id="complaintWithinOneWeek" resultType="com.iscas.sdas.dto.CellComplainDto"
 		parameterType="java.lang.String">
 		SELECT

@@ -16,6 +16,8 @@ public interface ComplainDao {
 	List<CellComplainDto> getPageList();
 	
 	List<CellComplainDto> getfocuslist(String cellname);
+
+	List<CellComplainDto> getcomplist(ComplainDto ComplainDto);
 	/**
 	 * 一周内投诉
 	 * @param cellname

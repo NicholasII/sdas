@@ -34,11 +34,29 @@ input {
 				<div class="ibox float-e-margins">
 					<div class="ibox-title">
 						<h5>性能工单列表</h5>
-						<div class="ibox-tools"></div>
+						<div class="ibox-tools">
+						<div class="btn-group" id="datePicker">
+								<button class="btn btn-white datePicker" type="button">今日</button>
+								<button class="btn btn-info datePicker" type="button">一周</button>
+								<button class="btn btn-white datePicker" type="button">一月</button>
+								<button class="btn btn-white datePicker" type="button">按时间选择</button>
+								<div id="timeselect" style="display: none;float: left;">
+									<input style="margin-left:5px;margin-top: -7px !important;" id="starttime"
+										class="layer-date starttime" placeholder="请输入开始时间"
+										onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+									<span id="span" style="margin-top: -10px ;display: inline !important;"
+										class="input-group-addon">到</span> 
+									<input  style="margin-top: -7px !important;" class="layer-date endtime" id="endtime"
+										placeholder="请输入结束时间"
+										onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+									<button class="btn btn-info search" type="button" onclick="select()">确定</button>
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class="ibox-content">
 						<div>
-							<label>时间选择</label> <select id="timeselect"
+							<!-- <label>时间选择</label> <select id="timeselect"
 								style="padding-top: 5px; padding-bottom: 5px; margin-top: 10px; margin-bottom: 10px">
 								<option>全部</option>
 								<option>按时间段</option>
@@ -50,7 +68,7 @@ input {
 								class="input-group-addon">到</span> <input id="endtime"
 								style="margin-top: -10px !important;" class="layer-date"
 								placeholder="请输入结束时间" disabled="disabled"
-								onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+								onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"> -->
 
 							<label>小区名称</label> <input type="text" placeholder="请输入小区名称"
 								id="name" name="name"> <label>所属区域</label> <select

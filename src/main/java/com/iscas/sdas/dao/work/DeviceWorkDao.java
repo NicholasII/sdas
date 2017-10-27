@@ -15,4 +15,6 @@ public interface DeviceWorkDao {
 	List<DeviceWorkDto> getlistWhithinOneWeek(String cellname);
 
 	List<DeviceWorkDto> getlistWhithinOneMonth(String cellname);
+	
+	List<DeviceWorkDto> getlistdevice(DeviceWorkDto deviceWorkDto);
 }

@@ -64,4 +64,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY start_time DESC LIMIT 1),INTERVAL 30 DAY)
 		AND cell_name = #{cellname}
 	</select>
+	<select id="getlistout" parameterType="java.lang.String" resultType="com.iscas.sdas.dto.work.OutServerDto">
+		select start_time,recovery_time,fault_type,vip_type,cell_name,station_name
+		from t_wireless_retirement where 1=1
+		<if test="starttime!='' and starttime!=''">
+		and start_time &gt;=#{starttime} and start_time &lt;=#{endtime}
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==7">
+		and TO_DAYS(NOW())-TO_DAYS(start_time) &lt;=#{daynum}<!-- #{daynum} -->
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==30">
+		and TO_DAYS(NOW())-TO_DAYS(start_time) &lt;=#{daynum}
+		</if>
+		<if test="starttime=='' and endtime=='' and daynum==0">
+		and TO_DAYS(NOW())-TO_DAYS(start_time) =#{daynum}
+		</if>
+	</select>
+	
+		
 </mapper>
