@@ -1,10 +1,10 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@taglib prefix="fun" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-
 <c:set var="context" value="${pageContext.request.contextPath}" />
-
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
 <!-- 全局js css -->
 <script src="${context}/lib/hplus/js/jquery.min.js?v=2.1.4"></script>
 <script src="${context}/lib/hplus/js/bootstrap.min.js?v=3.3.6"></script>

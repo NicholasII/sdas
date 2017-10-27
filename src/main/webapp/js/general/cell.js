@@ -730,7 +730,7 @@ function workQuery(type, start, end) {
 }
 $(function() {
 	/*
-	 * 故障工单
+	 * 投诉工单
 	 */
 	$.ajax({
 				url : complainturl,
@@ -764,7 +764,7 @@ $(function() {
 	/*
 	 * 指标权重
 	 */
-	$.ajax({
+	/*$.ajax({
 				url : weighturl,
 				data : {
 					'cellname' : cellname
@@ -775,9 +775,24 @@ $(function() {
 					var list = data.rows;
 					refreshJqGrid_weight(list);
 				}
-			});
+			});*/
+    /*
+     * 历史表格
+     */
+    $.ajax({
+                url : "/sdas/cell/healthtable",
+                data : {
+                    'cellname' : cellname
+                },
+                type : "POST",
+                dataType : "json",
+                success : function(data, status) {
+                    var list = data.rows;
+                    refreshJqGrid_healthtable(list);
+                }
+     });
 	/*
-	 * 模型
+	 * K线图
 	 */
 	$.ajax({
 		url : "/sdas/cell/belonggroup",
@@ -842,7 +857,7 @@ $(function() {
 					var data2 = [];
 					for (var z = 0; z < list.length; z++) {
 						var timer = list[z].time;
-						var ratio = list[z].ratio;
+                        var ratio = list[z].ratio;
 						var perworks = list[z].perworks;
 						var deviceworks = list[z].deviceworks;
 						var osworks = list[z].osworks;
@@ -1294,9 +1309,126 @@ function switchwork(url, params) {
 				}
 			});
 }
-
 function refreshJqGrid_weight(list) {
-	$("#table_list_weight").jqGrid({
+    $("#table_list_weight").jqGrid({
+        data : list,
+        datatype : "local",
+        height : "auto",
+        autowidth : false,
+        shrinkToFit : false,
+        rowNum : 10,
+        rowList : [10, 20, 30],
+        colNames : ['指标名称', '0点', '1点', '2点', '3点', '4点', '5点', '6点', '7点',
+                '8点', '9点', '10点', '11点', '12点', '13点', '14点', '15点', '16点',
+                '17点', '18点', '19点', '20点', '21点', '22点', '23点'],
+        colModel : [{
+                    name : 'indeicator_name',
+                    index : '指标名称',
+                    width : 180
+                }, {
+                    name : 'range0',
+                    index : '0点',
+                    width : 100
+                }, {
+                    name : 'range1',
+                    index : '1点',
+                    width : 100
+                }, {
+                    name : 'range2',
+                    index : '2点',
+                    width : 100
+                }, {
+                    name : 'range3',
+                    index : '3点',
+                    width : 100
+                }, {
+                    name : 'range4',
+                    index : '4点',
+                    width : 100
+                }, {
+                    name : 'range5',
+                    index : '5点',
+                    width : 100
+                }, {
+                    name : 'range6',
+                    index : '6点',
+                    width : 100
+                }, {
+                    name : 'range7',
+                    index : '7点',
+                    width : 100
+                }, {
+                    name : 'range8',
+                    index : '8点',
+                    width : 100
+                }, {
+                    name : 'range9',
+                    index : '9点',
+                    width : 100
+                }, {
+                    name : 'range10',
+                    index : '10点',
+                    width : 100
+                }, {
+                    name : 'range11',
+                    index : '11点',
+                    width : 100
+                }, {
+                    name : 'range12',
+                    index : '12点',
+                    width : 100
+                }, {
+                    name : 'range13',
+                    index : '13点',
+                    width : 100
+                }, {
+                    name : 'range14',
+                    index : '14点',
+                    width : 100
+                }, {
+                    name : 'range15',
+                    index : '15点',
+                    width : 100
+                }, {
+                    name : 'range16',
+                    index : '16点',
+                    width : 100
+                }, {
+                    name : 'range17',
+                    index : '17点',
+                    width : 100
+                }, {
+                    name : 'range18',
+                    index : '18点',
+                    width : 100
+                }, {
+                    name : 'range19',
+                    index : '19点',
+                    width : 100
+                }, {
+                    name : 'range20',
+                    index : '20点',
+                    width : 100
+                }, {
+                    name : 'range21',
+                    index : '21点',
+                    width : 100
+                }, {
+                    name : 'range22',
+                    index : '22点',
+                    width : 100
+                }, {
+                    name : 'range23',
+                    index : '23点',
+                    width : 100
+                }],
+        pager : "#pager_list_weight",
+        viewrecords : true,
+        hidegrid : false
+    });
+}
+function refreshJqGrid_healthtable(list) {
+	$("#table_list_healthtable").jqGrid({
 		data : list,
 		datatype : "local",
 		height : "auto",
@@ -1304,111 +1436,111 @@ function refreshJqGrid_weight(list) {
 		shrinkToFit : false,
 		rowNum : 10,
 		rowList : [10, 20, 30],
-		colNames : ['指标名称', '0点', '1点', '2点', '3点', '4点', '5点', '6点', '7点',
+		colNames : ['时间', '0点', '1点', '2点', '3点', '4点', '5点', '6点', '7点',
 				'8点', '9点', '10点', '11点', '12点', '13点', '14点', '15点', '16点',
 				'17点', '18点', '19点', '20点', '21点', '22点', '23点'],
 		colModel : [{
-					name : 'indeicator_name',
-					index : '指标名称',
-					width : 180
+					name : 'yyyyMMdd',
+					index : '时间',
+					width : 120
 				}, {
-					name : 'range0',
+					name : 'range_00',
 					index : '0点',
 					width : 100
 				}, {
-					name : 'range1',
+					name : 'range_01',
 					index : '1点',
 					width : 100
 				}, {
-					name : 'range2',
+					name : 'range_02',
 					index : '2点',
 					width : 100
 				}, {
-					name : 'range3',
+					name : 'range_03',
 					index : '3点',
 					width : 100
 				}, {
-					name : 'range4',
+					name : 'range_04',
 					index : '4点',
 					width : 100
 				}, {
-					name : 'range5',
+					name : 'range_05',
 					index : '5点',
 					width : 100
 				}, {
-					name : 'range6',
+					name : 'range_06',
 					index : '6点',
 					width : 100
 				}, {
-					name : 'range7',
+					name : 'range_07',
 					index : '7点',
 					width : 100
 				}, {
-					name : 'range8',
+					name : 'range_08',
 					index : '8点',
 					width : 100
 				}, {
-					name : 'range9',
+					name : 'range_09',
 					index : '9点',
 					width : 100
 				}, {
-					name : 'range10',
+					name : 'range_10',
 					index : '10点',
 					width : 100
 				}, {
-					name : 'range11',
+					name : 'range_11',
 					index : '11点',
 					width : 100
 				}, {
-					name : 'range12',
+					name : 'range_12',
 					index : '12点',
 					width : 100
 				}, {
-					name : 'range13',
+					name : 'range_13',
 					index : '13点',
 					width : 100
 				}, {
-					name : 'range14',
+					name : 'range_14',
 					index : '14点',
 					width : 100
 				}, {
-					name : 'range15',
+					name : 'range_15',
 					index : '15点',
 					width : 100
 				}, {
-					name : 'range16',
+					name : 'range_16',
 					index : '16点',
 					width : 100
 				}, {
-					name : 'range17',
+					name : 'range_17',
 					index : '17点',
 					width : 100
 				}, {
-					name : 'range18',
+					name : 'range_18',
 					index : '18点',
 					width : 100
 				}, {
-					name : 'range19',
+					name : 'range_19',
 					index : '19点',
 					width : 100
 				}, {
-					name : 'range20',
+					name : 'range_20',
 					index : '20点',
 					width : 100
 				}, {
-					name : 'range21',
+					name : 'range_21',
 					index : '21点',
 					width : 100
 				}, {
-					name : 'range22',
+					name : 'range_22',
 					index : '22点',
 					width : 100
 				}, {
-					name : 'range23',
+					name : 'range_23',
 					index : '23点',
 					width : 100
 				}],
-		pager : "#pager_list_weight",
+		pager : "#pager_list_healthtable",
 		viewrecords : true,
 		hidegrid : false
 	});
