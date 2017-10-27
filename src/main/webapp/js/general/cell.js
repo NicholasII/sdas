@@ -195,7 +195,11 @@ var histroy_trend = {
 					'name' : "历史健康度"
 				}, {
 					'name' : "投诉"
-				}]
+				},{
+                    'name' : "fault"
+                },{
+                    'name' : "warnning"
+                }]
 	},
 	dataZoom : [{
 				type : 'slider',
@@ -252,7 +256,69 @@ var histroy_trend = {
 										}])
 					}
 				}
-			}, {
+			},{
+                name : 'fault',
+                data : [],
+                type : 'scatter',
+                symbolSize : function(data) {
+                    return data[3] * 20;
+                },
+                label : {
+                    emphasis : {
+                        show : true,
+                        formatter : function(param) {
+                            return "fault";
+                        },
+                        position : 'top'
+                    }
+                },
+                itemStyle : {
+                    normal : {
+                        shadowBlur : 10,
+                        shadowColor : 'rgba(120, 36, 50, 0.5)',
+                        shadowOffsetY : 5,
+                        color : new echarts.graphic.RadialGradient(0.4, 0.3, 1,
+                                [{
+                                            offset : 0,
+                                            color : 'rgb(51, 118, 123)'
+                                        }, {
+                                            offset : 1,
+                                            color : 'rgb(9, 97, 97)'
+                                        }])
+                    }
+                }
+            },{
+                name : 'warnning',
+                data : [],
+                type : 'scatter',
+                symbolSize : function(data) {
+                    return data[4] * 20;
+                },
+                label : {
+                    emphasis : {
+                        show : true,
+                        formatter : function(param) {
+                            return "warn";
+                        },
+                        position : 'top'
+                    }
+                },
+                itemStyle : {
+                    normal : {
+                        shadowBlur : 10,
+                        shadowColor : 'rgba(120, 36, 50, 0.5)',
+                        shadowOffsetY : 5,
+                        color : new echarts.graphic.RadialGradient(0.4, 0.3, 1,
+                                [{
+                                            offset : 0,
+                                            color : 'rgb(51, 118, 123)'
+                                        }, {
+                                            offset : 1,
+                                            color : 'rgb(225, 240, 16)'
+                                        }])
+                    }
+                }
+            }, {
 				name : '',
 				type : 'line',
 				smooth : true,
@@ -523,20 +589,26 @@ function historyTrendQuery(type, start, end) {
 					for (var z = 0; z < list.length; z++) {
 						var timer = list[z].time;
 						var ratio = list[z].ratio;
-						var perworks = list[z].perworks;
-						var deviceworks = list[z].deviceworks;
-						var osworks = list[z].osworks;
+						//var perworks = list[z].perworks;
+						//var deviceworks = list[z].deviceworks;
+						//var osworks = list[z].osworks;
 						var complaints = list[z].complaints;
+                        var fault = list[z].result_fault;
+                        var warn = list[z].result_warnning;
 						var temp = []
 						axis.push(timer);
 						temp.push(timer);
 						temp.push(ratio);
 						temp.push(complaints);
+                        temp.push(fault);
+                        temp.push(warn);
 						data2.push(temp);
 					}
 					histroy_trend.xAxis.data = axis;
 					histroy_trend.series[0].data = data2;
 					histroy_trend.series[1].data = data2;
+                    histroy_trend.series[2].data = data2;
+                    histroy_trend.series[3].data = data2;
 					ratiotrend.setOption(histroy_trend);
 				}
 			});
@@ -855,23 +927,29 @@ $(function() {
 					var list = data.rows;
 					var axis = [];
 					var data2 = [];
-					for (var z = 0; z < list.length; z++) {
-						var timer = list[z].time;
+                    for (var z = 0; z < list.length; z++) {
+                        var timer = list[z].time;
                         var ratio = list[z].ratio;
-						var perworks = list[z].perworks;
-						var deviceworks = list[z].deviceworks;
-						var osworks = list[z].osworks;
-						var complaints = list[z].complaints;
-						var temp = []
-						axis.push(timer);
-						temp.push(timer);
-						temp.push(ratio);
-						temp.push(complaints);
-						data2.push(temp);
-					}
-					histroy_trend.xAxis.data = axis;
-					histroy_trend.series[0].data = data2;
-					histroy_trend.series[1].data = data2;
+                        //var perworks = list[z].perworks;
+                        //var deviceworks = list[z].deviceworks;
+                        //var osworks = list[z].osworks;
+                        var complaints = list[z].complaints;
+                        var fault = list[z].result_fault;
+                        var warn = list[z].result_warnning;
+                        var temp = []
+                        axis.push(timer);
+                        temp.push(timer);
+                        temp.push(ratio);
+                        temp.push(complaints);
+                        temp.push(fault);
+                        temp.push(warn);
+                        data2.push(temp);
+                    }
+                    histroy_trend.xAxis.data = axis;
+                    histroy_trend.series[0].data = data2;
+                    histroy_trend.series[1].data = data2;
+                    histroy_trend.series[2].data = data2;
+                    histroy_trend.series[3].data = data2;
 					ratiotrend.setOption(histroy_trend);
 				}
 			});

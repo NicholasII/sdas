@@ -222,5 +222,49 @@ public class CommonUntils {
 		}
 		return filepaths;
 	}
+	/**
+	 * 判断一月有多少天
+	 * 一、三、五、七、八、十、十二都是三十一天，二月28天，闰年29天，其余月份年年都是30天
+	 * @param month
+	 * @return
+	 */
+	public static int daysInMonth(int year,int month){
+		switch (month) {
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+			return 31;
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+			return 30;
+		case 2:
+			if (isleapyear(year)) {
+				return 29;
+			}else {
+				return 28;
+			}
+		default:
+			return -1;
+		}
+	}
+	/**
+	 * 判断是否为闰年
+	 * 由用户输入任意一个年份，能被4整除但不能被100整除，或者能被400整除，是闰年
+	 * @param year
+	 * @return
+	 */
+	public static boolean isleapyear(int year) {
+        if ((year%4==0&&year%100!=0)||year%400==0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 
 }

@@ -14,6 +14,8 @@ public class TotalHealthInfoDto {
 	private int complaints;
 	private String alarm_name;
 	private int alarm_counts;
+	private Integer result_fault;//app_result
+	private Integer result_warnning;//app_result
 	
 	public String getTime() {
 		return time;
@@ -63,6 +65,16 @@ public class TotalHealthInfoDto {
 	public void setAlarm_counts(int alarm_counts) {
 		this.alarm_counts = alarm_counts;
 	}
-	
-	
+	public Integer getResult_fault() {
+		return result_fault;
+	}
+	public void setResult_fault(Integer result_fault) {
+		this.result_fault = result_fault;
+	}
+	public Integer getResult_warnning() {
+		return result_warnning;
+	}
+	public void setResult_warnning(Integer result_warnning) {
+		this.result_warnning = result_warnning;
+	}
 }
