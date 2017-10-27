@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iscas.sdas.dao.cell.CellDao">
-    <select id="getcells" resultType="com.iscas.sdas.dto.cell.CellDto">
+	<select id="getcells" resultType="com.iscas.sdas.dto.cell.CellDto">
 		select
 		e_utrancell,network_name,used_band,cover_scene,station_name,group_type
 		from
@@ -11,20 +11,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		table_cell_base_station.network_name = t_groupBaseInfo.cell_code and
 		table_cell_base_station.network_name = t_cell_info.cell_code and
 		t_cell_info.in_used = 1
-        <if test="network_name != null">
-            <bind name="network_name" value="'%'+ _parameter.getNetwork_name() +'%'" />
+		<if test="network_name != null">
+			<bind name="network_name" value="'%'+ _parameter.getNetwork_name() +'%'" />
 			and table_cell_base_station.network_name like #{network_name}
-        </if>
-        <if test="cover_scene != null">
+		</if>
+		<if test="cover_scene != null">
 			and table_cell_base_station.cover_scene like
 			#{cover_scene}
-        </if>
-        <if test="group_type != null">
+		</if>
+		<if test="group_type != null">
 			and t_groupBaseInfo.group_type like #{group_type}
-        </if>
+		</if>
 		limit 1000
-    </select>
-    <select id="getgroups" resultType="java.lang.String">
+	</select>
+	<select id="getgroups" resultType="java.lang.String">
 		select
 		cover_scene
 		from
@@ -34,78 +34,119 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		table_cell_base_station.network_name = t_cell_info_special.cell_code
 		GROUP BY table_cell_base_station.cover_scene
 		limit 1000
-    </select>
-    <select id="getgroupindexs" resultType="com.iscas.sdas.dto.GroupIndexMeatdata"
-        parameterType="java.lang.String">
+	</select>
+	<select id="getgroupindexs" resultType="com.iscas.sdas.dto.GroupIndexMeatdata"
+		parameterType="java.lang.String">
 		SELECT
 		t_groupDetailInfo.cell_code,t_groupDetailInfo.indeicator_code,
 		t_normalcheckmetadata.indeicator_name FROM
 		t_groupDetailInfo,t_normalcheckmetadata
-		WHERE t_groupDetailInfo.indeicator_code =
+		WHERE
+		t_groupDetailInfo.indeicator_code =
 		t_normalcheckmetadata.indeicator_id AND t_groupDetailInfo.cell_code =
 		#{grouptype}
-    </select>
-    <select id="getgroupindexcontent" resultType="com.iscas.sdas.dto.cell.BaseGroupIndex">
-		SELECT * FROM t_groupDetailInfo WHERE cell_code = #{grouptype} AND indeicator_code=#{indexcode}
-    </select>
-    <select id="getgroup" parameterType="java.lang.String" resultType="java.lang.String">
-		SELECT group_type FROM t_groupBaseInfo WHERE cell_code = #{cellname} LIMIT 1
-    </select>
-    <select id="cellcurrenthealth" parameterType="java.lang.String" resultType="com.iscas.sdas.dto.cell.BaseCellHealth">
-        SELECT * FROM t_cell_health_info WHERE yyyyMMdd = (SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd DESC LIMIT 1) AND cell_code= #{cellname} and health_flag = 0 ORDER BY yyyyMMdd LIMIT 1
-    </select>
-    <select id="cellhealthtrend" parameterType="java.lang.String" resultType="com.iscas.sdas.dto.cell.BaseCellHealth">
-		SELECT * FROM t_cell_health_info WHERE STR_TO_DATE(yyyyMMdd,'%Y%m%d') > DATE_SUB((SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd DESC LIMIT 1),INTERVAL 7 DAY) AND cell_code=#{cellname} and health_flag = 0 ORDER BY yyyyMMdd
-    </select>
-    <select id="performWorkWithinCurrTime" resultType="com.iscas.sdas.dto.PerformanceWorkDto" parameterType="java.lang.String">
-		SELECT * FROM t_performance_work WHERE cellid = #{cellname} AND occurrence_time BETWEEN DATE_SUB((SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd DESC LIMIT 1),INTERVAL 7 DAY) AND (SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd DESC LIMIT 1)
-    </select>
-    <select id="deviceWorkWithinCurrTime" resultType="com.iscas.sdas.dto.DeviceWorkDto" parameterType="java.lang.String">
-		SELECT * FROM t_equipment_failure_201708 WHERE cell_name = #{cellname} AND fault_occus_time BETWEEN DATE_SUB((SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd DESC LIMIT 1),INTERVAL 7 DAY) AND (SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd DESC LIMIT 1)
-    </select>
-    <select id="osWorkWithinCurrTime" resultType="com.iscas.sdas.dto.OSWorkDto" parameterType="java.lang.String">
-		SELECT * FROM t_wireless_retirement WHERE cell_name = #{cellname} AND start_time BETWEEN DATE_SUB((SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd DESC LIMIT 1),INTERVAL 7 DAY) AND (SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd DESC LIMIT 1)
-    </select>
-    <select id="complaintWithinCurrTime" resultType="com.iscas.sdas.dto.CellComplainDto" parameterType="java.lang.String">
-         SELECT record_time,phone_number,live_cellname1,live_cellname2,live_cellname3 FROM t_complaint_residentarea WHERE record_time BETWEEN DATE_SUB((SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd DESC LIMIT 1),INTERVAL 7 DAY) AND (SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd DESC LIMIT 1) AND (live_cellname1 = #{cellname} OR live_cellname2 = #{cellname} OR live_cellname3 = #{cellname})
-    </select>
-    
-    <select id="cellhealthtrendWithinOneMonth" parameterType="java.lang.String" resultType="com.iscas.sdas.dto.cell.BaseCellHealth">
-        SELECT * FROM t_cell_health_info WHERE STR_TO_DATE(yyyyMMdd,'%Y%m%d') BETWEEN DATE_SUB((SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd DESC LIMIT 1),INTERVAL 30 DAY) AND (SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd DESC LIMIT 1) AND cell_code=#{cellname} and health_flag = 0 ORDER BY yyyyMMdd
-    </select>
-    <select id="complaintWithinOneMonth" resultType="com.iscas.sdas.dto.CellComplainDto" parameterType="java.lang.String">
-         SELECT record_time,phone_number,live_cellname1,live_cellname2,live_cellname3 FROM t_complaint_residentarea WHERE record_time BETWEEN DATE_SUB((SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd DESC LIMIT 1),INTERVAL 30 DAY) AND (SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd DESC LIMIT 1) AND (live_cellname1 = #{cellname} OR live_cellname2 = #{cellname} OR live_cellname3 = #{cellname})
-    </select>
-    
-    <select id="cellhealthtrendWithinSelect" resultType="com.iscas.sdas.dto.cell.BaseCellHealth">
-        SELECT * FROM t_cell_health_info WHERE cell_code=#{0} and health_flag = 0 and STR_TO_DATE(yyyyMMdd,'%Y%m%d') BETWEEN #{1} AND #{2} ORDER BY yyyyMMdd
-    </select>
-    <select id="complaintWithinSelect" resultType="com.iscas.sdas.dto.CellComplainDto">
-         SELECT record_time,phone_number,live_cellname1,live_cellname2,live_cellname3 FROM t_complaint_residentarea WHERE record_time BETWEEN #{1} AND #{2} AND (live_cellname1 = #{0} OR live_cellname2 = #{0} OR live_cellname3 = #{0})
-    </select>
-       
-    <select id="allcells" resultType="java.lang.String">
-        SELECT cell_code FROM t_cell_health_info GROUP BY cell_code
-    </select>  
-    <select id="currenthealthratio" parameterType="java.lang.String" resultType="com.iscas.sdas.dto.cell.BaseCellHealth">
-        SELECT * FROM t_cell_health_info WHERE cell_code=#{cellname} and health_flag = 0 ORDER BY yyyyMMdd limit 1
-    </select>
-    <select id="allstations" resultType="java.lang.String">
-        select t_cell_info.station_code 
-        from
-        table_cell_base_station, t_groupBaseInfo,t_cell_info where
-        table_cell_base_station.network_name = t_groupBaseInfo.cell_code and
-        table_cell_base_station.network_name = t_cell_info.cell_code and
-        t_cell_info.in_used = 1 GROUP BY t_cell_info.station_code        
-    </select>
-    <select id="allcellsinstation" parameterType="java.lang.String" resultType="java.lang.String">
-        SELECT cell_code FROM t_cell_info WHERE station_code = #{stationname} 
-    </select>
-    <!--筛选出最新数据作为异常预警选择  -->
-    <select id="alarmhealthtrend" parameterType="java.lang.String" resultType="com.iscas.sdas.dto.cell.BaseCellHealth">
-		SELECT * FROM t_cell_health_info WHERE STR_TO_DATE(yyyyMMdd,'%Y%m%d') > DATE_SUB((SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd DESC LIMIT 1),INTERVAL 7 DAY) AND cell_code=#{cellname} and health_flag = 0 ORDER BY yyyyMMdd DESC limit 1
-    </select>
-    <select id="getalarmname" parameterType="java.lang.String" resultType="java.lang.String">
-		SELECT indeicator_name AS alarm_name FROM t_normalcheckmetadata 	WHERE indeicator_id=#{alarm_name}
-    </select>
+	</select>
+	<select id="getgroupindexcontent" resultType="com.iscas.sdas.dto.cell.BaseGroupIndex">
+		SELECT * FROM
+		t_groupDetailInfo WHERE cell_code = #{grouptype} AND
+		indeicator_code=#{indexcode}
+	</select>
+	<select id="getgroup" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SELECT group_type FROM t_groupBaseInfo WHERE cell_code =
+		#{cellname} LIMIT 1
+	</select>
+	<select id="cellcurrenthealth" parameterType="java.lang.String"
+		resultType="com.iscas.sdas.dto.cell.BaseCellHealth">
+		SELECT * FROM t_cell_health_info WHERE yyyyMMdd = (SELECT yyyyMMdd FROM
+		t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd
+		DESC LIMIT 1) AND cell_code= #{cellname} and health_flag = 0 ORDER BY
+		yyyyMMdd LIMIT 1
+	</select>
+	<select id="cellhealthtrend" parameterType="java.lang.String"
+		resultType="com.iscas.sdas.dto.cell.BaseCellHealth">
+		SELECT * FROM t_cell_health_info WHERE
+		STR_TO_DATE(yyyyMMdd,'%Y%m%d') > DATE_SUB((SELECT yyyyMMdd FROM
+		t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd
+		DESC LIMIT 1),INTERVAL 7 DAY) AND cell_code=#{cellname} and
+		health_flag = 0 ORDER BY yyyyMMdd
+	</select>
+	<select id="performWorkWithinOneWeek" resultType="com.iscas.sdas.dto.PerformanceWorkDto"
+		parameterType="java.lang.String">
+		SELECT * FROM t_performance_work WHERE cellid =
+		#{cellname} AND occurrence_time BETWEEN DATE_SUB((SELECT yyyyMMdd FROM
+		t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd
+		DESC LIMIT 1),INTERVAL 7 DAY) AND (SELECT yyyyMMdd FROM
+		t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd
+		DESC LIMIT 1)
+	</select>
+	<select id="deviceWorkWithinOneWeek" resultType="com.iscas.sdas.dto.DeviceWorkDto"
+		parameterType="java.lang.String">
+		SELECT * FROM t_equipment_failure_201708 WHERE cell_name
+		= #{cellname} AND fault_occus_time BETWEEN DATE_SUB((SELECT yyyyMMdd
+		FROM t_cell_health_info WHERE cell_code = #{cellname} ORDER BY
+		yyyyMMdd DESC LIMIT 1),INTERVAL 7 DAY) AND (SELECT yyyyMMdd FROM
+		t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd
+		DESC LIMIT 1)
+	</select>
+	<select id="osWorkWithinOneWeek" resultType="com.iscas.sdas.dto.OSWorkDto"
+		parameterType="java.lang.String">
+		SELECT * FROM t_wireless_retirement WHERE cell_name =
+		#{cellname} AND start_time BETWEEN DATE_SUB((SELECT yyyyMMdd FROM
+		t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd
+		DESC LIMIT 1),INTERVAL 7 DAY) AND (SELECT yyyyMMdd FROM
+		t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd
+		DESC LIMIT 1)
+	</select>
+	<select id="cellhealthtrendWithinOneMonth" parameterType="java.lang.String"
+		resultType="com.iscas.sdas.dto.cell.BaseCellHealth">
+		SELECT * FROM t_cell_health_info WHERE STR_TO_DATE(yyyyMMdd,'%Y%m%d')
+		BETWEEN DATE_SUB((SELECT yyyyMMdd FROM t_cell_health_info WHERE
+		cell_code = #{cellname} ORDER BY yyyyMMdd DESC LIMIT 1),INTERVAL 30
+		DAY) AND (SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code =
+		#{cellname} ORDER BY yyyyMMdd DESC LIMIT 1) AND cell_code=#{cellname}
+		and health_flag = 0 ORDER BY yyyyMMdd
+	</select>
+	<select id="cellhealthtrendWithinSelect" resultType="com.iscas.sdas.dto.cell.BaseCellHealth">
+		SELECT * FROM t_cell_health_info WHERE cell_code=#{cellname} and health_flag = 0
+		and STR_TO_DATE(yyyyMMdd,'%Y%m%d') BETWEEN #{start} AND #{end} ORDER BY
+		yyyyMMdd
+	</select>
+	<select id="allcells" resultType="java.lang.String">
+		SELECT cell_code FROM t_cell_health_info GROUP BY cell_code
+	</select>
+	<select id="currenthealthratio" parameterType="java.lang.String"
+		resultType="com.iscas.sdas.dto.cell.BaseCellHealth">
+		SELECT * FROM t_cell_health_info WHERE cell_code=#{cellname} and health_flag
+		= 0 ORDER BY yyyyMMdd limit 1
+	</select>
+	<select id="allstations" resultType="java.lang.String">
+		select t_cell_info.station_code
+		from
+		table_cell_base_station, t_groupBaseInfo,t_cell_info where
+		table_cell_base_station.network_name = t_groupBaseInfo.cell_code and
+		table_cell_base_station.network_name = t_cell_info.cell_code and
+		t_cell_info.in_used = 1 GROUP BY t_cell_info.station_code
+	</select>
+	<select id="allcellsinstation" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SELECT cell_code FROM t_cell_info WHERE station_code = #{stationname}
+	</select>
+	<!--筛选出最新数据作为异常预警选择 -->
+	<select id="alarmhealthtrend" parameterType="java.lang.String"
+		resultType="com.iscas.sdas.dto.cell.BaseCellHealth">
+		SELECT * FROM t_cell_health_info WHERE
+		STR_TO_DATE(yyyyMMdd,'%Y%m%d') > DATE_SUB((SELECT yyyyMMdd FROM
+		t_cell_health_info WHERE cell_code = #{cellname} ORDER BY yyyyMMdd
+		DESC LIMIT 1),INTERVAL 7 DAY) AND cell_code=#{cellname} and
+		health_flag = 0 ORDER BY yyyyMMdd DESC limit 1
+	</select>
+	<select id="getalarmname" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SELECT indeicator_name AS alarm_name FROM
+		t_normalcheckmetadata WHERE indeicator_id=#{alarm_name}
+	</select>
+	<select id="getHealthRatio" resultType="java.lang.Integer">
+		SELECT app_result  FROM t_cell_result_info WHERE cell_code = #{cellname} AND yyyyMMdd = #{yyyymmdd} AND app_hour = #{hour}
+	</select>
 </mapper>

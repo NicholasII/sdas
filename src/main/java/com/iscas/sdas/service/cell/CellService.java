@@ -1,10 +1,12 @@
 package com.iscas.sdas.service.cell;
 
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.hadoop.hdfs.server.namenode.NNUpgradeUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.iscas.sdas.dao.ComplainDao;
 import com.iscas.sdas.dao.StationInfoDtoMapper;
 import com.iscas.sdas.dao.cell.CellDao;
 import com.iscas.sdas.dto.BaseStationHealthRatio;
@@ -24,8 +27,9 @@ import com.iscas.sdas.dto.StationInfoDto;
 import com.iscas.sdas.dto.TotalHealthInfoDto;
 import com.iscas.sdas.dto.cell.BaseCellHealth;
 import com.iscas.sdas.dto.cell.CellDto;
+import com.iscas.sdas.dto.cell.CellHealthTableDto;
+import com.iscas.sdas.dto.cell.MomentDto;
 import com.iscas.sdas.util.CommonUntils;
-import com.mysql.jdbc.log.Log;
 
 @Service
 public class CellService {
@@ -35,6 +39,8 @@ public class CellService {
 	CellDao cellDao;
 	@Autowired
 	StationInfoDtoMapper stationDto;
+	@Autowired
+	ComplainDao complainDao;
 	
 	public List<CellDto> getCellList(CellDto cellDto){
 		return cellDao.getcells(cellDto);
@@ -52,12 +58,12 @@ public class CellService {
 		return cellDao.getgroup(cellname);
 	}
 	/**
-	 * 一周历史曲线
+	 * 历史曲线
 	 * @param cellname
 	 * @return
 	 */
 	public List<TotalHealthInfoDto> generateCellHealthTrend(String cellname,String type,String start,String end){
-		List<TotalHealthInfoDto> list = new ArrayList<>();
+		List<TotalHealthInfoDto> result = null;
 		try {
 			List<BaseCellHealth> cellHealths;		
 			if ("week".equals(type)) {
@@ -68,81 +74,205 @@ public class CellService {
 				cellHealths = cellDao.cellhealthtrendWithinSelect(cellname, start, end);
 			}
 			if (cellHealths!=null && cellHealths.size()>0) {
-				//List<String> perWorkCount = permanceWorkWithinCurrenttime(cellname); 
-				//List<String> deviceWorkCount = deviceWorkWithinCurrenttime(cellname);
-				//List<String> osWorkCount = osWorkWithinCurrenttime(cellname);
-				List<String> complaints = complaintsWithinCurrenttime(cellname,type,start,end);
-			
-				for (int i=0;i<cellHealths.size(); i++) {
-					BaseCellHealth cellHealth = cellHealths.get(i);
-					Method[] methods = cellHealth.getClass().getMethods();
-					for (Method method : methods) {
-						if (method.getName().startsWith("getRange")) {	
-							TotalHealthInfoDto infoDto  = new TotalHealthInfoDto();
-							String range = (String)method.invoke(cellHealth, null);						
-							int  moment = Integer.parseInt(method.getName().substring(method.getName().lastIndexOf("_")+1));
-							Double ratio = parseRatio(range);
-							String year  = cellHealth.getYyyyMMdd().substring(0, 4);
-							String month  = cellHealth.getYyyyMMdd().substring(4, 6);
-							String day  = cellHealth.getYyyyMMdd().substring(6);
-							String time = year+"-"+month+"-"+day+" "+moment+"时";
-							infoDto.setTime(time);
-							infoDto.setRatio(ratio);
-							infoDto.setDeviceworks(0);
-							infoDto.setOsworks(0);
-							infoDto.setPerworks(0);
-							infoDto.setComplaints(0);
-							/*if (perWorkCount!=null) {
-								for (int j = 0; j < perWorkCount.size(); j++) {
-									
-									if (perWorkCount.get(j).equals(infoDto.getTime())) {
-										System.out.println("---性能--"+perWorkCount.get(j)+"--------"+infoDto.getTime());
-										int perworks = infoDto.getPerworks()+1;
-										infoDto.setPerworks(perworks);
+				List<String> complaints = complaintsWithinCurrenttime(cellname,type,start,end);//投诉工单
+				String begintime = cellHealths.get(0).getYyyyMMdd();
+				if ("week".equals(type)) {
+					result = originData(7, begintime);
+				}else if ("month".equals(type)) {
+					result = originData(30, begintime);
+				}else {
+					
+				}
+				if (result!=null) {
+					for (int i = 0; i < result.size(); i++) {
+						for (int j=0;j<cellHealths.size(); j++) {
+							BaseCellHealth cellHealth = cellHealths.get(j);
+							Method[] methods = cellHealth.getClass().getMethods();
+							for (Method method : methods) {
+								if (method.getName().startsWith("getRange")) {	
+									TotalHealthInfoDto infoDto  = result.get(i);
+									String range = (String)method.invoke(cellHealth, null);						
+									int  moment = Integer.parseInt(method.getName().substring(method.getName().lastIndexOf("_")+1));
+									Double ratio = parseRatio(range);
+									String time = formattime(cellHealth.getYyyyMMdd(), moment);
+									if (result.get(i).getTime().equals(time)) {
+										infoDto.setRatio(ratio);
+										logger.info("-----------------坐标轴："+result.get(i).getTime()+"ratio："+time);								
 									}
-								}
+								}		
 							}
-							if (deviceWorkCount!=null) {
-								for (int j = 0; j < deviceWorkCount.size(); j++) {
-									
-									if (deviceWorkCount.get(j).equals(infoDto.getTime())) {
-										System.out.println("--设备单---"+deviceWorkCount.get(j)+"--------"+infoDto.getTime());
-										int devworks = infoDto.getPerworks()+1;
-										infoDto.setPerworks(devworks);
-									}
-								}
+							
+						}
+						for (int z = 0; z < complaints.size(); z++) {
+							if (complaints.get(z).equals(result.get(i).getTime())) {							
+								int complaint = result.get(i).getComplaints()+1;
+								result.get(i).setComplaints(complaint);
+								logger.info("--投诉---"+complaints.get(z)+"--------"+result.get(i).getTime()+"总共"+complaint+"个");
 							}
-							if (osWorkCount!=null) {
-								for (int j = 0; j < osWorkCount.size(); j++) {
-									
-									if (osWorkCount.get(j).equals(infoDto.getTime())) {
-										System.out.println("--退服务---"+osWorkCount.get(j)+"--------"+infoDto.getTime());
-										int osworks = infoDto.getPerworks()+1;
-										infoDto.setPerworks(osworks);
-									}
-								}
-							}*/
-							if (complaints!=null) {
-								for (int j = 0; j < complaints.size(); j++) {
-									
-									if (complaints.get(j).equals(infoDto.getTime())) {
-										
-										int complaint = infoDto.getComplaints()+1;
-										infoDto.setComplaints(complaint);
-										//System.out.println("--投诉---"+complaints.get(j)+"--------"+infoDto.getTime()+"总共"+complaint+"个");
-									}
-								}
-							}
-							list.add(infoDto);
-						}		
+						}
 					}
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return result;
+	}
+	/**
+	 * 历史表格
+	 * @param cellname
+	 * @return List<CellHealthTableDto>
+	 */
+	public List<CellHealthTableDto> generateCellHealthTable(String cellname) {
+		
+		List<CellHealthTableDto> list = new ArrayList<>();
+		
+		List<BaseCellHealth> cellHealths = cellDao.cellhealthtrend(cellname);
+		if (cellHealths != null) {
+			try {
+				for (int j = 0; j < cellHealths.size(); j++) {
+					BaseCellHealth cellHealth = cellHealths.get(j);
+					CellHealthTableDto dto = new CellHealthTableDto();
+					List<MomentDto> moments = new ArrayList<>();
+					for (int i = 0; i < 24; i++) {
+						MomentDto momentDto = new MomentDto();
+						momentDto.setRatio(praseMoment(i, cellHealth));
+						String hour = i>=10?i+"":"0"+i;
+						Integer result = cellDao.getHealthRatio(cellname, cellHealth.getYyyyMMdd(), hour);
+						if (result!=null) {
+							momentDto.setResult(result);
+						}else {
+							momentDto.setResult(-1);
+						}						
+						moments.add(momentDto);
+					}
+					dto.setYyyyMMdd(cellHealth.getYyyyMMdd());
+					dto.setMoments(moments);
+					list.add(dto);
+				}
+				return list;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return null;
+	}
+	private double praseMoment(int i,BaseCellHealth baseCellHealth){
+		switch (i) {
+		case 0:
+			return parseRatio(baseCellHealth.getRange_00());
+		case 1:
+			return parseRatio(baseCellHealth.getRange_01());
+		case 2:
+			return parseRatio(baseCellHealth.getRange_02());
+		case 3:
+			return parseRatio(baseCellHealth.getRange_03());
+		case 4:
+			return parseRatio(baseCellHealth.getRange_04());
+		case 5:
+			return parseRatio(baseCellHealth.getRange_05());
+		case 6:
+			return parseRatio(baseCellHealth.getRange_06());
+		case 7:
+			return parseRatio(baseCellHealth.getRange_07());
+		case 8:
+			return parseRatio(baseCellHealth.getRange_08());
+		case 9:
+			return parseRatio(baseCellHealth.getRange_09());
+		case 10:
+			return parseRatio(baseCellHealth.getRange_10());
+		case 11:
+			return parseRatio(baseCellHealth.getRange_11());
+		case 12:
+			return parseRatio(baseCellHealth.getRange_12());
+		case 13:
+			return parseRatio(baseCellHealth.getRange_13());
+		case 14:
+			return parseRatio(baseCellHealth.getRange_14());
+		case 15:
+			return parseRatio(baseCellHealth.getRange_15());
+		case 16:
+			return parseRatio(baseCellHealth.getRange_16());
+		case 17:
+			return parseRatio(baseCellHealth.getRange_17());
+		case 18:
+			return parseRatio(baseCellHealth.getRange_18());
+		case 19:
+			return parseRatio(baseCellHealth.getRange_19());
+		case 20:
+			return parseRatio(baseCellHealth.getRange_20());
+		case 21:
+			return parseRatio(baseCellHealth.getRange_21());
+		case 22:
+			return parseRatio(baseCellHealth.getRange_22());
+		case 23:
+			return parseRatio(baseCellHealth.getRange_23());
+		default:
+			return 0;
+		}
+	}
+	
+	
+	private String formattime(String time,int moment){
+		String year  = time.substring(0, 4);
+		String month  = time.substring(4, 6);
+		String day  = time.substring(6);
+		String result = year+"-"+month+"-"+day+" "+moment+"时";
+		return result;
+	}
+	/**
+	 * 初始化List<TotalHealthInfoDto> --选择任意时间段
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	private List<TotalHealthInfoDto> originData(String start,String end){
+		List<TotalHealthInfoDto> list = new ArrayList<>();
+		
 		return list;
 	}
+	/**
+	 * 初始化List<TotalHealthInfoDto> --一周或一月
+	 * @param day
+	 * @param begintime
+	 * @return
+	 */
+	private List<TotalHealthInfoDto> originData(int day,String begintime){
+		List<TotalHealthInfoDto> list = new ArrayList<>();
+		for (int i = 0; i < day; i++) {
+			int tempyear  = Integer.parseInt(begintime.substring(0, 4));
+			int tempmonth  = Integer.parseInt(begintime.substring(4, 6));
+			int tempday;//2月为28天其他为30天
+			if (tempmonth==2) {
+				tempday  =  Integer.parseInt(begintime.substring(6))+i<=20?Integer.parseInt(begintime.substring(6))+i:Integer.parseInt(begintime.substring(6))+i-28;
+			}else {
+				tempday  =  Integer.parseInt(begintime.substring(6))+i<=30?Integer.parseInt(begintime.substring(6))+i:Integer.parseInt(begintime.substring(6))+i-30;
+			}
+			if (Integer.parseInt(begintime.substring(6))+i>30) {
+				if (tempmonth<12) {
+					tempmonth = tempmonth + 1;
+				}else {
+					tempmonth = 1;
+					tempyear += 1;
+				}
+				
+			}
+			for (int j = 0; j < 24; j++) {
+				TotalHealthInfoDto infoDto  = new TotalHealthInfoDto();
+				String str_tempmonth  = tempmonth >=10?tempmonth+"":"0"+tempmonth;
+				String str_tempday = tempday >=10?tempday+"":"0"+tempday;
+				String time = tempyear+"-"+str_tempmonth+"-"+str_tempday+" "+j+"时";
+				infoDto.setTime(time);
+				list.add(infoDto);
+			}
+		}
+		return list;
+	}
+	
+	
+	
 	/**
 	 * 返回最近一天的小区健康度
 	 * @param cellname
@@ -247,7 +377,7 @@ public class CellService {
 	 */
 	private List<String> permanceWorkWithinCurrenttime(String cellname){
 		List<String> list = new ArrayList<>();
-		List<PerformanceWorkDto> works =  cellDao.performWorkWithinCurrTime(cellname);
+		List<PerformanceWorkDto> works =  cellDao.performWorkWithinOneWeek(cellname);
 		for (PerformanceWorkDto work : works) {
 			int year = work.getOccurrence_time().getYear()+1900;
 			int month = work.getOccurrence_time().getMonth()+1;
@@ -267,7 +397,7 @@ public class CellService {
 	 */
 	private List<String> deviceWorkWithinCurrenttime(String cellname){
 		List<String> list = new ArrayList<>();
-		List<DeviceWorkDto> works =  cellDao.deviceWorkWithinCurrTime(cellname);
+		List<DeviceWorkDto> works =  cellDao.deviceWorkWithinOneWeek(cellname);
 		for (DeviceWorkDto work : works) {
 			int year = work.getFaultOccusTime().getYear()+1900;
 			int month = work.getFaultOccusTime().getMonth()+1;
@@ -288,7 +418,7 @@ public class CellService {
 	 */
 	private List<String> osWorkWithinCurrenttime(String cellname){
 		List<String> list = new ArrayList<>();
-		List<OSWorkDto> works =  cellDao.osWorkWithinCurrTime(cellname);
+		List<OSWorkDto> works =  cellDao.osWorkWithinOneWeek(cellname);
 		for (OSWorkDto work : works) {
 			int year = work.getStartTime().getYear()+1900;
 			int month = work.getStartTime().getMonth()+1;
@@ -311,11 +441,11 @@ public class CellService {
 		List<String> list = new ArrayList<>();
 		List<CellComplainDto> works;
 		if ("week".equals(type)) {
-			works =  cellDao.complaintWithinCurrTime(cellname);
+			works =  complainDao.complaintWithinOneWeek(cellname);
 		}else if ("month".equals(type)) {
-			works =  cellDao.complaintWithinOneMonth(cellname);
+			works =  complainDao.complaintWithinOneMonth(cellname);
 		}else {
-			works =  cellDao.complaintWithinSelect(cellname, starttime, endtime);
+			works =  complainDao.complaintWithinSelect(cellname, starttime, endtime);
 		}
 		if (works!=null) {
 			for (CellComplainDto work : works) {
@@ -343,6 +473,8 @@ public class CellService {
 					JSONObject obj = array.getJSONObject(i);
 					if ("Ratio".equals(obj.getString("Key"))) {
 					    ratio = Double.parseDouble(obj.get("Value").toString())*100;
+					    DecimalFormat  df = new DecimalFormat("######0.00");
+					    ratio = Double.parseDouble(df.format(ratio));
 						return ratio;
 					}
 					count++;
