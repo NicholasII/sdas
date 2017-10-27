@@ -30,19 +30,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT
 		t1.record_time,t1.phone_number,t1.complaint_detailinfo,t2.live_cellname1,t2.live_cellname2,t2.live_cellname3
 		FROM t_complaint_detail t1,t_complaint_residentarea t2
-		WHERE t1.phone_number=t2.phone_number AND
+		WHERE
+		t1.phone_number=t2.phone_number AND
 		left(t1.record_time,10)=left(t2.record_time,10)
-		AND (t2.live_cellname1=#{cellname} OR t2.live_cellname2=#{cellname}
-		OR t2.live_cellname3=#{cellname} )
+		AND
+		(t2.live_cellname1=#{cellname} OR t2.live_cellname2=#{cellname}
+		OR
+		t2.live_cellname3=#{cellname} )
 		ORDER BY t1.record_time
 	</select>
 	<select id="getPageList" resultType="com.iscas.sdas.dto.CellComplainDto">
 		SELECT
 		record_time,phone_number,live_cellname1,live_cellname2,live_cellname3
-		FROM t_complaint_residentarea GROUP BY phone_number
+		FROM t_complaint_residentarea ORDER BY record_time limit 1000
 	</select>
-
-
 	<select id="getfocuslist" resultType="com.iscas.sdas.dto.CellComplainDto">
 		<bind name="cellname" value="'%'+ _parameter +'%'" />
 		SELECT
@@ -52,11 +53,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		phone_number,record_time,live_cellname1,live_cellname2,live_cellname3
 		FROM
 		t_complaint_residentarea
-		WHERE live_cellname1 LIKE #{cellname} OR live_cellname2 LIKE #{cellname} OR
+		WHERE live_cellname1 LIKE #{cellname} OR
+		live_cellname2 LIKE #{cellname} OR
 		live_cellname3 LIKE #{cellname})t
 		WHERE record_time LIKE &apos;%2017-08-01%&apos;
 	</select>
-	
 	<select id="getcomplist" resultType="com.iscas.sdas.dto.CellComplainDto">
 		SELECT record_time,phone_number,live_cellname1,live_cellname2,live_cellname3
 		FROM t_complaint_residentarea where 1=1
@@ -75,5 +76,56 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 GROUP BY phone_number
 	</select>
 	
+
+	<select id="complaintWithinOneWeek" resultType="com.iscas.sdas.dto.CellComplainDto"
+		parameterType="java.lang.String">
+		SELECT
+		t1.record_time,t1.phone_number,t1.complaint_detailinfo,t2.live_cellname1,t2.live_cellname2,t2.live_cellname3
+		FROM t_complaint_detail t1,t_complaint_residentarea t2
+		WHERE
+		t1.phone_number=t2.phone_number AND
+		left(t1.record_time,10)=left(t2.record_time,10)
+		AND
+		(t2.live_cellname1=#{cellname} OR t2.live_cellname2=#{cellname}
+		OR
+		t2.live_cellname3=#{cellname} ) AND t1.record_time
+		BETWEEN DATE_SUB((SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code =
+		#{cellname} ORDER BY yyyyMMdd DESC LIMIT 1),INTERVAL 7 DAY) AND
+		(SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname}
+		ORDER BY yyyyMMdd DESC LIMIT 1)
+		ORDER BY t1.record_time
+	</select>
+	<select id="complaintWithinOneMonth" resultType="com.iscas.sdas.dto.CellComplainDto"
+		parameterType="java.lang.String">
+		SELECT
+		t1.record_time,t1.phone_number,t1.complaint_detailinfo,t2.live_cellname1,t2.live_cellname2,t2.live_cellname3
+		FROM t_complaint_detail t1,t_complaint_residentarea t2
+		WHERE
+		t1.phone_number=t2.phone_number AND
+		left(t1.record_time,10)=left(t2.record_time,10)
+		AND
+		(t2.live_cellname1=#{cellname} OR t2.live_cellname2=#{cellname}
+		OR
+		t2.live_cellname3=#{cellname} ) AND t1.record_time
+		BETWEEN DATE_SUB((SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code =
+		#{cellname} ORDER BY yyyyMMdd DESC LIMIT 1),INTERVAL 30 DAY) AND
+		(SELECT yyyyMMdd FROM t_cell_health_info WHERE cell_code = #{cellname}
+		ORDER BY yyyyMMdd DESC LIMIT 1)
+		ORDER BY t1.record_time
+	</select>
+	<select id="complaintWithinSelect" resultType="com.iscas.sdas.dto.CellComplainDto">
+		SELECT
+		t1.record_time,t1.phone_number,t1.complaint_detailinfo,t2.live_cellname1,t2.live_cellname2,t2.live_cellname3
+		FROM t_complaint_detail t1,t_complaint_residentarea t2
+		WHERE
+		t1.phone_number=t2.phone_number AND
+		left(t1.record_time,10)=left(t2.record_time,10)
+		AND
+		(t2.live_cellname1=#{cellname} OR t2.live_cellname2=#{cellname}
+		OR
+		t2.live_cellname3=#{cellname} ) AND t1.record_time
+		BETWEEN  #{start} AND #{end}
+		ORDER BY t1.record_time
+	</select>
 
 </mapper>

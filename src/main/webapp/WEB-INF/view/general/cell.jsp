@@ -10,12 +10,11 @@
 <meta http-equiv="expires" content="0">
 <title>小区综合页面</title>
 <%@ include file="/include/common.jsp"%>
-<script type="text/javascript" src="${context }/include/time.js"></script>
+<script type="text/javascript" src="${context}/include/time.js"></script>
 <script src="${context}/lib/hplus/js/plugins/layer/laydate/laydate.js"></script>
 <script type="text/javascript"
 	src="http://api.map.baidu.com/api?v=2.0&ak=EmXf0NLcNCvBO5hdDliGtvC9D5v6GA5K"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
-
 	
 <style type="text/css">
 	td {
@@ -53,7 +52,7 @@
 					<div class="ibox-title">
 						<h5>指标异常预警</h5>
 						<div class="ibox-tools">
-							<a href="#"><i>更多...</i></a>
+							<!-- <a href="#"><i>更多...</i></a> -->
 						</div>
 					</div>
 					<div class="ibox-content">
@@ -139,7 +138,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<!-- <div class="row">
 			<div class="col-sm-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-title">
@@ -196,7 +195,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 		<script type="text/javascript">
 			var capacityweekurl = ctx + "/capacitywork/oneweek";
@@ -247,9 +246,9 @@
 							onclick="switchwork('/sdas/outserverwork/oneweek','${cellname}')"
 							class=""><a data-toggle="tab" href="#tab-3"
 							aria-expanded="false">退服工单</a></li>
-						<li onclick="switchwork('/sdas/cellindex/mrinfo','${cellname}')"
+						<%-- <li onclick="switchwork('/sdas/cellindex/mrinfo','${cellname}')"
 							class=""><a data-toggle="tab" href="#tab-4"
-							aria-expanded="false">指标信息</a></li>
+							aria-expanded="false">指标信息</a></li> --%>
 					</ul>
 					<div class="tab-content">
 						<div id="tab-1" class="tab-pane active">
@@ -272,12 +271,12 @@
 								<div id="pager_list_work3"></div>
 							</div>
 						</div>
-						<div id="tab-4" class="tab-pane">
+						<!-- <div id="tab-4" class="tab-pane">
 							<div class="panel-body">
 								<table class="table" id="table_list_index"></table>
 								<div id="pager_list_index"></div>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -324,6 +323,23 @@
 				</div>
 				<div class="ibox-content">
 					<div id="ratiotrend" style="height: 300px;"></div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>小区健康判断结果</h5>
+						<div class="ibox-tools"></div>
+					</div>
+					<div class="ibox-content">
+						<div class="jqGrid_wrapper"
+							style="margin: 0; padding: 0; width: 100%; overflow: auto;">
+							<table id="table_list_healthtable"></table>
+							<div id="pager_list_healthtable"></div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -1,10 +1,10 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@taglib prefix="fun" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-
 <c:set var="context" value="${pageContext.request.contextPath}" />
-
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
 <!-- 全局js css -->
 <script src="${context}/lib/hplus/js/jquery.min.js?v=2.1.4"></script>
 <script src="${context}/lib/hplus/js/bootstrap.min.js?v=3.3.6"></script>
@@ -37,12 +37,16 @@
 <script src="${context}/lib/hplus/js/plugins/layer/layer.min.js"></script>
 <link href="${context}/lib/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
 
-<script type="text/javascript" src="${context}/lib/hplus/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-<script type="text/javascript" src="${context}/lib/hplus/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+
 <script type="text/javascript" src="${context}/lib/bootstrapValivator/src/js/bootstrapValidator.js"></script>
 <link href="${context}/lib/bootstrapValivator/src/css/bootstrapValidator.css" rel="stylesheet">
-<link href="${context}/lib/hplus/css/plugins/bootstrap-table/bootstrap-table.min.css" type="text/css" rel="stylesheet">
 
+
+<link href="${context}/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<script type="text/javascript" src="${context}/lib/bootstrap-table/bootstrap-table.min.js"></script>
+<%-- <script type="text/javascript" src="${context}/lib/bootstrap-table/bootstrap-table-mobile.min.js"></script> --%>
+
+<script type="text/javascript" src="${context}/lib/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
 <script>
   var ctx = "${context}";
 </script>

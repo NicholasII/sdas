@@ -23,6 +23,7 @@ import com.iscas.sdas.dto.GroupIndexMeatdata;
 import com.iscas.sdas.dto.TotalHealthInfoDto;
 import com.iscas.sdas.dto.cell.BaseCellHealth;
 import com.iscas.sdas.dto.cell.CellDto;
+import com.iscas.sdas.dto.cell.CellHealthTableDto;
 import com.iscas.sdas.service.cell.CellService;
 import com.iscas.sdas.util.CommonUntils;
 import com.iscas.sdas.util.Constraints;
@@ -99,14 +100,11 @@ public class CellController {
 	@RequestMapping("/healthtrend")
 	@ResponseBody
 	public ModelMap healthtrend(HttpServletRequest request,
-			@RequestParam(required=true,defaultValue="week",value="type")String type) throws UnsupportedEncodingException{
+			@RequestParam(required=true,defaultValue="week",value="type")String type){
 		ModelMap map = new ModelMap();
 		String cellname = request.getParameter("cellname");
-		//String cellname =new String(request.getParameter("cellname").getBytes("iso-8859-1"),"utf-8");
 		String starttime = null,endtime = null;
 		if ("select".equals(type)) {
-			//starttime =new String(request.getParameter("starttime").getBytes("iso-8859-1"),"utf-8");
-			//endtime =new String(request.getParameter("endtime").getBytes("iso-8859-1"),"utf-8");
 			starttime = request.getParameter("start");
 			endtime = request.getParameter("end");
 		}
@@ -114,6 +112,22 @@ public class CellController {
 		map.addAttribute(Constraints.RESULT_ROW, list);
 		return map;
 	}
+	/**
+	 * 小区健康度历史表格
+	 * @param request
+	 * @return
+	 * @throws UnsupportedEncodingException 
+	 */
+	@RequestMapping("/healthtable")
+	@ResponseBody
+	public ModelMap healthtable(HttpServletRequest request){
+		ModelMap map = new ModelMap();
+		String cellname = request.getParameter("cellname");
+		List<CellHealthTableDto> list = cellService.generateCellHealthTable(cellname);
+		map.addAttribute(Constraints.RESULT_ROW, list);
+		return map;
+	}
+	
 	/**
 	 * 小区属于组别
 	 * @param cellname

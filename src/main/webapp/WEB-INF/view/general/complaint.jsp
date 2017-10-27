@@ -6,11 +6,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>投诉信息总页</title>
 <%@ include file="/include/common.jsp"%>
-<%@ include file="/include/datapicker.jsp" %>
+<script src="${context}/lib/hplus/js/plugins/layer/laydate/laydate.js"></script>
 <script type="text/javascript" src="${context}/include/time.js"></script>
+<script type="text/javascript" src="${context}/include/utils.js"></script>
 </head>
 <body>
-
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="row">
 			<div class="col-sm-16">
@@ -54,7 +54,7 @@
 					</div>
 					<div class="ibox-content">
 						<div class="jqGrid_wrapper">
-							<table class="table" id="table_list_1"></table>
+							<table id="table_list_1"></table>
 							<div id="pager_list_1"></div>
 						</div>
 					</div>

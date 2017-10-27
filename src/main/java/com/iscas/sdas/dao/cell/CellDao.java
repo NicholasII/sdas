@@ -30,22 +30,30 @@ public interface CellDao {
 	 * @return
 	 */
 	List<BaseCellHealth> cellhealthtrend(String cellname);
-	
-	List<PerformanceWorkDto> performWorkWithinCurrTime(String cellname);
-	
-	List<DeviceWorkDto> deviceWorkWithinCurrTime(String cellname);
-	
-	List<OSWorkDto> osWorkWithinCurrTime(String cellname);
-	
-	List<CellComplainDto> complaintWithinCurrTime(String cellname);
+	/**
+	 * 一周性能工单
+	 * @param cellname
+	 * @return
+	 */
+	List<PerformanceWorkDto> performWorkWithinOneWeek(String cellname);
+	/**
+	 * 一周设备工单
+	 * @param cellname
+	 * @return
+	 */
+	List<DeviceWorkDto> deviceWorkWithinOneWeek(String cellname);
+	/**
+	 * 一周退服工单
+	 * @param cellname
+	 * @return
+	 */
+	List<OSWorkDto> osWorkWithinOneWeek(String cellname);
 	/**
 	 * 一个月的健康度
 	 * @param cellname
 	 * @return
 	 */
 	List<BaseCellHealth> cellhealthtrendWithinOneMonth(String cellname);
-	
-	List<CellComplainDto> complaintWithinOneMonth(String cellname);
 	/**
 	 * 一定时间段的健康度
 	 * @param cellname
@@ -53,9 +61,7 @@ public interface CellDao {
 	 * @param endtime
 	 * @return
 	 */
-	List<BaseCellHealth> cellhealthtrendWithinSelect(String cellname,String starttime,String endtime);
-	
-	List<CellComplainDto> complaintWithinSelect(String cellname,String starttime,String endtime);
+	List<BaseCellHealth> cellhealthtrendWithinSelect(@Param("cellname")String cellname,@Param("start")String starttime,@Param("end")String endtime);
 	/**
 	 * 该小区最近健康度
 	 * @param cellname
@@ -89,4 +95,12 @@ public interface CellDao {
 	 * @return String
 	 */
 	String getalarmname(String key);
+	/**
+	 * 某一时刻的健康度
+	 * @param cellname
+	 * @param yyyymmdd
+	 * @param hour
+	 * @return
+	 */
+	Integer getHealthRatio(@Param("cellname")String cellname,@Param("yyyymmdd")String yyyymmdd,@Param("hour")String hour);
 }

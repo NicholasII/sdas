@@ -1,12 +1,14 @@
 package com.iscas.sdas.dto;
 
 import java.util.Date;
+
+import com.iscas.sdas.common.PageDto;
 /**
  * 投诉信息dto
  * @author dongqun
  * 2017年10月13日上午11:14:30
  */
-public class CellComplainDto {
+public class CellComplainDto{
 
 	private Date record_time;
 	private String phone_number;
@@ -47,7 +49,5 @@ public class CellComplainDto {
 	}
 	public void setComplaint_detailinfo(String complaint_detailinfo) {
 		this.complaint_detailinfo = complaint_detailinfo;
-	}
-	
-	
+	}	
 }
