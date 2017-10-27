@@ -29,7 +29,9 @@
 	    padding-top: 5px;padding-bottom: 5px;margin-top: 0px;margin-bottom: 0px
 	}
 	#table_list_healthtable th,#table_list_healthtable td{border:1px solid #ddd}
-	.ibox-content .gray{color:gray}.ibox-content .red{color:red}.ibox-content .yellow{color:yellow}
+	.ibox-content .gray{background-color:gray}
+	.ibox-content .red{background-color:red}
+	.ibox-content .yellow{background-color:yellow}
 </style>
 </head>
 <body> 
@@ -342,7 +344,7 @@
 					</div>
 					<div class="ibox-content">
 						<div class="table" style="margin-left: 20px; width: 80%;">
-							<table id="table_list_healthtable" class="table"></table>
+							<table id="table_list_healthtable" class="table" style="width:100%"></table>
 						</div>
 					</div>
 				</div>

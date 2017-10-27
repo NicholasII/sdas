@@ -179,9 +179,9 @@ height: auto; /* let the content decide it */
 									<h5>性能工单</h5>
 									<div class="ibox-tools">
 										<div class="btn-group">
-												<button class="btn btn-info workPicker" type="button">今日</button>
+												<button class="btn btn-white workPicker" type="button">今日</button>
 												<button class="btn btn-white workPicker" type="button">一周</button>
-												<button class="btn btn-white workPicker" type="button">一月</button>
+												<button class="btn btn-info workPicker" type="button">一月</button>
 												<button class="btn btn-white workPicker" type="button">按时间选择</button>
 											<div id="timeselect_work_switch" style="display: none;float: left;">
 												<input style="margin-left:5px;margin-top: -7px !important;" id="starttime_work"
@@ -332,9 +332,9 @@ height: auto; /* let the content decide it */
 									<h5>性能工单</h5>
 									<div class="ibox-tools">
 										<div class="btn-group">
-												<button class="btn btn-info workPicker" type="button">今日</button>
+												<button class="btn btn-white workPicker" type="button">今日</button>
 												<button class="btn btn-white workPicker" type="button">一周</button>
-												<button class="btn btn-white workPicker" type="button">一月</button>
+												<button class="btn btn-info workPicker" type="button">一月</button>
 												<button class="btn btn-white workPicker" type="button">按时间选择</button>
 											<div id="timeselect_work_switch" style="display: none;float: left;">
 												<input style="margin-left:5px;margin-top: -7px !important;" id="starttime_work_switch"

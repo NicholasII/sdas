@@ -3,7 +3,7 @@
  */
 var Interval;
 var date_value = 0;// 曲线时间范围
-var work_date=0;//列表时间范围
+var work_date=30;//列表时间范围
 var ajax_url = "";// 请求地址
 var work_url="/sdas/fault/getworkprb";
 var date_attr = "";// 属性
@@ -112,7 +112,7 @@ $(function() {
 		starttime="";
 		endtime="";
 		//
-		work_date = 0;
+		work_date = 30;
 		work_start="";
 		work_end="";
 		var title = $(this).find("a").html();

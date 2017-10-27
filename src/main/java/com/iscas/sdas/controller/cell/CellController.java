@@ -230,6 +230,21 @@ public class CellController {
 									break;
 								}
 							}
+							if(moment==23){
+								String str_hour = (moment-1)>=10?(moment-1)+"":"0"+(moment-1);
+								String newrange  = (String)baseCellHealth.getClass().getMethod("getRange_"+str_hour, null).invoke(baseCellHealth, null);
+								JSONArray newarray = JSON.parseArray(newrange);
+								if (newarray!=null) {
+									for (int j = 0; j < newarray.size(); j++) {
+											JSONObject obj = newarray.getJSONObject(j);
+											if ("Ratio".equals(obj.getString("Key"))) {
+											    double ratio = Double.parseDouble(obj.get("Value").toString())*100;
+											    map.addAttribute("ratio", ratio);
+											}
+									}
+									break;
+								}
+							}
 						}
 					}	
 					
