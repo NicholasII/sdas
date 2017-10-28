@@ -15,7 +15,7 @@ public class CapacityWorkDto {
 	private String monitor_value;
 	private String alerm_level;
 	private Timestamp complete_time;
-	private int questionflag;
+	private Integer questionflag;
 	private int daynum;
 	private String starttime;
 	private String endtime;
@@ -85,10 +85,11 @@ public class CapacityWorkDto {
 	public void setAlarm_id(Integer alarm_id) {
 		this.alarm_id = alarm_id;
 	}
-	public int getQuestionflag() {
+	
+	public Integer getQuestionflag() {
 		return questionflag;
 	}
-	public void setQuestionflag(int questionflag) {
+	public void setQuestionflag(Integer questionflag) {
 		this.questionflag = questionflag;
 	}
 	public int getDaynum() {

@@ -155,19 +155,23 @@ public class WorkController {
 		String daynum = request.getParameter("daynum");
 		String starttime = request.getParameter("starttime");
 		String endtime = request.getParameter("endtime");
-		if (cellid!=null) {
+		String questionflag = request.getParameter("questionflag");
+		if (!CommonUntils.isempty(cellid)) {
 			cwdto.setCellid(cellid);
-		}else{cwdto.setCellid("");}
-		if (daynum!=null) {
+		}
+		if (!CommonUntils.isempty(daynum)) {
 			cwdto.setDaynum(Integer.parseInt(daynum));
 		}
-		if (starttime!=null) {
+		if (!CommonUntils.isempty(starttime)) {
 			cwdto.setStarttime(starttime);
 		}
-		if (endtime!=null) {
+		if (!CommonUntils.isempty(endtime)) {
 			cwdto.setEndtime(endtime);
 		}
-		List<CapacityWorkDto> capacityWorks = workService.getAllWorks();
+		if (!CommonUntils.isempty(questionflag) && !"3".equals(questionflag)) {
+			cwdto.setQuestionflag(Integer.parseInt(questionflag));
+		}
+		List<CapacityWorkDto> capacityWorks = workService.getAllWorks(cwdto);
 		map.addAttribute(Constraints.RESULT_ROW, capacityWorks);
 		return map;
 	}

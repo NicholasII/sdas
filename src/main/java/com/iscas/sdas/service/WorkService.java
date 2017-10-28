@@ -174,7 +174,7 @@ public class WorkService {
 	public List<CapacityWorkDto> getAllDoubtWorks(){
 		return capacityWorkDao.getAllDoubtWorks();
 	}
-	public List<CapacityWorkDto> getAllWorks(){
-		return capacityWorkDao.getAllWorks();
+	public List<CapacityWorkDto> getAllWorks(CapacityWorkDto capacityWorkDto){
+		return capacityWorkDao.getAllWorks(capacityWorkDto);
 	}
 }

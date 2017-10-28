@@ -45,12 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		t_groupDetailInfo.indeicator_code =
 		t_normalcheckmetadata.indeicator_id AND t_groupDetailInfo.cell_code =
 		#{grouptype}
-	</select>
-	<select id="getgroupindexcontent" resultType="com.iscas.sdas.dto.cell.BaseGroupIndex">
-		SELECT * FROM
-		t_groupDetailInfo WHERE cell_code = #{grouptype} AND
-		indeicator_code=#{indexcode}
-	</select>
+	</select>	
 	<select id="getgroup" parameterType="java.lang.String"
 		resultType="java.lang.String">
 		SELECT group_type FROM t_groupBaseInfo WHERE cell_code =

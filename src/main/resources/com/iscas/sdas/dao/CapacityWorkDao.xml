@@ -93,11 +93,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set questionflag = 1 where alarm_id = #{alarm_id}
 	</update>
 	<update id="updatedoubtwork" parameterType="com.iscas.sdas.dto.work.CapacityWorkDto">
-		update t_performance_work_rt
+		update
+		t_performance_work_rt
 		set questionflag = 0 where alarm_id = #{alarm_id}
 	</update>
 	<update id="updatealarmwork" parameterType="com.iscas.sdas.dto.work.CapacityWorkDto">
-		update t_performance_work_rt
+		update
+		t_performance_work_rt
 		set questionflag = 2 where alarm_id = #{alarm_id}
 	</update>
 	<select id="getListTheDay" resultType="com.iscas.sdas.dto.work.CapacityWorkDto">
@@ -111,24 +113,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		t_performance_work_rt ORDER BY occurrence_time DESC LIMIT 1)
 	</select>
 	<select id="getAllDoubtWorks" resultType="com.iscas.sdas.dto.work.CapacityWorkDto">
-		SELECT * FROM t_performance_work_rt WHERE questionflag = 0
+		SELECT * FROM
+		t_performance_work_rt WHERE questionflag = 0
 	</select>
-	<select id="getAllWorks" resultType="com.iscas.sdas.dto.work.CapacityWorkDto">
-		SELECT * FROM t_performance_work_rt WHERE questionflag = 0 or questionflag = 1 or questionflag = 2 
-		<if test="cellid!=''">
-		 and cellid like #{cellid}
-		</if>
-		<if test="starttime!='' and starttime!=''">
-		 and occurrence_time &gt;=#{starttime} and occurrence_time &lt;=#{endtime}
-		</if>
-		<if test="starttime=='' and endtime=='' and daynum==7">
-		and TO_DAYS(NOW())-TO_DAYS(occurrence_time) &lt;=#{daynum}<!-- #{daynum} -->
-		</if>
-		<if test="starttime=='' and endtime=='' and daynum==30">
-		and TO_DAYS(NOW())-TO_DAYS(occurrence_time) &lt;=#{daynum}
-		</if>
-		<if test="starttime=='' and endtime=='' and daynum==0">
-		and TO_DAYS(NOW())-TO_DAYS(occurrence_time) =#{daynum}
-		</if>
+	<select id="getAllWorks" resultType="com.iscas.sdas.dto.work.CapacityWorkDto"
+		parameterType="com.iscas.sdas.dto.work.CapacityWorkDto">
+		SELECT * FROM t_performance_work_rt
+		<where>
+			<if test="questionflag != null">
+				and questionflag = #{questionflag}
+			</if>		
+			<if test="cellid != null ">
+				and cellid like #{cellid}
+			</if>
+			<!-- <if test="starttime !=null and starttime!=null ">
+				and occurrence_time &gt;=#{starttime} and occurrence_time &lt;=#{endtime}
+			</if>
+			<if test="starttime==null and endtime==null and daynum==7">
+				and TO_DAYS(NOW())-TO_DAYS(occurrence_time) &lt;=#{daynum}#{daynum}
+			</if>
+			<if test="starttime==null and endtime==null and daynum==30">
+				and TO_DAYS(NOW())-TO_DAYS(occurrence_time) &lt;=#{daynum}
+			</if>
+			<if test="starttime==null and endtime==null and daynum==0">
+				and TO_DAYS(NOW())-TO_DAYS(occurrence_time) =#{daynum}
+			</if> -->
+			<if test="questionflag == null">
+				and questionflag = 0 or questionflag = 1 or questionflag = 2
+			</if>
+		</where>
 	</select>
 </mapper>

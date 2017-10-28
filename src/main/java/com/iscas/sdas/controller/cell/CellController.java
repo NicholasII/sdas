@@ -2,6 +2,7 @@ package com.iscas.sdas.controller.cell;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -224,6 +225,7 @@ public class CellController {
 											JSONObject obj = newarray.getJSONObject(j);
 											if ("Ratio".equals(obj.getString("Key"))) {
 											    double ratio = Double.parseDouble(obj.get("Value").toString())*100;
+											    
 											    map.addAttribute("ratio", ratio);
 											}
 									}
@@ -239,6 +241,8 @@ public class CellController {
 											JSONObject obj = newarray.getJSONObject(j);
 											if ("Ratio".equals(obj.getString("Key"))) {
 											    double ratio = Double.parseDouble(obj.get("Value").toString())*100;
+											    DecimalFormat  df = new DecimalFormat("######0.00");
+											    ratio = Double.parseDouble(df.format(ratio));
 											    map.addAttribute("ratio", ratio);
 											}
 									}

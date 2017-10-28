@@ -190,6 +190,16 @@ function select(daynum){
 	if(work_date==null){
     	starttime = $("#starttime").val();
         endtime = $("#endtime").val();
+    }    
+    var questionflag = $("#result").val();
+    if(questionflag=="正常工单"){
+        questionflag = 1;
+    }else if(questionflag=="高度可疑"){
+        questionflag = 0;
+    }else if(questionflag=="可疑工单"){
+        questionflag = 2;
+    }else{
+       questionflag = 3; 
     }
 	
 	$("#table_list_1").jqGrid("clearGridData");
@@ -203,7 +213,8 @@ function select(daynum){
 			'daynum':daynum,
             'starttime':starttime,
             'endtime':endtime,
-			'content':content
+			'content':content,
+            "questionflag":questionflag
 		},
 		success:function(data,status){
 			var list = data.rows;

@@ -74,31 +74,46 @@ input {
 								id="name" name="name"> <label>所属区域</label> <select
 								id="area"
 								style="padding-top: 5px; padding-bottom: 5px; margin-top: 10px; margin-bottom: 10px">
-								<option></option>
+								<option>全部</option>
 							</select> <label>监控内容</label> <select id="content"
 								style="padding-top: 5px; padding-bottom: 5px; margin-top: 10px; margin-bottom: 10px">
 								<option>全部</option>
 								<option>新切换出成功率(4次连续)</option>
 								<option>新PRB利用率(4次连续)</option>
 							</select>
-
-							<button class="btn btn-white" onclick="javascript:select()">查询</button>
-							<button class="btn btn-white" onclick="javascript:validate()">可疑工单验证</button>
-							<label for="checkbox6"><input id="doubtwork"
-								type="checkbox" name="doubtwork">可疑工单</label>
+							</select> <label>判断结果</label> <select id="result"
+								style="padding-top: 5px; padding-bottom: 5px; margin-top: 10px; margin-bottom: 10px">
+								<option>全部工单</option>
+								<option>高度可疑</option>
+								<option>可疑工单</option>
+								<option>正常工单</option>
+							</select>							
+							<button class="btn btn-white" onclick="javascript:select()">查询</button>																					
 							<button class="btn btn-white" onclick="">导出</button>
-							<form action="${context}/work/import" method="post" enctype="multipart/form-data">
-								<input type="file" name="file" multiple="multiple" accept="application/vnd.ms-excel"> <input type="submit" value="导入">
-								<input type="reset" value="重选">
-							</form>
-							
+
+							<div>
+								<form action="${context}/work/import" method="post"
+									enctype="multipart/form-data"
+									style="display: inline !important;">
+									<input style="display: inline !important;"
+										class="btn btn-white" type="file" name="file"
+										multiple="multiple" accept="application/vnd.ms-excel">
+									<input class="btn btn-white" type="submit" value="导入">
+									<input class="btn btn-white" type="reset" value="重选">
+								</form>
+								<button style="padding-top: 5px; padding-bottom: 5px; margin-top: 10px; margin-bottom: 10px" 
+								class="btn btn-white" onclick="javascript:validate()">工单验证</button>
+							</div>
+
+							<!-- <label for="checkbox6"><input id="doubtwork"
+								type="checkbox" name="doubtwork">可疑工单</label> -->
 						</div>
 
 
 					</div>
 					<div class="footer" style="height: 60px;">
 							<div>
-								<span><i>备注：</i> </span> <span>红色为可疑工单；绿色为确定工单；黄色为预警工单</span>
+								<span><i>备注：</i> </span> <span>红色为高度可疑工单；绿色为符合条件工单；黄色为可疑工单</span>
 							</div>
 						</div>
 					<div class="jqGrid_wrapper">

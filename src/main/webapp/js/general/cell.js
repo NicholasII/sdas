@@ -196,9 +196,9 @@ var histroy_trend = {
 				}, {
 					'name' : "投诉"
 				},{
-                    'name' : "fault"
+                    'name' : "警戒区"
                 },{
-                    'name' : "warnning"
+                    'name' : "观察区"
                 }]
 	},
 	dataZoom : [{
@@ -265,7 +265,7 @@ var histroy_trend = {
 					}
 				}
 			},{
-                name : 'fault',
+                name : '警戒区',
                 data : [],
                 type : 'scatter',
                 symbolSize : function(data) {
@@ -275,7 +275,7 @@ var histroy_trend = {
                     emphasis : {
                         show : true,
                         formatter : function(param) {
-                            return "fault";
+                            return "警戒区";
                         },
                         position : 'top'
                     }
@@ -296,7 +296,7 @@ var histroy_trend = {
                     }
                 }
             },{
-                name : 'warnning',
+                name : '观察区',
                 data : [],
                 type : 'scatter',
                 symbolSize : function(data) {
@@ -306,7 +306,7 @@ var histroy_trend = {
                     emphasis : {
                         show : true,
                         formatter : function(param) {
-                            return "warn";
+                            return "观察区";
                         },
                         position : 'top'
                     }
@@ -906,16 +906,17 @@ $(function() {
 						var type = item.cell_code;
 						var index = item.indeicator_code;
 						var option;
+                        var name = cellname;
 						if (i == 0) {
-							option = $('<li onclick=groupindex("'
-									+ type
+							option = $('<li onclick=cellindex("'
+									+ name
 									+ '","'
 									+ index
 									+ '") class="active"><a data-toggle="tab" aria-expanded="true">'
 									+ item.indeicator_name + '</a></li>');
 						} else {
-							option = $('<li onclick=groupindex("'
-									+ type
+							option = $('<li onclick=cellindex("'
+									+ name
 									+ '","'
 									+ index
 									+ '") class=""><a data-toggle="tab" aria-expanded="false">'
@@ -1034,14 +1035,14 @@ function refreshAlarm() {
 				}
 			});
 }
-function groupindex(cellcode, indexcode) {
+function cellindex(cellcode, indexcode) {
 	$.ajax({
-		url : "/sdas/cell/groupindexcontent",
+		url : "/sdas/cell/index",
 		type : "post",
 		dataType : "json",
 		data : {
-			'grouptype' : cellcode,
-			'indexid' : indexcode
+			'cellname' : cellcode,
+			'index' : indexcode
 		},
 		success : function(data, status) {
 			if (data.success) {
@@ -1138,7 +1139,7 @@ function refreshJqGrid(list) {
 		shrinkToFit : true,
 		rowNum : 10,
 		rowList : [10, 20, 30],
-		colNames : ['受理时间', '受理号码', '问题细项', '常住小区1', '常住小区2', '常住小区3'],
+		colNames : ['受理时间', '受理号码','服务请求类别' ,'问题细项', '常住小区1', '常住小区2', '常住小区3'],
 		colModel : [{
 					name : 'record_time',
 					index : 'record_time',
@@ -1151,6 +1152,10 @@ function refreshJqGrid(list) {
 					index : 'phone_number',
 					width : 40
 				}, {
+                    name : 'servicerequesttype',
+                    index : 'servicerequesttype',
+                    width : 100
+                },{
 					name : 'complaint_detailinfo',
 					index : 'complaint_detailinfo',
 					width : 60
@@ -1678,7 +1683,7 @@ function rtRatio() {
 						$("#b_ratio").text(ratio);
 						if (ratio > 80) {
 							$("#h_ratio").css("color", "green");
-						} else if (ratio > 60 && ratio <= 80) {
+						} else if (ratio > 25 && ratio <= 80) {
 							$("#h_ratio").css("color", "#B9C83F");
 						} else {
 							$("#h_ratio").css("color", "red");

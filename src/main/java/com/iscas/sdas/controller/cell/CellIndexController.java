@@ -20,7 +20,7 @@ import com.iscas.sdas.service.cell.CellIndexService;
 import com.iscas.sdas.util.CommonUntils;
 import com.iscas.sdas.util.Constraints;
 /**
- * 小区健康模型相关
+ * 小组小区健康模型相关
  * @author dongqun
  * 2017年10月12日上午9:43:23
  */
@@ -39,23 +39,17 @@ public class CellIndexController {
 	@ResponseBody
 	public ModelMap cellindex(HttpServletRequest request){
 		ModelMap map = new ModelMap();
-		String str_index = request.getParameter("index");
+		String indexid = request.getParameter("index");
 		String cellname = request.getParameter("cellname");
-		if (!CommonUntils.isempty(str_index)&&!CommonUntils.isempty(cellname)) {
-			Integer indexid = Integer.parseInt(str_index);
+		if (!CommonUntils.isempty(indexid)&&!CommonUntils.isempty(cellname)) {
 			try {
-				List<List<Double[]>> hosdata = cellIndexService.generateIndexData(indexid,cellname);
-				List<Double[]> realdata = cellIndexService.generateRealTimeData(indexid);
+				List<List<Double[]>> hosdata = cellIndexService.generateIndexData(cellname, indexid, cellIndexService.CELL);
 				if (hosdata!=null) {
 					map.addAttribute(Constraints.RESULT_ROW,hosdata);	
 					map.addAttribute(Constraints.RESULT_SUCCESS, true);	
 				}else {
 					map.addAttribute(Constraints.RESULT_SUCCESS, false);	
-				}
-				/*if (realdata!=null) {
-					map.addAttribute("real", realdata);
-				}*/
-							
+				}		
 				return map;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -98,7 +92,7 @@ public class CellIndexController {
 		String indexid = request.getParameter("indexid");
 		if (!CommonUntils.isempty(grouptype)&&!CommonUntils.isempty(indexid)) {
 			try {
-				List<List<Double[]>> result = cellIndexService.generateGroupIndexData(grouptype, indexid);
+				List<List<Double[]>> result = cellIndexService.generateIndexData(grouptype, indexid, CellIndexService.GROUP);
 				if (result!=null) {
 					map.addAttribute(Constraints.RESULT_ROW,result);	
 					map.addAttribute(Constraints.RESULT_SUCCESS, true);	

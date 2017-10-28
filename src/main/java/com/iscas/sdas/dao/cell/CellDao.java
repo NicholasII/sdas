@@ -21,8 +21,6 @@ public interface CellDao {
 	
 	List<GroupIndexMeatdata> getgroupindexs(String grouptype);
 	
-	BaseGroupIndex getgroupindexcontent(@Param("grouptype")String grouptype,@Param("indexcode")String indexcode);
-	
 	String getgroup(String cellname);
 	/**
 	 * 一个周的健康度

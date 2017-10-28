@@ -14,6 +14,7 @@ public class CellComplainDto{
 	private String phone_number;
 	private String live_cellname1,live_cellname2,live_cellname3;
 	private String complaint_detailinfo;
+	private String servicerequesttype;
 	public Date getRecord_time() {
 		return record_time;
 	}
@@ -49,5 +50,11 @@ public class CellComplainDto{
 	}
 	public void setComplaint_detailinfo(String complaint_detailinfo) {
 		this.complaint_detailinfo = complaint_detailinfo;
-	}	
+	}
+	public String getServicerequesttype() {
+		return servicerequesttype;
+	}
+	public void setServicerequesttype(String servicerequesttype) {
+		this.servicerequesttype = servicerequesttype;
+	}
 }

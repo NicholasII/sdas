@@ -53,5 +53,5 @@ public interface CapacityWorkDao {
 	 * 临时演示用
 	 * @return
 	 */
-	List<CapacityWorkDto> getAllWorks();
+	List<CapacityWorkDto> getAllWorks(CapacityWorkDto capacityWorkDto);
 }

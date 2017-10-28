@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.iscas.sdas.dao.IndexWeightDao;
 import com.iscas.sdas.dao.cell.CellDao;
 import com.iscas.sdas.dao.cell.CellIndexDao;
+import com.iscas.sdas.dto.cell.Base;
 import com.iscas.sdas.dto.cell.BaseGroupIndex;
 import com.iscas.sdas.dto.cell.BaseGroupWeight;
 import com.iscas.sdas.dto.cell.BaseIndex;
@@ -32,10 +33,17 @@ public class CellIndexService {
 	CellIndexDao cellIndexDao;
 	@Autowired
 	IndexWeightDao weightDao;
-	@Autowired
-	CellDao cellDao;
 	
-	public List<List<Double[]>> generateIndexData(Integer indexid,String cellname){
+	public static String GROUP = "group";
+	public static String CELL = "cell";
+	
+	/**
+	 * 小区
+	 * @param indexid
+	 * @param cellname
+	 * @return
+	 */
+	/*public List<List<Double[]>> generateIndexData(String indexid,String cellname){
 		List<List<Double[]>> map = new ArrayList<>();
 		try {
 			BaseIndex cellIndex = cellIndexDao.getOriginIndex(indexid,cellname);
@@ -89,18 +97,29 @@ public class CellIndexService {
 			e.printStackTrace();
 		}
 		return null;
-	}
+	}*/
 	
-	
-	public List<List<Double[]>> generateGroupIndexData(String grouptype,String indexcode){
+	/**
+	 * 小组he小区
+	 * @param grouptype
+	 * @param indexcode
+	 * @return
+	 */
+	public List<List<Double[]>> generateIndexData(String cellname,String indexcode,String type){
 		List<List<Double[]>> map = new ArrayList<>();
 		try {
-			BaseGroupIndex groupIndex = cellDao.getgroupindexcontent(grouptype, indexcode);
-			if (groupIndex!=null) {
-				Method[] methods = groupIndex.getClass().getMethods();
+			Base baseindex = null;
+			if (GROUP.equals(type)) {
+				baseindex = cellIndexDao.getGroupIndexContent(cellname, indexcode);
+			}else if (CELL.equals(type)){
+				baseindex = cellIndexDao.getCellIndexContent(cellname, indexcode);
+			}
+			//BaseGroupIndex groupIndex = cellIndexDao.getgroupindexcontent(grouptype, indexcode);
+			if (baseindex!=null) {
+				Method[] methods = baseindex.getClass().getMethods();
 				for (Method method : methods) {
 					if (method.getName().contains("getRange")) {	
-						String range = (String)method.invoke(groupIndex, null);						
+						String range = (String)method.invoke(baseindex, null);						
 						String key = method.getName().substring(method.getName().lastIndexOf("_")+1);
 						List<Double[]> value = getconv(key,range);
 						if (value!=null) {
@@ -159,24 +178,11 @@ public class CellIndexService {
 		double max,min,pre,last;
 		try {
 			JSONArray array = JSON.parseArray(content);
-			/*int vaildcount=0,currcount=0;
-			for (int i = 0; i < array.size(); i++) {
-				JSONObject obj = array.getJSONObject(i);
-				if (obj.containsKey("is_valid")) {
-					boolean is_valid = obj.getBoolean("is_valid");
-					if (is_valid) {
-						vaildcount++;
-					}
-				}
-			}*/
-			//if (vaildcount > 0) {
 				for (int i = 0; i < array.size(); i++) {
 					JSONObject obj = array.getJSONObject(i);					
 					if (obj.containsKey("is_valid")) {
 						boolean is_valid = obj.getBoolean("is_valid");
 						if (is_valid) {
-							//currcount++;
-							//double temp1 = (double)currcount/(vaildcount+1);
 							Double[] point = new Double[5];
 							point[0] =  temp;
 							if (obj.containsKey("max")) {
