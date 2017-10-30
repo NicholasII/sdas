@@ -27,14 +27,33 @@ public class IndexAlarmService extends BaseService<IndexAlarmDao, IndexAlarmDto>
 	public List<IndexAlarmDto> currentDayAlarm(){
 		List<IndexAlarmDto> alarmDtos = indexAlarmDao.getPageListCurrentDay();
 		for (int i=0;i<alarmDtos.size();i++) {
+			if (alarmDtos.get(i).getApp_type()==0) {
+				alarmDtos.get(i).setType("新PRB利用率(4次连续)");
+			}else if (alarmDtos.get(i).getApp_type()==1) {
+				alarmDtos.get(i).setType("新切换出成功率(4次连续)");
+			}
 			if (alarmDtos.get(i).getCount() ==0) {
 				alarmDtos.remove(i);
 			}
 		}
 		return alarmDtos;
 	}
-
 	
+	
+	public List<IndexAlarmDto> allDayIndexAlarm(IndexAlarmDto alarmDto){
+		List<IndexAlarmDto> alarmDtos = indexAlarmDao.allDayIndexAlarm(alarmDto);
+		for (int i=0;i<alarmDtos.size();i++) {
+			if (alarmDtos.get(i).getApp_type()==0) {
+				alarmDtos.get(i).setType("新PRB利用率(4次连续)");
+			}else if (alarmDtos.get(i).getApp_type()==1) {
+				alarmDtos.get(i).setType("新切换出成功率(4次连续)");
+			}
+			if (alarmDtos.get(i).getCount() ==0) {
+				alarmDtos.remove(i);
+			}
+		}
+		return alarmDtos;
+	}
 	
 
 }

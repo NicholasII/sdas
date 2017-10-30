@@ -21,6 +21,8 @@ import com.iscas.sdas.util.CommonUntils;
 import com.iscas.sdas.util.Constraints;
 import com.iscas.sdas.util.FileImport;
 
+import tasks.BGTask;
+
 
 @Controller
 @RequestMapping("/work")
@@ -85,7 +87,8 @@ public class WorkController {
 	@ResponseBody
 	public ModelMap workvalidate(){
 		ModelMap map = new ModelMap();
-		
+		/*BGTask task = new NewGDCheckTask();//调用spark跑工单验证
+		task.doTask();*/
 		List<CapacityWorkDto> capacityWorks = workService.workValidate(workService.allvalidatelist(),0);
 		if (capacityWorks.size()>0) {
 			map.addAttribute(Constraints.RESULT_ROW, capacityWorks);

@@ -1,6 +1,5 @@
 package com.iscas.sdas.controller.data;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -47,24 +46,12 @@ public class DataController {
 			map.addAttribute(Constraints.RESULT_SUCCESS, false);
 		}
         try {
-			//executeShell();
+        	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return map;
 	}
 	
-	private void executeShell() throws IOException, InterruptedException{
-		String shell = "D:\\shell\\shelltest.sh";
-		
-		Process process =  Runtime.getRuntime().exec("D:\\shell\\shelltest.sh zzz ccc");
-		int exitValue = process.waitFor();
-		if (0!=exitValue) {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			String line;
-			while((line=reader.readLine())!=null){
-				System.out.println(line);
-			}
-		}
-	}
+
 }

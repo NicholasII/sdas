@@ -80,8 +80,8 @@ function refreshJqGrid(list){
                 index: 'cell_code',
                 width: 250
             },{
-                name: 'app_type',
-                index: 'app_type',
+                name: 'type',
+                index: 'type',
                 width: 250
             },
             {
@@ -96,10 +96,11 @@ function refreshJqGrid(list){
         	for(var i=0;i<ids.length;i++){
         	    var id = ids[i];
         	    var cell_code = $("#table_list_1").getCell(id,'cell_code');
-        	    var monitor_content = $("#table_list_1").getCell(id,'monitor_content');
-        	    var link2 = "/sdas/general/cellhome/";
-        	    var url2='<a href=javascript:gotocellhome("'+link2+'","'+cell_code+'")>'+cell_code+'</a>';
-        	    $("#table_list_1").jqGrid('setRowData',id,{cell_code:url2});
+                if(cell_code.indexOf("<a")<0){
+                    var link2 = "/sdas/general/cellhome/";
+                    var url2='<a href=javascript:gotocellhome("'+link2+'","'+cell_code+'")>'+cell_code+'</a>';
+                    $("#table_list_1").jqGrid('setRowData',id,{cell_code:url2});
+                }    	    
         	}
         },
         pager: "#pager_list_1",
@@ -127,7 +128,7 @@ function select(daynum){
             'cellname':name,
             'daynum':daynum,
             'starttime':starttime,
-            'endtime':endtime,
+            'endtime':endtime
         },
         success:function(data,status){
             var list = data.rows;

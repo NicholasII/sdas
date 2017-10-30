@@ -122,13 +122,17 @@ function refreshJqGrid(list){
             for(var i=0;i<ids.length;i++){
                 var id = ids[i];
                 var cellid = $("#table_list_work").getCell(id,'cellid');
+                if(cellid.indexOf("<a")<0){
+                   var link2 = "/sdas/general/cellhome/";
+                   var url2='<a href=javascript:gotocellhome("'+link2+'","'+cellid+'")>'+cellid+'</a>';
+                   $("#table_list_work").jqGrid('setRowData',id,{cellid:url2});
+                }               
                 var monitor_content = $("#table_list_work").getCell(id,'monitor_content');
-                var link2 = "/sdas/general/cellhome/";
-                var url2='<a href=javascript:gotocellhome("'+link2+'","'+cellid+'")>'+cellid+'</a>';
-                var link3 = "/sdas/fault/page";             
-                var url3='<a href=javascript:gotoprb("'+link3+'","'+monitor_content+'")>'+monitor_content+'</a>';
-                $("#table_list_work").jqGrid('setRowData',id,{cellid:url2});
-                $("#table_list_work").jqGrid('setRowData',id,{monitor_content:url3});
+                if(monitor_content.indexOf("<a")<0){
+                    var link3 = "/sdas/fault/page";             
+                    var url3='<a href=javascript:gotoprb("'+link3+'","'+monitor_content+'")>'+monitor_content+'</a>';           
+                    $("#table_list_work").jqGrid('setRowData',id,{monitor_content:url3});
+                }                       
             }
         }
     });
@@ -173,10 +177,11 @@ function refreshJqGrid_alarm(list){
         	for(var i=0;i<ids.length;i++){
         	    var id = ids[i];
         	    var cell_code = $("#table_list_alarm").getCell(id,'cell_code');
-        	    var monitor_content = $("#table_list_alarm").getCell(id,'monitor_content');
-        	    var link2 = "/sdas/general/cellhome/";
-        	    var url2='<a href=javascript:gotocellhome("'+link2+'","'+cell_code+'")>'+cell_code+'</a>';
-        	    $("#table_list_alarm").jqGrid('setRowData',id,{cell_code:url2});
+        	    if(cell_code.indexOf("<a")<0){
+                    var link2 = "/sdas/general/cellhome/";
+                    var url2='<a href=javascript:gotocellhome("'+link2+'","'+cell_code+'")>'+cell_code+'</a>';
+                    $("#table_list_alarm").jqGrid('setRowData',id,{cell_code:url2});
+                }   	    
         	}
         },
         pager: "#pager_list_alarm",
@@ -217,9 +222,9 @@ function refreshJqGrid_alarm_index(list){
                 index: 'cell_code',
                 width: 50
             },{
-                name: 'app_type',
-                index: 'app_type',
-                width: 30
+                name: 'type',
+                index: 'type',
+                width: 40
             },
             {
                 name: 'count',
@@ -233,10 +238,11 @@ function refreshJqGrid_alarm_index(list){
             for(var i=0;i<ids.length;i++){
                 var id = ids[i];
                 var cell_code = $("#table_list_alarm_index").getCell(id,'cell_code');
-                var monitor_content = $("#table_list_alarm_index").getCell(id,'monitor_content');
-                var link2 = "/sdas/general/cellhome/";
-                var url2='<a href=javascript:gotocellhome("'+link2+'","'+cell_code+'")>'+cell_code+'</a>';
-                $("#table_list_alarm").jqGrid('setRowData',id,{cell_code:url2});
+                if(cell_code.indexOf("<a")<0){
+                    var link2 = "/sdas/general/cellhome/";
+                    var url2='<a href=javascript:gotocellhome("'+link2+'","'+cell_code+'")>'+cell_code+'</a>';
+                    $("#table_list_alarm_index").jqGrid('setRowData',id,{cell_code:url2});
+                }      
             }
         },
         pager: "#pager_list_alarm_index",

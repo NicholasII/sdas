@@ -24,6 +24,8 @@ public class IndexAlarmDto extends BaseDto {
 	private int app_code;
 	
 	private int app_type;
+	
+	private String type;
 
 	private int daynum;
 	private String starttime;
@@ -119,6 +121,14 @@ public class IndexAlarmDto extends BaseDto {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

@@ -11,8 +11,11 @@ public interface IndexAlarmDao extends BaseDao<IndexAlarmDto>{
 	 * @return
 	 */
 	List<IndexAlarmDto> getPageListCurrentDay();
-	
-	//List<IndexAlarmDto> allDayAlarm(IndexAlarmDto alarmDto);
+	/**
+	 * 获取所有天指标预警
+	 * @return
+	 */
+	List<IndexAlarmDto> allDayIndexAlarm(IndexAlarmDto alarmDto);
 	
 	
 }

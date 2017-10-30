@@ -10,25 +10,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		t_cell_result_index_info ORDER BY yyyyMMdd DESC LIMIT 1)) AS a WHERE
 		a.app_result=0 GROUP BY a.cell_code
 	</select>
-	<select id="getPageList" resultType="com.iscas.sdas.dto.IndexAlarmDto"
+	<select id="allDayIndexAlarm" resultType="com.iscas.sdas.dto.IndexAlarmDto"
 		parameterType="com.iscas.sdas.dto.IndexAlarmDto">
 		SELECT yyyyMMdd,cell_code,COUNT(*) AS count,app_type FROM t_cell_result_index_info WHERE app_result = 0 			
 		<if test="cell_code !=null">
 			<bind name="cellcode" value="'%'+ _parameter.getCell_code() +'%'" />
 			and cell_code like #{cellcode}
 		</if>
-		<if test="starttime!='' and starttime!=''">
+		<!-- <if test="starttime!=null and starttime!=null">
 		 and create_time &gt;=#{starttime} and create_time &lt;=#{endtime}
 		</if>
-		<if test="starttime=='' and endtime=='' and daynum==7">
-		and TO_DAYS(NOW())-TO_DAYS(create_time) &lt;=15<!-- #{daynum} -->
+		<if test="starttime==null and endtime==null and daynum==7">
+		and TO_DAYS(NOW())-TO_DAYS(create_time) &lt;=15#{daynum}
 		</if>
-		<if test="starttime=='' and endtime=='' and daynum==30">
+		<if test="starttime==null and endtime==null and daynum==30">
 		and TO_DAYS(NOW())-TO_DAYS(create_time) &lt;=80
 		</if>
-		<if test="starttime=='' and endtime=='' and daynum==0">
+		<if test="starttime==null and endtime==null and daynum==0">
 		and TO_DAYS(NOW())-TO_DAYS(create_time) =15
-		</if>
+		</if> -->
 		GROUP BY cell_code,yyyyMMdd ORDER BY yyyyMMdd
 	</select>
 </mapper>

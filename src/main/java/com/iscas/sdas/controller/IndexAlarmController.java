@@ -38,10 +38,10 @@ public class IndexAlarmController extends BaseController<IndexAlarmDto>{
 		ModelMap map = new ModelMap();
 		int pageNum = Integer.parseInt(num);
 		int pageSize = Integer.parseInt(size);
-		PageHelper.startPage(pageNum, pageSize); 
+		//PageHelper.startPage(pageNum, pageSize); 
 		List<IndexAlarmDto> alarmDtos =  alarmService.currentDayAlarm();
-		PageInfo<IndexAlarmDto> pageInfo = new PageInfo<>(alarmDtos);
-		map.addAttribute(Constraints.RESULT_ROW, pageInfo);
+		//PageInfo<IndexAlarmDto> pageInfo = new PageInfo<>(alarmDtos);
+		map.addAttribute(Constraints.RESULT_ROW, alarmDtos);
 		return map;
 	}
 	/**
@@ -57,25 +57,24 @@ public class IndexAlarmController extends BaseController<IndexAlarmDto>{
 		String daynum = request.getParameter("daynum");
 		String starttime = request.getParameter("starttime");
 		String endtime = request.getParameter("endtime");
-		if (cellname!=null) {
+		if (!CommonUntils.isempty(cellname)) {
 			alarmDto.setCell_code(cellname);
 		}
-		if (daynum!=null) {
+		if (!CommonUntils.isempty(daynum)) {
 			alarmDto.setDaynum(Integer.parseInt(daynum));
 		}
-		if (starttime!=null) {
+		if (!CommonUntils.isempty(starttime)) {
 			alarmDto.setStarttime(starttime);
 		}
-		if (endtime!=null) {
+		if (!CommonUntils.isempty(endtime)) {
 			alarmDto.setEndtime(endtime);
 		}
 		int pageNum = Integer.parseInt(num);
 		int pageSize = Integer.parseInt(size);
-		PageHelper.startPage(pageNum, pageSize); 
-		alarmService.init(null);
-		List<IndexAlarmDto> alarmDtos =  alarmService.getpagelist(alarmDto);
-		PageInfo<IndexAlarmDto> pageInfo = new PageInfo<>(alarmDtos);
-		map.addAttribute(Constraints.RESULT_ROW, pageInfo);
+		//PageHelper.startPage(pageNum, pageSize); 
+		List<IndexAlarmDto> alarmDtos =  alarmService.allDayIndexAlarm(alarmDto);
+		//PageInfo<IndexAlarmDto> pageInfo = new PageInfo<>(alarmDtos);
+		map.addAttribute(Constraints.RESULT_ROW, alarmDtos);
 		return map;
 	}
 	@RequestMapping("/")
