@@ -100,7 +100,7 @@
       #{complete_time,jdbcType=TIMESTAMP}, #{apply_person,jdbcType=VARCHAR}, #{apply_time,jdbcType=TIMESTAMP}, 
       #{apply_time_now,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, #{final_reply,jdbcType=VARCHAR}, 
       #{receive_person,jdbcType=VARCHAR}, #{receive_time,jdbcType=VARCHAR}, #{make_up,jdbcType=VARCHAR}, 
-      #{tablenum,jdbcType=VARCHAR}, #{questionflag,jdbcType=INTEGER})
+      #{tablenum,jdbcType=VARCHAR}, -1)
   </insert>
   <insert id="insertSelective" parameterType="com.iscas.sdas.dto.PerformanceWorkDto">
     insert into t_performance_work

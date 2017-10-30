@@ -11,7 +11,7 @@ var JSON = "json";
 var LABELS = ['default','success','primary','info','warning','danger'];
 var SP = "&nbsp;&nbsp;";
 /**
- * 从子iframe跳转到父iframe
+ * 从子iframe跳转到另一个iframe
  */
 function iframeconvert(url,name,param){
 	var a_parent = $(".page-tabs-content",window.parent.document);  //父ifream <a>

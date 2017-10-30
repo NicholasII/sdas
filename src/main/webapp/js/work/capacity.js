@@ -3,7 +3,7 @@
  * 2017年9月20日下午9:10:31
  * TODO
  */
-var capacityworkurl = "/sdas/work/alltest";
+var capacityworkurl = "/sdas/work/allrtworks";
 //var capacityworkurl = ctx + "/capacitywork/gettable";
 var doubutworkurl = ctx +"/work/validatedoubt";
 var aeraurl = ctx + "/capacitywork/belongare";
@@ -14,7 +14,7 @@ var work_date=7;
 $(function(){
 	$.jgrid.defaults.styleUI = 'Bootstrap';
 	$.ajax({
-		url: '/sdas/work/alltest',
+		url: capacityworkurl,
 		type:"GET",
 		data:{
         	'daynum':work_date,
@@ -267,13 +267,13 @@ $(function(){
 	
 });
 function validate(){
+    jQuery("#table_list_1").jqGrid("clearGridData");
     $.ajax({
                 url: validateurl,
                 type:"GET",
                 dataType:"json",
                 success:function(data,status){  
-                    var success = data.success;
-                    jQuery("#table_list_1").jqGrid("clearGridData");
+                    var success = data.success;                   
                     if(success){
                         var list = data.rows;
                         $("#table_list_1").jqGrid('setGridParam',{

@@ -45,12 +45,14 @@ public interface CapacityWorkDao {
 	 */
 	int updatealarmwork(CapacityWorkDto work);
 	/**
-	 * 临时演示用
+	 * 经过工单验证的所有值
+	 * t_performance_work_rt 中 questionflag=0的值
 	 * @return
 	 */
 	List<CapacityWorkDto> getAllDoubtWorks();
 	/**
-	 * 临时演示用
+	 * 经过工单验证的所有值
+	 * t_performance_work_rt 中 questionflag=0,1,2的值
 	 * @return
 	 */
 	List<CapacityWorkDto> getAllWorks(CapacityWorkDto capacityWorkDto);

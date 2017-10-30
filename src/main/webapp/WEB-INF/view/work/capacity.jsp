@@ -92,7 +92,7 @@ input {
 							<button class="btn btn-white" onclick="">导出</button>
 
 							<div>
-								<form action="${context}/work/import" method="post"
+								<form action="${context}/work/import/capacity" method="post"
 									enctype="multipart/form-data"
 									style="display: inline !important;">
 									<input style="display: inline !important;"

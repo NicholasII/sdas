@@ -21,8 +21,6 @@ import com.iscas.sdas.util.CommonUntils;
 import com.iscas.sdas.util.Constraints;
 import com.iscas.sdas.util.FileImport;
 
-import tasks.BGTask;
-
 
 @Controller
 @RequestMapping("/work")
@@ -52,7 +50,12 @@ public class WorkController {
 	public ModelAndView outservice(){
 		return new ModelAndView("/work/outservice");
 	}
-	@RequestMapping("/import")
+	/**
+	 * 导入性能工单
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/import/capacity")
 	public ModelAndView fileimport(HttpServletRequest request){
 		ModelAndView map = new ModelAndView("/work/capacity");
 		String tablename = "t_performance_work";
@@ -67,12 +70,10 @@ public class WorkController {
 					performanceWorkDtos.add(workDto);
 				}
 				try {
-					FileImport.importwork(paths.get(0), performanceWorkDtos, tableInfoDtos);
-					workService.clearPerformanceWork();				
-					workService.insertPerformanceWork(performanceWorkDtos);
-					//map.addAttribute(Constraints.RESULT_SUCCESS, true);
+					FileImport.importwork(paths.get(0), performanceWorkDtos, tableInfoDtos);//将excel映射为对象
+					workService.clearPerformanceWork();	//清空表
+					workService.insertPerformanceWork(performanceWorkDtos);//插入表并将questionflag置为-1
 				} catch (Exception e) {
-					//map.addAttribute(Constraints.RESULT_ROW, performanceWorkDtos);
 					map.addObject(Constraints.RESULT_SUCCESS, false);
 					e.printStackTrace();
 				}
@@ -83,13 +84,19 @@ public class WorkController {
 		return map;
 		
 	}
+	/**
+	 * 工单验证
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/validate")
 	@ResponseBody
-	public ModelMap workvalidate(){
+	public ModelMap workvalidate() throws Exception{
 		ModelMap map = new ModelMap();
 		/*BGTask task = new NewGDCheckTask();//调用spark跑工单验证
 		task.doTask();*/
-		List<CapacityWorkDto> capacityWorks = workService.workValidate(workService.allvalidatelist(),0);
+		//List<CapacityWorkDto> capacityWorks = workService.workValidate(workService.allvalidatelist(),0);
+		List<CapacityWorkDto> capacityWorks =  workService.workValidate2();
 		if (capacityWorks.size()>0) {
 			map.addAttribute(Constraints.RESULT_ROW, capacityWorks);
 			map.addAttribute(Constraints.RESULT_SUCCESS, true);
@@ -146,10 +153,10 @@ public class WorkController {
 		return map;
 	}
 	/**
-	 * 获取rt表中所有可疑工单（演示用）
+	 * 获取工单验证表中所有工单
 	 * @return
 	 */
-	@RequestMapping("/alltest")
+	@RequestMapping("/allrtworks")
 	@ResponseBody
 	public ModelMap alltest(HttpServletRequest request){
 		ModelMap map = new ModelMap();

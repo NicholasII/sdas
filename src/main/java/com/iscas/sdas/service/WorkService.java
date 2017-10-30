@@ -132,6 +132,19 @@ public class WorkService {
 		}
 		
 	}
+	/**
+	 * 工单验证，即从t_performance_work_rt表中读取questionfalg为0,1,2的值
+	 * questionflag = 0 or questionflag = 1 or questionflag = 2
+	 * @return
+	 */
+	public List<CapacityWorkDto> workValidate2(){ 
+		CapacityWorkDto capacityWorkDto = new CapacityWorkDto();
+		return capacityWorkDao.getAllWorks(capacityWorkDto);
+	}
+	
+	
+	
+	
 	private void updateState(List<CapacityWorkDto> works){
 		for (CapacityWorkDto capacityWorkDto : works) {
 			capacityWorkDao.update(capacityWorkDto);
