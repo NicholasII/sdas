@@ -47,16 +47,16 @@ public class AlarmController {
 		String daynum = request.getParameter("daynum");
 		String starttime = request.getParameter("starttime");
 		String endtime = request.getParameter("endtime");
-		if (cellname!=null) {
+		if (!CommonUntils.isempty(cellname)) {
 			alarmDto.setCell_code(cellname);
 		}
-		if (daynum!=null) {
-			alarmDto.setDaynum(Integer.parseInt(daynum));
+		if (!CommonUntils.isempty(daynum)) {
+			alarmDto.setDaynum(daynum);
 		}
-		if (starttime!=null) {
+		if (!CommonUntils.isempty(starttime)) {
 			alarmDto.setStarttime(starttime);
 		}
-		if (endtime!=null) {
+		if (!CommonUntils.isempty(endtime)) {
 			alarmDto.setEndtime(endtime);
 		}
 		List<AlarmDto> alarmDtos =  alarmService.allAlarm(alarmDto);

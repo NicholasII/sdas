@@ -163,7 +163,7 @@ public class WorkController {
 			cwdto.setCellid(cellid);
 		}
 		if (!CommonUntils.isempty(daynum)) {
-			cwdto.setDaynum(Integer.parseInt(daynum));
+			cwdto.setDaynum(daynum);
 		}
 		if (!CommonUntils.isempty(starttime)) {
 			cwdto.setStarttime(starttime);

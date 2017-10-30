@@ -37,7 +37,7 @@ public class DeviceController {
 		if (!CommonUntils.isempty(cellname)) {
 			deviceWorkDto.setCell_name(cellname);
 		}
-		if (!CommonUntils.isempty(starttime) && CommonUntils.isempty(endtime)) {
+		if (!CommonUntils.isempty(starttime) && !CommonUntils.isempty(endtime)) {
 			deviceWorkDto.setBuild_bill_time(CommonUntils.strToTimestap(starttime));
 		}
 		if (starttime=="") {
@@ -82,13 +82,13 @@ public class DeviceController {
 		String daynum = request.getParameter("daynum");
 		String starttime = request.getParameter("starttime");
 		String endtime = request.getParameter("endtime");
-		if (daynum!=null) {
-			deviceWorkDto.setDaynum(Integer.parseInt(daynum));
+		if (!CommonUntils.isempty(daynum)) {
+			deviceWorkDto.setDaynum(daynum);
 		}
-		if (starttime!=null) {
+		if (!CommonUntils.isempty(starttime)) {
 			deviceWorkDto.setStarttime(starttime);
 		}
-		if (endtime!=null) {
+		if (!CommonUntils.isempty(endtime)) {
 			deviceWorkDto.setEndtime(endtime);
 		}
 		List<DeviceWorkDto> works = deviceWorkService.getlistdevice(deviceWorkDto);

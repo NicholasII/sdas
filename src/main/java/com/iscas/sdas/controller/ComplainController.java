@@ -21,6 +21,7 @@ import com.iscas.sdas.common.PageDto;
 import com.iscas.sdas.dto.CellComplainDto;
 import com.iscas.sdas.dto.ComplainDto;
 import com.iscas.sdas.service.ComplainService;
+import com.iscas.sdas.util.CommonUntils;
 import com.iscas.sdas.util.Constraints;
 
 @Controller
@@ -137,13 +138,13 @@ public class ComplainController {
 			String daynum = request.getParameter("daynum");
 			String starttime = request.getParameter("starttime");
 			String endtime = request.getParameter("endtime");
-			if (daynum!=null) {
-				ComplainDto.setDaynum(Integer.parseInt(daynum));
+			if (!CommonUntils.isempty(daynum)) {
+				ComplainDto.setDaynum(daynum);
 			}
-			if (starttime!=null) {
+			if (!CommonUntils.isempty(starttime)) {
 				ComplainDto.setStarttime(starttime);
 			}
-			if (endtime!=null) {
+			if (!CommonUntils.isempty(endtime)) {
 				ComplainDto.setEndtime(endtime);
 			}
 			List<CellComplainDto> cellComplainDtos = complainService.getcomplist(ComplainDto);

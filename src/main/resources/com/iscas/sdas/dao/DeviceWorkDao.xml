@@ -81,16 +81,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getlistdevice" parameterType="java.lang.String" resultType="com.iscas.sdas.dto.work.DeviceWorkDto">
 		select order_title,build_bill_time,net_alarm_name,net_remove_time,net_alarm_source,cell_name,fault_occus_time,transt_reason
 		from t_equipment_failure_201708 where 1=1
-		<if test="starttime!='' and starttime!=''">
+		<if test="starttime!=null and starttime!=null">
 		and build_bill_time &gt;=#{starttime} and build_bill_time &lt;=#{endtime}
 		</if>
-		<if test="starttime=='' and endtime=='' and daynum==7">
+		<if test="starttime==null and endtime==null and daynum==7">
 		and TO_DAYS(NOW())-TO_DAYS(build_bill_time) &lt;=#{daynum}<!-- #{daynum} -->
 		</if>
-		<if test="starttime=='' and endtime=='' and daynum==30">
+		<if test="starttime==null and endtime==null and daynum==30">
 		and TO_DAYS(NOW())-TO_DAYS(build_bill_time) &lt;=#{daynum}
 		</if>
-		<if test="starttime=='' and endtime=='' and daynum==0">
+		<if test="starttime==null and endtime==null and daynum==0">
 		and TO_DAYS(NOW())-TO_DAYS(build_bill_time) =#{daynum}
 		</if>
 	</select>

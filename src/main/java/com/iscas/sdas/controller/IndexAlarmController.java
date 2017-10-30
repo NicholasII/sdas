@@ -61,7 +61,7 @@ public class IndexAlarmController extends BaseController<IndexAlarmDto>{
 			alarmDto.setCell_code(cellname);
 		}
 		if (!CommonUntils.isempty(daynum)) {
-			alarmDto.setDaynum(Integer.parseInt(daynum));
+			alarmDto.setDaynum(daynum);
 		}
 		if (!CommonUntils.isempty(starttime)) {
 			alarmDto.setStarttime(starttime);

@@ -13,7 +13,7 @@ public class DeviceWorkDto {
 	private String fault_occus_time;
 	private String transt_reason;
 	
-	private int daynum;
+	private String daynum;
 	private String starttime;
 	private String endtime;
 	
@@ -65,10 +65,10 @@ public class DeviceWorkDto {
 	public void setTranst_reason(String transt_reason) {
 		this.transt_reason = transt_reason;
 	}
-	public int getDaynum() {
+	public String getDaynum() {
 		return daynum;
 	}
-	public void setDaynum(int daynum) {
+	public void setDaynum(String daynum) {
 		this.daynum = daynum;
 	}
 	public String getStarttime() {

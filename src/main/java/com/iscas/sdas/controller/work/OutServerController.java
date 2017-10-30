@@ -36,16 +36,10 @@ public class OutServerController {
 		if (!CommonUntils.isempty(cellname)) {
 			outServerDto.setCell_name(cellname);
 		}
-		if (!CommonUntils.isempty(starttime) && CommonUntils.isempty(endtime)) {
+		if (!CommonUntils.isempty(starttime)) {
 			outServerDto.setStart_time(CommonUntils.strToTimestap(starttime));
 		}
-		if (starttime=="") {
-			starttime = null;
-		}
-		if (endtime=="") {
-			endtime = null;
-		}
-		List<OutServerDto> outServerDtos = outServerService.getlist(outServerDto,starttime,endtime);
+		List<OutServerDto> outServerDtos = outServerService.getlist(outServerDto);
 		map.addAttribute(Constraints.RESULT_ROW
 				, outServerDtos);
 		return map;
@@ -80,13 +74,13 @@ public class OutServerController {
 		String daynum = request.getParameter("daynum");
 		String starttime = request.getParameter("starttime");
 		String endtime = request.getParameter("endtime");
-		if (daynum!=null) {
-			outServerDto.setDaynum(Integer.parseInt(daynum));
+		if (CommonUntils.isempty(daynum)) {
+			outServerDto.setDaynum(daynum);
 		}
-		if (starttime!=null) {
+		if (CommonUntils.isempty(starttime)) {
 			outServerDto.setStarttime(starttime);
 		}
-		if (endtime!=null) {
+		if (CommonUntils.isempty(endtime)) {
 			outServerDto.setEndtime(endtime);
 		}
 		List<OutServerDto> works = outServerService.getlistout(outServerDto);
