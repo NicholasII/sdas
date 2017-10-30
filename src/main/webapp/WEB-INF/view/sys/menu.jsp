@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/include/common.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title></title>
+<%@ include file="/include/common.jsp"%>
+<%-- <script type="text/javascript" src="${context}/include/utils.js"></script> --%>
 <script type="text/javascript" src="${context}/js/sys/menu.js"></script>
 </head>
 <body>

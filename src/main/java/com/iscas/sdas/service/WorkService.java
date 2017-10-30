@@ -2,13 +2,10 @@ package com.iscas.sdas.service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.sound.midi.VoiceStatus;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +17,7 @@ import com.iscas.sdas.dao.WorkDao;
 import com.iscas.sdas.dao.work.CapacityWorkDao;
 import com.iscas.sdas.dto.PerformanceWorkDto;
 import com.iscas.sdas.dto.work.CapacityWorkDto;
-import com.mysql.fabric.xmlrpc.base.Fault;
-import com.sun.java.swing.plaf.motif.resources.motif;
+
 
 @Service
 public class WorkService {

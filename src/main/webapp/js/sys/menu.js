@@ -65,12 +65,12 @@ $(function() {
 		sidePagination : 'server',// 设置为服务器端分页
 		columns : [
 			{ field : "", checkbox : true },
-			{ field : "MENU_ID", title : "ID", titleTooltip:"编码", align : "center", valign : "middle", visible:false},
-			{ field : "MENU_NAME", title : "名称", align : "center", valign : "middle" },
-			{ field : "PARENT_MENU_ID", title : "父菜单", align : "center", valign : "middle" },
-			{ field : 'MENU_URL', title : '地址', align : 'left', valign : 'middle' },
-			{ field : "MENU_NOTICE", title : "描述", align : "left", valign : "middle" },
-			{ field : "ORDER_NUM", title : "排序", align : "center", valign : "middle" } 
+			{ field : "menu_ID", title : "ID", titleTooltip:"编码", align : "center", valign : "middle", visible:false},
+			{ field : "menu_NAME", title : "名称", align : "center", valign : "middle" },
+			{ field : "parent_MENU_NAME", title : "父菜单", align : "center", valign : "middle" },
+			{ field : 'menu_URL', title : '地址', align : 'left', valign : 'middle' },
+			{ field : "menu_NOTICE", title : "描述", align : "left", valign : "middle" },
+			{ field : "order_NUM", title : "排序", align : "center", valign : "middle" } 
 		],
 		onPageChange : function(size, number) {
 			searchInfo();
@@ -348,8 +348,8 @@ function commonGridAjax(type, url, data, success, gridid, boolean) {
 }
 function commonCallback(response, gridid, url, data, boolean) {
 	if (gridid != null && gridid != "") {
-		
-		$("#" + gridid).bootstrapTable('load', response);
+		var result = response.rows;
+		$("#" + gridid).bootstrapTable('load', result);
 		// db中数据被删除了，检索的后一页没有数据，页面显示前一页的数据
 		/*if(boolean){
 			if (response.rows.length == 0 && response.total > 0) {

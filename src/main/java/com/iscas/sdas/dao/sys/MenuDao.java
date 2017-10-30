@@ -18,6 +18,14 @@ public interface MenuDao {
 	 */
 	public List<MenuDto> getSecondMenu(Integer pid);
 	
-	
+	/**
+	 * 获取指定id的menu
+	 * @return
+	 */
+	public MenuDto getMenu(Integer id);
+	/**
+	 * 获取所有菜单
+	 * @return
+	 */
 	public List<MenuDto> getAllMenu();
 }

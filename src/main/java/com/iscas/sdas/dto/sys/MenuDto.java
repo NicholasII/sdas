@@ -12,6 +12,8 @@ public class MenuDto {
 		private String MENU_URL;
 		// 菜单名称
 		private String MENU_NAME;
+		// 父菜单名称
+		private String PARENT_MENU_NAME;
 		// 菜单顺序
 		private Integer ORDER_NUM;
 		// 注释
@@ -62,9 +64,11 @@ public class MenuDto {
 		}
 		public void setMenus(List<MenuDto> menus) {
 			this.menus = menus;
+		}
+		public String getPARENT_MENU_NAME() {
+			return PARENT_MENU_NAME;
+		}
+		public void setPARENT_MENU_NAME(String pARENT_MENU_NAME) {
+			PARENT_MENU_NAME = pARENT_MENU_NAME;
 		}	
-
-		
-		
-		
 }	
