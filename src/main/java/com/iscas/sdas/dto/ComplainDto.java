@@ -7,7 +7,7 @@ public class ComplainDto {
 	private Timestamp time;
 	private String cellname;
 	private int countnum;
-	private int daynum;
+	private String daynum;
 	private String starttime;
 	private String endtime;
 	public Timestamp getTime() {
@@ -28,10 +28,10 @@ public class ComplainDto {
 	public void setCountnum(int countnum) {
 		this.countnum = countnum;
 	}
-	public int getDaynum() {
+	public String getDaynum() {
 		return daynum;
 	}
-	public void setDaynum(int daynum) {
+	public void setDaynum(String daynum) {
 		this.daynum = daynum;
 	}
 	public String getStarttime() {

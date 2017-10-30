@@ -27,7 +27,7 @@ public class IndexAlarmDto extends BaseDto {
 	
 	private String type;
 
-	private int daynum;
+	private String daynum;
 	private String starttime;
 	private String endtime;
 	
@@ -95,11 +95,11 @@ public class IndexAlarmDto extends BaseDto {
 		this.app_type = app_type;
 	}
 
-	public int getDaynum() {
+	public String getDaynum() {
 		return daynum;
 	}
 
-	public void setDaynum(int daynum) {
+	public void setDaynum(String daynum) {
 		this.daynum = daynum;
 	}
 

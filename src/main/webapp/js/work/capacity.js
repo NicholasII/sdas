@@ -10,7 +10,7 @@ var aeraurl = ctx + "/capacitywork/belongare";
 var validateurl = ctx +"/work/validate";
 var starttime="";
 var endtime="";
-var work_date=7;
+var work_date=null;
 $(function(){
 	$.jgrid.defaults.styleUI = 'Bootstrap';
 	$.ajax({
@@ -54,7 +54,11 @@ $(function(){
 		$(this).parent().children(":last").css("display", "none");
 				starttime="";
 				endtime=""
-			if ($(this).html() == "今日") {
+			if($(this).html() == "全部"){
+				work_date = null;	
+				$(this).removeClass("btn-white");
+				$(this).addClass("btn-info");
+			}else if ($(this).html() == "今日") {
 				work_date = 0;
 				$(this).removeClass("btn-white");
 				$(this).addClass("btn-info");
@@ -72,7 +76,7 @@ $(function(){
 				$(this).addClass("btn-info");
 				$(this).parent().children(":last").css("display", "block");
 			}
-			if(work_date!=null){
+			if($("#timeselect").is(":hidden")){
 				select(work_date);
 			}
 		});
@@ -187,7 +191,7 @@ function select(daynum){
 	var name = $("#name").val();
 	var area = $("#area").val();
 	var content = $("#content").val();
-	if(work_date==null){
+	if(work_date==null&&!$("#timeselect").is(":hidden")){
     	starttime = $("#starttime").val();
         endtime = $("#endtime").val();
     }    

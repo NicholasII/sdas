@@ -10,7 +10,7 @@ public class OutServerDto {
 	private String vip_type;
 	private String cell_name;
 	private String station_name;
-	private int daynum;
+	private String daynum;
 	private String starttime;
 	private String endtime;
 	
@@ -50,10 +50,10 @@ public class OutServerDto {
 	public void setStation_name(String station_name) {
 		this.station_name = station_name;
 	}
-	public int getDaynum() {
+	public String getDaynum() {
 		return daynum;
 	}
-	public void setDaynum(int daynum) {
+	public void setDaynum(String daynum) {
 		this.daynum = daynum;
 	}
 	public String getStarttime() {
