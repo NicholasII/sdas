@@ -197,9 +197,9 @@ var histroy_trend = {
 					'name' : "投诉"
 				},{
                     'name' : "警戒区"
-                },{
+                }/*,{
                     'name' : "观察区"
-                }]
+                }*/]
 	},
 	dataZoom : [{
 				type : 'slider',
@@ -295,7 +295,7 @@ var histroy_trend = {
                                         }])
                     }
                 }
-            },{
+            },/*{
                 name : '观察区',
                 data : [],
                 type : 'scatter',
@@ -326,7 +326,7 @@ var histroy_trend = {
                                         }])
                     }
                 }
-            }, {
+            },*/ {
 				name : '',
 				type : 'line',
 				smooth : true,
@@ -624,7 +624,7 @@ function historyTrendQuery(type, start, end) {
 					histroy_trend.series[0].data = data2;
 					histroy_trend.series[1].data = data2;
                     histroy_trend.series[2].data = data2;
-                    histroy_trend.series[3].data = data2;
+                    //histroy_trend.series[3].data = data2;
 					ratiotrend.setOption(histroy_trend);
 				}
 			});
@@ -966,7 +966,7 @@ $(function() {
                     histroy_trend.series[0].data = data2;
                     histroy_trend.series[1].data = data2;
                     histroy_trend.series[2].data = data2;
-                    histroy_trend.series[3].data = data2;
+                    //histroy_trend.series[3].data = data2;
 					ratiotrend.setOption(histroy_trend);
 				}
 			});
@@ -1544,7 +1544,8 @@ function refresh_healthtable(list) {
 			}else if(k.result==1){//Normal
 				str+="<td>"+k.ratio+"</td>";
 			}else if(k.result==2){//Warning
-				str+="<td class='yellow'>"+k.ratio+"</td>";
+				str+="<td>"+k.ratio+"</td>";
+				//str+="<td class='yellow'>"+k.ratio+"</td>";
 			}else if(k.result==3){//Unkonw
 				str+="<td class='gray'>"+k.ratio+"</td>";
 			}else if(k.result==4){//Error
