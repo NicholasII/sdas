@@ -20,16 +20,16 @@
 .laydate_body .laydate_box .laydate_void{color:#00E8D7!important;}
 .laydate_body .laydate_box a, .laydate_body .laydate_box a:hover{color:#00625A;}
 .laydate_body .laydate_box a:hover{color:#666;}
-.laydate_body .laydate_click{background-color:#009F95!important; color:#fff!important;}
-.laydate_body .laydate_top{border-top:1px solid #009F95; background-color:#009F95}
-.laydate_body .laydate_ym{border:1px solid #009F95; background-color:#009F95;}
-.laydate_body .laydate_ym .laydate_yms{border:1px solid #009F95; background-color:#009F95; color:#fff;}
-.laydate_body .laydate_y .laydate_yms a{border-bottom:1px solid #009F95;}
-.laydate_body .laydate_y .laydate_yms .laydate_chdown{border-top:1px solid #009F95; border-bottom:none;}
-.laydate_body .laydate_choose{border-left:1px solid #009F95;}
-.laydate_body .laydate_chprev{border-left:none; border-right:1px solid #009F95;}
+.laydate_body .laydate_click{background-color:#1c84c6!important; color:#fff!important;}
+.laydate_body .laydate_top{border-top:1px solid #1c84c6; background-color:#1c84c6}
+.laydate_body .laydate_ym{border:1px solid #1c84c6; background-color:#1c84c6;}
+.laydate_body .laydate_ym .laydate_yms{border:1px solid #1c84c6; background-color:#1c84c6; color:#fff;}
+.laydate_body .laydate_y .laydate_yms a{border-bottom:1px solid #1c84c6;}
+.laydate_body .laydate_y .laydate_yms .laydate_chdown{border-top:1px solid #1c84c6; border-bottom:none;}
+.laydate_body .laydate_choose{border-left:1px solid #1c84c6;}
+.laydate_body .laydate_chprev{border-left:none; border-right:1px solid #1c84c6;}
 .laydate_body .laydate_choose:hover,
-.laydate_body .laydate_y .laydate_yms a:hover{background-color:#00C1B3;}
+.laydate_body .laydate_y .laydate_yms a:hover{background-color:#1c84c6;}
 .laydate_body .laydate_chtop cite{border-bottom-color:#fff;}
 .laydate_body .laydate_chdown cite, .laydate_body .laydate_ym label{border-top-color:#fff;}
 .laydate_body .laydate_chprev cite{border-right-style:solid; border-right-color:#fff;}
@@ -54,6 +54,6 @@
 .laydate_body .laydate_m .laydate_yms span:hover,
 .laydate_body .laydate_time .laydate_hmsno span:hover,
 .laydate_body .laydate_y .laydate_yms ul li:hover,
-.laydate_body .laydate_table td:hover{background-color:#00C1B3; color:#fff;}
+.laydate_body .laydate_table td:hover{background-color:#1c84c6; color:#fff;}
 
 
