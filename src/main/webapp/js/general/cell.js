@@ -326,7 +326,9 @@ var histroy_trend = {
                                         }])
                     }
                 }
-            },*/ {
+
+            }, */{
+
 				name : '',
 				type : 'line',
 				smooth : true,
@@ -1180,28 +1182,35 @@ function refreshJqGrid(list) {
 			var ids = jQuery("#table_list_complain").jqGrid("getDataIDs");
 			for (var i = 0; i < ids.length; i++) {
 				var id = ids[i];
+                var link = "/sdas/general/cellhome/";
 				var live_cellname1 = $("#table_list_complain").getCell(id,
 						'live_cellname1');
+                if(live_cellname1.indexOf("<a")<0){
+                    var url1 = '<a href=javascript:gotocellhome("' +link +'","' + live_cellname1
+                        + '")>' + live_cellname1 + '</a>';
+                    $("#table_list_complain").jqGrid('setRowData', id, {
+                            live_cellname1 : url1});
+                }
 				var live_cellname2 = $("#table_list_complain").getCell(id,
 						'live_cellname2');
+                if(live_cellname2.indexOf("<a")<0){
+                    var url2 = '<a href=javascript:gotocellhome("' +link +'","' + live_cellname2
+                        + '")>' + live_cellname2 + '</a>';
+                    $("#table_list_complain").jqGrid('setRowData', id, {
+                            live_cellname2 : url2
+                        });
+                }
 				var live_cellname3 = $("#table_list_complain").getCell(id,
 						'live_cellname3');
-				var link = "/sdas/general/cellhome/";
-				var url1 = '<a href=javascript:gotocellhome("' +link +'","' + live_cellname1
-						+ '")>' + live_cellname1 + '</a>';
-				var url2 = '<a href=javascript:gotocellhome("' +link +'","' + live_cellname2
-						+ '")>' + live_cellname2 + '</a>';
-				var url3 = '<a href=javascript:gotocellhome("' +link +'","' + live_cellname3
-						+ '")>' + live_cellname3 + '</a>';
-				$("#table_list_complain").jqGrid('setRowData', id, {
-							live_cellname1 : url1
-						});
-				$("#table_list_complain").jqGrid('setRowData', id, {
-							live_cellname2 : url2
-						});
-				$("#table_list_complain").jqGrid('setRowData', id, {
-							live_cellname3 : url3
-						});
+				
+				if(live_cellname3.indexOf("<a")<0){
+                    var url3 = '<a href=javascript:gotocellhome("' +link +'","' + live_cellname3
+                        + '")>' + live_cellname3 + '</a>';
+                            
+                    $("#table_list_complain").jqGrid('setRowData', id, {
+                            live_cellname3 : url3
+                        });
+                }								
 			}
 		}
 	});

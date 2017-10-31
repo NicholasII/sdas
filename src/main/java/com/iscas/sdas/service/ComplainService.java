@@ -1,5 +1,6 @@
 package com.iscas.sdas.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -27,12 +28,22 @@ public class ComplainService {
 		return complainDao.getlist();
 	}
 	/**
-	 * 小区投诉
+	 * 小区投诉(包含4G的)
 	 * @param cellname
 	 * @return
 	 */
 	public List<CellComplainDto> getcelllist(String cellname){
-		return encryption(complainDao.getcelllist(cellname));
+		List<CellComplainDto> result = new ArrayList<>();
+		List<CellComplainDto> list = encryption(complainDao.getcelllist(cellname));
+		for (CellComplainDto cellComplainDto : list) {		
+			String detailInfo = cellComplainDto.getServicerequesttype();
+			if (detailInfo.contains("4G")) {			
+				detailInfo  = detailInfo.substring(6);
+				cellComplainDto.setServicerequesttype(detailInfo);
+				result.add(cellComplainDto);
+			}
+		}
+		return result;
 	}
 	/**
 	 * 所有投诉

@@ -80,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="complaintWithinOneWeek" resultType="com.iscas.sdas.dto.CellComplainDto"
 		parameterType="java.lang.String">
 		SELECT
-		t1.record_time,t1.phone_number,t1.complaint_detailinfo,t2.live_cellname1,t2.live_cellname2,t2.live_cellname3
+		t1.record_time,t1.phone_number,t1.servicerequesttype,t1.complaint_detailinfo,t2.live_cellname1,t2.live_cellname2,t2.live_cellname3
 		FROM t_complaint_detail t1,t_complaint_residentarea t2
 		WHERE
 		t1.phone_number=t2.phone_number AND
@@ -98,7 +98,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="complaintWithinOneMonth" resultType="com.iscas.sdas.dto.CellComplainDto"
 		parameterType="java.lang.String">
 		SELECT
-		t1.record_time,t1.phone_number,t1.complaint_detailinfo,t2.live_cellname1,t2.live_cellname2,t2.live_cellname3
+		t1.record_time,t1.phone_number,t1.servicerequesttype,t1.complaint_detailinfo,t2.live_cellname1,t2.live_cellname2,t2.live_cellname3
 		FROM t_complaint_detail t1,t_complaint_residentarea t2
 		WHERE
 		t1.phone_number=t2.phone_number AND
@@ -115,7 +115,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="complaintWithinSelect" resultType="com.iscas.sdas.dto.CellComplainDto">
 		SELECT
-		t1.record_time,t1.phone_number,t1.complaint_detailinfo,t2.live_cellname1,t2.live_cellname2,t2.live_cellname3
+		t1.record_time,t1.phone_number,t1.servicerequesttype,t1.complaint_detailinfo,t2.live_cellname1,t2.live_cellname2,t2.live_cellname3
 		FROM t_complaint_detail t1,t_complaint_residentarea t2
 		WHERE
 		t1.phone_number=t2.phone_number AND
