@@ -6,7 +6,7 @@ function section(){
 	var Output=$("#Output").val();
 	var ifDel=$("input[name='deleteOut']:checked").val();
 	$.ajax({
-		url:"/sdas/timer/",
+		url:"/sdas/timer/section",
 		data:{
 			"source":Source,
 			"output":Output,
@@ -31,7 +31,7 @@ function calculate(id,url,areaId){
 		},
 		daraType:"post",
 		success:function(data){
-			
+			alert("计算成功！");
 		}
 	});
 }

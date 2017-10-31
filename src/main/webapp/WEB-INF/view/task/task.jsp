@@ -78,7 +78,7 @@ input[type='textarea'] {
 									</div>
 									<div class="col-sm-4 col-sm-offset-3" style="margin-top: 10px">
 										<button class="btn btn-info search" type="button"
-											onclick="section('')">确定</button>
+											onclick="section()">确定</button>
 									</div>
 								</div>
 
@@ -102,15 +102,15 @@ input[type='textarea'] {
 										<div class="timeselect">
 											<input id="model_time" class="layer-date"
 												placeholder="请输入计算时间"
-												onclick="laydate({istime: false, format: 'YYYY-MM'})">
+												onclick="laydate({istime: false, format: 'YYYYMM'})">
 											<button class="btn btn-info search" type="button"
-												onclick="calculate()">确定</button>
+												onclick="calculate('#model_time','/sdas/timer/OffLineNormalState')">确定</button>
 										</div>
 									</div>
-									<label class="col-sm-3 control-label">计算结果：</label>
+									<!-- <label class="col-sm-3 control-label">计算结果：</label>
 									<div class="col-sm-8">
 										<input type="textarea" placeholder="计算结果" class="form-control" id="m_area">
-									</div>
+									</div> -->
 								</div>
 							</div>
 						</div>
@@ -133,15 +133,15 @@ input[type='textarea'] {
 										<div class="timeselect" style="float: left;">
 											<input id="Health_time" class="layer-date"
 												placeholder="请输入计算时间"
-												onclick="laydate({istime: false, format: 'YYYY-MM'})">
+												onclick="laydate({istime: false, format: 'YYYYMM'})">
 											<button class="btn btn-info search" type="button"
-												onclick="calculate()">确定</button>
+												onclick="calculate('#Health_time','/sdas/timer/HealthDegreeHistory')">确定</button>
 										</div>
 									</div>
-									<label class="col-sm-3 control-label">计算结果：</label>
+									<!-- <label class="col-sm-3 control-label">计算结果：</label>
 									<div class="col-sm-8">
 										<input type="textarea" placeholder="计算结果" class="form-control" id="h_area">
-									</div>
+									</div> -->
 								</div>
 							</div>
 						</div>
@@ -161,17 +161,17 @@ input[type='textarea'] {
 									<label class="col-sm-3 control-label">选择计算时间：</label>
 									<div class="col-sm-8">
 										<div class="timeselect">
-											<input id="Percen_time" class="layer-date"
+											<input id="Percent_time" class="layer-date"
 												placeholder="请输入计算时间"
-												onclick="laydate({istime: false, format: 'YYYY-MM'})">
+												onclick="laydate({istime: false, format: 'YYYYMM'})">
 											<button class="btn btn-info search" type="button"
-												onclick="calculate()">确定</button>
+												onclick="calculate('#Percent_time','/sdas/timer/CellHealthPercent')">确定</button>
 										</div>
 									</div>
-									<label class="col-sm-3 control-label">计算结果：</label>
+									<!-- <label class="col-sm-3 control-label">计算结果：</label>
 									<div class="col-sm-8">
 										<input type="textarea" placeholder="计算结果" class="form-control" id="p_area">
-									</div>
+									</div> -->
 								</div>
 							</div>
 						</div>
@@ -193,15 +193,15 @@ input[type='textarea'] {
 										<div class="timeselect">
 											<input id="alarm_time" class="layer-date"
 												placeholder="请输入计算时间"
-												onclick="laydate({istime: false, format: 'YYYY-MM'})">
+												onclick="laydate({istime: false, format: 'YYYYMM'})">
 											<button class="btn btn-info search" type="button"
-												onclick="calculate()">确定</button>
+												onclick="calculate('#alarm_time','/sdas/timer/IndexWarning')">确定</button>
 										</div>
 									</div>
-									<label class="col-sm-3 control-label">计算结果：</label>
+									<!-- <label class="col-sm-3 control-label">计算结果：</label>
 									<div class="col-sm-8">
 										<input type="textarea" placeholder="计算结果" class="form-control" id="a_area">
-									</div>
+									</div> -->
 								</div>
 							</div>
 						</div>
