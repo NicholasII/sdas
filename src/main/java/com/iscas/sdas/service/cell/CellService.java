@@ -455,15 +455,20 @@ public class CellService {
 			works =  complainDao.complaintWithinSelect(cellname, starttime, endtime);
 		}
 		if (works!=null) {
+			
 			for (CellComplainDto work : works) {
-				int year = work.getRecord_time().getYear()+1900;
-				int month = work.getRecord_time().getMonth()+1;
-				String monthstr = month>=10?""+month:"0"+month;
-				int day = work.getRecord_time().getDate();
-				String daystr = day>=10?""+day:"0"+day;
-				int hour = work.getRecord_time().getHours();
-				String occurtime = year +"-"+ monthstr+"-"+daystr+" "+hour+"时";
-				list.add(occurtime);
+				if (work.getServicerequesttype()!=null) {
+					if (work.getServicerequesttype().contains("4G")) {
+						int year = work.getRecord_time().getYear()+1900;
+						int month = work.getRecord_time().getMonth()+1;
+						String monthstr = month>=10?""+month:"0"+month;
+						int day = work.getRecord_time().getDate();
+						String daystr = day>=10?""+day:"0"+day;
+						int hour = work.getRecord_time().getHours();
+						String occurtime = year +"-"+ monthstr+"-"+daystr+" "+hour+"时";
+						list.add(occurtime);
+					}
+				}							
 			}
 		}
 		return list;

@@ -3,7 +3,6 @@ package com.iscas.sdas.controller.cell;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +25,6 @@ import com.iscas.sdas.dto.cell.BaseCellHealth;
 import com.iscas.sdas.dto.cell.CellDto;
 import com.iscas.sdas.dto.cell.CellHealthTableDto;
 import com.iscas.sdas.service.cell.CellService;
-import com.iscas.sdas.util.CommonUntils;
 import com.iscas.sdas.util.Constraints;
 /**
  * 小区有关：全部表、分组、健康度 
@@ -217,7 +215,7 @@ public class CellController {
 						if (rangestr!=null) {
 							JSONArray array = JSON.parseArray(rangestr);
 							if (array.size()<2) {
-								String str_hour = (moment-1)>=10?(moment-1)+"":"0"+(moment-1);
+								String str_hour = (moment-1)>=10?moment+"":"0"+moment;
 								String newrange  = (String)baseCellHealth.getClass().getMethod("getRange_"+str_hour, null).invoke(baseCellHealth, null);
 								JSONArray newarray = JSON.parseArray(newrange);
 								if (newarray!=null) {
