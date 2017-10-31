@@ -326,7 +326,9 @@ var histroy_trend = {
                                         }])
                     }
                 }
+
             }, */{
+
 				name : '',
 				type : 'line',
 				smooth : true,
@@ -1551,7 +1553,8 @@ function refresh_healthtable(list) {
 			}else if(k.result==1){//Normal
 				str+="<td>"+k.ratio+"</td>";
 			}else if(k.result==2){//Warning
-				str+="<td class='yellow'>"+k.ratio+"</td>";
+				str+="<td>"+k.ratio+"</td>";
+				//str+="<td class='yellow'>"+k.ratio+"</td>";
 			}else if(k.result==3){//Unkonw
 				str+="<td class='gray'>"+k.ratio+"</td>";
 			}else if(k.result==4){//Error
