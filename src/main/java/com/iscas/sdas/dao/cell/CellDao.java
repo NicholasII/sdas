@@ -5,13 +5,13 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.iscas.sdas.dto.CellComplainDto;
-import com.iscas.sdas.dto.DeviceWorkDto;
 import com.iscas.sdas.dto.GroupIndexMeatdata;
-import com.iscas.sdas.dto.OSWorkDto;
-import com.iscas.sdas.dto.PerformanceWorkDto;
 import com.iscas.sdas.dto.cell.BaseCellHealth;
 import com.iscas.sdas.dto.cell.BaseGroupIndex;
 import com.iscas.sdas.dto.cell.CellDto;
+import com.iscas.sdas.dto.work.AllOutServerDto;
+import com.iscas.sdas.dto.work.DeviceWorkDto;
+import com.iscas.sdas.dto.work.AllCapacityWorkDto;
 
 public interface CellDao {
 	
@@ -33,7 +33,7 @@ public interface CellDao {
 	 * @param cellname
 	 * @return
 	 */
-	List<PerformanceWorkDto> performWorkWithinOneWeek(String cellname);
+	List<AllCapacityWorkDto> performWorkWithinOneWeek(String cellname);
 	/**
 	 * 一周设备工单
 	 * @param cellname
@@ -45,7 +45,7 @@ public interface CellDao {
 	 * @param cellname
 	 * @return
 	 */
-	List<OSWorkDto> osWorkWithinOneWeek(String cellname);
+	List<AllOutServerDto> osWorkWithinOneWeek(String cellname);
 	/**
 	 * 一个月的健康度
 	 * @param cellname

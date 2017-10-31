@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.iscas.sdas.dao.OSWorkDtoMapper">
-  <resultMap id="BaseResultMap" type="com.iscas.sdas.dto.OSWorkDto">
+<mapper namespace="com.iscas.sdas.dao.work.AllOutServerDao">
+  <resultMap id="BaseResultMap" type="com.iscas.sdas.dto.work.AllOutServerDto">
     <result column="net_type" jdbcType="VARCHAR" property="netType" />
     <result column="alarm_id" jdbcType="VARCHAR" property="alarmId" />
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
@@ -19,7 +19,7 @@
     <result column="physical_site_name" jdbcType="VARCHAR" property="physicalSiteName" />
     <result column="device_maintain_company" jdbcType="VARCHAR" property="deviceMaintainCompany" />
   </resultMap>
-  <insert id="insert" parameterType="com.iscas.sdas.dto.OSWorkDto">
+  <insert id="insert" parameterType="com.iscas.sdas.dto.work.AllOutServerDto">
     insert into t_wireless_retirement (net_type, alarm_id, start_time, 
       recovery_time, fault_type, order_state, 
       vip_type, net_name, cell_name, 
@@ -33,7 +33,7 @@
       #{eventLog,jdbcType=VARCHAR}, #{physicalSiteId,jdbcType=VARCHAR}, #{physicalSiteName,jdbcType=VARCHAR}, 
       #{deviceMaintainCompany,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.iscas.sdas.dto.OSWorkDto">
+  <insert id="insertSelective" parameterType="com.iscas.sdas.dto.work.AllOutServerDto">
     insert into t_wireless_retirement
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="netType != null">
@@ -136,4 +136,7 @@
       </if>
     </trim>
   </insert>
+  <delete id="delete">
+    delete from t_wireless_retirement
+  </delete>
 </mapper>

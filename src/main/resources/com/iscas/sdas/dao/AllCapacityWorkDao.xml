@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.iscas.sdas.dao.PerformanceWorkDtoMapper">
-  <resultMap id="BaseResultMap" type="com.iscas.sdas.dto.PerformanceWorkDto">
+<mapper namespace="com.iscas.sdas.dao.work.AllCapacityWorkDao">
+  <resultMap id="BaseResultMap" type="com.iscas.sdas.dto.work.AllCapacityWorkDto">
     <id column="alarm_id" jdbcType="INTEGER" property="alarmId" />
     <result column="occurrence_time" jdbcType="TIMESTAMP" property="occurrenceTime" />
     <result column="monitor_item_name" jdbcType="VARCHAR" property="monitorItemName" />
@@ -70,7 +70,7 @@
   <delete id="delete">
     delete from t_performance_work_rt
   </delete>
-  <insert id="insert" parameterType="com.iscas.sdas.dto.PerformanceWorkDto">
+  <insert id="insert" parameterType="com.iscas.sdas.dto.work.AllCapacityWorkDto">
     insert into t_performance_work_rt (alarm_id, occurrence_time, monitor_item_name, 
       current_value, bscid, cellid, 
       station_name, boutique_level, limit_times, 
@@ -102,7 +102,7 @@
       #{receive_person,jdbcType=VARCHAR}, #{receive_time,jdbcType=VARCHAR}, #{make_up,jdbcType=VARCHAR}, 
       #{tablenum,jdbcType=VARCHAR}, -1)
   </insert>
-  <insert id="insertSelective" parameterType="com.iscas.sdas.dto.PerformanceWorkDto">
+  <insert id="insertSelective" parameterType="com.iscas.sdas.dto.work.AllCapacityWorkDto">
     insert into t_performance_work
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="alarmId != null">
@@ -373,7 +373,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.iscas.sdas.dto.PerformanceWorkDto">
+  <update id="updateByPrimaryKeySelective" parameterType="com.iscas.sdas.dto.work.AllCapacityWorkDto">
     update t_performance_work
     <set>
       <if test="occurrenceTime != null">
@@ -508,7 +508,7 @@
     </set>
     where alarm_id = #{alarmId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.iscas.sdas.dto.PerformanceWorkDto">
+  <update id="updateByPrimaryKey" parameterType="com.iscas.sdas.dto.work.AllCapacityWorkDto">
     update t_performance_work
     set occurrence_time = #{occurrenceTime,jdbcType=TIMESTAMP},
       monitor_item_name = #{monitorItemName,jdbcType=VARCHAR},

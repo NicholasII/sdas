@@ -1,8 +1,8 @@
-package com.iscas.sdas.dto;
+package com.iscas.sdas.dto.work;
 
 import java.util.Date;
 
-public class PerformanceWorkDto {
+public class AllCapacityWorkDto {
     private Integer alarm_id;
 
     private Date occurrence_time;

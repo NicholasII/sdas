@@ -12,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iscas.datas.ratio.HealthDegree;
-import com.iscas.sdas.dao.PerformanceWorkDtoMapper;
 import com.iscas.sdas.dao.WorkDao;
 import com.iscas.sdas.dao.work.CapacityWorkDao;
-import com.iscas.sdas.dto.PerformanceWorkDto;
+import com.iscas.sdas.dao.work.AllCapacityWorkDao;
 import com.iscas.sdas.dto.work.CapacityWorkDto;
+import com.iscas.sdas.dto.work.AllCapacityWorkDto;
 
 
 @Service
@@ -26,7 +26,7 @@ public class WorkService {
 	WorkDao performanceWorkDao;
 	
 	@Autowired
-	PerformanceWorkDtoMapper performanceWorkMapper;
+	AllCapacityWorkDao performanceWorkMapper;
 	
 	@Autowired
 	CapacityWorkDao capacityWorkDao;
@@ -34,8 +34,8 @@ public class WorkService {
 	 * 插入性能工单
 	 * @param performanceWorkDtos
 	 */
-	public void insertPerformanceWork(List<PerformanceWorkDto> performanceWorkDtos){
-		for (PerformanceWorkDto performanceWorkDto : performanceWorkDtos) {
+	public void insertPerformanceWork(List<AllCapacityWorkDto> performanceWorkDtos){
+		for (AllCapacityWorkDto performanceWorkDto : performanceWorkDtos) {
 			if (performanceWorkDto.getAlarm_id()!=null) {
 				performanceWorkMapper.insert(performanceWorkDto);
 			}		

@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.iscas.sdas.dto.PerformanceWorkDto;
 import com.iscas.sdas.dto.TableInfoDto;
 import com.iscas.sdas.dto.work.CapacityWorkDto;
+import com.iscas.sdas.dto.work.AllCapacityWorkDto;
 import com.iscas.sdas.service.CommonService;
 import com.iscas.sdas.service.WorkService;
 import com.iscas.sdas.util.CommonUntils;
@@ -63,13 +63,13 @@ public class WorkController {
 		ModelAndView map = new ModelAndView("/work/capacity");
 		String tablename = "t_performance_work";
 		List<TableInfoDto> tableInfoDtos = commonService.tableindex(tablename);		
-		List<PerformanceWorkDto> performanceWorkDtos = new ArrayList<>();
+		List<AllCapacityWorkDto> performanceWorkDtos = new ArrayList<>();
 		List<String> paths = CommonUntils.MultipleFilesUpload(request);
 		if (paths!=null && paths.size()>0) {
 			if (tableInfoDtos!=null && tableInfoDtos.size()>0) {
 				int rows = FileImport.tablerows(paths.get(0));
 				for (int i = 0; i < rows; i++) {
-					PerformanceWorkDto workDto = new PerformanceWorkDto();
+					AllCapacityWorkDto workDto = new AllCapacityWorkDto();
 					performanceWorkDtos.add(workDto);
 				}
 				try {

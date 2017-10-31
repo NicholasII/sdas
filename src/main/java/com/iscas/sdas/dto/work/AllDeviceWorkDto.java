@@ -1,8 +1,8 @@
-package com.iscas.sdas.dto;
+package com.iscas.sdas.dto.work;
 
 import java.util.Date;
 
-public class DeviceWorkDto {
+public class AllDeviceWorkDto {
     private String orderId;
 
     private String orderState;

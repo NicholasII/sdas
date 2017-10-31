@@ -18,16 +18,16 @@ import com.iscas.sdas.dao.StationInfoDtoMapper;
 import com.iscas.sdas.dao.cell.CellDao;
 import com.iscas.sdas.dto.BaseStationHealthRatio;
 import com.iscas.sdas.dto.CellComplainDto;
-import com.iscas.sdas.dto.DeviceWorkDto;
 import com.iscas.sdas.dto.GroupIndexMeatdata;
-import com.iscas.sdas.dto.OSWorkDto;
-import com.iscas.sdas.dto.PerformanceWorkDto;
 import com.iscas.sdas.dto.StationInfoDto;
 import com.iscas.sdas.dto.TotalHealthInfoDto;
 import com.iscas.sdas.dto.cell.BaseCellHealth;
 import com.iscas.sdas.dto.cell.CellDto;
 import com.iscas.sdas.dto.cell.CellHealthTableDto;
 import com.iscas.sdas.dto.cell.MomentDto;
+import com.iscas.sdas.dto.work.AllOutServerDto;
+import com.iscas.sdas.dto.work.DeviceWorkDto;
+import com.iscas.sdas.dto.work.AllCapacityWorkDto;
 import com.iscas.sdas.util.CommonUntils;
 
 @Service
@@ -384,8 +384,8 @@ public class CellService {
 	 */
 	private List<String> permanceWorkWithinCurrenttime(String cellname){
 		List<String> list = new ArrayList<>();
-		List<PerformanceWorkDto> works =  cellDao.performWorkWithinOneWeek(cellname);
-		for (PerformanceWorkDto work : works) {
+		List<AllCapacityWorkDto> works =  cellDao.performWorkWithinOneWeek(cellname);
+		for (AllCapacityWorkDto work : works) {
 			int year = work.getOccurrence_time().getYear()+1900;
 			int month = work.getOccurrence_time().getMonth()+1;
 			String monthstr = month>=10?""+month:"0"+month;
@@ -425,8 +425,8 @@ public class CellService {
 	 */
 	private List<String> osWorkWithinCurrenttime(String cellname){
 		List<String> list = new ArrayList<>();
-		List<OSWorkDto> works =  cellDao.osWorkWithinOneWeek(cellname);
-		for (OSWorkDto work : works) {
+		List<AllOutServerDto> works =  cellDao.osWorkWithinOneWeek(cellname);
+		for (AllOutServerDto work : works) {
 			int year = work.getStartTime().getYear()+1900;
 			int month = work.getStartTime().getMonth()+1;
 			String monthstr = month>=10?""+month:"0"+month;
@@ -567,7 +567,7 @@ public class CellService {
 			}
 			result.add(baseStationHealthRatio);
 		}
-		logger.error("-------计算结束---------");
+		logger.info("-------计算结束---------");
 		return result;
 	}
 	/**

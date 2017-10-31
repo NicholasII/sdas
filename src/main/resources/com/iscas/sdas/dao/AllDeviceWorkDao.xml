@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.iscas.sdas.dao.DeviceWorkDtoMapper">
-  <resultMap id="BaseResultMap" type="com.iscas.sdas.dto.DeviceWorkDto">
+<mapper namespace="com.iscas.sdas.dao.work.AllDeviceWorkDao">
+  <resultMap id="BaseResultMap" type="com.iscas.sdas.dto.work.AllDeviceWorkDto">
     <result column="order_id" jdbcType="VARCHAR" property="orderId" />
     <result column="order_state" jdbcType="VARCHAR" property="orderState" />
     <result column="order_title" jdbcType="VARCHAR" property="orderTitle" />
@@ -138,7 +138,7 @@ confirmationOption" />
     <result column="net_class_2" jdbcType="VARCHAR" property="netClass2" />
     <result column="month" jdbcType="VARCHAR" property="month" />
   </resultMap>
-  <insert id="insert" parameterType="com.iscas.sdas.dto.DeviceWorkDto">
+  <insert id="insert" parameterType="com.iscas.sdas.dto.work.AllDeviceWorkDto">
     insert into t_equipment_failure_201708 (order_id, order_state, order_title, 
       order_creat_person, order_creat_person_part, 
       build_bill_time, net_alarm_id, net_alarm_name, 
@@ -248,7 +248,7 @@ confirmationOption,jdbcType=VARCHAR},
       #{netClass1,jdbcType=VARCHAR}, #{netClass2,jdbcType=VARCHAR}, #{month,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.iscas.sdas.dto.DeviceWorkDto">
+  <insert id="insertSelective" parameterType="com.iscas.sdas.dto.work.AllDeviceWorkDto">
     insert into t_equipment_failure_201708
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="orderId != null">

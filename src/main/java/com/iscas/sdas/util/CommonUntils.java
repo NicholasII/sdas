@@ -209,7 +209,6 @@ public class CommonUntils {
 				MultipartFile file = mutiRequest.getFile(filename);
 				if (file != null) {
 					String targetfile = request.getServletContext().getRealPath("/WEB-INF/order/") + file.getOriginalFilename();
-					//System.out.println(request.getServletContext().getRealPath("/WEB-INF/order/"));
 					try {
 						file.transferTo(new File(targetfile));
 						filepaths.add(targetfile);
@@ -221,6 +220,36 @@ public class CommonUntils {
 			}
 		}
 		return filepaths;
+	}
+	/**
+	 * 将文件上传到指定目录并制指定文件名
+	 * @param request
+	 * @param filepath
+	 * @param filename
+	 * @return
+	 */
+	public static boolean FileUpload(HttpServletRequest request,String filepath,String filename) {
+		// 将当前上下文初始化给 CommonsMutipartResolver （多部分解析器）
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
+				request.getSession().getServletContext());
+		if (multipartResolver.isMultipart(request)) {
+			MultipartHttpServletRequest mutiRequest = (MultipartHttpServletRequest) request;
+			Iterator it = mutiRequest.getFileNames();
+			while (it.hasNext()) {
+				MultipartFile file = mutiRequest.getFile(filename);
+				if (file != null) {
+					String targetfile = filepath + filename;
+					try {
+						file.transferTo(new File(targetfile));
+						return true;
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				}
+			}
+		}
+		return false;
 	}
 	/**
 	 * 判断一月有多少天
