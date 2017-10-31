@@ -25,6 +25,28 @@ input {
 .SelectYel{
 	color: #DFCD15;
 }
+.loading_bk{
+	display:none;
+    height: 80%;
+    width: 100%;
+    min-height:310px;
+    background-color: #777;
+    position: absolute;
+    z-index: 999;
+    opacity: 0.6;
+    text-align: center;
+    }
+.loading{
+	display:none;
+	color:#fff;
+    margin-left: 40%;
+    margin-top: 10%;
+    position: absolute;
+    z-index: 9999;
+    text-align: center;
+    }
+.loading span{font-size: 16px; margin-left: 10px;}
+.loading img{height:30px}
 </style>
 </head>
 <body style="margin-left: 5px;margin-right: 5px;">
@@ -118,6 +140,11 @@ input {
 							</div>
 						</div>
 					<div class="jqGrid_wrapper">
+						<!-- loading -->
+						<div class="loading_bk" id="loadbk"></div>
+						<div class="loading" id="load"><img src="${context}/lib/hplus/css/plugins/blueimp/img/loading.gif"><span>内容加载中...</span></div>
+						<!-- loading -->
+						
 						<table class="table" id="table_list_1"></table>
 						<div id="pager_list_1"></div>
 					</div>

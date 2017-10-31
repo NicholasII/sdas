@@ -271,6 +271,9 @@ $(function(){
 	
 });
 function validate(){
+	//load显示
+	$(".loading_bk").show();
+	$(".loading").show();
     jQuery("#table_list_1").jqGrid("clearGridData");
     $.ajax({
                 url: validateurl,
@@ -280,11 +283,17 @@ function validate(){
                     var success = data.success;                   
                     if(success){
                         var list = data.rows;
-                        $("#table_list_1").jqGrid('setGridParam',{
-                            datatype:'local',
-                            data : list,   
-                            page:1
-                        }).trigger("reloadGrid");
+                        setTimeout(function(){
+                        	$("#table_list_1").jqGrid('setGridParam',{
+                                datatype:'local',
+                                data : list,   
+                                page:1
+                            }).trigger("reloadGrid");
+                        	//load显示
+                        	$(".loading_bk").hide();
+                        	$(".loading").hide();
+                        },3000);
+                        
                     }                                
                 }
             });

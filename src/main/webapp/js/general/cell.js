@@ -819,6 +819,9 @@ function workQuery(type, start, end) {
 	}
 }
 $(function() {
+	//loading初始化显示
+	$(".loading_bk").show();
+	$(".loading").show();
 	/*
 	 * 投诉工单
 	 */
@@ -879,6 +882,7 @@ $(function() {
                 success : function(data, status) {
                     var list = data.rows;
                     refresh_healthtable(list);
+                 
                 }
      });
 	/*
@@ -970,6 +974,9 @@ $(function() {
                     histroy_trend.series[2].data = data2;
                     //histroy_trend.series[3].data = data2;
 					ratiotrend.setOption(histroy_trend);
+					//loading隐藏
+                	$("#ratiotrend_loadbk").hide();
+                	$("#ratiotrend_load").hide();
 				}
 			});
 	/**
@@ -998,6 +1005,7 @@ $(function() {
 					rt_health.xAxis.data = axis;
 					rt_health.series[0].data = data2;
 					rtratio.setOption(rt_health);
+					
 				}
 			});
 	////////////
@@ -1017,6 +1025,9 @@ $(function() {
 					setInterval((function() {
 								refreshAlarm()
 							}), 5 * 60 * 1000);
+					//loading隐藏
+                	$("#alarm_loadbk").hide();
+                	$("#alarm_load").hide();
 				}
 			});
 	//实时简况度
@@ -1565,9 +1576,9 @@ function refresh_healthtable(list) {
 		$("#table_list_healthtable").append(str);
 	});
 	$("#table_list_healthtable").append("</tbody>");
-	////
-	/*$('body').addClass('loaded');
-    $('#loader-wrapper .load_title').remove();*/
+	 //loading隐藏
+	$("#healthtable_loadbk").hide();
+	$("#healthtable_load").hide();
 }
 
 function scroll() {

@@ -14,28 +14,76 @@
 <script src="${context}/lib/hplus/js/plugins/layer/laydate/laydate.js"></script>
 <script type="text/javascript"
 	src="http://api.map.baidu.com/api?v=2.0&ak=EmXf0NLcNCvBO5hdDliGtvC9D5v6GA5K"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
-	<link href="${context}/style/loader.css" rel="stylesheet"
+<script type="text/javascript"
+	src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+<link href="${context}/style/loader.css" rel="stylesheet"
 	type="text/css">
 <link
 	href="${context}/lib/hplus/css/plugins/dataTables/dataTables.bootstrap.css"
 	rel="stylesheet">
 <style type="text/css">
-	td {
-		margin-left: 10px;
-		margin-right: 10px
-	}
-	input{
-	    padding-top: 5px;padding-bottom: 5px;margin-top: 0px;margin-bottom: 0px
-	}
-	#table_list_healthtable th,#table_list_healthtable td{border:1px solid #ddd}
-	.ibox-content .gray{background-color:gray}
-	.ibox-content .red{background-color:red}
-	.ibox-content .yellow{background-color:yellow}
+td {
+	margin-left: 10px;
+	margin-right: 10px
+}
+
+input {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-top: 0px;
+	margin-bottom: 0px
+}
+
+.loading_bk {
+	display: none;
+	height: 80%;
+	width: 95%;
+	min-height: 310px; background-color : #777;
+	position: absolute;
+	z-index: 999;
+	opacity: 0.6;
+	text-align: center;
+	background-color: #777;
+}
+
+.loading {
+	display: none;
+	color: #fff;
+	margin-left: 40%;
+	margin-top: 10%;
+	position: absolute;
+	z-index: 9999;
+	text-align: center;
+}
+
+.loading span {
+	font-size: 16px;
+	margin-left: 10px;
+}
+
+.loading img {
+	height: 30px
+}
+
+#table_list_healthtable th, #table_list_healthtable td {
+	border: 1px solid #ddd
+}
+
+.ibox-content .gray {
+	background-color: gray
+}
+
+.ibox-content .red {
+	background-color: red
+}
+
+.ibox-content .yellow {
+	background-color: yellow
+}
 </style>
 </head>
-<body> 
-	
+<body>
+
 	<script type="text/javascript">
 		var cellname = '${cellname}';
 		var stationname = '${stationname}';
@@ -48,9 +96,9 @@
 				<b>${cellname}</b>小区日常监控
 			</h1>
 			<div>
-				<h1 id="h_ratio" style="color: green;display: none;">
+				<h1 id="h_ratio" style="color: green; display: none;">
 					<b id="b_ratio">90</b>
-					
+
 				</h1>
 				<h3 id="h3_ratio" style="display: none;">健康度</h3>
 			</div>
@@ -65,7 +113,14 @@
 						</div>
 					</div>
 					<div class="ibox-content">
-					<div class="jqGrid_wrapper"
+						<!-- loading -->
+						<div class="loading_bk" id="alarm_loadbk"></div>
+						<div class="loading" style="margin-top: 20%" id="alarm_load">
+							<img
+								src="${context}/lib/hplus/css/plugins/blueimp/img/loading.gif"><span>内容加载中...</span>
+						</div>
+						<!-- loading -->
+						<div class="jqGrid_wrapper"
 							style="margin: 0; padding: 0; width: 100%; overflow: auto;">
 							<table class="table" id="alarm_table"></table>
 							<div id="pager_alarm_table"></div>
@@ -106,8 +161,7 @@
 			<div class="col-sm-12">
 				<div class="ibox-title">
 					<h5>小区健康度实时曲线</h5>
-					<div class="ibox-tools">						
-					</div>
+					<div class="ibox-tools"></div>
 				</div>
 				<div class="ibox-content">
 					<div id="rtratio" style="height: 300px;"></div>
@@ -118,7 +172,7 @@
 			<div class="col-sm-12">
 				<div class="tabs-container">
 					<ul id="group_index" class="nav nav-tabs">
-					
+
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active">
@@ -220,26 +274,31 @@
 		</script>
 		<div class="row">
 			<div class="ibox-title">
-					<h5>工单信息</h5>
-					<div class="ibox-tools">
-						<div class="btn-group">
-							<button class="btn btn-info" id="workinweek" type="button" onclick="javascript:workoneweek()">一周</button>
-							<button class="btn btn-white" id="workinmonth" type="button" onclick="javascript:workonemonth()">一月</button>
-							<button class="btn btn-white" id="workinselect" type="button" onclick="javascript:worktimeselect()">按时间选择</button>
-							<div id="worktimeselect" style="display: none;">
-								<input id="start" style="margin-left:5px;margin-top: -7px !important;"
-									class="layer-date" placeholder="请输入开始时间"
-									onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
-								<span id="span" style="margin-top: -10px ;display: inline !important;"
-									class="input-group-addon">到</span> 
-								<input id="end"
-									style="margin-top: -7px !important;" class="layer-date"
-									placeholder="请输入结束时间"
-									onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
-								<button class="btn btn-info" type="button" onclick="javascript:query2()">确定</button>
-							</div>
+				<h5>工单信息</h5>
+				<div class="ibox-tools">
+					<div class="btn-group">
+						<button class="btn btn-info" id="workinweek" type="button"
+							onclick="javascript:workoneweek()">一周</button>
+						<button class="btn btn-white" id="workinmonth" type="button"
+							onclick="javascript:workonemonth()">一月</button>
+						<button class="btn btn-white" id="workinselect" type="button"
+							onclick="javascript:worktimeselect()">按时间选择</button>
+						<div id="worktimeselect" style="display: none;">
+							<input id="start"
+								style="margin-left: 5px; margin-top: -7px !important;"
+								class="layer-date" placeholder="请输入开始时间"
+								onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+							<span id="span"
+								style="margin-top: -10px; display: inline !important;"
+								class="input-group-addon">到</span> <input id="end"
+								style="margin-top: -7px !important;" class="layer-date"
+								placeholder="请输入结束时间"
+								onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+							<button class="btn btn-info" type="button"
+								onclick="javascript:query2()">确定</button>
 						</div>
 					</div>
+				</div>
 			</div>
 			<div class="col-sm-12">
 				<div class="tabs-container">
@@ -312,25 +371,37 @@
 					<h5>小区健康度历史趋势</h5>
 					<div class="ibox-tools">
 						<div class="btn-group">
-							<button class="btn btn-info" id="trendinweek" type="button" onclick="javascript:oneweek()">一周</button>
-							<button class="btn btn-white" id="trendinmonth" type="button" onclick="javascript:onemonth()">一月</button>
-							<button class="btn btn-white" id="trendinselect" type="button" onclick="javascript:timeselect()">按时间选择</button>
+							<button class="btn btn-info" id="trendinweek" type="button"
+								onclick="javascript:oneweek()">一周</button>
+							<button class="btn btn-white" id="trendinmonth" type="button"
+								onclick="javascript:onemonth()">一月</button>
+							<button class="btn btn-white" id="trendinselect" type="button"
+								onclick="javascript:timeselect()">按时间选择</button>
 							<div id="timeselect" style="display: none;">
-								<input id="starttime" style="margin-left:5px;margin-top: -7px !important;"
+								<input id="starttime"
+									style="margin-left: 5px; margin-top: -7px !important;"
 									class="layer-date" placeholder="请输入开始时间"
 									onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
-								<span id="span" style="margin-top: -10px ;display: inline !important;"
-									class="input-group-addon">到</span> 
-								<input id="endtime"
+								<span id="span"
+									style="margin-top: -10px; display: inline !important;"
+									class="input-group-addon">到</span> <input id="endtime"
 									style="margin-top: -7px !important;" class="layer-date"
 									placeholder="请输入结束时间"
 									onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
-								<button class="btn btn-info" type="button" onclick="javascript:query()">确定</button>
+								<button class="btn btn-info" type="button"
+									onclick="javascript:query()">确定</button>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="ibox-content">
+					<!-- loading -->
+					<div class="loading_bk" id="ratiotrend_loadbk"></div>
+					<div class="loading" id="ratiotrend_load">
+						<img
+							src="${context}/lib/hplus/css/plugins/blueimp/img/loading.gif"><span>内容加载中...</span>
+					</div>
+					<!-- loading -->
 					<div id="ratiotrend" style="height: 300px;"></div>
 				</div>
 			</div>
@@ -343,15 +414,23 @@
 						<div class="ibox-tools"></div>
 					</div>
 					<div class="ibox-content">
+						<!-- loading -->
+						<div class="loading_bk" id="healthtable_loadbk"></div>
+						<div class="loading" id="healthtable_load">
+							<img
+								src="${context}/lib/hplus/css/plugins/blueimp/img/loading.gif"><span>内容加载中...</span>
+						</div>
+						<!-- loading -->
 						<div class="table" style="margin-left: 20px; width: 80%;">
-							<table id="table_list_healthtable" class="table" style="width:100%"></table>
+							<table id="table_list_healthtable" class="table"
+								style="width: 100%"></table>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<script type="text/javascript">
 		// 百度地图API功能
 		var map = new BMap.Map("allmap"); // 创建Map实例
@@ -361,9 +440,8 @@
 		map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
 		var marker = new BMap.Marker(new BMap.Point(113.270856, 23.137463));
 		map.addOverlay(marker);
-		
 	</script>
-	<script type="text/javascript" src="${context}/js/general/heatMap.js"></script>	
+	<script type="text/javascript" src="${context}/js/general/heatMap.js"></script>
 
 
 	<script type="text/javascript">
@@ -372,6 +450,6 @@
 		var ratiotrend = echarts.init($("#ratiotrend").get(0));
 	</script>
 
-    <script type="text/javascript" src="${context}/js/general/cell.js"></script>
+	<script type="text/javascript" src="${context}/js/general/cell.js"></script>
 </body>
 </html>
