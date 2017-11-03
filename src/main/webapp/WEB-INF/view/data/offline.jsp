@@ -112,6 +112,20 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-sm-6">
+				<div class="panel panel-success">
+					<div class="panel-heading">投诉详情数据</div>
+					<div class="panel-body">
+						<form action="" method="post" enctype="multipart/form-data">
+							<input class="btn btn-white" type="file" name="file"
+								multiple="multiple" accept="text/*"> <br> <input
+								class="btn btn-white" type="reset" value="重选"> <input
+								class="btn btn-white" type="submit" value="上传">
+
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>
