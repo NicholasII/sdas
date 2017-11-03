@@ -34,4 +34,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		GROUP BY cell_code,yyyyMMdd ORDER BY yyyyMMdd
 	</select>
+	<select id="getLastDay" resultType="com.iscas.sdas.dto.IndexAlarmDto">
+	SELECT * FROM t_cell_result_index_info where cell_code=#{cell_code} and yyyyMMdd=(SELECT yyyyMMdd as lasttime FROM t_cell_result_index_info  where cell_code=#{cell_code} order by lasttime DESC LIMIT 1)
+	<if test="type !=null">
+			and app_type = #{type}
+	</if>;
+	</select>
 </mapper>

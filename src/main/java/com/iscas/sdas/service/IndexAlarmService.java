@@ -53,5 +53,18 @@ public class IndexAlarmService extends BaseService<IndexAlarmDao, IndexAlarmDto>
 		}
 		return pageDto;
 	}
-
+	/**
+	 * 指标预警页面小区预警列表
+	 */
+	public List<IndexAlarmDto> getLastDay(IndexAlarmDto dto) {
+		 List<IndexAlarmDto> alarmDtos = indexAlarmDao.getLastDay(dto);
+		 for (int i=0;i<alarmDtos.size();i++) {
+				if (alarmDtos.get(i).getApp_type()==0) {
+					alarmDtos.get(i).setType("新PRB利用率(4次连续)");
+				}else if (alarmDtos.get(i).getApp_type()==1) {
+					alarmDtos.get(i).setType("新切换出成功率(4次连续)");
+				}
+			}
+		return alarmDtos;
+	}
 }

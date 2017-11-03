@@ -102,5 +102,27 @@ public class IndexAlarmController extends BaseController<IndexAlarmDto> {
 	public ModelAndView page() {
 		return new ModelAndView("alarm/indexalarm");
 	}
-
+	/**
+	 *指标预警页面小区预警列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/getLastDay")
+	@ResponseBody
+	public ModelMap getLastDay(HttpServletRequest request) {
+		ModelMap map = new ModelMap();
+		IndexAlarmDto alarmDto = new IndexAlarmDto();
+		String cell_code = request.getParameter("cell_code");
+		
+		String type = request.getParameter("type");
+		if (!CommonUntils.isempty(cell_code)) {
+			alarmDto.setCell_code(cell_code);
+		}
+		if (!CommonUntils.isempty(type)) {
+			alarmDto.setType(type);
+		}
+		List<IndexAlarmDto> dtos = alarmService.getLastDay(alarmDto);
+		map.addAttribute(Constraints.RESULT_ROW, dtos);
+		return map;
+	}
 }
