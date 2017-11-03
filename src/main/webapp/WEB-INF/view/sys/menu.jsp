@@ -5,7 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <%@ include file="/include/common.jsp"%>
-<%-- <script type="text/javascript" src="${context}/include/utils.js"></script> --%>
 <script type="text/javascript" src="${context}/js/sys/menu.js"></script>
 </head>
 <body>

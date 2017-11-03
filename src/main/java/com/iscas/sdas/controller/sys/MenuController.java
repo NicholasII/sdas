@@ -29,7 +29,6 @@ public class MenuController {
 	Logger logger = Logger.getLogger(MenuController.class);
 	@RequestMapping("/")
 	public ModelAndView page(){
-		/*logger.error("我是老大！");*/
 		return new ModelAndView("/sys/menu");
 	}
 	@RequestMapping("/getPagedList")

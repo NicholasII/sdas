@@ -25,13 +25,10 @@ import com.iscas.sdas.dto.cell.BaseCellHealth;
 import com.iscas.sdas.dto.cell.CellDto;
 import com.iscas.sdas.dto.cell.CellHealthTableDto;
 import com.iscas.sdas.dto.cell.MomentDto;
-import com.iscas.sdas.dto.work.AllOutServerDto;
-import com.iscas.sdas.dto.work.DeviceWorkDto;
-import com.iscas.sdas.dto.work.AllCapacityWorkDto;
 import com.iscas.sdas.util.CommonUntils;
 
 @Service
-public class CellService {
+public class CellService{
 
 	Logger logger = Logger.getLogger(CellService.class);
 	@Autowired
@@ -373,68 +370,6 @@ public class CellService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		return list;
-	}
-	
-	/**
-	 * 当前时间性能单数量
-	 * @param cellname
-	 * @return
-	 */
-	private List<String> permanceWorkWithinCurrenttime(String cellname){
-		List<String> list = new ArrayList<>();
-		List<AllCapacityWorkDto> works =  cellDao.performWorkWithinOneWeek(cellname);
-		for (AllCapacityWorkDto work : works) {
-			int year = work.getOccurrence_time().getYear()+1900;
-			int month = work.getOccurrence_time().getMonth()+1;
-			String monthstr = month>=10?""+month:"0"+month;
-			int day = work.getOccurrence_time().getDate();
-			String daystr = day>=10?""+day:"0"+day;
-			int hour = work.getOccurrence_time().getHours();
-			String occurtime = year +"-"+ monthstr+"-"+daystr+" "+hour+"时";
-			list.add(occurtime);
-		}
-		return list;
-	}
-	/**
-	 * 当前时间设备工单数量
-	 * @param cellname
-	 * @return
-	 */
-	private List<String> deviceWorkWithinCurrenttime(String cellname){
-		List<String> list = new ArrayList<>();
-		List<DeviceWorkDto> works =  cellDao.deviceWorkWithinOneWeek(cellname);
-		for (DeviceWorkDto work : works) {
-			int year = work.getFaultOccusTime().getYear()+1900;
-			int month = work.getFaultOccusTime().getMonth()+1;
-			String monthstr = month>=10?""+month:"0"+month;
-			int day = work.getFaultOccusTime().getDate();
-			String daystr = day>=10?""+day:"0"+day;
-			int hour = work.getFaultOccusTime().getHours();
-			String occurtime = year +"-"+ monthstr+"-"+daystr+" "+hour+"时";
-			list.add(occurtime);
-		}
-		return list;
-	}
-	
-	/**
-	 * 当前时间退服工单数量
-	 * @param cellname
-	 * @return
-	 */
-	private List<String> osWorkWithinCurrenttime(String cellname){
-		List<String> list = new ArrayList<>();
-		List<AllOutServerDto> works =  cellDao.osWorkWithinOneWeek(cellname);
-		for (AllOutServerDto work : works) {
-			int year = work.getStartTime().getYear()+1900;
-			int month = work.getStartTime().getMonth()+1;
-			String monthstr = month>=10?""+month:"0"+month;
-			int day = work.getStartTime().getDate();
-			String daystr = day>=10?""+day:"0"+day;
-			int hour = work.getStartTime().getHours();
-			String occurtime = year +"-"+ monthstr+"-"+daystr+" "+hour+"时";
-			list.add(occurtime);
 		}
 		return list;
 	}

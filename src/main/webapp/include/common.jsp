@@ -27,9 +27,9 @@
 <![endif]-->
 
 <!-- jqgrid-->
-<link href="${context}/lib/hplus/css/plugins/jqgrid/ui.jqgrid.css" rel="stylesheet">
-<script src="${context}/lib/hplus/js/plugins/jqgrid/i18n/grid.locale-cn.js"></script>
-<script src="${context}/lib/hplus/js/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<link href="${context}/lib/jqgrid/ui.jqgrid.css" rel="stylesheet">
+<script src="${context}/lib/jqgrid/i18n/grid.locale-cn.js"></script>
+<script src="${context}/lib/jqgrid/jquery.jqGrid.min.js"></script>
 
 <!-- plugins-->
 <script src="${context}/lib/hplus/js/plugins/metisMenu/jquery.metisMenu.js"></script>
@@ -37,16 +37,19 @@
 <script src="${context}/lib/hplus/js/plugins/layer/layer.min.js"></script>
 <link href="${context}/lib/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
 
+<!-- bootstrap Valivator -->
+<script type="text/javascript" src="${context}/lib/bootstrapValivator/dist/js/bootstrapValidator.js"></script>
+<link href="${context}/lib/bootstrapValivator/dist/css/bootstrapValidator.css" type="text/css" rel="stylesheet">
 
-<script type="text/javascript" src="${context}/lib/bootstrapValivator/src/js/bootstrapValidator.js"></script>
-<link href="${context}/lib/bootstrapValivator/src/css/bootstrapValidator.css" rel="stylesheet">
 
-
+<!-- bootstrap-table -->
 <link href="${context}/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
 <script type="text/javascript" src="${context}/lib/bootstrap-table/bootstrap-table.min.js"></script>
-<%-- <script type="text/javascript" src="${context}/lib/bootstrap-table/bootstrap-table-mobile.min.js"></script> --%>
-
 <script type="text/javascript" src="${context}/lib/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+<!-- 通用js工具类 -->
+<script type="text/javascript" src="${context}/include/utils.js"></script>
+<script type="text/javascript" src="${context}/include/check.js"></script>
+<script type="text/javascript" src="${context }/include/time.js"></script>
 <script>
   var ctx = "${context}";
 </script>

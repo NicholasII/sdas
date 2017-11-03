@@ -6,8 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@ include file="/include/common.jsp"%>
-<script type="text/javascript" src="${context }/include/time.js"></script>
-<script type="text/javascript" src="${context }/include/utils.js"></script>
 <link href="${context}/style/loader.css" rel="stylesheet" type="text/css">
 <script type="text/javascript"
 	src="http://api.map.baidu.com/api?v=2.0&ak=EmXf0NLcNCvBO5hdDliGtvC9D5v6GA5K"></script>

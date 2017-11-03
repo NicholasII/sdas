@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iscas.sdas.common.BaseService;
+import com.iscas.sdas.common.PageDto;
 import com.iscas.sdas.dao.IndexAlarmDao;
 import com.iscas.sdas.dto.IndexAlarmDto;
 
@@ -14,11 +15,6 @@ public class IndexAlarmService extends BaseService<IndexAlarmDao, IndexAlarmDto>
 	
 	@Autowired
 	IndexAlarmDao indexAlarmDao;
-
-	@Override
-	public void init(IndexAlarmDao dao) {
-		super.init(indexAlarmDao);
-	}
 	
 	/**
 	 * 最近一天预警
@@ -38,10 +34,13 @@ public class IndexAlarmService extends BaseService<IndexAlarmDao, IndexAlarmDto>
 		}
 		return alarmDtos;
 	}
-	
-	
-	public List<IndexAlarmDto> allDayIndexAlarm(IndexAlarmDto alarmDto){
-		List<IndexAlarmDto> alarmDtos = indexAlarmDao.allDayIndexAlarm(alarmDto);
+	/**
+	 * 每天预警
+	 */
+	@Override
+	public PageDto<IndexAlarmDto> getPageList(IndexAlarmDto dto, String num, String size) {
+		PageDto<IndexAlarmDto> pageDto =  super.getPageList(dto, num, size);
+		List<IndexAlarmDto> alarmDtos = pageDto.getRows();
 		for (int i=0;i<alarmDtos.size();i++) {
 			if (alarmDtos.get(i).getApp_type()==0) {
 				alarmDtos.get(i).setType("新PRB利用率(4次连续)");
@@ -52,8 +51,7 @@ public class IndexAlarmService extends BaseService<IndexAlarmDao, IndexAlarmDto>
 				alarmDtos.remove(i);
 			}
 		}
-		return alarmDtos;
+		return pageDto;
 	}
-	
 
 }

@@ -1,6 +1,12 @@
 package com.iscas.sdas.common;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 /**
  * 通用Service
  * @author dongqun
@@ -10,18 +16,29 @@ import java.util.List;
  */
 public abstract class BaseService<Dao extends BaseDao<Dto>,Dto extends BaseDto> {
 	
+	@Autowired
 	protected Dao dao;
-			
-	protected void init(Dao dao){
-		this.dao = dao;
-	}
+
 	/**
 	 * 获取分页数据
 	 * @param dto
 	 * @return
 	 */
-	public List<Dto> getpagelist(Dto dto){
-		return dao.getPageList(dto);
+	public PageDto<Dto> getPageList(Dto dto,String num,String size){
+		int pageNum = Integer.parseInt(num);
+		int pageSize = Integer.parseInt(size);
+		PageHelper.startPage(pageNum, pageSize);
+		List<Dto> dtos = dao.getPageList(dto);
+		PageInfo<Dto> pageInfo = new PageInfo<>(dtos);
+		List<Dto> rows = new ArrayList<>();
+		for (int i = 0; i < dtos.size(); i++) {
+			Dto dto1 = dtos.get(i);
+			rows.add(dto1);
+		}
+		PageDto<Dto> pageDto = new PageDto<>();
+		pageDto.setTotal(pageInfo.getTotal());
+		pageDto.setRows(rows);
+		return pageDto;
 	}
 	/**
 	 * 获取不分页获取

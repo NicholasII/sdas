@@ -8,7 +8,6 @@
 <%@include file="/include/common.jsp"%>
 <script src="${context}/lib/hplus/js/plugins/layer/laydate/laydate.js"></script>
 <link href="${context}/style/loader.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="${context}/include/time.js"></script>
 <script type="text/javascript" src="${context}/js/work/outservice.js"></script>
 </head>
 <body>

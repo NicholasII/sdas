@@ -18,10 +18,13 @@
 		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">  
 		<property name="supportedMediaTypes">  
 			<list>  
-				<value>text/html;charset=UTF-8</value>  
+				<value>text/html;charset=UTF-8</value>
 			</list>  
 		</property>  
-	</bean>  
+	</bean> 
+	<context:component-scan base-package="com.iscas.sdas">
+        <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
+    </context:component-scan>
 	<!-- 启动SpringMVC的注解功能，完成请求和注解POJO的映射 -->  
 	<bean  
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  

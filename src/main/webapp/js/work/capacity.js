@@ -21,8 +21,8 @@ $(function(){
         	'starttime':starttime,
             'endtime':endtime
             },
-		dataType:"json",
 		success:function(data,status){
+            var data = eval('(' + data + ')');
 			var list = data.rows;
 			refreshJqGrid(list);
 		}
@@ -30,8 +30,8 @@ $(function(){
 	$.ajax({
 		url: aeraurl,
 		type:"GET",
-		dataType:"json",
 		success:function(data,status){
+            var data = eval('(' + data + ')');
 			var areas = data.rows;
 			for(var i=0;i<areas.length;i++){
 				if (areas[i]!=null) {
@@ -210,7 +210,6 @@ function select(daynum){
 	$.ajax({
 		url:capacityworkurl,
 		type:"post",
-		dataType:"json",
 		data:{
 			'cellid':name,
 			'area':area,
@@ -221,6 +220,7 @@ function select(daynum){
             "questionflag":questionflag
 		},
 		success:function(data,status){
+            var data = eval('(' + data + ')');
 			var list = data.rows;
 			$("#table_list_1").jqGrid('setGridParam',{
 			      datatype:'local',
@@ -233,7 +233,7 @@ function select(daynum){
 		}
 	});
 }
-$(function(){
+/*$(function(){
 	$("#doubtwork").change(function() {
 		if ($("#doubtwork").is(':checked')) {
 			$.ajax({
@@ -269,7 +269,7 @@ $(function(){
 		
 	});
 	
-});
+});*/
 function validate(){
 	//load显示
 	$(".loading_bk").show();
@@ -278,8 +278,8 @@ function validate(){
     $.ajax({
                 url: validateurl,
                 type:"GET",
-                dataType:"json",
                 success:function(data,status){  
+                    var data = eval('(' + data + ')');
                     var success = data.success;                   
                     if(success){
                         var list = data.rows;

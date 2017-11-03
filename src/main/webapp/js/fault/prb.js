@@ -243,9 +243,9 @@ function PRBCharts(daynum) {
 			"starttime":starttime,
 			"endtime":endtime
 		},
-		dataType : "json",
 		async : false,
 		success : function(data, status) {
+            var data = eval('(' + data + ')');
 			if (data.success) {
 				var list = data.rows;
 				var rrcdata = [];
@@ -311,9 +311,9 @@ function switchCharts(daynum) {
 			"starttime":starttime,
 			"endtime":endtime
 		},
-		dataType : "json",
 		async : false,
 		success : function(data, status) {
+            var data = eval('(' + data + ')');
 			if (data.success) {
 				var list = data.rows;
 				var yymon = [];
@@ -377,8 +377,8 @@ function simpleCharts(url ,daynum, attr, id, title, color) {
 			"starttime":starttime,
 			"endtime":endtime
 		},
-		dataType : "json",
 		success : function(data, status) {
+            var data = eval('(' + data + ')');
 			if (data.success) {
 				var list = data.rows;
 				var line_data = [];
@@ -540,8 +540,8 @@ function work_data(id,url,date_value,starttime,endtime){
 			"endtime":endtime
 		},
  		type : "get",
- 		dataType : "json",
  		success : function(data, status) {
+            var data = eval('(' + data + ')');
  			var list = data.rows;
  			$(id).bootstrapTable('load',list);
  		}

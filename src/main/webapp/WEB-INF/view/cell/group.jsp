@@ -14,12 +14,12 @@
 </head>
 
 <body class="gray-bg">
-	<div id="loader-wrapper">
+	<!-- <div id="loader-wrapper">
 		<div id="loader"></div>
 		<div class="loader-section section-left"></div>
 		<div class="loader-section section-right"></div>
 		<div class="load_title">正在加载小区数据...</div>
-	</div>
+	</div> -->
 
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="row">
@@ -37,15 +37,6 @@
 								class="form-control m-b" id="scene" name="scene">
 									<option>全部</option>
 							</select></label>
-							<!-- <label for="level">级别 <select class="form-control m-b"
-								id="level" name="level">
-									<option>全部</option>
-									<option>I</option>
-									<option>II</option>
-									<option>III</option>
-									<option>IV</option>
-									<option>V</option>
-							</select></label> -->
 							<button style="margin-left: 5px;" class="btn btn-white"
 								onclick="javascript:select()">查询</button>
 							<button id="clear" type="reset" class="btn btn-white">清空</button>
@@ -60,15 +51,15 @@
 						</div>
 						<div class="tabs-container">
 							<ul class="nav nav-tabs">
-								<li onclick="javascript:select2('I')" class="active"><a
+								<li onclick="javascript:switchGroup('I')" class="active"><a
 									data-toggle="tab" aria-expanded="true">I类小区</a></li>
-								<li onclick="javascript:select2('II')" class=""><a
+								<li onclick="javascript:switchGroup('II')" class=""><a
 									data-toggle="tab" aria-expanded="false">II类小区</a></li>
-								<li onclick="javascript:select2('III')" class=""><a
+								<li onclick="javascript:switchGroup('III')" class=""><a
 									data-toggle="tab" aria-expanded="false">III类小区</a></li>
-								<li onclick="javascript:select2('IV')" class=""><a
+								<li onclick="javascript:switchGroup('IV')" class=""><a
 									data-toggle="tab" aria-expanded="false">IV类小区</a></li>
-								<li onclick="javascript:select2('V')" class=""><a
+								<li onclick="javascript:switchGroup('V')" class=""><a
 									data-toggle="tab" aria-expanded="false">V类小区</a></li>
 							</ul>
 						</div>
@@ -114,6 +105,6 @@
 	<script type="text/javascript">
 		var chart_mb = echarts.init($("#kline").get(0));
 	</script>
-	<script type="text/javascript" src="${context}/js/cell/table.js"></script>
+	<script type="text/javascript" src="${context}/js/cell/group.js"></script>
 </body>
 </html>
