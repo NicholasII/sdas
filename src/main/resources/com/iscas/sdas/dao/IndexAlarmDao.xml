@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		t_cell_result_index_info ORDER BY yyyyMMdd DESC LIMIT 1)) AS a WHERE
 		a.app_result=0 GROUP BY a.cell_code
 	</select>
-	<select id="allDayIndexAlarm" resultType="com.iscas.sdas.dto.IndexAlarmDto"
+	<select id="getPageList" resultType="com.iscas.sdas.dto.IndexAlarmDto"
 		parameterType="com.iscas.sdas.dto.IndexAlarmDto">
 		SELECT yyyyMMdd,cell_code,COUNT(*) AS count,app_type FROM t_cell_result_index_info WHERE app_result = 0 			
 		<if test="cell_code !=null">

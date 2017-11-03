@@ -11,33 +11,49 @@ var JSON = "json";
 var LABELS = ['default','success','primary','info','warning','danger'];
 var SP = "&nbsp;&nbsp;";
 /**
- * 从子iframe跳转到另一个iframe
+ * iframe间跳转
+ * @param {} url 目标iframe地址
+ * @param {} params 参数对象
+ * @param {} iframe iframe名称
  */
-function iframeconvert(url,name,param){
-	var a_parent = $(".page-tabs-content",window.parent.document);  //父ifream <a>
-	var iframe_parent = $("#content-main",window.parent.document);  //父iframe <iframe>
-	
-	var item = $('<a href="javascript:;" class="active J_menuTab" data-id="'+url+'">'+name+' <i class="fa fa-times-circle"></i></a>');
-	var content = $('<iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="'+url+'?name='+param+'" frameborder="0" data-id="'+url+'" seamless></iframe>');
-	
-	a_parent.children("a").removeClass("active");
-	
+function iframeconvert(url,iframe,params) {
 
-	if(a_parent.has('a[data-id="'+url+'"]').length>0){ //当父窗口中有子ifream
-		
-		a_parent.children('a[data-id="'+url+'"]').addClass("active");
-		iframe_parent.children("iframe").css("display","none");
-		iframe_parent.children().remove('iframe[data-id="'+url+'"]');
-		content.css("display","inline");
-		iframe_parent.prepend(content);
-	}else {//父窗口中木有子ifream
-		
-		content.css("display","inline");
-		a_parent.append(item);
-		iframe_parent.children("iframe").css("display","none");
-		iframe_parent.prepend(content);
+    var a_parent = $(".page-tabs-content", window.parent.document);
+    var iframe_parent = $("#content-main", window.parent.document);
+
+    var target_url = url;
+    if (params != undefined) {
+		for (var i = 0; i < params.length; i++) {
+			if (i == 0) {
+				target_url += "?" + params[i].key + "=" + params[i].value;
+			} else {
+				target_url += "&" + params[i].key + "=" + params[i].value;
+			}
+		}
 	}
+    
+    var item = $('<a href="#" class="active J_menuTab" data-id="'
+            + url + '">'+iframe+' <i class="fa fa-times-circle"></i></a>');
+    var content = $('<iframe class="J_iframe" name="iframe10" width="100%" height="100%" src="'
+            + target_url + '" frameborder="0" data-id="' + url + '" seamless></iframe>');
+
+    a_parent.children("a").removeClass("active");
+
+    if (a_parent.has('a[data-id="' + url + '"]').length > 0) {
+        a_parent.children('a[data-id="' + url + '"]').addClass("active");
+        iframe_parent.children("iframe").css("display", "none");
+        iframe_parent.children().remove('iframe[data-id="' + url + '"]');
+        content.css("display", "inline");
+        iframe_parent.prepend(content);
+    } else {
+        content.css("display", "inline");
+        a_parent.append(item);
+        iframe_parent.children("iframe").css("display", "none");
+        iframe_parent.prepend(content);
+    }
 }
+
+
 /**
  * 非表格数据用ajax请求
  * 调用共同ajax方法，外部接口
@@ -60,7 +76,7 @@ function docommonAjax(type, url, data, success) {
 		dataType : JSON,
 		success : function(response,status) {
 			var result = response;
-			/*// 消息
+			// 消息
 			var errList = result.errList;
 			// 返回的消息类型
 			var errType = result.errType;
@@ -73,7 +89,7 @@ function docommonAjax(type, url, data, success) {
 			} else {
 				// 回调函数
 				eval(success)(response);
-			}*/
+			}
 		},
 		error : function(jqXHR, exception) {
 			/*if (jqXHR.status === 0) {
@@ -94,7 +110,97 @@ function docommonAjax(type, url, data, success) {
 		}
 	});
 }
+/**
+ * 获取表格分页信息
+ * @param {} gridid
+ * @param {} data
+ * @param {} url
+ * @param {} success
+ * @param {} boolean
+ */
+function commonRowDatas(gridid, data, url, success, boolean) {
+    if (boolean) {
+        var options = $('#' + gridid).bootstrapTable('getOptions');
+        // 获取当前页
+        var currpage = options.pageNumber;
+        if (currpage == 0) {
+            currpage = 1;
+        }
+        // 获取当前页显示数据条数
+        var pageSize = options.pageSize;
+        data.currpage = currpage;
+        data.pageSize = pageSize;
+    }
+    commonGridAjax('post', url, data, success, gridid, boolean);
+}
+/**
+ * 表格数据ajax请求
+ * @param {} type
+ * @param {} url
+ * @param {} data
+ * @param {} success
+ * @param {} gridid
+ * @param {} boolean
+ */
+function commonGridAjax(type, url, data, success, gridid, boolean) {
+    $.ajax({
+        type : type,
+        url : url,
+        data : data,
+        success : function(response) {
+            var result = response;          
+            if (success != null && success != "commonCallback") {
+                eval(success)(response);
+            } else if (success == "commonCallback") {
+                if(typeof result == "string" &&result.constructor==String){
+                    var temp = eval('(' + result + ')'); 
+                    result = temp.rows
+                }else{
+                    result = result.rows
+                }             
+                commonCallback(result, gridid, url, data, boolean);
+            }
+        },
+        error : function(jqXHR, exception) {
+            if (jqXHR.status === 0) {
+                showOnlyMessage(ERROR, "服务器停止运行，请与管理员联系");
+            } else if ((jqXHR.responseText).indexOf("401") > 0) {
+                top.location.href = contextPath + "/login/error?error=401";
+            } else if ((jqXHR.responseText).indexOf("403") > 0) {
+                top.location.href = contextPath + "/login/error?error=403";
+            } else if ((jqXHR.responseText).indexOf("500") > 0) {
+                top.location.href = contextPath + "/login/error?error=500";
+            } else if (exception === 'parsererror') {
+                showOnlyMessage(ERROR, "json数据解析错误");
+            } else if (exception === 'timeout') {
+                showOnlyMessage(ERROR, "请求超时，请重试");
+            } else {
+                showOnlyMessage(ERROR, "系统异常，请与管理员联系");
+            }
+        }
 
+    });
+}
+/**
+ * 通用表格数据ajax请求后回调函数
+ * @param {} response
+ * @param {} gridid
+ * @param {} url
+ * @param {} data
+ * @param {} boolean
+ */
+function commonCallback(response, gridid, url, data, boolean) {
+    if (gridid != null && gridid != "") {
+        $("#" + gridid).bootstrapTable('load', response);
+        // db中数据被删除了，检索的后一页没有数据，页面显示前一页的数据
+        if(boolean){
+            if (response.rows.length == 0 && response.total > 0) {
+                data.currpage = data.currpage - 1;
+                commonRowDatas(gridid, data, url, "commonCallback", boolean);
+            }
+        }
+    }
+}
 /**
  * 共同取得一览数据的方法
  * @param gridid 表格id
@@ -166,7 +272,11 @@ function showErrMsgFromBack(type, errList) {
 		});
 	}
 }
-//获取form中的数据，并将其转换成ajax需要的数据格式
+/**
+ * 获取form中的数据，并将其转换成ajax需要的数据格式
+ * @param {} formId
+ * @return {}
+ */
 function getFormJson(formId) {
 	var o = {};
 	var fid = "#" + formId;
@@ -184,8 +294,10 @@ function getFormJson(formId) {
 	return o;
 }
 /**
- * 共同回调函数
- * @param response 后台传回的数据
- * @param gridid 表格控件的id
- * @param boolean 是否需要分页条件
+ * 弹出提示消息
+ * @param type
+ * @param message
  */
+function showOnlyMessage(type, message) {
+    showParamMessage(type, message);
+}

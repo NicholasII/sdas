@@ -7,8 +7,6 @@
 <title>投诉信息总页</title>
 <%@ include file="/include/common.jsp"%>
 <script src="${context}/lib/hplus/js/plugins/layer/laydate/laydate.js"></script>
-<script type="text/javascript" src="${context}/include/time.js"></script>
-<script type="text/javascript" src="${context}/include/utils.js"></script>
 </head>
 <body>
 	<div class="wrapper wrapper-content animated fadeInRight">

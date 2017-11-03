@@ -22,7 +22,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="group_type != null">
 			and t_groupBaseInfo.group_type like #{group_type}
 		</if>
-		limit 1000
 	</select>
 	<select id="getgroups" resultType="java.lang.String">
 		select

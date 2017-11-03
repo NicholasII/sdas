@@ -25,13 +25,10 @@ import com.iscas.sdas.dto.cell.BaseCellHealth;
 import com.iscas.sdas.dto.cell.CellDto;
 import com.iscas.sdas.dto.cell.CellHealthTableDto;
 import com.iscas.sdas.dto.cell.MomentDto;
-import com.iscas.sdas.dto.work.AllOutServerDto;
-import com.iscas.sdas.dto.work.DeviceWorkDto;
-import com.iscas.sdas.dto.work.AllCapacityWorkDto;
 import com.iscas.sdas.util.CommonUntils;
 
 @Service
-public class CellService {
+public class CellService{
 
 	Logger logger = Logger.getLogger(CellService.class);
 	@Autowired
@@ -376,7 +373,6 @@ public class CellService {
 		}
 		return list;
 	}
-	
 	
 	/**
 	 * 投诉工单数量

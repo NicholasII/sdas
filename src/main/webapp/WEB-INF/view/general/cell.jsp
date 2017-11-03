@@ -10,8 +10,7 @@
 <meta http-equiv="expires" content="0">
 <title>小区综合页面</title>
 <%@ include file="/include/common.jsp"%>
-<script type="text/javascript" src="${context}/include/time.js"></script>
-<script src="${context}/lib/hplus/js/plugins/layer/laydate/laydate.js"></script>
+<%-- <script src="${context}/lib/hplus/js/plugins/layer/laydate/laydate.js"></script> --%>
 <script type="text/javascript"
 	src="http://api.map.baidu.com/api?v=2.0&ak=EmXf0NLcNCvBO5hdDliGtvC9D5v6GA5K"></script>
 <script type="text/javascript"
@@ -263,6 +262,7 @@ input {
 		<script type="text/javascript">
 			var capacityweekurl = ctx + "/capacitywork/oneweek";
 			var capacitymonthurl = ctx + "/capacitywork/onemonth";
+			var capacityselecturl = ctx + "/capacitywork/gettable";
 			var deviceurl = ctx + "/devicework/getlist";
 			var deviceweekurl = ctx + "/devicework/oneweek";
 			var devicemonthurl = ctx + "/devicework/onemonth";
@@ -450,6 +450,6 @@ input {
 		var ratiotrend = echarts.init($("#ratiotrend").get(0));
 	</script>
 
-	<script type="text/javascript" src="${context}/js/general/cell.js"></script>
+	<script type="text/javascript" src="${context}/js/cell/cell.js"></script>
 </body>
 </html>

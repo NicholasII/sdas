@@ -3,6 +3,7 @@ package com.iscas.sdas.controller.cell;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,12 +20,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.iscas.sdas.common.PageDto;
 import com.iscas.sdas.dto.GroupIndexMeatdata;
 import com.iscas.sdas.dto.TotalHealthInfoDto;
 import com.iscas.sdas.dto.cell.BaseCellHealth;
 import com.iscas.sdas.dto.cell.CellDto;
 import com.iscas.sdas.dto.cell.CellHealthTableDto;
 import com.iscas.sdas.service.cell.CellService;
+import com.iscas.sdas.util.CommonUntils;
 import com.iscas.sdas.util.Constraints;
 /**
  * 小区有关：全部表、分组、健康度 
@@ -38,40 +43,56 @@ public class CellController {
 
 	@Autowired
 	CellService cellService;
-	
+	/**
+	 * 分组首页
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping("/celltable")
 	public ModelAndView celllist(HttpServletRequest request,HttpServletResponse response){
-		ModelAndView view = new ModelAndView("cell/table");
+		ModelAndView view = new ModelAndView("cell/group");
 		return view;
 		
 	}
+	/**
+	 * 小区列表（加查询条件）--加分页
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/getcelllist")
 	@ResponseBody
-	public ModelMap getlist(HttpServletRequest request) throws UnsupportedEncodingException{
+	public ModelMap getlist(@RequestParam(value = "currpage", required = true, defaultValue = "1") String num,
+			@RequestParam(value = "pageSize", required = true, defaultValue = "10") String size,HttpServletRequest request){
 		ModelMap map = new ModelMap();
 		CellDto cellDto = new CellDto();
 		String name = request.getParameter("name");
 		String scene = request.getParameter("scene");
 		String type = request.getParameter("type");
-		if (!"".equals(name)&&name!=null) {
-			//name=new String(request.getParameter("cellname").getBytes("iso-8859-1"),"utf-8");
+		if (!CommonUntils.isempty(name)) {
 			cellDto.setNetwork_name(name);
 		}
-		if (!"".equals(type)&&!"全部".equals(type)&&type!=null) {
-			//type=new String(request.getParameter("type").getBytes("iso-8859-1"),"utf-8");
+		if (!CommonUntils.isempty(type)&&!"全部".equals(type)) {
 			cellDto.setGroup_type(type);
 		}
-		if (!"".equals(scene)&&!"全部".equals(scene)&&scene!=null) {
-			//scene=new String(request.getParameter("scene").getBytes("iso-8859-1"),"utf-8");
+		if (!CommonUntils.isempty(scene)&&!"全部".equals(scene)) {
 			cellDto.setCover_scene(scene);
 		}
+		int pageNum = Integer.parseInt(num);
+		int pageSize = Integer.parseInt(size);
+		PageHelper.startPage(pageNum, pageSize);
 		List<CellDto> cellDtos = cellService.getCellList(cellDto);
-		if (cellDtos!=null) {
-			map.addAttribute(Constraints.RESULT_ROW, cellDtos);
-			map.addAttribute(Constraints.RESULT_SUCCESS, true);
-		}else {
-			map.addAttribute(Constraints.RESULT_SUCCESS, false);
+		PageInfo<CellDto> pageInfo = new PageInfo<>(cellDtos);
+		List<CellDto> rows = new ArrayList<>();
+		for (int i = 0; i < cellDtos.size(); i++) {
+			CellDto dto = cellDtos.get(i);
+			rows.add(dto);
 		}
+		PageDto<CellDto> pageDto = new PageDto<>();
+		pageDto.setTotal(pageInfo.getTotal());
+		pageDto.setRows(rows);
+		map.addAttribute(Constraints.RESULT_ROW, pageDto);
+	
 		return map;
 	}
 	@RequestMapping("/group")
@@ -82,6 +103,11 @@ public class CellController {
 		map.addAttribute(Constraints.RESULT_ROW, groups);
 		return map;
 	}
+	/**
+	 * 小组模型
+	 * @param grouptype
+	 * @return
+	 */
 	@RequestMapping("/groupindexs")
 	@ResponseBody
 	public ModelMap getgroupindes(@RequestParam(value="type",defaultValue="I",required = true)String grouptype){
@@ -141,7 +167,7 @@ public class CellController {
 		return map;
 	}
 	/**
-	 * 实时简况度
+	 * 实时健康度
 	 * @param request
 	 * @return
 	 */
@@ -155,14 +181,13 @@ public class CellController {
 		return map;
 	}
 	/**
-	 * 小区异常预警
+	 * 小区首页异常指标预警
 	 * @param request
 	 * @return
-	 * @throws UnsupportedEncodingException
 	 */
 	@RequestMapping("/alarm_healthtrend")
 	@ResponseBody
-	public ModelMap alarm_healthtrend(HttpServletRequest request) throws UnsupportedEncodingException{
+	public ModelMap alarm_healthtrend(HttpServletRequest request){
 		ModelMap map = new ModelMap();
 		String cellname = request.getParameter("cellname");	
 		List<TotalHealthInfoDto> list = cellService.getalarmhealthtrend(cellname);
@@ -170,7 +195,7 @@ public class CellController {
 		return map;
 	}
 	/**
-	 * 当前时刻蒋康度
+	 * 当前时刻健康度
 	 * @param request
 	 * @return
 	 */

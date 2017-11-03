@@ -14,9 +14,6 @@ $(function(){
             var list = temp.rows;
             refreshJqGrid(list);
             
-        },
-        error:function(data){
-            alert("fail");
         }
     }); 
     /*
@@ -24,13 +21,14 @@ $(function(){
 	 */
     $.ajax({
         url: "/sdas/alarm/currentday",
-        type:"GET",
+        type:"get",
+        dadaType:"json",
         success:function(data,status){
             var temp = eval('(' + data + ')'); 
             var list = temp.rows;
             refreshJqGrid_alarm(list);
         },
-        error:function(data){
+        error:function(xhr,status,exception){
             alert("fail");
         }
     });
@@ -40,27 +38,19 @@ $(function(){
      */	 
     $.ajax({
         url: "/sdas/indexalarm/currentday",
-        type:"GET",
+        type:"post",
+        dadaType:"json",
         success:function(data,status){
             var temp = eval('(' + data + ')'); 
             var list = temp.rows;
             refreshJqGrid_alarm_index(list);
         },
-        error:function(data){
+        error:function(xhr,status,exception){
             alert("fail");
         }
     });
 });
 
-
-/*function scroll2(){
- 
-    $("#table tr:first").appendTo($("#table"));
-    $("#table1 tr:first").appendTo($("#table1"));
-}
-setInterval(function(){
-    scroll2()
-},1000);*/
 
 function alarmrefresh(){
     $.ajax({

@@ -31,4 +31,10 @@ public interface BaseDao<T> {
 	 * @return
 	 */
 	public abstract int delete(T t);
+	/**
+	 * 插入
+	 * @param t
+	 * @return
+	 */
+	public abstract int insert(T t);
 }

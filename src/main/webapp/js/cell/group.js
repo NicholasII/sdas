@@ -116,31 +116,63 @@ var serie = {
                     ]
                 }
             }
+
+var cellListUrl = '/sdas/cell/getcelllist';
 $(function(){
-	$.jgrid.defaults.styleUI = 'Bootstrap';
-	$.ajax({
-		url: "/sdas/cell/getcelllist",
-		type:"POST",
-		data:{
-			'type':'I'
-		},
-		dataType:"json",
-		success:function(data,status){
-			var list = data.rows;
-			refreshJqGrid(list);
-			$('body').addClass('loaded');
-	        $('#loader-wrapper .load_title').remove();
-		}
-	}); 
+    $('#table_list_1').bootstrapTable({
+        cache : false,
+        striped : true,
+        pagination : true,
+        toolbar : '#toolbar',
+        pageSize : 10,
+        pageNumber : 1,
+        pageList : [ 5, 10, 20 ],
+        clickToSelect : true,
+        sidePagination : 'server',// 设置为服务器端分页
+        columns : [
+            { field : "network_name", title : "小区名称", align : "center", valign : "middle"},
+            { field : "cover_scene", title : "覆盖场景", align : "center", valign : "middle"},
+            { field : "", title : "健康监控", align : "center", valign : "middle",formatter:function(value,row,index){
+                    var url = "/sdas/general/cellhome/";
+                    var params = "[{\"key\":\"name\",\"value\":\""+row.e_utrancell+"\"},{\"key\":\"cover_scene\",\"value\":\""+row.cover_scene+"\"},{\"key\":\"stationname\",\"value\":\""+row.station_name+"\"},{\"key\":\"used_band\",\"value\":\""+row.used_band+"\"}]";
+                    var url = '<a href=javascript:iframeconvert("' + url + '","日常监控",' + params + ')>健康监控</a>';
+                    return url;
+                }},
+            { field : "", title : '指标监控', align : 'left', valign : 'middle',formatter:function(value,row,index){
+                    var url = "/sdas/fault/page"; 
+                    var params = "[{\"key\":\"name\",\"value\":\""+row.e_utrancell+"\"}]";
+                    var url = '<a href=javascript:iframeconvert("' + url + '","指标监控",' + params + ')>指标监控</a>';
+                    return url;
+                } }
+        ],
+        onPageChange : function(size, number) {
+            searchInfo();
+        },
+        formatNoMatches : function() {
+            return "NOT_FOUND_DATAS";
+        }
+    });
+    searchInfo();
+});
+//全局查询参数
+var bsdata = {};
+bsdata.type = 'I';
+// 查询表格信息
+function searchInfo() { 
+    commonRowDatas("table_list_1", bsdata, cellListUrl, "commonCallback", true);
+}
+
+
+$(function(){
 	$.ajax({
 		url:"/sdas/cell/groupindexs",
 		type:"post",
-		dataType:"json",
 		data:{
 			'type':'I'
 		},
 		success:function(data,status){
-			var list = data.rows;
+            var temp = eval('(' + data + ')'); 
+			var list = temp.rows;
 			$("#group_index").children().remove();
 			for (var i = 0; i < list.length; i++) {
 				var item = list[i];
@@ -161,7 +193,7 @@ $(function(){
 	/*
 	 * 指标权重
 	 */
-	$.ajax({
+	/*$.ajax({
 		url: '/sdas/group/weight',
 		data:{
 			'type':'I'
@@ -172,7 +204,7 @@ $(function(){
 			var list = data.rows;
 			refreshJqGrid_weight(list);
 		}
-	});
+	});*/
 	/*
 	 * 覆盖场景
 	 */
@@ -181,7 +213,8 @@ $(function(){
 		type:"GET",
 		dataType:"json",
 		success:function(data,status){
-			var list = data.rows;
+            var temp = eval('(' + data + ')'); 
+			var list = temp.rows;
 			for(var i=0;i<list.length;i++){
 				var option = $('<option>'+list[i]+'</option>');
 				$("#scene").append(option);
@@ -190,6 +223,7 @@ $(function(){
 		}
 	});
 });
+
 function refreshJqGrid_weight(list){
 	$("#table_list_weight").jqGrid({
 		data:list,
@@ -328,89 +362,8 @@ function refreshJqGrid_weight(list){
         viewrecords: true,
         hidegrid: false  
 	});
-   /* $(window).bind('resize', function () {
-        var width = $('.jqGrid_wrapper').width();
-        $('#table_list_weight').setGridWidth(width);
-    });*/
 }
-function refreshJqGrid(list){
-	$("#table_list_1").jqGrid({
-		data:list,
-		datatype: "local",
-        height: "auto",
-        autowidth: true,
-        shrinkToFit: true,
-        rowNum: 10,
-        rowList: [10, 20, 30],
-        colNames: ['小区名称','基站','分组','频段' ,'覆盖场景','健康监控','指标监控'],
-        colModel: [
-            {
-                name: 'network_name',
-                index: 'network_name',
-                width: 100
-            },
-            {
-                name: 'station_name',
-                index: 'station_name',
-                width: 30,
-                hidden:true
-            },
-            {
-                name: 'group_type',
-                index: 'group_type',
-                width: 30,
-                hidden:true
-            },{
-                name: 'used_band',
-                index: 'used_band',
-                width: 30,
-                hidden:true
-            },
-            {
-                name: 'cover_scene',
-                index: 'cover_scene',
-                width: 30
-            },
-            {
-                name: 'index',
-                index: '健康监控',
-                width: 30
-            },
-            {
-                name: '指标监控',
-                index: '指标监控',
-                width: 40
-                
-            }
-        ],
-        pager: "#pager_list_1",
-        viewrecords: true,
-        hidegrid: false,
-        gridComplete:function(){
-        	//获取某列的每一行id
-        	var ids = jQuery("#table_list_1").jqGrid("getDataIDs");
-        	for(var i=0;i<ids.length;i++){
-        	    var id = ids[i];
-        	    var names = $("#table_list_1").getCell(id,'network_name');
-        	    var station_name = $("#table_list_1").getCell(id,'station_name');
-                var cover_scene = $("#table_list_1").getCell(id,'cover_scene');
-                var used_band = $("#table_list_1").getCell(id,'used_band');
-        	    var link2 = "/sdas/general/cellhome/";
-        	    var url2='<a href=javascript:gotocellhome("'+link2+'","'+names+'","'+station_name+'","'+cover_scene+'","'+used_band+'")>健康监控</a>';
-        	    var link3 = "/sdas/fault/page";      	    
-        	    var url3='<a href=javascript:gotoprb("'+link3+'","'+names+'")>指标监控</a>';
-        	    $("#table_list_1").jqGrid('setRowData',id,{index:url2});
-        	    $("#table_list_1").jqGrid('setRowData',id,{指标监控:url3});
-        	}
-        }
-	});
-	// Add responsive to jqGrid
-    $(window).bind('resize', function () {
-        var width = $('.jqGrid_wrapper').width();
-        $('#table_list_1').setGridWidth(width);
 
-    });
-}
 
 
 function getdetail(id,datas){
@@ -423,9 +376,6 @@ function getdetail(id,datas){
 		},
 		success:function(data,status){
 			alert(status);
-		},
-		error:function(data){
-			alert(data);
 		}
 	});
 }
@@ -433,64 +383,25 @@ function getdetail(id,datas){
 function select(){
 	var name = $("#name").val();
 	var scene = $("#scene").val();
-	var type = $("#level").val();
-	$("#table_list_1").jqGrid("clearGridData");
-	$.ajax({
-		url:"/sdas/cell/getcelllist",
-		type:"post",
-		dataType:"json",
-		data:{
-			'name':name,
-			'scene':scene,
-			'type':type
-		},
-		success:function(data,status){
-			var list = data.rows;
-			$("#table_list_1").jqGrid('setGridParam',{  // 重新加载数据
-			      datatype:'local',
-			      data : list,   //  newdata 是符合格式要求的需要重新加载的数据 
-			      page:1
-			}).trigger("reloadGrid");
-			$('body').addClass('loaded');
-	        $('#loader-wrapper .load_title').remove();
-		},
-		error:function(data,status){
-			alert(status);
-		}
-	});
+    bsdata.name = name;
+    bsdata.scene = scene;             
+    commonRowDatas("table_list_1", bsdata, cellListUrl, "commonCallback", true);
+   
 }
-function select2(type){
-	$("#table_list_1").jqGrid("clearGridData");
-	$.ajax({
-		url:"/sdas/cell/getcelllist",
-		type:"post",
-		dataType:"json",
-		data:{
-			'type':type
-		},
-		success:function(data,status){
-			var list = data.rows;
-			$("#table_list_1").jqGrid('setGridParam',{  // 重新加载数据
-			      datatype:'local',
-			      data : list,   //  newdata 是符合格式要求的需要重新加载的数据 
-			      page:1
-			}).trigger("reloadGrid");
-			$('body').addClass('loaded');
-	        $('#loader-wrapper .load_title').remove();
-		},
-		error:function(data,status){
-			alert(status);
-		}
-	});
+function switchGroup(type){
+
+    bsdata.type = type;
+    commonRowDatas("table_list_1", bsdata, cellListUrl, "commonCallback", true);
+    
 	$.ajax({
 		url:"/sdas/cell/groupindexs",
 		type:"post",
-		dataType:"json",
 		data:{
 			'type':type
 		},
 		success:function(data,status){
-			var list = data.rows;
+            var temp = eval('(' + data + ')'); 
+            var list = temp.rows;
 			$("#group_index").children().remove();
 			for (var i = 0; i < list.length; i++) {
 				var item = list[i];
@@ -511,7 +422,7 @@ function select2(type){
 	/*
 	 * 指标权重
 	 */
-	$.ajax({
+	/*$.ajax({
 		url: '/sdas/group/weight',
 		data:{
 			'type':type
@@ -530,20 +441,21 @@ function select2(type){
 			}
 			
 		}
-	});
+	});*/
 }
+
 function groupindex(cellcode,indexcode) {
 	$.ajax({
 		url:"/sdas/cell/groupindexcontent",
 		type:"post",
-		dataType:"json",
 		data:{
 			'grouptype':cellcode,
 			'indexid':indexcode
 		},
 		success:function(data,status){
-			if (data.success) {
-				var scatter = data.rows;
+            var temp = eval('(' + data + ')'); 
+			if (temp.success) {
+				var scatter = temp.rows;
                 var series = [];
                 for(var i=0;i<scatter.length;i++){
                     var temp = splitData(scatter[i]); 
@@ -579,8 +491,6 @@ function splitData(rawData) {
         values: values
     };
 }
-
-
 function calculateMA(data) {
     var result = [];
     for (var i = 0, len = data.length; i < len; i++) {
@@ -588,7 +498,6 @@ function calculateMA(data) {
     }
     return result;
 }
-
 function clear(){
 	$("#name").val("");
 	$("#scene").val("");
@@ -597,59 +506,3 @@ function clear(){
 $("#clear").click(function() {
 	clear();
 });
-
-function gotocellhome(url,cellname,station,scene,band){
-	
-	var a_parent = $(".page-tabs-content",window.parent.document);
-	var iframe_parent = $("#content-main",window.parent.document);
-	
-	var item = $('<a href="javascript:;" class="active J_menuTab" data-id="'+url+'">日常监控 <i class="fa fa-times-circle"></i></a>');
-	var content = $('<iframe class="J_iframe" name="iframe10" width="100%" height="100%" src="'+url+'?name='+cellname+'&stationname='+station+'&cover_scene='+scene+'&used_band='+band+'" frameborder="0" data-id="'+url+'" seamless></iframe>');
-	
-	a_parent.children("a").removeClass("active");
-
-	if(a_parent.has('a[data-id="'+url+'"]').length>0){
-		
-		a_parent.children('a[data-id="'+url+'"]').addClass("active");
-		iframe_parent.children("iframe").css("display","none");
-		iframe_parent.children().remove('iframe[data-id="'+url+'"]');
-		content.css("display","inline");
-		iframe_parent.prepend(content);
-	}else {
-		
-		content.css("display","inline");
-		a_parent.append(item);
-		iframe_parent.children("iframe").css("display","none");
-		iframe_parent.prepend(content);
-	}
-
-	
-
-}
-function gotoprb(url,params){
-	
-	var a_parent = $(".page-tabs-content",window.parent.document);
-	var iframe_parent = $("#content-main",window.parent.document);
-	
-	var item = $('<a href="javascript:;" class="active J_menuTab" data-id="'+url+'">指标监控 <i class="fa fa-times-circle"></i></a>');
-	var content = $('<iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="'+url+'?name='+params+'" frameborder="0" data-id="'+url+'" seamless></iframe>');
-	
-	a_parent.children("a").removeClass("active");
-	
-
-	if(a_parent.has('a[data-id="'+url+'"]').length>0){
-		
-		a_parent.children('a[data-id="'+url+'"]').addClass("active");
-		iframe_parent.children("iframe").css("display","none");
-		iframe_parent.children().remove('iframe[data-id="'+url+'"]');
-		content.css("display","inline");
-		iframe_parent.prepend(content);
-	}else {
-		
-		content.css("display","inline");
-		a_parent.append(item);
-		iframe_parent.children("iframe").css("display","none");
-		iframe_parent.prepend(content);
-	}
-}
-

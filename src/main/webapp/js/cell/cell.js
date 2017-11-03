@@ -599,8 +599,8 @@ function historyTrendQuery(type, start, end) {
 					'type' : type
 				},
 				type : "POST",
-				dataType : "json",
 				success : function(data, status) {
+                    var data = eval('(' + data + ')');
 					var list = data.rows;
 					var axis = [];
 					var data2 = [];
@@ -641,185 +641,84 @@ function query2() {
 	var end = $("#end").val();
 	workQuery("select", start, end);
 }
+
 function workQuery(type, start, end) {
 	if (iscapacitywork) {
 		if ("week" == type) {
-			$.ajax({
-						url : capacityweekurl,
-						data : {
-							'cellname' : cellname
-						},
-						type : "POST",
-						dataType : "json",
-						success : function(data, status) {
-							var list = data.rows;
-							$("#table_list_work").jqGrid('clearGridData');
-							$("#table_list_work").jqGrid('setGridParam', {
-										datatype : 'local',
-										data : list,
-										page : 1
-									}).trigger("reloadGrid");
-						}
-					});
+            var data = {};
+            data.cellname = cellname;
+            commonAjax(capacityweekurl,data,"POST","table_list_work")			
 		} else if ("month" == type) {
-			$.ajax({
-						url : capacitymonthurl,
-						data : {
-							'cellname' : cellname
-						},
-						type : "POST",
-						dataType : "json",
-						success : function(data, status) {
-							var list = data.rows;
-							$("#table_list_work").jqGrid('clearGridData');
-							$("#table_list_work").jqGrid('setGridParam', {
-										datatype : 'local',
-										data : list,
-										page : 1
-									}).trigger("reloadGrid");
-						}
-					});
+            var data = {};
+            data.cellname = cellname;
+            commonAjax(capacitymonthurl,data,"POST","table_list_work");			
 		} else {
-			$.ajax({
-						url : '/sdas/capacitywork/gettable',
-						data : {
-							'cellname' : cellname,
-							'starttime' : start,
-							'endtime' : end
-						},
-						type : "POST",
-						dataType : "json",
-						success : function(data, status) {
-							var list = data.rows;
-							$("#table_list_work").jqGrid('clearGridData');
-							$("#table_list_work").jqGrid('setGridParam', {
-										datatype : 'local',
-										data : list,
-										page : 1
-									}).trigger("reloadGrid");
-						}
-					});
+            var data = {};
+            data.cellname = cellname;
+            data.starttime = start;
+            data.endtime = end;
+            commonAjax(capacityselecturl,data,"POST","table_list_work");
 		}
 	} else if (isdevicework) {
 		if ("week" == type) {
-			$.ajax({
-						url : deviceweekurl,
-						data : {
-							'cellname' : cellname
-						},
-						type : "POST",
-						dataType : "json",
-						success : function(data, status) {
-							var list = data.rows;
-							$("#table_list_work2").jqGrid('clearGridData');
-							$("#table_list_work2").jqGrid('setGridParam', {
-										datatype : 'local',
-										data : list,
-										page : 1
-									}).trigger("reloadGrid");
-						}
-					});
+            var data = {};
+            data.cellname = cellname;
+            commonAjax(deviceweekurl,data,"POST","table_list_work2");			
 		} else if ("month" == type) {
-			$.ajax({
-						url : devicemonthurl,
-						data : {
-							'cellname' : cellname
-						},
-						type : "POST",
-						dataType : "json",
-						success : function(data, status) {
-							var list = data.rows;
-							$("#table_list_work2").jqGrid('clearGridData');
-							$("#table_list_work2").jqGrid('setGridParam', {
-										datatype : 'local',
-										data : list,
-										page : 1
-									}).trigger("reloadGrid");
-						}
-					});
+            var data = {};
+            data.cellname = cellname;
+            commonAjax(devicemonthurl,data,"POST","table_list_work2");
 		} else {
-			$.ajax({
-						url : deviceurl,
-						data : {
-							'cellname' : cellname,
-							'starttime' : start,
-							'endtime' : end
-						},
-						type : "POST",
-						dataType : "json",
-						success : function(data, status) {
-							var list = data.rows;
-							$("#table_list_work2").jqGrid('clearGridData');
-							$("#table_list_work2").jqGrid('setGridParam', {
-										datatype : 'local',
-										data : list,
-										page : 1
-									}).trigger("reloadGrid");
-						}
-					});
+            var data = {};
+            data.cellname = cellname;
+            data.starttime = start;
+            data.endtime = end;
+            commonAjax(deviceurl,data,"POST","table_list_work2");
 		}
 	} else if (isoutservework) {
 		if ("week" == type) {
-			$.ajax({
-						url : outserviceweek,
-						data : {
-							'cellname' : cellname
-						},
-						type : "POST",
-						dataType : "json",
-						success : function(data, status) {
-							var list = data.rows;
-							$("#table_list_work3").jqGrid('clearGridData');
-							$("#table_list_work3").jqGrid('setGridParam', {
-										datatype : 'local',
-										data : list,
-										page : 1
-									}).trigger("reloadGrid");
-						}
-					});
+            var data = {};
+            data.cellname = cellname;
+            commonAjax(outserviceweek,data,"POST","table_list_work3");
 		} else if ("month" == type) {
-			$.ajax({
-						url : outservicemonth,
-						data : {
-							'cellname' : cellname
-						},
-						type : "POST",
-						dataType : "json",
-						success : function(data, status) {
-							var list = data.rows;
-							$("#table_list_work3").jqGrid('clearGridData');
-							$("#table_list_work3").jqGrid('setGridParam', {
-										datatype : 'local',
-										data : list,
-										page : 1
-									}).trigger("reloadGrid");
-						}
-					});
+            var data = {};
+            data.cellname = cellname;
+            commonAjax(outservicemonth,data,"POST","table_list_work3");
 		} else {
-			$.ajax({
-						url : outservicemonth,
-						data : {
-							'cellname' : cellname,
-							'starttime' : start,
-							'endtime' : end
-						},
-						type : "POST",
-						dataType : "json",
-						success : function(data, status) {
-							var list = data.rows;
-							$("#table_list_work3").jqGrid('clearGridData');
-							$("#table_list_work3").jqGrid('setGridParam', {
-										datatype : 'local',
-										data : list,
-										page : 1
-									}).trigger("reloadGrid");
-						}
-					});
+            var data = {};
+            data.cellname = cellname;
+            data.starttime = start;
+            data.endtime = end;
+            commonAjax(outservicemonth,data,"POST","table_list_work3");
 		}
 	}
 }
+/**
+ * 通用更新jqueryGrid
+ * @param {} url
+ * @param {} data
+ * @param {} type
+ * @param {} gridid
+ */
+function commonAjax(url, data, type,gridid) {
+	$.ajax({
+				url : url,
+				data :data,
+				type : type,
+				success : function(data, status) {
+					var data = eval('(' + data + ')');
+					var list = data.rows;
+					$('#' + gridid).jqGrid('clearGridData');
+					$('#' + gridid).jqGrid('setGridParam', {
+								datatype : 'local',
+								data : list,
+								page : 1
+							}).trigger("reloadGrid");
+				}
+			});
+}
 $(function() {
-	//loading初始化显示
+	// loading初始化显示
 	$(".loading_bk").show();
 	$(".loading").show();
 	/*
@@ -831,9 +730,10 @@ $(function() {
 					'cellname' : cellname
 				},
 				type : "POST",
-				dataType : "json",
 				success : function(data, status) {
-					var list = data.rows;
+					// var list = data.rows;
+                    var temp = eval('(' + data + ')'); 
+                    var list = temp.rows;
 					refreshJqGrid(list);
 
 				}
@@ -847,9 +747,10 @@ $(function() {
 					'cellname' : cellname
 				},
 				type : "POST",
-				dataType : "json",
 				success : function(data, status) {
-					var list = data.rows;
+                    var temp = eval('(' + data + ')'); 
+                    var list = temp.rows;
+					//var list = data.rows;
 					refreshJqGrid_capacity(list);
 					iscapacitywork = true;
 				}
@@ -878,9 +779,10 @@ $(function() {
                     'cellname' : cellname
                 },
                 type : "POST",
-                dataType : "json",
                 success : function(data, status) {
-                    var list = data.rows;
+                   // var list = data.rows;
+                    var temp = eval('(' + data + ')'); 
+                    var list = temp.rows;
                     refresh_healthtable(list);
                  
                 }
@@ -894,18 +796,19 @@ $(function() {
 			'cellname' : cellname
 		},
 		type : "POST",
-		dataType : "json",
 		success : function(data, status) {
-			var group = data.group;
+            var temp = eval('(' + data + ')'); 
+			var group = temp.group;
 			$.ajax({
 				url : "/sdas/cell/groupindexs",
 				type : "post",
-				dataType : "json",
 				data : {
 					'type' : group
 				},
 				success : function(data, status) {
-					var list = data.rows;
+                    var temp = eval('(' + data + ')'); 
+                    var list = temp.rows;
+					//var list = data.rows;
 					$("#group_index").children().remove();
 					for (var i = 0; i < list.length; i++) {
 						var item = list[i];
@@ -945,9 +848,10 @@ $(function() {
 					'cellname' : cellname
 				},
 				type : "POST",
-				dataType : "json",
 				success : function(data, status) {
-					var list = data.rows;
+                    var temp = eval('(' + data + ')'); 
+                    var list = temp.rows;
+					//var list = data.rows;
 					var axis = [];
 					var data2 = [];
                     for (var z = 0; z < list.length; z++) {
@@ -988,9 +892,10 @@ $(function() {
 					'cellname' : cellname
 				},
 				type : "POST",
-				dataType : "json",
 				success : function(data, status) {
-					var list = data.rows;
+					//var list = data.rows;
+                    var temp = eval('(' + data + ')'); 
+                    var list = temp.rows;
 					var axis = [];
 					var data2 = [];
 					for (var z = 0; z < list.length; z++) {
@@ -1018,9 +923,10 @@ $(function() {
 					'cellname' : cellname
 				},
 				type : "POST",
-				dataType : "json",
 				success : function(data, status) {
-					var list = data.rows;
+					//var list = data.rows;
+                    var temp = eval('(' + data + ')'); 
+                    var list = temp.rows;
 					alarmJqGrid(list);
 					setInterval((function() {
 								refreshAlarm()
@@ -1043,6 +949,7 @@ function refreshAlarm() {
 				type : "POST",
 				dataType : "json",
 				success : function(data, status) {
+                    var data = eval('(' + data + ')'); 
 					var list = data.rows;
 					alarmJqGrid(list);
 				}
@@ -1052,12 +959,12 @@ function cellindex(cellcode, indexcode) {
 	$.ajax({
 		url : "/sdas/cell/index",
 		type : "post",
-		dataType : "json",
 		data : {
 			'cellname' : cellcode,
 			'index' : indexcode
 		},
 		success : function(data, status) {
+            var data = eval('(' + data + ')'); 
 			if (data.success) {
 				var scatter = data.rows;
 				var temp0 = splitData(scatter[0]);
@@ -1391,8 +1298,8 @@ function switchwork(url, params) {
 					'cellname' : params
 				},
 				type : "POST",
-				dataType : "json",
 				success : function(data, status) {
+                    var data = eval('(' + data + ')');
 					var list = data.rows;
 					if (url == "/sdas/capacitywork/oneweek") {
 						if (!iscapacitywork) {
@@ -1697,9 +1604,9 @@ function rtRatio() {
 					'cellname' : cellname,
 					'count' : refreshcount
 				},
-				dataType : "json",
 				success : function(data, status) {
-					var ratio = data.ratio;
+                    var temp = eval('(' + data + ')'); 
+					var ratio = temp.ratio;
 					if (ratio != undefined && ratio != "" && ratio != null) {
 						$("#b_ratio").text(ratio);
 						if (ratio > 80) {

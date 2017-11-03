@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<jsp:include page="/include/common.jsp"></jsp:include>
+<%@ include file="/include/common.jsp"%>
 </head>
 <body>
 	<div class="ibox-content">
