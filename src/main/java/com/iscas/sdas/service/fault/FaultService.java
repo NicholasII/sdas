@@ -15,22 +15,25 @@ public class FaultService {
 	@Autowired
 	FaultDao faultDao;
 	
-	public List<PRBBean> getprbs(String cellname,Integer daynum,String starttime,String endtime){
-		return faultDao.getprb(cellname,daynum,starttime,endtime);
+	public List<PRBBean> getprbs(PRBBean prb){
+		return faultDao.getprb(prb);
 	}
-	public List<PRBBean> getprbothers(String cellname,Integer daynum,String starttime,String endtime){
-		return faultDao.getprbothers(cellname,daynum,starttime,endtime);
+	public List<PRBBean> getprbothers(PRBBean prb){
+		return faultDao.getprbothers(prb);
 	}
-	public List<PRBBean> getswitch(String cellname,Integer daynum,String starttime,String endtime){
-		return faultDao.getswitch(cellname,daynum,starttime,endtime);
+	public List<PRBBean> getswitch(PRBBean prb){
+		return faultDao.getswitch(prb);
 	}
-	public List<PRBBean> getswitchothers(String cellname,Integer daynum,String starttime,String endtime){
-		return faultDao.getswitchothers(cellname,daynum,starttime,endtime);
+	public List<PRBBean> getswitchothers(PRBBean prb){
+		return faultDao.getswitchothers(prb);
 	}
-	public List<PRBBean> getworkprb(String cellname,Integer daynum,String starttime,String endtime){
-		return faultDao.getworkprb(cellname,daynum,starttime,endtime);
+	public List<PRBBean> getworkprb(PRBBean prb){
+		return faultDao.getworkprb(prb);
 	}
-	public List<PRBBean> getworkswitch(String cellname,Integer daynum,String starttime,String endtime){
-		return faultDao.getworkswitch(cellname,daynum,starttime,endtime);
+	public List<PRBBean> getworkswitch(PRBBean prb){
+		return faultDao.getworkswitch(prb);
+	}
+	public PRBBean getlasttime(String cellname){
+		return faultDao.getlasttime(cellname);
 	}
 }
