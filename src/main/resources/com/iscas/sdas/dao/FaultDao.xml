@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.iscas.sdas.dao.fault.FaultDao">
 <select id="getlasttime" resultType="com.iscas.sdas.dto.data.PRBBean">
 	SELECT test.time1 as lasttime FROM
-		test_rtdata_net test where test.cellcode9=#{cellname} order by timestamp DESC LIMIT 1;
+		test_rtdata_net test where test.cellcode9=#{cellname} order by lasttime DESC LIMIT 1;
 	</select>
 	<select id="getprb" resultType="com.iscas.sdas.dto.data.PRBBean">
 	Select * from (SELECT test.time1 as timestamp,test.key30 as rrc,test.key58	as upprb,test.key59 as downprb FROM
