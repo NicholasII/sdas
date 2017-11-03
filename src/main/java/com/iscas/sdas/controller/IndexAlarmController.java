@@ -57,6 +57,7 @@ public class IndexAlarmController extends BaseController<IndexAlarmDto> {
 		String daynum = request.getParameter("daynum");
 		String starttime = request.getParameter("starttime");
 		String endtime = request.getParameter("endtime");
+		String type=request.getParameter("type");
 		if (!CommonUntils.isempty(cellname)) {
 			alarmDto.setCell_code(cellname);
 		}
@@ -68,6 +69,9 @@ public class IndexAlarmController extends BaseController<IndexAlarmDto> {
 		}
 		if (!CommonUntils.isempty(endtime)) {
 			alarmDto.setEndtime(endtime);
+		}
+		if (!CommonUntils.isempty(type)) {
+			alarmDto.setType(type);
 		}
 		/*int pageNum = Integer.parseInt(num);
 		int pageSize = Integer.parseInt(size);

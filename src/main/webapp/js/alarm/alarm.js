@@ -99,7 +99,7 @@ function select(daynum){
     var data = {};
     data.daynum = daynum;
     data.starttime =  starttime;
-    data.endttime = endtime;
+    data.endtime = endtime;
     data.cellname = name;
     commonRowDatas("table_list_1", data, alarmurl, "commonCallback", true);
 
