@@ -10,6 +10,10 @@ var INFO = "info";
 var JSON = "json";
 var LABELS = ['default','success','primary','info','warning','danger'];
 var SP = "&nbsp;&nbsp;";
+/** 提示_无符合条件的记录 */
+var NOT_FOUND_DATAS = '无符合条件的记录';
+/** 提示_是否删除 */
+var IF_DELETE_INFO = "是否要删除选中的行?";
 /**
  * iframe间跳转
  * @param {} url 目标iframe地址
@@ -63,36 +67,28 @@ function doAjax(type, url, data, success) {
 }
 /**
  * ajax共同方法
- * @param type
- * @param url
- * @param data
- * @param success
+ * @param type get or post
+ * @param url  请求地址
+ * @param data 携带数据
+ * @param success 成功后回调函数名称
  */
 function docommonAjax(type, url, data, success) {
 	$.ajax({
 		type : type,
 		url : url,
 		data : data,
-		dataType : JSON,
 		success : function(response,status) {
 			var result = response;
-			// 消息
-			var errList = result.errList;
-			// 返回的消息类型
-			var errType = result.errType;
-			// 后台有消息返回
-			if (errList != undefined && errList.length != 0) {
-				showErrMsgFromBack(errType, errList); // 显示错误消息
-				// 回调函数
-				eval(success)(response);
-				return;
-			} else {
-				// 回调函数
-				eval(success)(response);
-			}
+            if(typeof result == "string" &&result.constructor==String){
+                var temp = eval('(' + result + ')'); 
+                result = temp.rows
+            }else{
+                result = result.rows
+            }
+            eval(success)(result);//result可能是一个json数据或者是一个json对象，在传入的回调函数中解译
 		},
 		error : function(jqXHR, exception) {
-			/*if (jqXHR.status === 0) {
+			if (jqXHR.status === 0) {
 				showOnlyMessage(ERROR, "服务器停止运行，请与管理员联系");
 			} else if ((jqXHR.responseText).indexOf("401") > 0) {
 				top.location.href = ctx + "/login/error?error=401";
@@ -106,7 +102,7 @@ function docommonAjax(type, url, data, success) {
 				showOnlyMessage(ERROR, "请求超时，请重试");
 			} else {
 				showOnlyMessage(ERROR, "系统异常，请与管理员联系");
-			}*/
+			}
 		}
 	});
 }
@@ -193,12 +189,12 @@ function commonCallback(response, gridid, url, data, boolean) {
     if (gridid != null && gridid != "") {
         $("#" + gridid).bootstrapTable('load', response);
         // db中数据被删除了，检索的后一页没有数据，页面显示前一页的数据
-        if(boolean){
+        /*if(boolean){
             if (response.rows.length == 0 && response.total > 0) {
                 data.currpage = data.currpage - 1;
                 commonRowDatas(gridid, data, url, "commonCallback", boolean);
             }
-        }
+        }*/
     }
 }
 /**
@@ -294,10 +290,74 @@ function getFormJson(formId) {
 	return o;
 }
 /**
+ * 弹出确认框
+ * @param funName
+ * @param msg
+ * @param type
+ * @param url
+ * @param date
+ * @param success
+ */
+function showConfirm(funName, msg, type, url, date, success) {
+    bootbox.setLocale("zh_CN");
+    bootbox.confirm(msg, function(result) {
+        if (result) {
+            eval(funName)(type, url, date, success);
+        }
+    });
+}
+/**
  * 弹出提示消息
  * @param type
  * @param message
  */
 function showOnlyMessage(type, message) {
     showParamMessage(type, message);
+}
+/**
+ * 详情btn
+ * @param value
+ * @returns {String}
+ */
+function detailBtn(value) {
+    //var html = '<span class="label label-sm label-info"><a href="#" onclick="checkDetail(\'' + value + '\')"><i class="fa fa-info"></i>详情</a></span>';
+    var html = '<a href="javascript:;" class="btn btn-outline btn-circle btn-sm purple" onclick="checkDetail(\'' + value + '\')"><i class="fa fa-info"></i>详情</a>';
+    return html;
+}
+
+/**
+ * 编辑btn
+ * @param value
+ * @returns {String}
+ */
+function editBtn(value) {
+    var html = '<a href="javascript:;" class="btn btn-outline btn-circle btn-sm purple" onclick="editDetail(\'' + value + '\')"><i class="fa fa-edit"></i>编辑</a>';
+    return html;
+}
+/**
+ * 获取选表格中行
+ * @param {} id
+ * @return {}
+ */ 
+function selectedRows(id) {
+    var rowsObj = $('#' + id).bootstrapTable('getSelections');
+    return rowsObj;
+}
+/** 
+ * 获取表格选中的行数
+ * @param {} id
+ * @return {}
+ */
+function selectedCount(id) {
+    var rows = $('#' + id).bootstrapTable('getAllSelections').length;
+    return rows;
+}
+/**
+ * 对input框进行md5加密
+ * @param id
+ */
+function Encrypt(id) {
+    if ($("#" + id).val() != null && $("#" + id).val() != "") {
+        $("#" + id).val($.md5($("#" + id).val()));
+    }
 }

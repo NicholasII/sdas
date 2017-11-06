@@ -9,16 +9,10 @@ import java.util.List;
  */
 public interface BaseDao<T> {
 	/**
-	 * 查询（分页）
+	 * 查询
 	 * @return
 	 */
 	public abstract List<T> getPageList(T t);
-	/**
-	 * 查询（不分页）
-	 * @param t
-	 * @return
-	 */
-	public abstract List<T> getAllList(T t);
 	/**
 	 * 更新
 	 * @param t

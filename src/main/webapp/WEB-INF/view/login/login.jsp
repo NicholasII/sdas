@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-group">
                     	<lable class="sr-only" for="password">密码</lable>
-                    	<input type="password" name="password" id="password" class="form-control pword m-b" placeholder="密码" />
+                    	<input type="password" name="password" id="password" class="form-control pword m-b" placeholder="密码" onblur="EncryptPassword()"/>
                     </div>
                     <%-- <c:if test="${env != 'dev' }">
                     <div class="row" style="padding-bottom: 15px;">

@@ -46,6 +46,49 @@ public abstract class BaseService<Dao extends BaseDao<Dto>,Dto extends BaseDto> 
 	 * @return
 	 */
 	public List<Dto> getalllist(Dto dto){
-		return dao.getAllList(dto);
+		return dao.getPageList(dto);
+	}
+	/**
+	 * 插入多项数据
+	 * @param dtos
+	 */
+	public boolean insert(List<Dto> dtos){
+		try {
+			for (Dto dto : dtos) {
+				dao.insert(dto);
+			}
+		} catch (Exception e) {		
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	/**
+	 * 更新数据
+	 * @param dto
+	 * @return
+	 */
+	public boolean update(Dto dto){
+		try {
+				dao.update(dto);
+		} catch (Exception e) {		
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	/**
+	 * 删除数据
+	 * @param dto
+	 * @return
+	 */
+	public boolean delete(Dto dto){
+		try {
+			dao.delete(dto);
+		} catch (Exception e) {		
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 }

@@ -55,6 +55,12 @@
 									<span class="fa arrow"></span>
 								</a>
 							</c:if>
+							<c:if test="${menu.MENU_NAME=='用户管理'}">
+								<a class="J_menuItem" href="${context}${menu.MENU_URL}"> <i class="fa fa-flask"></i> <span
+									class="nav-label">${menu.MENU_NAME}</span> <span
+									class="fa arrow"></span>
+								</a>
+							</c:if> 
 						</li>
 					</c:if>
 					<!-- 一级菜单下有二级菜单 -->
@@ -66,13 +72,7 @@
 									class="nav-label">${menu.MENU_NAME}</span> <span
 									class="fa arrow"></span>
 								</a>
-							</c:if> 
-							<c:if test="${menu.MENU_NAME=='用户管理'}">
-								<a href="#"> <i class="fa fa-edit"></i> <span
-									class="nav-label">${menu.MENU_NAME}</span> <span
-									class="fa arrow"></span>
-								</a>
-							</c:if> 
+							</c:if> 							
 							<c:if test="${menu.MENU_NAME=='数据集合'}">
 								<a href="#"> <i class="fa fa-desktop"></i> <span
 									class="nav-label">${menu.MENU_NAME}</span> <span

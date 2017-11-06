@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iscas.datas.ratio.HealthDegree;
-import com.iscas.sdas.dao.WorkDao;
 import com.iscas.sdas.dao.work.CapacityWorkDao;
+import com.iscas.sdas.dao.WorkDao;
 import com.iscas.sdas.dao.work.AllCapacityWorkDao;
 import com.iscas.sdas.dto.work.CapacityWorkDto;
 import com.iscas.sdas.dto.work.AllCapacityWorkDto;
