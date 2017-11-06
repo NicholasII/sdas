@@ -24,6 +24,7 @@ public class PRBBean {
 	private String cellname;
 	private String monitor_value;
 	private String reasons;
+	private String lasttime;
 	
 	public String getSwitchs() {
 		return switchs;
@@ -144,6 +145,12 @@ public class PRBBean {
 	}
 	public void setCellname(String cellname) {
 		this.cellname = cellname;
+	}
+	public String getLasttime() {
+		return lasttime;
+	}
+	public void setLasttime(String lasttime) {
+		this.lasttime = lasttime;
 	}
 	
 }

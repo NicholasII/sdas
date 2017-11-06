@@ -13,8 +13,15 @@ input {
 	padding-top: 5px;
 	padding-bottom: 5px;
 	margin-top: 10px;
-	margin-bottom: 10px
+	margin-bottom: 10px;
+	height: 35px;
+    border-radius: 3px;
+    border: 1px solid #999999;
 }
+select{    
+    width: 160px;
+    height: 35px;
+    border-radius: 3px}
 </style>
 </head>
 <body>
@@ -50,8 +57,14 @@ input {
 					</div>
 					<div class="ibox-content">
 						<div>
-							<label>小区名称</label> <input type="text" placeholder="请输入小区名称"
-								id="name" name="name">
+							<label>小区名称</label> 
+							<input type="text" placeholder="请输入小区名称" id="name" name="name"> 
+							<label>指标类型：</label>
+							<select name="type" id="type" value="">
+									<option value="" name="type">全部</option>
+									<option value="0" name="type">新PRB利用率(4次连续)</option>
+									<option value="1" name="type">新切换出成功率(4次连续)</option>
+								</select>
 							<button class="btn btn-white" onclick="javascript:select()">查询</button>
 						</div>
 					</div>

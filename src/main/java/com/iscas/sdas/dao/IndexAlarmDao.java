@@ -12,7 +12,11 @@ public interface IndexAlarmDao extends BaseDao<IndexAlarmDto>{
 	 * @return
 	 */
 	List<IndexAlarmDto> getPageListCurrentDay();
-
+	/**
+	 * 指标预警页面对应小区获取最近一天指标预警
+	 * @return
+	 */
+	List<IndexAlarmDto> getLastDay(IndexAlarmDto indexAlarmDto);
 	
 	
 }

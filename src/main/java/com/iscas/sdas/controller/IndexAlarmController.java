@@ -57,6 +57,7 @@ public class IndexAlarmController extends BaseController<IndexAlarmDto> {
 		String daynum = request.getParameter("daynum");
 		String starttime = request.getParameter("starttime");
 		String endtime = request.getParameter("endtime");
+		String type=request.getParameter("type");
 		if (!CommonUntils.isempty(cellname)) {
 			alarmDto.setCell_code(cellname);
 		}
@@ -68,6 +69,9 @@ public class IndexAlarmController extends BaseController<IndexAlarmDto> {
 		}
 		if (!CommonUntils.isempty(endtime)) {
 			alarmDto.setEndtime(endtime);
+		}
+		if (!CommonUntils.isempty(type)) {
+			alarmDto.setType(type);
 		}
 		/*int pageNum = Integer.parseInt(num);
 		int pageSize = Integer.parseInt(size);
@@ -98,5 +102,27 @@ public class IndexAlarmController extends BaseController<IndexAlarmDto> {
 	public ModelAndView page() {
 		return new ModelAndView("alarm/indexalarm");
 	}
-
+	/**
+	 *指标预警页面小区预警列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/getLastDay")
+	@ResponseBody
+	public ModelMap getLastDay(HttpServletRequest request) {
+		ModelMap map = new ModelMap();
+		IndexAlarmDto alarmDto = new IndexAlarmDto();
+		String cell_code = request.getParameter("cell_code");
+		
+		String type = request.getParameter("type");
+		if (!CommonUntils.isempty(cell_code)) {
+			alarmDto.setCell_code(cell_code);
+		}
+		if (!CommonUntils.isempty(type)) {
+			alarmDto.setType(type);
+		}
+		List<IndexAlarmDto> dtos = alarmService.getLastDay(alarmDto);
+		map.addAttribute(Constraints.RESULT_ROW, dtos);
+		return map;
+	}
 }

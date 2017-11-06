@@ -29,7 +29,6 @@ public class PRBController {
 	public ModelAndView page(HttpServletRequest request) throws UnsupportedEncodingException{
 		ModelAndView modelAndView = new ModelAndView("fault/prb");
 		String cellname = request.getParameter("name");
-		//String cellname = request.getParameter("name");
 		if (!CommonUntils.isempty(cellname)) {
 			modelAndView.addObject("cellname", cellname);
 		}
@@ -44,13 +43,22 @@ public class PRBController {
 		String daynumStr=request.getParameter("daynum");
 		String starttime=request.getParameter("starttime");
 		String endtime=request.getParameter("endtime");
-		if(daynumStr!=null&&daynumStr!=""){
-			daynum=Integer.parseInt(daynumStr);
+		PRBBean prb=faultService.getlasttime(cellname);
+		prb.setCellname(cellname);
+		prb.setLasttime(prb.getLasttime().substring(0, prb.getLasttime().lastIndexOf(" ")));
+		if(!CommonUntils.isempty(daynumStr)){
+			prb.setDaynum(Integer.parseInt(daynumStr));
+		}
+		if(!CommonUntils.isempty(starttime)){
+			prb.setStarttime(starttime);
+		}
+		if(!CommonUntils.isempty(endtime)){
+			prb.setEndtime(endtime);
 		}
 		ModelMap map = new ModelMap();
-		List<PRBBean> prbBeans = faultService.getprbs(cellname,daynum,starttime,endtime);
+		List<PRBBean> prbBeans = faultService.getprbs(prb);
 		//获取性能工单数据
-		List<PRBBean> workprb = faultService.getworkprb(cellname,daynum,starttime,endtime);
+		List<PRBBean> workprb = faultService.getworkprb(prb);
 		if (prbBeans!=null) {
 			map.addAttribute(Constraints.RESULT_ROW, prbBeans);
 			map.addAttribute(Constraints.RESULT_WORKS, workprb);
@@ -68,13 +76,22 @@ public class PRBController {
 		String daynumStr=request.getParameter("daynum");
 		String starttime=request.getParameter("starttime");
 		String endtime=request.getParameter("endtime");
-		if(daynumStr!=null&&daynumStr!=""){
-			daynum=Integer.parseInt(daynumStr);
+		PRBBean prb=faultService.getlasttime(cellname);
+		prb.setCellname(cellname);
+		prb.setLasttime(prb.getLasttime().substring(0, prb.getLasttime().lastIndexOf(" ")));
+		if(!CommonUntils.isempty(daynumStr)){
+			prb.setDaynum(Integer.parseInt(daynumStr));
+		}
+		if(!CommonUntils.isempty(starttime)){
+			prb.setStarttime(starttime);
+		}
+		if(!CommonUntils.isempty(endtime)){
+			prb.setEndtime(endtime);
 		}
 		ModelMap map = new ModelMap();
-		List<PRBBean> prbothers = faultService.getprbothers(cellname,daynum,starttime,endtime);
+		List<PRBBean> prbothers = faultService.getprbothers(prb);
 		//获取性能工单数据
-		List<PRBBean> workprb = faultService.getworkprb(cellname,daynum,starttime,endtime);
+		List<PRBBean> workprb = faultService.getworkprb(prb);
 		if (prbothers!=null) {
 			map.addAttribute(Constraints.RESULT_ROW, prbothers);
 			map.addAttribute(Constraints.RESULT_WORKS, workprb);
@@ -92,12 +109,21 @@ public class PRBController {
 		String daynumStr=request.getParameter("daynum");
 		String starttime=request.getParameter("starttime");
 		String endtime=request.getParameter("endtime");
-		if(daynumStr!=null&&daynumStr!=""){
-			daynum=Integer.parseInt(daynumStr);
+		PRBBean prb=faultService.getlasttime(cellname);
+		prb.setCellname(cellname);
+		prb.setLasttime(prb.getLasttime().substring(0, prb.getLasttime().lastIndexOf(" ")));
+		if(!CommonUntils.isempty(daynumStr)){
+			prb.setDaynum(Integer.parseInt(daynumStr));
+		}
+		if(!CommonUntils.isempty(starttime)){
+			prb.setStarttime(starttime);
+		}
+		if(!CommonUntils.isempty(endtime)){
+			prb.setEndtime(endtime);
 		}
 		ModelMap map = new ModelMap();
-		List<PRBBean> switchBeans = faultService.getswitch(cellname,daynum,starttime,endtime);
-		List<PRBBean> workswitch = faultService.getworkswitch(cellname,daynum,starttime,endtime);
+		List<PRBBean> switchBeans = faultService.getswitch(prb);
+		List<PRBBean> workswitch = faultService.getworkswitch(prb);
 		if (switchBeans!=null) {
 			map.addAttribute(Constraints.RESULT_ROW, switchBeans);
 			map.addAttribute(Constraints.RESULT_WORKS, workswitch);
@@ -115,12 +141,21 @@ public class PRBController {
 		String daynumStr=request.getParameter("daynum");
 		String starttime=request.getParameter("starttime");
 		String endtime=request.getParameter("endtime");
-		if(daynumStr!=null&&daynumStr!=""){
-			daynum=Integer.parseInt(daynumStr);
+		PRBBean prb=faultService.getlasttime(cellname);
+		prb.setCellname(cellname);
+		prb.setLasttime(prb.getLasttime().substring(0, prb.getLasttime().lastIndexOf(" ")));
+		if(!CommonUntils.isempty(daynumStr)){
+			prb.setDaynum(Integer.parseInt(daynumStr));
+		}
+		if(!CommonUntils.isempty(starttime)){
+			prb.setStarttime(starttime);
+		}
+		if(!CommonUntils.isempty(endtime)){
+			prb.setEndtime(endtime);
 		}
 		ModelMap map = new ModelMap();
-		List<PRBBean> switchothers = faultService.getswitchothers(cellname,daynum,starttime,endtime);
-		List<PRBBean> workswitch = faultService.getworkswitch(cellname,daynum,starttime,endtime);
+		List<PRBBean> switchothers = faultService.getswitchothers(prb);
+		List<PRBBean> workswitch = faultService.getworkswitch(prb);
 		if (switchothers!=null) {
 			map.addAttribute(Constraints.RESULT_ROW, switchothers);
 			map.addAttribute(Constraints.RESULT_WORKS, workswitch);
@@ -138,11 +173,20 @@ public class PRBController {
 		String daynumStr=request.getParameter("daynum");
 		String starttime=request.getParameter("starttime");
 		String endtime=request.getParameter("endtime");
-		if(daynumStr!=null&&daynumStr!=""){
-			daynum=Integer.parseInt(daynumStr);
+		PRBBean prb=faultService.getlasttime(cellname);
+		prb.setCellname(cellname);
+		prb.setLasttime(prb.getLasttime().substring(0, prb.getLasttime().lastIndexOf(" ")));
+		if(!CommonUntils.isempty(daynumStr)){
+			prb.setDaynum(Integer.parseInt(daynumStr));
+		}
+		if(!CommonUntils.isempty(starttime)){
+			prb.setStarttime(starttime);
+		}
+		if(!CommonUntils.isempty(endtime)){
+			prb.setEndtime(endtime);
 		}
 		ModelMap map = new ModelMap();
-		List<PRBBean> workprb = faultService.getworkprb(cellname,daynum,starttime,endtime);
+		List<PRBBean> workprb = faultService.getworkprb(prb);
 		if (workprb!=null) {
 			map.addAttribute(Constraints.RESULT_ROW, workprb);
 			map.addAttribute(Constraints.RESULT_SUCCESS, true);
@@ -159,11 +203,20 @@ public class PRBController {
 		String daynumStr=request.getParameter("daynum");
 		String starttime=request.getParameter("starttime");
 		String endtime=request.getParameter("endtime");
-		if(daynumStr!=null&&daynumStr!=""){
-			daynum=Integer.parseInt(daynumStr);
+		PRBBean prb=faultService.getlasttime(cellname);
+		prb.setCellname(cellname);
+		prb.setLasttime(prb.getLasttime().substring(0, prb.getLasttime().lastIndexOf(" ")));
+		if(!CommonUntils.isempty(daynumStr)){
+			prb.setDaynum(Integer.parseInt(daynumStr));
+		}
+		if(!CommonUntils.isempty(starttime)){
+			prb.setStarttime(starttime);
+		}
+		if(!CommonUntils.isempty(endtime)){
+			prb.setEndtime(endtime);
 		}
 		ModelMap map = new ModelMap();
-		List<PRBBean> workswitch = faultService.getworkswitch(cellname,daynum,starttime,endtime);
+		List<PRBBean> workswitch = faultService.getworkswitch(prb);
 		if (workswitch!=null) {
 			map.addAttribute(Constraints.RESULT_ROW, workswitch);
 			map.addAttribute(Constraints.RESULT_SUCCESS, true);

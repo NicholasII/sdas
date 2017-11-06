@@ -127,10 +127,12 @@ $(function() {
 			work_url="/sdas/fault/getworkprb";
 			PRBCharts(date_value);
 			work_data("#work_table","/sdas/fault/getworkprb",work_date,work_start,work_end);
+			alarm_data("#alarm_table",0);
 		}else{
 			work_url="/sdas/fault/getworkswitch";
 			switchCharts(date_value);
 			work_data("#work_table_switch","/sdas/fault/getworkswitch",work_date,work_start,work_end);
+			alarm_data("#alarm_table_switch",1);
 		}
 	});
 	$("#tab").find("li").click(function() {
@@ -187,10 +189,16 @@ $(function() {
 				}
 			});
 	// 初始化数据
+	//指标预警列表
+	alarm_table("#alarm_table",[],"#pager_alarm_table");
+	alarm_data("#alarm_table",0);
+	alarm_table("#alarm_table_switch",[],"#pager_alarm_table_switch");
+	//
 	PRBCharts(date_value);
 	work_table("#work_table","#page_work_table");
 	work_table("#work_table_switch","#page_work_table_switch",[]);
 	work_data("#work_table","/sdas/fault/getworkprb",work_date,work_start,work_end);
+	
 });
 //按日期查询按钮
 function query(str){
@@ -554,6 +562,7 @@ function work_table(id,pageid,list) {
 	    toolbar: pageid,      //工具按钮用哪个容器
 	    striped: true,                      //是否显示行间隔色
 	    singleSelect: false,
+	    height:400,
 	    pagination: true, //分页
 	    pageNumber:1,                       //初始化加载第一页，默认第一页
 	    pageSize: 5,                       //每页的记录行数（*）
@@ -580,4 +589,45 @@ function work_table(id,pageid,list) {
 	          }]
 	      });
 	//
+}
+function alarm_data(id,type){
+	$.ajax({
+ 		url : "/sdas/indexalarm/getLastDay",
+ 		data : {
+			"cell_code":cellname,
+			"type":type
+		},
+ 		type : "get",
+ 		async : false,
+ 		success : function(data, status) {
+ 			var data = eval('(' + data + ')');
+ 			var list =data.rows
+ 			$(id).bootstrapTable('load',list);
+ 		}
+ 	});
+}
+function alarm_table(id,list,pageid){
+	$(id).bootstrapTable({
+		data:list,
+	    type:"post",
+	    dataType: "json",
+	    toolbar: pageid,      //工具按钮用哪个容器
+	    striped: true,                      //是否显示行间隔色
+	    singleSelect: false,
+	    pagination: true, //分页
+	    height:300,
+	    pageNumber:1,                       //初始化加载第一页，默认第一页
+	    pageSize: 5,                       //每页的记录行数（*）
+	    pageList: [5,10, 25],        //可供选择的每页的行数（*）
+	    search: false, //显示搜索框
+	          columns: [{
+	              field: 'create_time',
+	              title: '发生时间',
+	              width:500
+	           },{
+	              field: 'type',
+	              title: '指标值',
+	              width:500
+	          }]
+	      });
 }

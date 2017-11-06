@@ -1163,7 +1163,7 @@ function refreshJqGrid_capacity(list) {
 						}, {
 							name : 'monitor_value',
 							index : 'monitor_value',
-							width : 45
+							width : 65
 						}],
 				pager : "#pager_list_work",
 				viewrecords : true,
@@ -1197,11 +1197,11 @@ function refreshJqGrid_device(list) {
 						}, {
 							name : 'cell_name',
 							index : 'cell_name',
-							width : 30
+							width : 40
 						}, {
 							name : 'net_alarm_name',
 							index : 'net_alarm_name',
-							width : 30
+							width : 60
 						}],
 				pager : "#pager_list_work2",
 				viewrecords : true,

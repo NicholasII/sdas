@@ -39,6 +39,7 @@ $(function(){
         }
     });
     searchInfo();
+    //
 });
 
 // 查询表格信息
@@ -107,5 +108,7 @@ function select(daynum) {
     data.starttime =  starttime;
     data.endttime = endtime;
     data.cellname = name;
+    data.type=$("#type").val();
+    
     commonRowDatas("table_list_1", data, alarmurl, "commonCallback", true);
 }

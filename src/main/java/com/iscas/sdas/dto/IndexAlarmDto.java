@@ -30,6 +30,7 @@ public class IndexAlarmDto extends BaseDto {
 	private String daynum;
 	private String starttime;
 	private String endtime;
+	private String create_time;
 	
 	public String getCell_code() {
 		return cell_code;
@@ -129,6 +130,14 @@ public class IndexAlarmDto extends BaseDto {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getCreate_time() {
+		return create_time;
+	}
+
+	public void setCreate_time(String create_time) {
+		this.create_time = create_time;
 	}
 	
 }

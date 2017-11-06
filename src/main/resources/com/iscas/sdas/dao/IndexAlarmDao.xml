@@ -12,10 +12,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="getPageList" resultType="com.iscas.sdas.dto.IndexAlarmDto"
 		parameterType="com.iscas.sdas.dto.IndexAlarmDto">
-		SELECT yyyyMMdd,cell_code,COUNT(*) AS count,app_type FROM t_cell_result_index_info WHERE app_result = 0 			
+		SELECT yyyyMMdd,cell_code,COUNT(*) AS count,app_type FROM t_cell_result_index_info WHERE app_result = 0		
 		<if test="cell_code !=null">
 			<bind name="cellcode" value="'%'+ _parameter.getCell_code() +'%'" />
 			and cell_code like #{cellcode}
+		</if>
+		<if test="type !=null">
+			and app_type = #{type}
 		</if>
 		<if test="starttime!=null and starttime!=null">
 		 and create_time &gt;=#{starttime} and create_time &lt;=#{endtime}
@@ -30,5 +33,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and TO_DAYS(NOW())-TO_DAYS(create_time) =#{daynum}
 		</if>
 		GROUP BY cell_code,yyyyMMdd ORDER BY yyyyMMdd
+	</select>
+	<select id="getLastDay" resultType="com.iscas.sdas.dto.IndexAlarmDto">
+	SELECT * FROM t_cell_result_index_info where cell_code=#{cell_code} and yyyyMMdd=(SELECT yyyyMMdd as lasttime FROM t_cell_result_index_info  where cell_code=#{cell_code} order by lasttime DESC LIMIT 1)
+	<if test="type !=null">
+			and app_type = #{type}
+	</if>;
 	</select>
 </mapper>
