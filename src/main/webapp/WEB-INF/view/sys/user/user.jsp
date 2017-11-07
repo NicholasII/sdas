@@ -1,3 +1,4 @@
+<%@page import="com.iscas.sdas.dto.sys.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
@@ -10,6 +11,13 @@
 <script type="text/javascript" src="${context}/js/sys/user/user.js"></script>
 </head>
 <body>
+	<script type="text/javascript">
+		var role = ${role}
+	</script>
+	<%
+		UserDto userinfo = (UserDto)session.getAttribute("userInfo");	
+		pageContext.setAttribute("role", userinfo.getRolename());
+	%>
 	<div class="ibox-content">
 		<div class="row row-lg">
 			<div class="col-sm-12">

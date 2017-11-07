@@ -25,12 +25,14 @@ public class LoginController {
 	UserService UserService;
 	
 	@RequestMapping("/")
-	public ModelAndView login() {
-		return new ModelAndView("/login/login");
+	public ModelAndView login(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView("/login/login");
+		request.getSession().setAttribute("status", "isload");
+		return modelAndView;
 	}
 
 	@RequestMapping("/main")
-	public ModelAndView tohome(HttpServletRequest request, HttpServletResponse response,
+	public ModelAndView login(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "username", defaultValue = "admin", required = true) String userId,
 			@RequestParam(value = "password", defaultValue = "admin", required = true) String password) {
 		ModelAndView modelAndView = null;
@@ -39,14 +41,15 @@ public class LoginController {
 		dto.setPassword(password);
 		UserDto user = UserService.getUser(dto);
 		if (user!=null) {
+			request.getSession().setAttribute("userInfo", user);
 			modelAndView = new ModelAndView("main/main");
-			List<MenuDto> firstMenu = menuService.getFirstMenus();
+			List<MenuDto> firstMenu = menuService.getFirstMenus();//获取一级菜单及其子菜单
+			request.getSession().setAttribute("menuInfo", firstMenu);
 			firstMenu = getMenus(firstMenu);
 			modelAndView.addObject("firstMenu", firstMenu);
 		} else {
 			modelAndView = new ModelAndView("redirect:/");
 		}
-
 		return modelAndView;
 
 	}
@@ -66,5 +69,10 @@ public class LoginController {
 		}
 		return firstMenu;
 	}
-
+	@RequestMapping("/logout")
+	public ModelAndView loginout(HttpServletRequest request){
+		request.getSession().invalidate();
+		request.getSession().setAttribute("status", "unload");
+		return new ModelAndView("redirect:/");
+	}
 }

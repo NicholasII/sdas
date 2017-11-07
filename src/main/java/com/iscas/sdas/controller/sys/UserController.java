@@ -31,8 +31,13 @@ public class UserController extends BaseController<UserDto>{
 	 * @return
 	 */
 	@RequestMapping("/")
-	public ModelAndView page(){
-		return new ModelAndView("sys/user/user");
+	public ModelAndView page(HttpServletRequest request){
+		UserDto userInfo = (UserDto)request.getSession().getAttribute("userInfo");
+		ModelAndView modelAndView = new ModelAndView("sys/user/user");
+		if (userInfo!=null) {
+			modelAndView.addObject("role", userInfo.getRolename());
+		}
+		return modelAndView;
 	}
 	/**
 	 * 获取用户列表
@@ -46,18 +51,24 @@ public class UserController extends BaseController<UserDto>{
 	@ResponseBody
 	public ModelMap userList(@RequestParam(value = "currpage", required = true, defaultValue = "1") String num,
 			@RequestParam(value = "pageSize", required = true, defaultValue = "10") String size,
-			@RequestParam(value="userId")String userid,@RequestParam(value="userName")String username){
+			@RequestParam(value="userId")String userid,@RequestParam(value="userName")String username,HttpServletRequest request){
 		ModelMap map = new ModelMap();
 		UserDto userDto = new UserDto();
-		if (!CommonUntils.isempty(userid)) {
-			userDto.setUserId(userid);
-		}
-		if (!CommonUntils.isempty(username)) {
-			userDto.setUsername(username);
-		}
+		UserDto userInfo = (UserDto)request.getSession().getAttribute("userInfo");
+		if (userInfo!=null) {
+			if (Constraints.ROLE_ADMIN.equals(userInfo.getRolename())) {
+				if (!CommonUntils.isempty(userid)) {
+					userDto.setUserId(userid);
+				}
+				if (!CommonUntils.isempty(username)) {
+					userDto.setUsername(username);
+				}
+			}else if (Constraints.ROLE_USER.equals(userInfo.getRolename())) {
+				userDto.setUserId(userInfo.getUserId());
+			}		
+		}	
 		PageDto<UserDto> pageDto = userService.getPageList(userDto, num, size);
-		map.addAttribute(Constraints.RESULT_ROW
-				, pageDto);
+		map.addAttribute(Constraints.RESULT_ROW, pageDto);
 		return map;
 	}
 	/**

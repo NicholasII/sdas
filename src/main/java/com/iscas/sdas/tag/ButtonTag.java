@@ -11,7 +11,7 @@ import com.iscas.sdas.util.CommonUntils;
 import com.iscas.sdas.util.Constraints;
 import com.iscas.sdas.util.Message;
 
-public class ButtonTag extends SimpleTagSupport {
+public class ButtonTag extends SimpleTagSupport implements ButtonAuthority{
 
 	private String type;
 	private String id;
@@ -193,10 +193,19 @@ public class ButtonTag extends SimpleTagSupport {
 							: (new StringBuilder(String.valueOf(iconClass))).append(icon).toString();
 			button = "button";
 		}
-		JspWriter out = getJspContext().getOut();
-		out.println(Message.format(
-				"<button id=\"{0}\" type=\"{1}\" class=\"{2}\" onclick=\"{3}\"><span class=\"{4}\" aria-hidden=\"true\"></span>{5}</button>",
-				new Object[] { id, button, css, onclick, icon, title }));
+		if ("insert".equals(type) || "delete".equals(type)) {
+			if (hasAuthority()) {
+				JspWriter out = getJspContext().getOut();
+				out.println(Message.format(
+						"<button id=\"{0}\" type=\"{1}\" class=\"{2}\" onclick=\"{3}\"><span class=\"{4}\" aria-hidden=\"true\"></span>{5}</button>",
+						new Object[] { id, button, css, onclick, icon, title }));
+			}
+		}else {
+			JspWriter out = getJspContext().getOut();
+			out.println(Message.format(
+					"<button id=\"{0}\" type=\"{1}\" class=\"{2}\" onclick=\"{3}\"><span class=\"{4}\" aria-hidden=\"true\"></span>{5}</button>",
+					new Object[] { id, button, css, onclick, icon, title }));
+		}		
 	}
 
 	public String getType() {
@@ -261,6 +270,17 @@ public class ButtonTag extends SimpleTagSupport {
 
 	public void setAuth(String auth) {
 		this.auth = auth;
+	}
+
+	@Override
+	public boolean hasAuthority() {
+		jspContext = super.getJspContext();
+		String roleName = (String) jspContext.getAttribute("role");
+		if (Constraints.ROLE_ADMIN.equals(roleName)) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 	

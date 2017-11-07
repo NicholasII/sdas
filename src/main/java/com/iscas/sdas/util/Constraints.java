@@ -16,5 +16,7 @@ public class Constraints {
 	public static final String BTN_SAVE = "保存";
 	public static final String BTN_EDIT = "编辑";
 	public static final String BTN_CUSTOM = "自定义";
+	public static final String ROLE_ADMIN = "管理员";
+	public static final String ROLE_USER = "普通用户";
 
 }
