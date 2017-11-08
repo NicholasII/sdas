@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	<%@ include file="/include/common.jsp"%>
     <title>广州移动基站数据分析系统</title>
+    <!-- <title>基于大数据的基站小区智能维护系统</title> -->
     <link href="${context}/lib/hplus/css/login.css" rel="stylesheet">
     <script>
         if(window.top!==window.self){window.top.location=window.location};
@@ -26,6 +27,7 @@
 	                    <div class="logopanel m-b">
 	                    <img src="${context}/lib/hplus/img/logo_1.jpg" style="float: left;margin-right: 10px;border-radius: 15px;top:12px">
 	                        <h1 style="float: left">广州移动基站维护数据分析系统</h1>
+	                        <!-- <h1 style="float: left">基于大数据的基站小区智能维护系统</h1> -->
 	                    </div>
 	                   <!--  <h4>欢迎使用: <strong>广州移动基站维护数据分析系统</strong></h4> -->
 	                    

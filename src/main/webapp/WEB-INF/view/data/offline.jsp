@@ -8,6 +8,15 @@
 <%@ include file="/include/common.jsp"%>
 </head>
 <body>
+	<script type="text/javascript">
+		var status = '${success}';
+		if(status=='success'){
+			showOnlyMessage(INFO, "导入数据成功！");
+		}else if (status=="fail") {
+			showOnlyMessage(ERROR, "导入失败，请重试！");
+		}
+		
+	</script>
 	<div class="ibox-content">
 		<div class="row">
 			<div class="col-sm-6">
@@ -17,13 +26,12 @@
 						<!-- <p>容量：2.4T</p>
 						<p>采样频率：15min</p>
 						<p>最后采样时间：2017-08-01</p> -->
-						<form action="${context}/data/upload?type='network'" method="post"
+						<form action="${context}/data/upload?type=network" method="post"
 							enctype="multipart/form-data">
 
-							<input class="btn btn-white" type="file" name="file"
-								multiple="multiple" accept="text/*"> <br> <input
-								class="btn btn-white" type="reset" value="重选"> <input
-								class="btn btn-white" type="submit" value="上传">
+							<input class="btn btn-white" type="file" name="file" accept=".csv"> <br> 
+							<input class="btn btn-white" type="reset" value="重选"> 
+							<input class="btn btn-white" type="submit" value="上传">
 
 						</form>
 					</div>
@@ -36,7 +44,7 @@
 						<!-- <p>容量：2.4T</p>
 						<p>采样频率：1天</p>
 						<p>最后采样时间：2017-08-01</p> -->
-						<form action="${context}/data/upload?type='capacity'"
+						<form action="${context}/data/upload?type=capacity"
 							method="post" enctype="multipart/form-data">
 
 							<input class="btn btn-white" type="file" name="file"
@@ -50,7 +58,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" style="display: none!important;">
 			<div class="col-sm-6">
 				<div class="panel panel-success">
 					<div class="panel-heading">故障工单</div>
@@ -77,7 +85,7 @@
 						<!-- <p>容量：2.4T</p>
 						<p>采样频率：1天</p>
 						<p>最后采样时间：2017-08-01</p> -->
-						<form action="${context}/data/upload?type='complaint'"
+						<form action="${context}/data/upload?type=complaint"
 							method="post" enctype="multipart/form-data">
 
 							<input class="btn btn-white" type="file" name="file"
@@ -92,7 +100,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" style="display: none!important;">
 			<div class="col-sm-6">
 				<div class="panel panel-success">
 					<div class="panel-heading">可视化小区退服</div>
@@ -100,7 +108,7 @@
 						<!-- <p>容量：2.4T</p>
 						<p>采样频率：实时数据</p>
 						<p>最后采样时间：2017-08-01</p> -->
-						<form action="${context}/data/upload?type='outservice'"
+						<form action="${context}/data/upload?type=outservice"
 							method="post" enctype="multipart/form-data">
 
 							<input class="btn btn-white" type="file" name="file"

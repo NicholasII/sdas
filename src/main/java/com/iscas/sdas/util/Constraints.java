@@ -6,6 +6,7 @@ public class Constraints {
 	public static String RESULT_WORKS = "works";
 	public static String RESULT_SUCCESS = "success";
 	public static String RESULT_FAIL = "fail";
+	public static String RESULT_UNKNOWN = "unkown";
 	public static final String BTN_SEARCH = "查询";
 	public static final String BTN_INSERT = "新增";
 	public static final String BTN_DELETE = "删除";

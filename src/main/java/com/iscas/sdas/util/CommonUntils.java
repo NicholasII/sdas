@@ -9,19 +9,22 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 /**
  * 通用工具类
  * @author Administrator
  *
  */
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 public class CommonUntils {
+	
+	static Logger logger = Logger.getLogger(CommonUntils.class);
 	/**
 	 * 判断字符串是否为null或者""
 	 * Administrator
@@ -204,14 +207,21 @@ public class CommonUntils {
 			MultipartHttpServletRequest mutiRequest = (MultipartHttpServletRequest) request;
 			Iterator it = mutiRequest.getFileNames();
 			while (it.hasNext()) {
-				String filename = (String) it.next();
-				System.out.println(filename);
-				MultipartFile file = mutiRequest.getFile(filename);
+				String name = (String) it.next();
+				MultipartFile file = mutiRequest.getFile(name);
 				if (file != null) {
-					String targetfile = request.getServletContext().getRealPath("/WEB-INF/order/") + file.getOriginalFilename();
+					int index = file.getOriginalFilename().lastIndexOf(".");
+					String filename = file.getOriginalFilename().substring(0, index) +"-"+ System.currentTimeMillis()+file.getOriginalFilename().substring(index);
+					String filepath = request.getServletContext().getRealPath("/WEB-INF/order/") + filename;
+					logger.error(filename);
+					logger.error(file.getOriginalFilename());
+					File targetfile = new File(filepath);
+					if (targetfile.exists()) {
+						targetfile.delete();
+					}
 					try {
-						file.transferTo(new File(targetfile));
-						filepaths.add(targetfile);
+						file.transferTo(targetfile);
+						filepaths.add(filepath);
 					} catch (IllegalStateException | IOException e) {
 						e.printStackTrace();
 					}

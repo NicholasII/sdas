@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.iscas.sdas.dto.TableInfoDto;
-import com.iscas.sdas.dto.work.AllOutServerDto;
 import com.iscas.sdas.dto.work.AllCapacityWorkDto;
+import com.iscas.sdas.dto.work.AllOutServerDto;
 import com.iscas.sdas.service.CommonService;
 import com.iscas.sdas.service.WorkService;
 import com.iscas.sdas.service.work.OutServerService;
 import com.iscas.sdas.util.CommonUntils;
+import com.iscas.sdas.util.Constraints;
 import com.iscas.sdas.util.FileImport;
 
 import tasks.realtime.CellUploadFileTask;
@@ -39,62 +40,65 @@ public class DataController {
 	}
 	@RequestMapping("/offline")
 	public ModelAndView offline(){
-		return new ModelAndView("/data/offline");
+		ModelAndView modelAndView  = new ModelAndView("/data/offline");
+		modelAndView.addObject("success", Constraints.RESULT_UNKNOWN);
+		return modelAndView;
 	}
 	@RequestMapping("/upload")
-	public ModelAndView upload(HttpServletRequest request){
+	public ModelAndView upload(HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView("data/offline");
-		String type = request.getParameter("type");
-		if ("network".equals(type)) {
-			String path = "/home/hadoop/systempdata/test_rtdata_net.csv";
-			CommonUntils.FileUpload(request, "/home/hadoop/systempdata/", "test_rtdata_net.csv");
-			CellUploadFileTask.doUploadFileWork(path);
-		}else if ("capacity".equals(type)) {
-			String tablename = "t_performance_work";
-			List<TableInfoDto> tableInfoDtos = commonService.tableindex(tablename);		
-			List<AllCapacityWorkDto> performanceWorkDtos = new ArrayList<>();
-			List<String> paths = CommonUntils.MultipleFilesUpload(request);
-			if (paths!=null && paths.size()>0) {
-				if (tableInfoDtos!=null && tableInfoDtos.size()>0) {
-					int rows = FileImport.tablerows(paths.get(0));
-					for (int i = 0; i < rows; i++) {
-						AllCapacityWorkDto workDto = new AllCapacityWorkDto();
-						performanceWorkDtos.add(workDto);
-					}
-					try {
-						FileImport.importwork(paths.get(0), performanceWorkDtos, tableInfoDtos);//将excel映射为对象
-						workService.clearPerformanceWork();	//清空表
-						workService.insertPerformanceWork(performanceWorkDtos);//插入表并将questionflag置为-1
-					} catch (Exception e) {
-						e.printStackTrace();
+		try {
+			String type = request.getParameter("type");
+			if ("network".equals(type)) {
+				List<String> paths = CommonUntils.MultipleFilesUpload(request);
+				if (paths.size() > 0) {
+					CellUploadFileTask.doUploadFileWork(paths.get(0));
+				}
+			} else if ("capacity".equals(type)) {
+				String tablename = "t_performance_work";
+				List<TableInfoDto> tableInfoDtos = commonService.tableindex(tablename);
+				List<AllCapacityWorkDto> performanceWorkDtos = new ArrayList<>();
+				List<String> paths = CommonUntils.MultipleFilesUpload(request);
+				if (paths != null && paths.size() > 0) {
+					if (tableInfoDtos != null && tableInfoDtos.size() > 0) {
+						int rows = FileImport.tablerows(paths.get(0));
+						for (int i = 0; i < rows; i++) {
+							AllCapacityWorkDto workDto = new AllCapacityWorkDto();
+							performanceWorkDtos.add(workDto);
+						}
+
+						FileImport.importwork(paths.get(0), performanceWorkDtos, tableInfoDtos);// 将excel映射为对象
+						workService.clearPerformanceWork(); // 清空表
+						workService.insertPerformanceWork(performanceWorkDtos);// 插入表并将questionflag置为-1
 					}
 				}
-			}
-		}else if ("fault".equals(type)) {
-			
-		}else if ("complaint".equals(type)) {
-			
-		}else if ("outservice".equals(type)) {
-			String tablename = "t_wireless_retirement";
-			List<TableInfoDto> tableInfoDtos = commonService.tableindex(tablename);				
-			List<AllOutServerDto> osWorkDtos = new ArrayList<>();
-			List<String> paths = CommonUntils.MultipleFilesUpload(request);
-			if (paths!=null && paths.size()>0) {
-				if (tableInfoDtos!=null && tableInfoDtos.size()>0) {
-					int rows = FileImport.tablerows(paths.get(0));
-					for (int i = 0; i < rows; i++) {
-						AllOutServerDto workDto = new AllOutServerDto();
-						osWorkDtos.add(workDto);
-					}
-					try {
-						FileImport.importwork(paths.get(0), osWorkDtos, tableInfoDtos);//将excel映射为对象
-						outServerService.clearOSWork();	//清空表
+			} else if ("fault".equals(type)) {
+
+			} else if ("complaint".equals(type)) {
+
+			} else if ("outservice".equals(type)) {
+				String tablename = "t_wireless_retirement";
+				List<TableInfoDto> tableInfoDtos = commonService.tableindex(tablename);
+				List<AllOutServerDto> osWorkDtos = new ArrayList<>();
+				List<String> paths = CommonUntils.MultipleFilesUpload(request);
+				if (paths != null && paths.size() > 0) {
+					if (tableInfoDtos != null && tableInfoDtos.size() > 0) {
+						int rows = FileImport.tablerows(paths.get(0));
+						for (int i = 0; i < rows; i++) {
+							AllOutServerDto workDto = new AllOutServerDto();
+							osWorkDtos.add(workDto);
+						}
+						FileImport.importwork(paths.get(0), osWorkDtos, tableInfoDtos);// 将excel映射为对象
+						outServerService.clearOSWork(); // 清空表
 						outServerService.insertOSWork(osWorkDtos);
-					} catch (Exception e) {
-						e.printStackTrace();
+
 					}
 				}
 			}
+			modelAndView.addObject("success", Constraints.RESULT_SUCCESS);
+		} catch (Exception e) {
+			modelAndView.addObject("success", Constraints.RESULT_FAIL);
+			e.printStackTrace();
 		}
 		return modelAndView;
 	}
