@@ -17,10 +17,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.junit.Test;
 
 import com.iscas.sdas.dto.TableInfoDto;
-import com.mysql.fabric.xmlrpc.base.Data;
 
 /**
  * 文件导入1、上传到指定目录；2、利用POI逐页行列对取存到bean中3、存到数据库
@@ -108,61 +106,6 @@ public class FileImport {
 		}
 		return result;
 	}
-	@Test
-	public void test(){
-		String path = "C:\\Users\\liuyufeng\\Desktop\\work2.xls";
-		Workbook workbook = null;
-		File file = new File(path);
-		try {
-			InputStream is = new FileInputStream(file);
-			String filetype = path.substring(path.lastIndexOf(".")+1);
-			if ("xls".equals(filetype)) {
-				workbook = new HSSFWorkbook(is);
-			}else if ("xlsx".equals(filetype)) {
-				workbook = new XSSFWorkbook(is);
-			}else {
-				//throw new Exception("上传文件不是EXCEL文件");
-			}
-			for (int page = 0; page < workbook.getNumberOfSheets(); page++) {
-				Sheet sheet = workbook.getSheetAt(page);
-				if (sheet == null) {
-					continue;
-				}
-				for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-					//T t = result.get(i-1);
-					Row titlerow = sheet.getRow(0);
-					Row row = sheet.getRow(i);
-					int minCol = row.getFirstCellNum();
-					int maxCol = row.getLastCellNum();
-					for (int col = minCol; col < maxCol; col++) {
-						Cell cell = row.getCell(col);
-						Cell cellname = titlerow.getCell(col);
-						String titlevalue = cellname.getStringCellValue();
-						System.out.println("--标题："+titlevalue+"--内容："+getStringValue(cell));
-						/*for (TableInfoDto column : tableindex) {
-							if (column.getColumnComment().equals(titlerow)) {
-								String type = column.getColumnType();
-								titlevalue = cellname.getStringCellValue();
-								String methodname = "set" +titlevalue.replace(titlevalue.substring(0, 1), titlevalue.substring(0, 1).toUpperCase());
-								Class[] classes = new Class[1];
-								classes[0] = String.class;
-								Method method = t.getClass().getMethod(methodname, classes);
-								method.invoke(t, cell.getStringCellValue());
-								break;
-							}
-						}	*/							
-					}
-				}
-			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	
 	/**
 	 * 将各种类型的cell的值输出指定类型数据

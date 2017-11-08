@@ -6,8 +6,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import tasks.BGTask;
 import tasks.cell.OffLineNormalStateBDTask;
 import tasks.cell.OffLineNormalStateBDTask2;
+import tasks.cell.OffLineNormalStateOfExpertDBTask;
 import tasks.realtime.CellHealthPercentageWangGuanAllTask;
 import tasks.realtime.HealthDegreeHistoryTask;
 import tasks.sheet.IndexWarningTask;
@@ -52,6 +54,24 @@ public class TimerController {
 		return map;
 	}
 	
+	/**
+	 * 专家模式库
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/OffLineNormalStateExpert")
+	public ModelMap OffLineNormalStateExpert(HttpServletRequest request){
+		ModelMap map = new ModelMap();
+		String  time=request.getParameter("time");
+		if(!CommonUntils.isempty(time)){
+			BGTask task=new OffLineNormalStateOfExpertDBTask();//XXX 专家模式计算簇心
+			task.runTask(new String[]{time});
+			map.addAttribute(Constraints.RESULT_SUCCESS, true);
+		}else{
+			map.addAttribute(Constraints.RESULT_SUCCESS, false);
+		}
+		return map;
+	}
 	@RequestMapping("/OffLineNormalState")
 	public ModelMap OffLineNormalState(HttpServletRequest request){
 		ModelMap map = new ModelMap();

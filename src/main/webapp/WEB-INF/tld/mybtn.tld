@@ -12,7 +12,7 @@
             <name>type</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
-            <description>可选值:search,insert,delete,update,import,export,cancle,save,edit,custom</description>
+            <description>可选值:search,insert,delete,update,import,export,cancel,save,edit,custom</description>
         </attribute>
         <attribute>
             <name>id</name>

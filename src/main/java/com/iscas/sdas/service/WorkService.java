@@ -7,16 +7,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iscas.datas.ratio.HealthDegree;
-import com.iscas.sdas.dao.work.CapacityWorkDao;
 import com.iscas.sdas.dao.WorkDao;
 import com.iscas.sdas.dao.work.AllCapacityWorkDao;
-import com.iscas.sdas.dto.work.CapacityWorkDto;
+import com.iscas.sdas.dao.work.CapacityWorkDao;
 import com.iscas.sdas.dto.work.AllCapacityWorkDto;
+import com.iscas.sdas.dto.work.CapacityWorkDto;
 
 
 @Service
@@ -160,7 +159,7 @@ public class WorkService {
 			capacityWorkDao.updatealarmwork(capacityWorkDto);
 		}
 	}
-	
+	/*
 	@Test
 	public void test1(){
 		String cellcode ="广州天河区石牌复建房南区1E-ZLW-1";
@@ -170,7 +169,7 @@ public class WorkService {
     	HealthDegree hd = new HealthDegree(cellcode, yyyyMM, yyyyMMdd);
     	Map<String, HealthDegree.Degree> map = hd.getDegrees();
     	System.out.println(map);
-	}
+	}//*/
 	/*@Test
 	public void test2(){
 		Date sheetTime = DateUtils.convert2Date("2017-08-03 13:00:00", "yyyy-MM-dd HH:mm:ss");

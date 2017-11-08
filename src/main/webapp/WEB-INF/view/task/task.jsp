@@ -115,6 +115,23 @@ input[type='textarea'] {
 							</div>
 						</div>
 					</div>
+					<div class="col-sm-4">
+						<div class="panel panel-success">
+							<div class="panel-heading">专家模式库挖掘</div>
+							<div class="panel-body">
+								<div class="form-group">
+									<label class="col-sm-3 control-label">选择计算时间：</label>
+									<div class="col-sm-8">
+											<input id="model_time_expert" class="layer-date"
+												placeholder="请输入计算时间" onclick="laydate({istime: false, format: 'YYYYMM'})">
+											<input class="btn btn-info search" type="button" name="OK" value="OK"
+												onclick="calculate('#model_time_expert','/sdas/timer/OffLineNormalStateExpert')">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="col-sm-12">

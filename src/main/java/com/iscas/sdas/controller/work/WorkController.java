@@ -87,6 +87,7 @@ public class WorkController {
 		return map;
 		
 	}
+
 	/**
 	 * 工单验证
 	 * @return
@@ -96,8 +97,9 @@ public class WorkController {
 	@ResponseBody
 	public ModelMap workvalidate() throws Exception{
 		ModelMap map = new ModelMap();
-		BGTask task = new NewGDCheckTask();//调用spark跑工单验证
-		task.doTask();
+		BGTask task = new NewGDCheckTask();//XXX 调用spark跑工单验证
+		task.doTask();//阻塞
+		//task.runTaskWithThread();//新的线程
 		//List<CapacityWorkDto> capacityWorks = workService.workValidate(workService.allvalidatelist(),0);
 		List<CapacityWorkDto> capacityWorks =  workService.workValidate2();
 		if (capacityWorks.size()>0) {

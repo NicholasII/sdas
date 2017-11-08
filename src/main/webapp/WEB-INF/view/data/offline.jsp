@@ -6,16 +6,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@ include file="/include/common.jsp"%>
+<script type="text/javascript" src="${context}/js/data/offline.js"></script>
 </head>
 <body>
 	<script type="text/javascript">
 		var status = '${success}';
-		if(status=='success'){
+		if (status == 'success') {
 			showOnlyMessage(INFO, "导入数据成功！");
-		}else if (status=="fail") {
-			showOnlyMessage(ERROR, "导入失败，请重试！");
+		} else if (status.indexOf("fail")>=0) {
+			showOnlyMessage(ERROR, status);
 		}
-		
 	</script>
 	<div class="ibox-content">
 		<div class="row">
@@ -23,16 +23,13 @@
 				<div class="panel panel-success">
 					<div class="panel-heading">中兴网管指标数据</div>
 					<div class="panel-body">
-						<!-- <p>容量：2.4T</p>
-						<p>采样频率：15min</p>
-						<p>最后采样时间：2017-08-01</p> -->
-						<form action="${context}/data/upload?type=network" method="post"
+						<form id="form1" action="${context}/data/upload?type=network" method="post"
 							enctype="multipart/form-data">
-
-							<input class="btn btn-white" type="file" name="file" accept=".csv"> <br> 
-							<input class="btn btn-white" type="reset" value="重选"> 
-							<input class="btn btn-white" type="submit" value="上传">
-
+							<input class="btn btn-white" type="file" name="file"
+								multiple="multiple" accept=".csv"> <br> <input
+								class="btn btn-white" type="reset" value="重选"> <input id="submit"
+								class="btn btn-white" type="submit" value="上传">
+								<progress id="progress" style="display: none">正在上传...</progress>
 						</form>
 					</div>
 				</div>
@@ -41,22 +38,16 @@
 				<div class="panel panel-success">
 					<div class="panel-heading">性能工单</div>
 					<div class="panel-body">
-						<!-- <p>容量：2.4T</p>
-						<p>采样频率：1天</p>
-						<p>最后采样时间：2017-08-01</p> -->
-						<form action="${context}/data/upload?type=capacity"
+						<form id="form2" action="${context}/data/upload?type=capacity"
 							method="post" enctype="multipart/form-data">
-
-							<input class="btn btn-white" type="file" name="file"
-								multiple="multiple" accept="text/*"> <br> <input
-								class="btn btn-white" type="reset" value="重选"> <input
+							<input class="btn btn-white" type="file" name="file" accept=".xls"> <br> <input
+								class="btn btn-white" type="reset" value="重选"> <input id="submit1"
 								class="btn btn-white" type="submit" value="上传">
-
+							<progress id="progress1" max="200" style="display: none">正在上传...</progress>
 						</form>
 					</div>
-
 				</div>
-			</div>
+			</div>			
 		</div>
 		<div class="row" style="display: none!important;">
 			<div class="col-sm-6">
@@ -66,7 +57,7 @@
 						<!-- <p>容量：2.4T</p>
 						<p>采样频率：15min</p>
 						<p>最后采样时间：2017-08-01</p> -->
-						<form action="${context}/data/upload?type='fault'" method="post"
+						<form action="${context}/data/upload?type=fault" method="post"
 							enctype="multipart/form-data">
 
 							<input class="btn btn-white" type="file" name="file"
