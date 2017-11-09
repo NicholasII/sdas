@@ -63,11 +63,23 @@ public class DataController {
 		ModelAndView modelAndView = new ModelAndView("data/offline");
 		String type = request.getParameter("type");
 		if ("network".equals(type)) {
-			List<String> paths = CommonUntils.MultipleFilesUpload(request);
-			if (paths.size() > 0) {
+			String time = request.getParameter("time");
+			List<String> paths = null;
+			try {
+				paths = CommonUntils.MultipleFilesUpload(request);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				modelAndView.addObject("success", Constraints.RESULT_FAIL+ ":上传失败！");
+			}
+			if (paths!=null && paths.size() > 0) {
 				try {
-					CellUploadFileTask.doUploadFileWork(paths.get(0));
-					CellUploadFileOfExpertTask.doUploadFileWork(paths.get(0));
+					String[] args = new String[2];
+					args[0] = paths.get(0);
+					args[1] = time;
+					new CellUploadFileOfExpertTask().runTask(args);
+					//CellUploadFileTask.doUploadFileWork(paths.get(0));
+					//CellUploadFileOfExpertTask.doUploadFileWork(paths.get(0));
 					modelAndView.addObject("success", Constraints.RESULT_SUCCESS);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -78,7 +90,14 @@ public class DataController {
 			String tablename = "t_performance_work";
 			List<TableInfoDto> tableInfoDtos = commonService.tableindex(tablename);
 			List<AllCapacityWorkDto> performanceWorkDtos = new ArrayList<>();
-			List<String> paths = CommonUntils.MultipleFilesUpload(request);
+			List<String> paths = null;
+			try {
+				paths = CommonUntils.MultipleFilesUpload(request);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				modelAndView.addObject("success", Constraints.RESULT_FAIL+ ":上传失败！");
+			}
 			if (paths != null && paths.size() > 0) {
 				if (tableInfoDtos != null && tableInfoDtos.size() > 0) {
 					int rows = FileImport.tablerows(paths.get(0));

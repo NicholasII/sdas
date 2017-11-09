@@ -30,7 +30,7 @@
 								<button class="btn btn-white datePicker" type="button">按时间选择</button>
 								<div id="timeselect" style="display: none;float: left;">
 									<input style="margin-left:5px;margin-top: -7px !important;" id="starttime"
-										class="layer-date starttime" placeholder="请输入开始时间"
+										class="layer-date starttime" placeholder="请选择时间"
 										onclick="laydate({istime: true, format: 'YYYYMMDD'})">
 									<span id="span" style="margin-top: -10px ;display: inline !important;"
 										class="input-group-addon">到</span> 

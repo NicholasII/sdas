@@ -209,23 +209,26 @@ public class CommonUntils {
 			while (it.hasNext()) {
 				String name = (String) it.next();
 				MultipartFile file = mutiRequest.getFile(name);
+				
 				if (file != null) {
+					System.out.println(file.getOriginalFilename());
 					int index = file.getOriginalFilename().lastIndexOf(".");
-					String filename = file.getOriginalFilename().substring(0, index) +"-"+ System.currentTimeMillis()+file.getOriginalFilename().substring(index);
-					String filepath = request.getServletContext().getRealPath("/WEB-INF/order/") + filename;
-					logger.error(filename);
-					logger.error(file.getOriginalFilename());
-					File targetfile = new File(filepath);
-					if (targetfile.exists()) {
-						targetfile.delete();
-					}
-					try {
-						file.transferTo(targetfile);
-						filepaths.add(filepath);
-					} catch (IllegalStateException | IOException e) {
-						e.printStackTrace();
-					}
-
+					if (index>0) {
+						String filename = file.getOriginalFilename().substring(0, index) +"-"+ System.currentTimeMillis()+file.getOriginalFilename().substring(index);
+						String filepath = request.getServletContext().getRealPath("/WEB-INF/order/") + filename;
+						logger.error(filename);
+						logger.error(file.getOriginalFilename());
+						File targetfile = new File(filepath);
+						if (targetfile.exists()) {
+							targetfile.delete();
+						}
+						try {
+							file.transferTo(targetfile);
+							filepaths.add(filepath);
+						} catch (IllegalStateException | IOException e) {
+							e.printStackTrace();
+						}
+					}			
 				}
 			}
 		}

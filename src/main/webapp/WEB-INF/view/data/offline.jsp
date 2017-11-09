@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@ include file="/include/common.jsp"%>
+<script src="${context}/lib/hplus/js/plugins/layer/laydate/laydate.js"></script>
 <script type="text/javascript" src="${context}/js/data/offline.js"></script>
 </head>
 <body>
@@ -25,8 +26,11 @@
 					<div class="panel-body">
 						<form id="form1" action="${context}/data/upload?type=network" method="post"
 							enctype="multipart/form-data">
-							<input class="btn btn-white" type="file" name="file"
-								multiple="multiple" accept=".csv"> <br> <input
+							<input id="time" name="time" style="display: inline;padding: -10px;margin: -10px;height: 39px;margin-right: 10px;"
+										class="btn btn-white layer-date starttime" placeholder="请选择时间"
+										onclick="laydate({istime: true, format: 'YYYYMM'})">
+							<input class="btn btn-white" type="file" name="file" style="display: inline;"
+								multiple="multiple" accept=".csv"> <br> <br><input
 								class="btn btn-white" type="reset" value="重选"> <input id="submit"
 								class="btn btn-white" type="submit" value="上传">
 								<progress id="progress" style="display: none">正在上传...</progress>
