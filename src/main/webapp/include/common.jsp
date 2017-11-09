@@ -40,7 +40,9 @@
 <link href="${context}/lib/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
 
 <!-- bootstrap Valivator -->
-<script type="text/javascript" src="${context}/lib/bootstrap-validator/dist/validator.min.js"></script>
+<link href="https://cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/language/zh_CN.js"></script>
 
 <!-- bootstrap-table -->
 <link href="${context}/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">

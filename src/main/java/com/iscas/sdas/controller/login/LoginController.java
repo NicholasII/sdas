@@ -15,6 +15,7 @@ import com.iscas.sdas.dto.sys.MenuDto;
 import com.iscas.sdas.dto.sys.UserDto;
 import com.iscas.sdas.service.sys.MenuService;
 import com.iscas.sdas.service.sys.UserService;
+import com.iscas.sdas.util.CommonUntils;
 
 @Controller
 public class LoginController {
@@ -28,6 +29,14 @@ public class LoginController {
 	public ModelAndView login(HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView("/login/login");
 		request.getSession().setAttribute("status", "isload");
+		String loginMsg = (String)request.getParameter("loginMsg");
+		String logoutMsg = (String)request.getParameter("logoutMsg");
+		if (!CommonUntils.isempty(loginMsg)) {
+			modelAndView.addObject("errormsg", loginMsg);
+		}
+		if (!CommonUntils.isempty(logoutMsg)) {
+			modelAndView.addObject("logout", logoutMsg);
+		}
 		return modelAndView;
 	}
 
@@ -49,6 +58,7 @@ public class LoginController {
 			modelAndView.addObject("firstMenu", firstMenu);
 		} else {
 			modelAndView = new ModelAndView("redirect:/");
+			modelAndView.addObject("loginMsg", "请输入正确的账号或密码！");
 		}
 		return modelAndView;
 
@@ -71,8 +81,10 @@ public class LoginController {
 	}
 	@RequestMapping("/logout")
 	public ModelAndView loginout(HttpServletRequest request){
+		ModelAndView modelAndView = new ModelAndView("redirect:/");
 		request.getSession().invalidate();
-		request.getSession().setAttribute("status", "unload");
-		return new ModelAndView("redirect:/");
+		request.getSession().setAttribute("status", "unload");	
+		modelAndView.addObject("logoutMsg", "已登出！");
+		return modelAndView;
 	}
 }
