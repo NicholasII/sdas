@@ -33,7 +33,7 @@
 	                </div>
 	            </div>
                 <form id="defaultForm" method="post">
-                    <div class="form-group" style="margin-top: 30px">
+                    <div class="form-group" style="margin-top: 1px">
                     	<lable class="sr-only" for="username">用户名</lable>
                     	<input type="text" name="username" id="username" class="form-control uname" placeholder="用户名"/>
                     </div>
@@ -41,15 +41,14 @@
                     	<lable class="sr-only" for="password">密码</lable>
                     	<input type="password" name="password" id="password" class="form-control pword m-b" placeholder="密码"/>
                     </div>
-
-                    <%-- <div class="row" style="padding-bottom: 15px;">
+                    <div class="row">
                     	<div class="col-xs-5">
-                    		<input type="text" name="kaptcha" id="kaptcha" class="form-control" maxlength="4" placeholder="验证码"/>
+                    		<input style="color: black;" type="text" name="kaptcha" id="kaptcha" class="form-control" maxlength="4" placeholder="验证码"/>
                     	</div>
-                  		<div class="col-xs-*" style="padding: 0px;height: 32px;">
-							<img src="${ctx}/getKaptchaImage.do?javascript:june.timestamp();" id="kaptchaImage" /> 
+                  		<div class="col-xs-5" style="padding: 0px;height: 20px;">
+							<img src="kaptcha.jpg" id="kaptchaImage" /> 
                     	</div>
-                    </div> --%>
+                    </div>
                     <div class="row">
                     	<div class="clearfix"></div>
                     </div>
@@ -69,11 +68,9 @@
 						<!-- <div class="col-xs-5" align="left">
 							<a href="#" style="color:#fff">忘记密码?</a>
 						</div> -->
-                    	<%-- <c:if test="${env != 'dev' }">
-						<div class="col-xs-6" align="right">
+						<div class="col-xs-6" align="left">
 							<a href="#" onclick="changeCode()" class="text-right">看不清?换一张</a>
 						</div>
-						</c:if> --%>
 					</div>
                     <button type="submit" class="btn btn-success btn-block">登录</button>
                 </form>

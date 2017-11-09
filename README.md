@@ -7,3 +7,4 @@ the station of data staistic system to guangzhou mobile
 2017/10/31 controller、service、dao、dto都基于相应的基类，在基类中写了大量的通用方法，减少的代码量<br>
 2017/11/6 前端大量代码优化，生成通用的工具类<br>
 2017/11/7 添加用户管理，登录验证和权限管理<br> 
+2017/11/9 增加登陆状态和验证码
