@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +16,9 @@ import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
+import com.iscas.sdas.dto.FileLogDto;
+import com.iscas.sdas.service.log.FileLogService;
 /**
  * 通用工具类
  * @author Administrator
@@ -205,11 +207,8 @@ public class CommonUntils {
 				request.getSession().getServletContext());
 		if (multipartResolver.isMultipart(request)) {
 			MultipartHttpServletRequest mutiRequest = (MultipartHttpServletRequest) request;
-			Iterator it = mutiRequest.getFileNames();
-			while (it.hasNext()) {
-				String name = (String) it.next();
-				MultipartFile file = mutiRequest.getFile(name);
-				
+			List<MultipartFile> files = mutiRequest.getFiles("file");
+			for (MultipartFile file : files) {
 				if (file != null) {
 					System.out.println(file.getOriginalFilename());
 					int index = file.getOriginalFilename().lastIndexOf(".");
@@ -235,34 +234,96 @@ public class CommonUntils {
 		return filepaths;
 	}
 	/**
-	 * 将文件上传到指定目录并制指定文件名
+	 * 单个文件导入(数据导入专用)
+	 * @param service
 	 * @param request
-	 * @param filepath
-	 * @param filename
+	 * @param fileLogDto
 	 * @return
 	 */
-	public static boolean FileUpload(HttpServletRequest request,String filepath,String filename) {
+	public static String FileImprot(HttpServletRequest request,FileLogDto fileLogDto) {
 		// 将当前上下文初始化给 CommonsMutipartResolver （多部分解析器）
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
 				request.getSession().getServletContext());
 		if (multipartResolver.isMultipart(request)) {
 			MultipartHttpServletRequest mutiRequest = (MultipartHttpServletRequest) request;
-			Iterator it = mutiRequest.getFileNames();
-			while (it.hasNext()) {
-				MultipartFile file = mutiRequest.getFile(filename);
+			List<MultipartFile> files = mutiRequest.getFiles("file");
+			for (MultipartFile file : files) {
 				if (file != null) {
-					String targetfile = filepath + filename;
-					try {
-						file.transferTo(new File(targetfile));
-						return true;
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-
+					System.out.println(file.getOriginalFilename());
+					int index = file.getOriginalFilename().lastIndexOf(".");
+					if (index>0) {
+						String filename = file.getOriginalFilename().substring(0, index) +"-"+ System.currentTimeMillis()+file.getOriginalFilename().substring(index);
+						String filepath = request.getServletContext().getRealPath("/WEB-INF/order/") + filename;
+						fileLogDto.setFilename(file.getOriginalFilename());						
+						File targetfile = new File(filepath);
+						if (targetfile.exists()) {
+							targetfile.delete();
+						}
+						try {
+							file.transferTo(targetfile);
+							return filepath;
+						} catch (IllegalStateException | IOException e) {
+							e.printStackTrace();
+							fileLogDto.setResult(0);
+						}
+					}			
 				}
 			}
 		}
-		return false;
+		return null;
+	}
+	/**
+	 * 将多文件上传到指定目录(数据导入专用)
+	 * @param request
+	 * @param filepath
+	 * @param filename
+	 * @return
+	 * @throws Exception 
+	 * @throws IOException 
+	 * @throws IllegalStateException 
+	 */
+	public static void MultipleFileImport(FileLogService service,HttpServletRequest request,String filepath,String type) throws Exception {
+		// 将当前上下文初始化给 CommonsMutipartResolver （多部分解析器）
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
+				request.getSession().getServletContext());
+		List<FileLogDto> fileLogDtos = new ArrayList<>();
+		if (multipartResolver.isMultipart(request)) {
+			MultipartHttpServletRequest mutiRequest = (MultipartHttpServletRequest) request;
+			List<MultipartFile> files = mutiRequest.getFiles("file");
+			for (MultipartFile file : files) {			
+				if (file != null) {					
+					FileLogDto fileLogDto = new FileLogDto();
+					String str_filename = filepath;
+					str_filename = filepath + file.getOriginalFilename();	
+					fileLogDto.setFilename(file.getOriginalFilename());
+					fileLogDto.setType(type);
+					fileLogDto.setStarttime(new Date());
+					long start = System.currentTimeMillis();
+					File targetfile = new File(str_filename);
+					if (targetfile.exists()) {
+						targetfile.delete();
+					}
+					try {
+						file.transferTo(targetfile);
+						fileLogDto.setResult(1);
+						long end = System.currentTimeMillis();
+						long alltime =  end-start;//耗时（秒）
+						fileLogDto.setEndtime(new Date());
+						fileLogDto.setAlltime(alltime);	
+					} catch (Exception e) {
+						fileLogDto.setResult(0);
+						long end = System.currentTimeMillis();
+						long alltime =  end-start;//耗时（秒）
+						fileLogDto.setEndtime(new Date());
+						fileLogDto.setAlltime(alltime);	
+						throw e;
+					}	
+					fileLogDtos.add(fileLogDto);
+				}			
+			}
+			service.insert(fileLogDtos);
+		}
+
 	}
 	/**
 	 * 判断一月有多少天
