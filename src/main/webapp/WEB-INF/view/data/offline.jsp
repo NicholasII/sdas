@@ -36,7 +36,7 @@
 								multiple="multiple" accept=".csv"> <br> <br><input
 								class="btn btn-white" type="reset" value="重选"> <input id="submit"
 								class="btn btn-white" type="submit" value="上传">
-								<input class="btn btn-white" type="button" value="查看上传记录" onclick="openIframe()"> 
+								<input class="btn btn-white" type="button" value="查看上传记录" onclick="openIframe('中兴网管指标数据')"> 
 								<progress id="progress" style="display: none">正在上传...</progress>
 						</form>
 					</div>
@@ -55,7 +55,7 @@
 								<br>
 								<input class="btn btn-white" type="reset" value="重选"> <input id="submit1"
 								class="btn btn-white" type="submit" value="上传">
-								<input class="btn btn-white" type="button" value="查看上传记录" onclick="openIframe()"> 
+								<input class="btn btn-white" type="button" value="查看上传记录" onclick="openIframe('性能工单')"> 
 							<progress id="progress1" max="200" style="display: none">正在上传...</progress>
 						</form>
 					</div>
@@ -77,6 +77,7 @@
 							<input
 								class="btn btn-white" type="reset" value="重选"> <input id="submit"
 								class="btn btn-white" type="submit" value="上传">
+								<input class="btn btn-white" type="button" value="查看上传记录" onclick="openIframe('中兴网管指标原始数据')"> 
 								<progress id="progress" style="display: none">正在上传...</progress>
 						</form>
 					</div>

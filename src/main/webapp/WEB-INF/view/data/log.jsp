@@ -13,7 +13,8 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="ibox-title">
-					<h1>上传历史记录</h1>
+					<h1 id="title">上传历史记录</h1>
+					<input class="btn btn-green" type="button" value="返回" onclick="back()" style="float: right">
 				</div>
 				<div class="ibox-content">
 					<div class="col-sm-12">
@@ -31,6 +32,7 @@
 			console.info("${type}");
 			if("${type}"!=""){
 				drawTables("${type}");
+				$("#title").html('${type}——上传历史记录');
 			}
 			
 		});

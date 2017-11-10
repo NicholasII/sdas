@@ -2,7 +2,7 @@
  * 导入历史数据列表
  */
 
-$(function(){
+function drawTables(type){
 	 $('#historyTable').bootstrapTable({
 	        cache : false,
 	        striped : true,
@@ -61,5 +61,8 @@ $(function(){
 	    });
 	 	var data = {};
 	 	data.type=type;
-	    commonRowDatas("historyTable", data, "", "commonCallback", true);
-});
+	    commonRowDatas("historyTable", data, "/sdas/log/file/list", "commonCallback", true);
+}
+function back(){
+	top.$("#offline").attr('src',"/sdas/data/offline");
+}

@@ -13,6 +13,5 @@ $("#form2").submit(function() {
 
 });
 function openIframe(type){
-	console.info($("#offline").parent().parent().parent().attr("class"));
-	top.$("#offline").attr('src',"/sdas/data/tohistorylist?type="+type);
+	top.$("#offline").attr('src',"/sdas/log/file/page?type="+type);
 }

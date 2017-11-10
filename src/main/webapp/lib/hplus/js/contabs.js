@@ -110,6 +110,7 @@ $(function () {
         var dataUrl = $(this).attr('href'),
             dataIndex = $(this).data('index'),
             menuName = $.trim($(this).text()),
+            menuId = $(this).attr('href').split("/")[3],
             flag = true;
         if (dataUrl == undefined || $.trim(dataUrl).length == 0)return false;
 
@@ -138,7 +139,7 @@ $(function () {
             $('.J_menuTab').removeClass('active');
 
             // 添加选项卡对应的iframe
-            var str1 = '<iframe class="J_iframe" name="iframe' + dataIndex + '" id="'+menuName+'" width="100%" height="100%" src="' + dataUrl + '" frameborder="0" data-id="' + dataUrl + '" seamless></iframe>';
+            var str1 = '<iframe class="J_iframe" name="iframe' + dataIndex + '" id="'+menuId+'" width="100%" height="100%" src="' + dataUrl + '" frameborder="0" data-id="' + dataUrl + '" seamless></iframe>';
             $('.J_mainContent').find('iframe.J_iframe').hide().parents('.J_mainContent').append(str1);
 
             //显示loading提示
