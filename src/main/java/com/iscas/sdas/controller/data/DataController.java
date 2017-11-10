@@ -1,6 +1,7 @@
 package com.iscas.sdas.controller.data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,11 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.iscas.sdas.dto.FileLogDto;
 import com.iscas.sdas.dto.TableInfoDto;
 import com.iscas.sdas.dto.work.AllCapacityWorkDto;
 import com.iscas.sdas.dto.work.AllOutServerDto;
 import com.iscas.sdas.service.CommonService;
 import com.iscas.sdas.service.WorkService;
+import com.iscas.sdas.service.log.FileLogService;
 import com.iscas.sdas.service.work.OutServerService;
 import com.iscas.sdas.util.CommonUntils;
 import com.iscas.sdas.util.Constraints;
@@ -25,14 +28,15 @@ import tasks.realtime.CellUploadFileTask;
 
 @Controller
 @RequestMapping("/data")
-public class DataController {
+public class DataController{
 	@Autowired
 	WorkService workService;
 	@Autowired
 	CommonService commonService;
 	@Autowired
 	OutServerService outServerService;
-	
+	@Autowired
+	FileLogService fileLogService;
 	@RequestMapping("/online")
 	public ModelAndView online(){
 		return new ModelAndView("/data/online");
@@ -64,60 +68,90 @@ public class DataController {
 		String type = request.getParameter("type");
 		if ("network".equals(type)) {
 			String time = request.getParameter("time");
-			List<String> paths = null;
+			String path = null;
+			FileLogDto fileLogDto = new FileLogDto();
+			long starttime = System.currentTimeMillis();
+			fileLogDto.setStarttime(new Date());
+			fileLogDto.setType("中兴网管指标数据");
 			try {
-				paths = CommonUntils.MultipleFilesUpload(request);
+				path = CommonUntils.FileImprot(request, fileLogDto);
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
+				fileLogDto.setResult(0);
 				modelAndView.addObject("success", Constraints.RESULT_FAIL+ ":上传失败！");
 			}
-			if (paths!=null && paths.size() > 0) {
+			if (path!=null) {
 				try {
 					String[] args = new String[2];
-					args[0] = paths.get(0);
+					args[0] = path;
 					args[1] = time;
+					fileLogDto.setMethodstart(new Date());
 					new CellUploadFileTask().runTask(args);
-					new CellUploadFileOfExpertTask().runTask(args);
-					//CellUploadFileTask.doUploadFileWork(paths.get(0));
-					//CellUploadFileOfExpertTask.doUploadFileWork(paths.get(0));
+					new CellUploadFileOfExpertTask().runTask(args);	
+					fileLogDto.setMethodend(new Date());
 					modelAndView.addObject("success", Constraints.RESULT_SUCCESS);
+					fileLogDto.setResult(1);
 				} catch (Exception e) {
 					e.printStackTrace();
+					fileLogDto.setResult(0);
 					modelAndView.addObject("success", Constraints.RESULT_FAIL+ ":调用后台方法失败！");
 				}
+			}else {
+				fileLogDto.setResult(0);
 			}
+			long endtime = System.currentTimeMillis();
+			fileLogDto.setStarttime(new Date());
+			long alltime = endtime - starttime;
+			fileLogDto.setAlltime(alltime);
+			List<FileLogDto> fileLogDtos = new ArrayList<>();
+			fileLogDtos.add(fileLogDto);
+			fileLogService.insert(fileLogDtos);
 		} else if ("capacity".equals(type)) {
 			String tablename = "t_performance_work";
 			List<TableInfoDto> tableInfoDtos = commonService.tableindex(tablename);
 			List<AllCapacityWorkDto> performanceWorkDtos = new ArrayList<>();
-			List<String> paths = null;
+			String path = null;
+			FileLogDto fileLogDto = new FileLogDto();
+			long starttime = System.currentTimeMillis();
+			fileLogDto.setStarttime(new Date());
+			fileLogDto.setType("性能工单数据");
 			try {
-				paths = CommonUntils.MultipleFilesUpload(request);
+				path = CommonUntils.FileImprot(request, fileLogDto);			
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
+				fileLogDto.setResult(0);
 				modelAndView.addObject("success", Constraints.RESULT_FAIL+ ":上传失败！");
 			}
-			if (paths != null && paths.size() > 0) {
+			if (path != null) {
 				if (tableInfoDtos != null && tableInfoDtos.size() > 0) {
-					int rows = FileImport.tablerows(paths.get(0));
+					int rows = FileImport.tablerows(path);
 					for (int i = 0; i < rows; i++) {
 						AllCapacityWorkDto workDto = new AllCapacityWorkDto();
 						performanceWorkDtos.add(workDto);
 					}
 					try {
-						FileImport.importwork(paths.get(0), performanceWorkDtos, tableInfoDtos);// 将excel映射为对象
+						FileImport.importwork(path, performanceWorkDtos, tableInfoDtos);// 将excel映射为对象
 						workService.clearPerformanceWork(); // 清空表
 						workService.insertPerformanceWork(performanceWorkDtos);// 插入表并将questionflag置为-1
 						modelAndView.addObject("success", Constraints.RESULT_SUCCESS);
+						fileLogDto.setResult(1);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+						fileLogDto.setResult(0);
 						modelAndView.addObject("success", Constraints.RESULT_FAIL + ":文件损坏！");
 					}
 				}
+			}else {
+				fileLogDto.setResult(0);
 			}
+			long endtime = System.currentTimeMillis();
+			fileLogDto.setStarttime(new Date());
+			long alltime = endtime - starttime;
+			fileLogDto.setAlltime(alltime);
+			List<FileLogDto> fileLogDtos = new ArrayList<>();
+			fileLogDtos.add(fileLogDto);
+			fileLogService.insert(fileLogDtos);
 		} else if ("fault".equals(type)) {
 
 		} else if ("complaint".equals(type)) {
@@ -147,9 +181,9 @@ public class DataController {
 				}
 			}
 		}else if ("file".equals(type)) {
-			try {
+			try {			
 				String filepath = "/home/hadoop/systempdata/";
-				CommonUntils.FileUpload(request, filepath);
+				CommonUntils.MultipleFileImport(fileLogService,request, filepath,"中兴网管指标原始数据");
 				modelAndView.addObject("success", Constraints.RESULT_SUCCESS);														
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
