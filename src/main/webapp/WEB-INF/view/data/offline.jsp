@@ -14,26 +14,28 @@
 		var status = '${success}';
 		if (status == 'success') {
 			showOnlyMessage(INFO, "导入数据成功！");
-		} else if (status.indexOf("fail")>=0) {
+		} else if (status.indexOf("fail") >= 0) {
 			showOnlyMessage(ERROR, status);
 		}
 	</script>
-	<div class="ibox-content">
+	<div class="ibox-content" id="offline">
 		<div class="row">
 			<div class="col-sm-6">
 				<div class="panel panel-success">
 					<div class="panel-heading">中兴网管指标数据</div>
 					<div class="panel-body">
-						<form id="form1" action="${context}/data/upload?type=network" method="post"
-							enctype="multipart/form-data">
-							<input id="time" name="time" style="display: inline;padding: -10px;margin: -10px;height: 39px;margin-right: 10px;"
-										class="btn btn-white layer-date starttime" placeholder="请选择时间"
-										onclick="laydate({istime: true, format: 'YYYYMM'})">
-							<input class="btn btn-white" type="file" name="file" style="display: inline;"
-								multiple="multiple" accept=".csv"> <br> <br><input
-								class="btn btn-white" type="reset" value="重选"> <input id="submit"
-								class="btn btn-white" type="submit" value="上传">
-								<progress id="progress" style="display: none">正在上传...</progress>
+						<form id="form1" action="${context}/data/upload?type=network"
+							method="post" enctype="multipart/form-data">
+							<input id="time" name="time"
+								style="display: inline; padding: -10px; margin: -10px; height: 39px; margin-right: 10px;"
+								class="btn btn-white layer-date starttime" placeholder="请选择时间"
+								onclick="laydate({istime: true, format: 'YYYYMM'})">
+							<input class="btn btn-white" type="file" name="file" style="display: inline;" multiple="multiple" accept=".csv">
+							<br><br>
+							<input class="btn btn-white" type="reset" value="重选">
+							<input id="submit" class="btn btn-white" type="submit" value="上传">
+							<input class="btn btn-white" type="button" value="查看上传记录" onclick="openIframe()"> 
+							<progress id="progress" style="display: none">正在上传...</progress>
 						</form>
 					</div>
 				</div>
@@ -44,16 +46,18 @@
 					<div class="panel-body">
 						<form id="form2" action="${context}/data/upload?type=capacity"
 							method="post" enctype="multipart/form-data">
-							<input class="btn btn-white" type="file" name="file" accept=".xls"> <br> <input
-								class="btn btn-white" type="reset" value="重选"> <input id="submit1"
+							<input class="btn btn-white" type="file" name="file" accept=".xls"> 
+								<br>
+								<input class="btn btn-white" type="reset" value="重选"> <input id="submit1"
 								class="btn btn-white" type="submit" value="上传">
+								<input class="btn btn-white" type="button" value="查看上传记录" onclick="openIframe()"> 
 							<progress id="progress1" max="200" style="display: none">正在上传...</progress>
 						</form>
 					</div>
 				</div>
-			</div>			
+			</div>
 		</div>
-		<div class="row" style="display: none!important;">
+		<div class="row" style="display: none !important;">
 			<div class="col-sm-6">
 				<div class="panel panel-success">
 					<div class="panel-heading">故障工单</div>
@@ -80,8 +84,8 @@
 						<!-- <p>容量：2.4T</p>
 						<p>采样频率：1天</p>
 						<p>最后采样时间：2017-08-01</p> -->
-						<form action="${context}/data/upload?type=complaint"
-							method="post" enctype="multipart/form-data">
+						<form action="${context}/data/upload?type=complaint" method="post"
+							enctype="multipart/form-data">
 
 							<input class="btn btn-white" type="file" name="file"
 								multiple="multiple" accept="text/*"> <br> <input
@@ -95,7 +99,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" style="display: none!important;">
+		<div class="row" style="display: none !important;">
 			<div class="col-sm-6">
 				<div class="panel panel-success">
 					<div class="panel-heading">可视化小区退服</div>

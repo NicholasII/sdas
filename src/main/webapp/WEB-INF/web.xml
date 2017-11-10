@@ -114,22 +114,22 @@
 		<init-param>
 			<param-name>kaptcha.image.width</param-name>
 			<param-value>200</param-value>
-			<description>Width in pixels of the kaptcha image.</description>
+			<!-- <description>Width in pixels of the kaptcha image.</description> -->
 		</init-param>
 		<init-param>
 			<param-name>kaptcha.image.height</param-name>
 			<param-value>50</param-value>
-			<description>Height in pixels of the kaptcha image.</description>
+			<!-- <description>Height in pixels of the kaptcha image.</description> -->
 		</init-param>
 		<init-param>
 			<param-name>kaptcha.textproducer.char.length</param-name>
 			<param-value>4</param-value>
-			<description>The number of characters to display.</description>
+			<!-- <description>The number of characters to display.</description> -->
 		</init-param>
 		<init-param>
 			<param-name>kaptcha.noise.impl</param-name>
 			<param-value>com.google.code.kaptcha.impl.NoNoise</param-value>
-			<description>The noise producer.</description>
+			<!-- <description>The noise producer.</description> -->
 		</init-param>
 	</servlet>
 	<servlet-mapping>
