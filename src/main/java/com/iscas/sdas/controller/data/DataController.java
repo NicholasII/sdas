@@ -100,7 +100,7 @@ public class DataController{
 				fileLogDto.setResult(0);
 			}
 			long endtime = System.currentTimeMillis();
-			fileLogDto.setStarttime(new Date());
+			fileLogDto.setEndtime(new Date());
 			long alltime = endtime - starttime;
 			fileLogDto.setAlltime(alltime);
 			List<FileLogDto> fileLogDtos = new ArrayList<>();
@@ -146,7 +146,7 @@ public class DataController{
 				fileLogDto.setResult(0);
 			}
 			long endtime = System.currentTimeMillis();
-			fileLogDto.setStarttime(new Date());
+			fileLogDto.setEndtime(new Date());
 			long alltime = endtime - starttime;
 			fileLogDto.setAlltime(alltime);
 			List<FileLogDto> fileLogDtos = new ArrayList<>();
@@ -181,8 +181,9 @@ public class DataController{
 				}
 			}
 		}else if ("file".equals(type)) {
-			try {			
-				String filepath = "/home/hadoop/systempdata/";
+			try {	
+				String filepath = "E:/";
+				//String filepath = "/home/hadoop/systempdata/";
 				CommonUntils.MultipleFileImport(fileLogService,request, filepath,"中兴网管指标原始数据");
 				modelAndView.addObject("success", Constraints.RESULT_SUCCESS);														
 			} catch (Exception e1) {

@@ -308,11 +308,13 @@ public class CommonUntils {
 						fileLogDto.setResult(1);
 						long end = System.currentTimeMillis();
 						long alltime =  end-start;//耗时（秒）
+						fileLogDto.setEndtime(new Date());
 						fileLogDto.setAlltime(alltime);	
 					} catch (Exception e) {
 						fileLogDto.setResult(0);
 						long end = System.currentTimeMillis();
 						long alltime =  end-start;//耗时（秒）
+						fileLogDto.setEndtime(new Date());
 						fileLogDto.setAlltime(alltime);	
 						throw e;
 					}	
