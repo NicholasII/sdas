@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -205,11 +204,8 @@ public class CommonUntils {
 				request.getSession().getServletContext());
 		if (multipartResolver.isMultipart(request)) {
 			MultipartHttpServletRequest mutiRequest = (MultipartHttpServletRequest) request;
-			Iterator it = mutiRequest.getFileNames();
-			while (it.hasNext()) {
-				String name = (String) it.next();
-				MultipartFile file = mutiRequest.getFile(name);
-				
+			List<MultipartFile> files = mutiRequest.getFiles("file");
+			for (MultipartFile file : files) {
 				if (file != null) {
 					System.out.println(file.getOriginalFilename());
 					int index = file.getOriginalFilename().lastIndexOf(".");
@@ -235,32 +231,33 @@ public class CommonUntils {
 		return filepaths;
 	}
 	/**
-	 * 将文件上传到指定目录并制指定文件名
+	 * 将多文件上传到指定目录
 	 * @param request
 	 * @param filepath
 	 * @param filename
 	 * @return
+	 * @throws IOException 
+	 * @throws IllegalStateException 
 	 */
-	public static boolean FileUpload(HttpServletRequest request,String filepath,String filename) {
+	public static boolean FileUpload(HttpServletRequest request,String filepath) throws IllegalStateException, IOException {
 		// 将当前上下文初始化给 CommonsMutipartResolver （多部分解析器）
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
 				request.getSession().getServletContext());
 		if (multipartResolver.isMultipart(request)) {
 			MultipartHttpServletRequest mutiRequest = (MultipartHttpServletRequest) request;
-			Iterator it = mutiRequest.getFileNames();
-			while (it.hasNext()) {
-				MultipartFile file = mutiRequest.getFile(filename);
+			List<MultipartFile> files = mutiRequest.getFiles("file");
+			for (MultipartFile file : files) {
 				if (file != null) {
-					String targetfile = filepath + filename;
-					try {
-						file.transferTo(new File(targetfile));
-						return true;
-					} catch (Exception e) {
-						e.printStackTrace();
+					String str_filename = filepath;
+					str_filename = filepath + file.getOriginalFilename();					
+					File targetfile = new File(str_filename);
+					if (targetfile.exists()) {
+						targetfile.delete();
 					}
-
+					file.transferTo(targetfile);					
 				}
 			}
+			return true;
 		}
 		return false;
 	}

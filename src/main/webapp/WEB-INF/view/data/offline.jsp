@@ -24,10 +24,13 @@
 				<div class="panel panel-success">
 					<div class="panel-heading">中兴网管指标数据</div>
 					<div class="panel-body">
+					<div>
+								<span><i>备注：</i> </span> <span>请选择小区一天的网管数据</span>
+							</div>
 						<form id="form1" action="${context}/data/upload?type=network" method="post"
 							enctype="multipart/form-data">
 							<input id="time" name="time" style="display: inline;padding: -10px;margin: -10px;height: 39px;margin-right: 10px;"
-										class="btn btn-white layer-date starttime" placeholder="请选择时间"
+										class="btn btn-white layer-date starttime" placeholder="请选择计算模式年月"
 										onclick="laydate({istime: true, format: 'YYYYMM'})">
 							<input class="btn btn-white" type="file" name="file" style="display: inline;"
 								multiple="multiple" accept=".csv"> <br> <br><input
@@ -42,6 +45,9 @@
 				<div class="panel panel-success">
 					<div class="panel-heading">性能工单</div>
 					<div class="panel-body">
+						<div>
+								<span><i>备注：</i> </span> <span>请选择单个性能工单表格文件</span>
+						</div>
 						<form id="form2" action="${context}/data/upload?type=capacity"
 							method="post" enctype="multipart/form-data">
 							<input class="btn btn-white" type="file" name="file" accept=".xls"> <br> <input
@@ -52,6 +58,27 @@
 					</div>
 				</div>
 			</div>			
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="panel panel-success">
+					<div class="panel-heading">中兴网管指标原始数据</div>
+					<div class="panel-body">
+					<div>
+								<span><i>备注：</i> </span> <span>可选择多个文件！</span>
+						</div>
+						<form id="form1" action="${context}/data/upload?type=file" method="post"
+							enctype="multipart/form-data">
+							<input class="btn btn-white" multiple="multiple" type="file" name="file" style="display: inline;"> <br><br>
+							<input
+								class="btn btn-white" type="reset" value="重选"> <input id="submit"
+								class="btn btn-white" type="submit" value="上传">
+								<progress id="progress" style="display: none">正在上传...</progress>
+						</form>
+					</div>
+				</div>
+			</div>
+			
 		</div>
 		<div class="row" style="display: none!important;">
 			<div class="col-sm-6">

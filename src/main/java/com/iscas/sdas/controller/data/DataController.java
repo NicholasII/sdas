@@ -77,6 +77,7 @@ public class DataController {
 					String[] args = new String[2];
 					args[0] = paths.get(0);
 					args[1] = time;
+					new CellUploadFileTask().runTask(args);
 					new CellUploadFileOfExpertTask().runTask(args);
 					//CellUploadFileTask.doUploadFileWork(paths.get(0));
 					//CellUploadFileOfExpertTask.doUploadFileWork(paths.get(0));
@@ -144,6 +145,16 @@ public class DataController {
 					}
 
 				}
+			}
+		}else if ("file".equals(type)) {
+			try {
+				String filepath = "/home/hadoop/systempdata/";
+				CommonUntils.FileUpload(request, filepath);
+				modelAndView.addObject("success", Constraints.RESULT_SUCCESS);														
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				modelAndView.addObject("success", Constraints.RESULT_FAIL+ ":上传失败！");
 			}
 		}
 		return modelAndView;
