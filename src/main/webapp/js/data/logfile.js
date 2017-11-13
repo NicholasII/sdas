@@ -4,7 +4,7 @@
 
 function drawTables(type){
 	 $('#historyTable').bootstrapTable({
-	        cache : false,
+		 cache : false,
 	        striped : true,
 	        pagination : true,
 	        toolbar : '#pager_Table',
@@ -53,7 +53,9 @@ function drawTables(type){
 	                 }
 	          }],
 	        onPageChange : function(size, number) {
-	            searchInfo();
+	        	var data = {};
+	    	 	data.type=type;
+	    	    commonRowDatas("historyTable", data, "/sdas/log/file/list", "commonCallback", true);
 	        },
 	        formatNoMatches : function() {
 	            return "NOT_FOUND_DATAS";
