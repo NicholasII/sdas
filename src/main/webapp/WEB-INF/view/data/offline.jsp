@@ -55,7 +55,7 @@
 								<br>
 								<input class="btn btn-white" type="reset" value="重选"> <input id="submit1"
 								class="btn btn-white" type="submit" value="上传">
-								<input class="btn btn-white" type="button" value="查看上传记录" onclick="openIframe('性能工单')"> 
+								<input class="btn btn-white" type="button" value="查看上传记录" onclick="openIframe('性能工单数据')"> 
 							<progress id="progress1" max="200" style="display: none">正在上传...</progress>
 						</form>
 					</div>

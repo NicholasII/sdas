@@ -239,8 +239,11 @@ public class CommonUntils {
 	 * @param request
 	 * @param fileLogDto
 	 * @return
+	 * @throws IllegalStateException 
+	 * @throws IOException 
+	 * @throws IllegalStatException 
 	 */
-	public static String FileImprot(HttpServletRequest request,FileLogDto fileLogDto) {
+	public static String FileImprot(HttpServletRequest request,FileLogDto fileLogDto) throws IllegalStateException, IOException  {
 		// 将当前上下文初始化给 CommonsMutipartResolver （多部分解析器）
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
 				request.getSession().getServletContext());
@@ -249,7 +252,6 @@ public class CommonUntils {
 			List<MultipartFile> files = mutiRequest.getFiles("file");
 			for (MultipartFile file : files) {
 				if (file != null) {
-					System.out.println(file.getOriginalFilename());
 					int index = file.getOriginalFilename().lastIndexOf(".");
 					if (index>0) {
 						String filename = file.getOriginalFilename().substring(0, index) +"-"+ System.currentTimeMillis()+file.getOriginalFilename().substring(index);
@@ -259,13 +261,8 @@ public class CommonUntils {
 						if (targetfile.exists()) {
 							targetfile.delete();
 						}
-						try {
-							file.transferTo(targetfile);
-							return filepath;
-						} catch (IllegalStateException | IOException e) {
-							e.printStackTrace();
-							fileLogDto.setResult(0);
-						}
+						file.transferTo(targetfile);
+						return filepath;				
 					}			
 				}
 			}

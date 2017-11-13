@@ -2,8 +2,6 @@ package com.iscas.sdas.util;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
@@ -36,75 +34,66 @@ public class FileImport {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("resource")
-	public static <T> List<T> importwork(String path,List<T> list,List<TableInfoDto> tableindex) throws Exception {
+	public static <T> void importwork(String path, List<T> list, List<TableInfoDto> tableindex) throws Exception {
 		File file = new File(path);
-		List<T> result = list;
+		//List<T> result = list;
 		Workbook workbook;
-		try {
-			InputStream is = new FileInputStream(file);
-			String filetype = path.substring(path.lastIndexOf(".")+1);
-			if ("xls".equals(filetype)) {
-				workbook = new HSSFWorkbook(is);
-			}else if ("xlsx".equals(filetype)) {
-				workbook = new XSSFWorkbook(is);
-			}else {
-				throw new Exception("上传文件不是EXCEL文件");
+
+		InputStream is = new FileInputStream(file);
+		String filetype = path.substring(path.lastIndexOf(".") + 1);
+		if ("xls".equals(filetype)) {
+			workbook = new HSSFWorkbook(is);
+		} else if ("xlsx".equals(filetype)) {
+			workbook = new XSSFWorkbook(is);
+		} else {
+			throw new Exception("上传文件不是EXCEL文件");
+		}
+		// workbook.getNumberOfSheets()
+		for (int page = 0; page < 1; page++) {// 去第一页的数据
+			Sheet sheet = workbook.getSheetAt(page);
+			if (sheet == null) {
+				continue;
 			}
-			//workbook.getNumberOfSheets()
-			for (int page = 0; page < 1 ; page++) {//去第一页的数据
-				Sheet sheet = workbook.getSheetAt(page);
-				if (sheet == null) {
-					continue;
-				}
-				int rowNum = sheet.getLastRowNum();
-				for (int i = 1; i <= rowNum; i++) {
-					T t = result.get(i-1);
-					Row titlerow = sheet.getRow(0);
-					Row row = sheet.getRow(i);
-					int minCol = row.getFirstCellNum();
-					int maxCol = row.getLastCellNum();
-					for (int col = minCol; col < maxCol; col++) {
-						Cell cell = row.getCell(col);
-						Cell cellname = titlerow.getCell(col);
-						String titlevalue = cellname.getStringCellValue();//excel中表头的字段值
-						for (TableInfoDto column : tableindex) {
-							if (column.getColumnComment().equals(titlevalue)) {
-								String type = column.getColumnType();
-								String fieldname = column.getColumnName();
-								String  methodname = fieldname.substring(0, 1).toUpperCase() + fieldname.substring(1);
-								methodname = "set" + methodname;
-								Class[] classes = new Class[1];																
-								if ("int".equals(type)) {
-									classes[0] = Integer.class;
-									Method method = t.getClass().getMethod(methodname, classes);
-									Integer value = (Integer)getTypeValue(type, cell);
-									method.invoke(t, value);
-								}else if ("varchar".equals(type) || "text".equals(type)) {
-									classes[0] = String.class;
-									Method method = t.getClass().getMethod(methodname, classes);
-									String value = (String)getTypeValue(type, cell);
-									method.invoke(t, value);
-								}else if ("datetime".equals(type)) {
-									classes[0] = Date.class;
-									Method method = t.getClass().getMethod(methodname, classes);
-									Date value = (Date)getTypeValue(type, cell);
-									method.invoke(t, value);
-								}
-								
-								break;
+			int rowNum = sheet.getLastRowNum();
+			for (int i = 1; i <= rowNum; i++) {
+				T t = list.get(i - 1);
+				Row titlerow = sheet.getRow(0);
+				Row row = sheet.getRow(i);
+				int minCol = row.getFirstCellNum();
+				int maxCol = row.getLastCellNum();
+				for (int col = minCol; col < maxCol; col++) {
+					Cell cell = row.getCell(col);
+					Cell cellname = titlerow.getCell(col);
+					String titlevalue = cellname.getStringCellValue();// excel中表头的字段值
+					for (TableInfoDto column : tableindex) {
+						if (column.getColumnComment().equals(titlevalue)) {
+							String type = column.getColumnType();
+							String fieldname = column.getColumnName();
+							String methodname = fieldname.substring(0, 1).toUpperCase() + fieldname.substring(1);
+							methodname = "set" + methodname;
+							Class[] classes = new Class[1];
+							if ("int".equals(type)) {
+								classes[0] = Integer.class;
+								Method method = t.getClass().getMethod(methodname, classes);
+								Integer value = (Integer) getTypeValue(type, cell);
+								method.invoke(t, value);
+							} else if ("varchar".equals(type) || "text".equals(type)) {
+								classes[0] = String.class;
+								Method method = t.getClass().getMethod(methodname, classes);
+								String value = (String) getTypeValue(type, cell);
+								method.invoke(t, value);
+							} else if ("datetime".equals(type)) {
+								classes[0] = Date.class;
+								Method method = t.getClass().getMethod(methodname, classes);
+								Date value = (Date) getTypeValue(type, cell);
+								method.invoke(t, value);
 							}
-						}								
+							break;
+						}
 					}
 				}
 			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		return result;
 	}
 	
 	/**

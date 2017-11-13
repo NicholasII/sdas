@@ -131,16 +131,21 @@ public class DataController{
 					}
 					try {
 						FileImport.importwork(path, performanceWorkDtos, tableInfoDtos);// 将excel映射为对象
-						workService.clearPerformanceWork(); // 清空表
-						workService.insertPerformanceWork(performanceWorkDtos);// 插入表并将questionflag置为-1
-						modelAndView.addObject("success", Constraints.RESULT_SUCCESS);
-						fileLogDto.setResult(1);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						try {						
+							workService.clearPerformanceWork(); // 清空表
+							workService.insertPerformanceWork(performanceWorkDtos);// 插入表并将questionflag置为-1
+							modelAndView.addObject("success", Constraints.RESULT_SUCCESS);
+							fileLogDto.setResult(1);
+						} catch (Exception e) {
+							e.printStackTrace();
+							fileLogDto.setResult(0);
+							modelAndView.addObject("success", Constraints.RESULT_FAIL + ":文件导入失败！");
+						}
+					} catch (Exception e1) {
+						e1.printStackTrace();
 						fileLogDto.setResult(0);
 						modelAndView.addObject("success", Constraints.RESULT_FAIL + ":文件损坏！");
-					}
+					}			
 				}
 			}else {
 				fileLogDto.setResult(0);
@@ -182,8 +187,8 @@ public class DataController{
 			}
 		}else if ("file".equals(type)) {
 			try {	
-				String filepath = "E:/";
-				//String filepath = "/home/hadoop/systempdata/";
+				//String filepath = "E:/";
+				String filepath = "/home/hadoop/systempdata/";
 				CommonUntils.MultipleFileImport(fileLogService,request, filepath,"中兴网管指标原始数据");
 				modelAndView.addObject("success", Constraints.RESULT_SUCCESS);														
 			} catch (Exception e1) {
@@ -194,6 +199,5 @@ public class DataController{
 		}
 		return modelAndView;
 	}
-	
 
 }
