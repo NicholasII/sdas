@@ -45,9 +45,9 @@ function file_upload(file){
 	    		fileSize = file.files[0].size; 
 	    	}
 	     }   
-	     var size = fileSize / 1024;    
-	     if(size>2000){
-	      alert("上传文件总大小不能大于2M");
+	     var size = fileSize /1024/1024;    
+	     if(size>4){
+	      alert("上传文件总大小不能大于4G");
 	      file.value="";
 	      ifupload=false;
 	      return
