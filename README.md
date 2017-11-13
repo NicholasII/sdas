@@ -1,9 +1,10 @@
 # sdas
-the station of data staistic system to guangzhou mobile
+<b>the station of data staistic system to guangzhou mobile</b><br>
 <small>基于r语言和大数据等技术实现对移动工单的验证，通过海量数据的分析显示对未来时刻的预警</small>
+<small>本系统作为上述算法验证的演示系统</small>
 <h1>introduce</h1>
-1.工单验证
-2、预警
+1.工单验证<br>
+2、预警<br>
 
 
 <h2>项目进展</h2>
@@ -18,13 +19,13 @@ the station of data staistic system to guangzhou mobile
 
 
 <h2>技术选型</h2>
-1. spring4
-2. mybatis3.4.5
-3. log4j
-4. poi
-5. pagehelper
-6. echarts
-7. bootsrap.table.notify,validator..
-8. hplus jqgrid
+1. spring4<br>
+2. mybatis3.4.5<br>
+3. log4j<br>
+4. poi<br>
+5. pagehelper<br>
+6. echarts<br>
+7. bootsrap.table.notify,validator..<br>
+8. hplus jqgrid<br>
 9. ......
 
