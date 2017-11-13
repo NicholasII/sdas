@@ -44,7 +44,7 @@
 			</div>
 			<div class="col-sm-6">
 				<div class="panel panel-success">
-					<div class="panel-heading">性能工单</div>
+					<div class="panel-heading">性能工单数据</div>
 					<div class="panel-body">
 						<div>
 								<span><i>备注：</i> </span> <span>请选择单个性能工单表格文件</span>
