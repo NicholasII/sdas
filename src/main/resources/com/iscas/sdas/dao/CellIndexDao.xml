@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		t_normalcheckmetadata.indeicator_id WHERE 
 		t_normalcheckmetadata.in_used = 1 AND
 		t_normal_model_detail_info.indeicator_code = #{indexcode} AND
-		t_normal_model_detail_info.cell_code= #{cellname}
+		t_normal_model_detail_info.cell_code= #{cellname} limit 1
 	</select>
 	<select id="getGroupIndexContent" resultType="com.iscas.sdas.dto.cell.BaseGroupIndex">
 		SELECT * FROM

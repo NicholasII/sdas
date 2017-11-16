@@ -122,8 +122,8 @@
 				</button>
 				<nav class="page-tabs J_menuTabs">
 				<div class="page-tabs-content">
-					<%-- <a href="javascript:;" class="active J_menuTab"
-						data-id="${context}/general/home">首页</a> --%>
+					<a href="javascript:;" class="active J_menuTab"
+						data-id="${context}/general/home">首页</a>
 				</div>
 				</nav>
 				<button class="roll-nav roll-right J_tabRight">
@@ -146,12 +146,12 @@
 
 			</div>
 			<div class="row J_mainContent" id="content-main">
-				<%-- <iframe class="J_iframe" name="iframe0" width="100%" height="100%"
-					src="${context}/general/home" frameborder="0"
-					data-id="${context}/general/home" seamless></iframe> --%>
 				<iframe class="J_iframe" name="iframe0" width="100%" height="100%"
+					src="${context}/general/home" frameborder="0"
+					data-id="${context}/general/home" seamless></iframe>
+				<!-- <iframe class="J_iframe" name="iframe0" width="100%" height="100%"
 					src="" frameborder="0"
-					data-id="" seamless></iframe>
+					data-id="" seamless></iframe> -->
 			</div>
 		</div>
 		<!--右侧部分结束-->
